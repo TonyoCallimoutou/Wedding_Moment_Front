@@ -1,4 +1,12 @@
-<h1> PICTURE </h1>
+<h2> PICTURE </h2>
+
+<button (click)="addPicture()">
+    + Picture
+</button>
+
+<button (click)="removePicture()">
+    - Picture
+</button>
 
 <div *ngFor="let picture of pictures">
     <p> id : {{ picture.pictureId}}</p>

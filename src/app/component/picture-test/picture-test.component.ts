@@ -13,7 +13,6 @@ export class PictureTestComponent implements OnInit {
 
   constructor(
     private pictureService: PictureService) {
-      this.ngOnInit()
     }
 
   ngOnInit() {
@@ -23,4 +22,18 @@ export class PictureTestComponent implements OnInit {
     })
   }
 
+  addPicture() {
+    this.pictureService.create(new Picture(2,"testPicture"))
+    .subscribe( data => {
+      this.ngOnInit
+      console.log(data);
+    })
+  }
+
+  removePicture() {
+    this.pictureService.delete(1)
+    .subscribe( data => {
+      console.log(data);
+    })
+  }
 }

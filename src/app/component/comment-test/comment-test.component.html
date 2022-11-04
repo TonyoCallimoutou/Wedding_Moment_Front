@@ -1,4 +1,12 @@
-<h1> COMMENT </h1>
+<h2> COMMENT </h2>
+
+<button (click)="addComment()">
+    + Comment
+</button>
+
+<button (click)="removeComment()">
+    - Comment
+</button>
 
 <div *ngFor="let comment of comments">
     <p> id : {{ comment.commentId}}</p>

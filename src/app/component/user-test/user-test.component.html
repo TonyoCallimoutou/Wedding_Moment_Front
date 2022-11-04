@@ -1,5 +1,15 @@
 
-<h1> USER </h1>
+<h2> USER </h2>
+
+<button (click)="addUser()">
+    + User
+</button>
+
+<button (click)="removeUser()">
+    - User
+</button>
+
+
 <div *ngFor="let user of users">
     <p> Userid : {{ user.userId}}</p>
     <p> first name : {{ user.firstName}}</p>

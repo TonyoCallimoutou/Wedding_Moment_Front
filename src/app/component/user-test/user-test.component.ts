@@ -23,4 +23,18 @@ export class UserTestComponent implements OnInit {
     })
   }
 
+  addUser() {
+    this.userService.create(new User("test","testName","emailTest"))
+    .subscribe( data => {
+      console.log(data);
+    })
+  }
+
+  removeUser() {
+    this.userService.delete(1)
+    .subscribe( data => {
+      console.log(data);
+    })
+  }
+
 }

@@ -23,4 +23,17 @@ export class CommentTestComponent implements OnInit {
     })
   }
 
+  addComment() {
+    this.commentService.create(new Comment(2,2,"test_commment"))
+    .subscribe( data => {
+      console.log(data);
+    })
+  }
+
+  removeComment() {
+    this.commentService.delete(1)
+    .subscribe( data => {
+      console.log(data);
+    })
+  }
 }
