@@ -1,11 +1,10 @@
 export class User {
   constructor(
-    public firstName: string,
-    public lastName: string,
+    public userName: string,
     public email: string,
-    public userId?: number,
-    public password?: string,
-    public picture?: string) {
+    public emailVerified: boolean,
+    public userId?: string,
+    public photoUrl?: string) {
   }
 
 }

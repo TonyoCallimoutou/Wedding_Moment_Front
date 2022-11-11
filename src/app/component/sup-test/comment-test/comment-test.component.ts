@@ -13,7 +13,6 @@ export class CommentTestComponent implements OnInit {
 
   constructor(
     private commentService: CommentService) {
-      this.ngOnInit()
     }
 
   ngOnInit() {

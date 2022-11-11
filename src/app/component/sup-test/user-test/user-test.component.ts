@@ -13,7 +13,6 @@ export class UserTestComponent implements OnInit {
 
   constructor(
     private userService: UserService) {
-      this.ngOnInit()
     }
 
   ngOnInit() {
@@ -24,9 +23,16 @@ export class UserTestComponent implements OnInit {
   }
 
   addUser() {
-    this.userService.create(new User("test","testName","emailTest"))
+    const userData: User = new User(
+      'user.displayName',
+      'user.email',
+      true,
+      'user.uid',
+      'user.photoURL'
+  );
+    this.userService.create(userData)
     .subscribe( data => {
-      console.log(data);
+        console.log(data);
     })
   }
 
