@@ -20,15 +20,15 @@ export class CommentService {
     return this.http.get<Comment[]>(baseUrl);
   }
 
-  getCommentsById(id: number): Observable<Comment> {
-    return this.http.get<Comment>(`${baseUrl}/${id}`);
+  getCommentsById(CommentId: number): Observable<Comment> {
+    return this.http.get<Comment>(`${baseUrl}/${CommentId}`);
   }
 
-  getCommentsByUserId(id: number): Observable<Comment> {
-    return this.http.get<Comment>(`${baseUrl}/user/${id}`);
+  getCommentsByUserId(userId: number): Observable<Comment> {
+    return this.http.get<Comment>(`${baseUrl}/user/${userId}`);
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+  delete(commentId: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${commentId}`);
   }
 }

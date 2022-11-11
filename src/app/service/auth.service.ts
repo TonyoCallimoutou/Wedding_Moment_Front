@@ -4,15 +4,23 @@ import * as auth from 'firebase/auth';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { UserService } from './user.service';
+import { CommentService } from './comment.service';
+import { PictureService } from './picture.service';
+import { Comment } from '../model/comment.model';
+import { Picture } from '../model/picture.model';
 
 @Injectable({
     providedIn: 'root',
   })
 export class AuthService {
-    userData: any; // Save logged in user data
+    userData: any; 
+    listPictureId : number[] = [];
+
     constructor(
         public userService: UserService,
-        public afAuth: AngularFireAuth, // Inject Firebase auth service
+        public commentService: CommentService,
+        public pictureService: PictureService,
+        public afAuth: AngularFireAuth,
         public router: Router,
     ) { 
         /* Saving user data in localstorage when 
@@ -20,6 +28,8 @@ export class AuthService {
         this.afAuth.authState.subscribe((user) => {
             if (user) {
             this.userData = user;
+            this.getListOfLikePictureId();
+
             localStorage.setItem('user', JSON.stringify(this.userData));
             JSON.parse(localStorage.getItem('user')!);
             } else {
@@ -45,6 +55,7 @@ export class AuthService {
                 window.alert(error.message);
             });
     }
+
     // Sign up with email/password
     SignUp(email: string, password: string) {
         return this.afAuth
@@ -59,6 +70,7 @@ export class AuthService {
                 window.alert(error.message);
             });
     }
+
     // Send email verfificaiton when new user sign up
     SendVerificationMail() {
         return this.afAuth.currentUser
@@ -67,6 +79,7 @@ export class AuthService {
                 this.router.navigate(['verify-email-address']);
             });
     }
+
     // Reset Forggot password
     ForgotPassword(passwordResetEmail: string) {
         return this.afAuth
@@ -78,17 +91,20 @@ export class AuthService {
                 window.alert(error);
             });
     }
+
     // Returns true when user is looged in and email is verified
     get isLoggedIn(): boolean {
         const user = JSON.parse(localStorage.getItem('user')!);
         return user !== null && user.emailVerified !== false ? true : false;
     }
+
     // Sign in with Google
     GoogleAuth() {
         return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
             //this.router.navigate(['dashboard']);
       });
     }
+
     // Auth logic to run auth providers
     AuthLogin(provider: any) {
         return this.afAuth
@@ -102,19 +118,12 @@ export class AuthService {
             });
     }
 
-
     // Sign out
     SignOut() {
         return this.afAuth.signOut().then(() => {
             // Remove User
             this.router.navigate(['sign-in']);
         });
-    }
-
-    getCurrentUser() {
-        if (this.isLoggedIn) {
-            return this.userData;
-        }
     }
 
     /* Setting up user data when sign in with username/password, 
@@ -132,6 +141,103 @@ export class AuthService {
         this.userService.create(userData)
             .subscribe( data => {
                 console.log(data);
+            });
+
+        this.getListOfLikePictureId();
+    }
+
+
+    /**
+     *  Methode autre que L'authentification
+     */
+
+    // Return Current User
+     getCurrentUser() {
+        if (this.isLoggedIn) {
+            return this.userData;
+        }
+    }
+
+    // Return List Of Like PictureId
+    getListOfLikePictureId() {
+        this.userService.getlikePicture(this.userData.uid)
+        .subscribe( data => {
+            this.listPictureId = [];
+            data.forEach((data : any) => {
+                this.listPictureId.push(data.pictureId);
+            });
+        });
+    }
+
+    // Like Or Dislike Picture
+    likePicture(pictureId: number) {
+        var data = {
+            userId : this.getCurrentUser().uid,
+            pictureId : pictureId
+        }
+
+        if (this.listPictureId.includes(pictureId)) {
+            this.userService.dislikePicture(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listPictureId = this.listPictureId.filter((item:number) => item !== pictureId);
             })
+        }
+        else {
+            this.userService.likePicture(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listPictureId.push(pictureId);
+            })
+        }
+    }
+
+    /**
+     * COMMENT
+     */
+
+    // Create Comment
+    createComment(pictureId: number) {
+        this.commentService.create(new Comment(pictureId,this.userData.uid,"test_commment"))
+        .subscribe( data => {
+          console.log(data);
+        })
+    }
+
+    // Remove Comment
+    removeComment(comment: Comment) {
+        if (comment.userId == this.userData.uid) {
+            this.commentService.delete(comment.commentId!)
+            .subscribe( data => {
+              console.log(data);
+            })
+        }
+    }
+
+    
+    /**
+     * PICTURE
+     */
+
+    // Create Picture
+    createPicture(data: any) {
+        const picture = {
+            userId: this.userData.uid,
+            pictureUrl: data.pictureUrl
+        }
+        this.pictureService.create(picture)
+        .subscribe( data => {
+          console.log(data);
+        })
+    }
+
+    // Remove Picture
+    removePicture(picture: Picture) {
+        if (picture.userId == this.userData.uid) {
+            this.pictureService.delete(picture.pictureId!)
+            .subscribe( data => {
+              console.log(data);
+            })
+        }
     }
 }

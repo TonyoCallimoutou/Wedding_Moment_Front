@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Comment } from 'src/app/model/comment.model';
 import { Picture } from 'src/app/model/picture.model';
+import { AuthService } from 'src/app/service/auth.service';
+import { CommentService } from 'src/app/service/comment.service';
 import { PictureService } from 'src/app/service/picture.service';
 
 @Component({
@@ -12,7 +15,9 @@ export class PictureTestComponent implements OnInit {
   pictures: Picture[] = [];
 
   constructor(
-    private pictureService: PictureService) {
+    private authService: AuthService,
+    private pictureService: PictureService,
+    private commentService: CommentService) {
     }
 
   ngOnInit() {
@@ -23,17 +28,20 @@ export class PictureTestComponent implements OnInit {
   }
 
   addPicture() {
-    this.pictureService.create(new Picture(2,"testPicture"))
-    .subscribe( data => {
-      this.ngOnInit
-      console.log(data);
+    this.authService.createPicture((data:any) => {
+      pictureUrl: "testUrl"
     })
   }
 
-  removePicture() {
-    this.pictureService.delete(1)
-    .subscribe( data => {
-      console.log(data);
-    })
+  removePicture(pictureId: any) {
+    this.authService.removePicture(pictureId);
+  }
+
+  addComment(pictureId: any) {
+    this.authService.createComment(pictureId);
+  }
+
+  likePicture(pictureId: any) {
+    this.authService.likePicture(pictureId);
   }
 }

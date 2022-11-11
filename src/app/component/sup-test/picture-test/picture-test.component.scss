@@ -1,0 +1,11 @@
+.card {
+    width: 80%;
+    .picture > img {
+        width: 100%;
+    }
+}
+
+.footer {
+    display: flex;
+    justify-content: space-around;
+}

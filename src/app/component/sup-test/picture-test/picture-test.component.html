@@ -4,12 +4,25 @@
     + Picture
 </button>
 
-<button (click)="removePicture()">
+<button (click)="removePicture(1)">
     - Picture
 </button>
 
-<div *ngFor="let picture of pictures">
-    <p> id : {{ picture.pictureId}}</p>
-    <p> userId : {{ picture.userId}}</p>
-    <p> picture : {{ picture.pictureUrl}}</p>
+<div class="card" *ngFor="let picture of pictures">
+    <div class="header">
+        <!-- Component entete d'une image avec Id utilisateur ? -->
+        <p> userId : {{ picture.userId}}</p>
+    </div>
+    <div class="picture">
+        <img src="{{ picture.pictureUrl }}" alt="{{ picture.pictureId}}">
+    </div>
+    <div class="counter">
+        <p> like : {{ picture.countLike }} </p>
+        <p> comment : {{ picture.countComment }} </p>
+    </div>
+    <div class="footer">
+        <button (click)="likePicture(picture.pictureId)"> Like </button>
+        <button (click)="addComment(picture.pictureId)"> Comment </button>
+        <button> Share </button>
+    </div>
 </div>
