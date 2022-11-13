@@ -1,19 +1,15 @@
 
 <h2> USER </h2>
 
-<button (click)="addUser()">
-    + User
-</button>
-
 <button (click)="removeUser()">
     - User
 </button>
 
 
-<div *ngFor="let user of users">
-    <p> Userid : {{ user.userId}}</p>
-    <p> Name : {{ user.userName}}</p>
+<div>
+
+    <img src="{{ user.photoUrl }}" alt="{{ user.userId}}">
+    <p> {{ user.userName}}</p>
     <p> email : {{ user.email}}</p>
     <p> emailVerified : {{ user.emailVerified}}</p>
-    <p> picture : {{ user.photoUrl}}</p>
 </div>

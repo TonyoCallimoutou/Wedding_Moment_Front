@@ -8,12 +8,13 @@ import { CommentService } from './comment.service';
 import { PictureService } from './picture.service';
 import { Comment } from '../model/comment.model';
 import { Picture } from '../model/picture.model';
+import { UserUtils } from '../utils/user.utils';
 
 @Injectable({
     providedIn: 'root',
   })
 export class AuthService {
-    userData: any; 
+    userData: any;
     listPictureId : number[] = [];
 
     constructor(
@@ -27,7 +28,7 @@ export class AuthService {
         logged in and setting up null when logged out */
         this.afAuth.authState.subscribe((user) => {
             if (user) {
-            this.userData = user;
+            this.userData = UserUtils.createUserFromFirebase(user);
             this.getListOfLikePictureId();
 
             localStorage.setItem('user', JSON.stringify(this.userData));
@@ -130,16 +131,16 @@ export class AuthService {
     sign up with username/password and sign in with social auth  
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
     SetUserData(user: any) {
-        const userData: User = new User(
+        this.userData = new User(
             user.displayName,
             user.email,
             user.emailVerified,
-            user.uid,
-            user.photoURL
+            user.photoURL,
+            user.uid
         );
 
-        this.userService.create(userData)
-            .subscribe( data => {
+        this.userService.create(this.userData)
+            .subscribe( data => {   
                 console.log(data);
             });
 
@@ -154,13 +155,13 @@ export class AuthService {
     // Return Current User
      getCurrentUser() {
         if (this.isLoggedIn) {
-            return this.userData;
+            return JSON.parse(localStorage.getItem('user')!);
         }
     }
 
     // Return List Of Like PictureId
     getListOfLikePictureId() {
-        this.userService.getlikePicture(this.userData.uid)
+        this.userService.getlikePicture(this.userData.userId)
         .subscribe( data => {
             this.listPictureId = [];
             data.forEach((data : any) => {
@@ -172,7 +173,7 @@ export class AuthService {
     // Like Or Dislike Picture
     likePicture(pictureId: number) {
         var data = {
-            userId : this.getCurrentUser().uid,
+            userId : this.userData.userId,
             pictureId : pictureId
         }
 
@@ -192,13 +193,18 @@ export class AuthService {
         }
     }
 
+    //Remove User
+    removeUser() {
+        this.userService.delete(this.userData.userId)
+    }
+
     /**
      * COMMENT
      */
 
     // Create Comment
     createComment(pictureId: number) {
-        this.commentService.create(new Comment(pictureId,this.userData.uid,"test_commment"))
+        this.commentService.create(new Comment(pictureId,this.userData.userId,"test_commment"))
         .subscribe( data => {
           console.log(data);
         })
@@ -206,7 +212,7 @@ export class AuthService {
 
     // Remove Comment
     removeComment(comment: Comment) {
-        if (comment.userId == this.userData.uid) {
+        if (comment.userId == this.userData.userId) {
             this.commentService.delete(comment.commentId!)
             .subscribe( data => {
               console.log(data);
@@ -222,7 +228,7 @@ export class AuthService {
     // Create Picture
     createPicture(data: any) {
         const picture = {
-            userId: this.userData.uid,
+            userId: this.userData.userId,
             pictureUrl: data.pictureUrl
         }
         this.pictureService.create(picture)
@@ -233,7 +239,7 @@ export class AuthService {
 
     // Remove Picture
     removePicture(picture: Picture) {
-        if (picture.userId == this.userData.uid) {
+        if (picture.userId == this.userData.userId) {
             this.pictureService.delete(picture.pictureId!)
             .subscribe( data => {
               console.log(data);

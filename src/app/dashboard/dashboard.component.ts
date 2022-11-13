@@ -5,11 +5,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
+
+  tabselector: number = 1;
 
   constructor() { }
 
-  ngOnInit(): void {
+  tab(tabulation: number) {
+    this.tabselector = tabulation;
   }
 
 }

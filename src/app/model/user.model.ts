@@ -3,8 +3,8 @@ export class User {
     public userName: string,
     public email: string,
     public emailVerified: boolean,
-    public userId?: string,
-    public photoUrl?: string) {
+    public photoUrl: string,
+    public userId?: string) {
   }
 
 }

@@ -10,8 +10,12 @@
 
 <div class="card" *ngFor="let picture of pictures">
     <div class="header">
-        <!-- Component entete d'une image avec Id utilisateur ? -->
-        <p> userId : {{ picture.userId}}</p>
+        <div class="user-banner">
+            <div class="photo-profil">
+                <img src="{{ picture.photoUrl }}" alt="{{ picture.userId}}">
+            </div>
+            <p> {{ picture.userName}}</p>
+        </div>
     </div>
     <div class="picture">
         <img src="{{ picture.pictureUrl }}" alt="{{ picture.pictureId}}">

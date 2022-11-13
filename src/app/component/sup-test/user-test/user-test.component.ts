@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/model/user.model';
+import { AuthService } from 'src/app/service/auth.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -9,38 +10,19 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class UserTestComponent implements OnInit {
 
-  users: User[] = [];
+  user: any;
 
   constructor(
-    private userService: UserService) {
+    private authService: AuthService) {
+      this.user = this.authService.getCurrentUser();
+      console.log(this.user)
     }
 
   ngOnInit() {
-    this.userService.getAll()
-    .subscribe( (data) => {
-      this.users = data;
-    })
-  }
-
-  addUser() {
-    const userData: User = new User(
-      'user.displayName',
-      'user.email',
-      true,
-      'user.uid',
-      'user.photoURL'
-  );
-    this.userService.create(userData)
-    .subscribe( data => {
-        console.log(data);
-    })
   }
 
   removeUser() {
-    this.userService.delete(1)
-    .subscribe( data => {
-      console.log(data);
-    })
+    this.authService.removeUser();
   }
 
 }

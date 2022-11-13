@@ -1,6 +1,21 @@
-<div class="list">
-  <!-- <app-user-test></app-user-test> -->
-  <app-picture-test></app-picture-test>
-  <!-- <app-comment-test></app-comment-test> -->
+<div class="home-page">
+  <div class="onglet">
+    <div *ngIf = "tabselector == 1">
+      <app-user-test></app-user-test>
+    </div>
+    <div *ngIf = "tabselector == 2">
+      <app-picture-test></app-picture-test>
+    </div>
+    <div *ngIf = "tabselector == 3">
+      <app-comment-test></app-comment-test>
+    </div>
+  </div>
+
+  <div class="navigation-bar" >
+    <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabselector == 1}">User</a>
+    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Picture</a>
+    <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabselector == 3}">Comment</a>
+  </div>
+
 </div>
 

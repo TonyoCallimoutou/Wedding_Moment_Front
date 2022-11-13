@@ -1,10 +1,12 @@
 export class Picture {
     constructor(
-      public userId: number,
+      public pictureId: number,
       public pictureUrl: string,
       public countLike: number,
       public countComment: number,
-      public pictureId?: number) {
+      public userId: number,
+      public userName: string,
+      public photoUrl: string) {
     }
   
   }
