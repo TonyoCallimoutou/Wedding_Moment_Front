@@ -1,7 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Comment } from 'src/app/model/comment.model';
-import { User } from 'src/app/model/user.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { CommentService } from 'src/app/service/comment.service';
 
@@ -23,12 +22,11 @@ export class CommentTestComponent implements OnInit {
     }
 
   ngOnInit() {
-
     this.initData();
   }
 
   /**
-   * Initialiser les donnnées
+   * Init data
    */
   initData() {
 
@@ -45,7 +43,7 @@ export class CommentTestComponent implements OnInit {
   }
 
   /**
-   * Ajouter un nouveau Commentaire
+   * add new comment
    * @param comment 
    */
   addComment(comment:string) {
@@ -55,14 +53,17 @@ export class CommentTestComponent implements OnInit {
   }
 
   /**
-   * Supprimer un commentaire
+   * delete comment
    * @param comment 
    */
   removeComment(comment: Comment) {
     this.authService.removeComment(comment);
   }
 
-
+  /**
+   * Like or Dislike comment
+   * @param commentId 
+   */
   likeComment(commentId: number) {
     this.authService.likeComment(commentId);
   }

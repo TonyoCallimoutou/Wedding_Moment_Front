@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Comment } from 'src/app/model/comment.model';
 import { Picture } from 'src/app/model/picture.model';
 import { AuthService } from 'src/app/service/auth.service';
-import { CommentService } from 'src/app/service/comment.service';
 import { PictureService } from 'src/app/service/picture.service';
 
 @Component({
@@ -18,31 +16,52 @@ export class PictureTestComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private pictureService: PictureService,
-    private commentService: CommentService,
     public router: Router ) {
     }
 
   ngOnInit() {
+    this.initPictures()
+  }
+
+  /**
+   * init list of picture
+   */
+  initPictures() {
     this.pictureService.getAll()
     .subscribe( (data) => {
       this.pictures = data;
     })
   }
 
+  /**
+   * Create new Picture
+   */
   addPicture() {
-    this.authService.createPicture((data:any) => {
+    this.authService.createPicture({
       pictureUrl: "testUrl"
     })
   }
 
+  /**
+   * Delete Picture
+   * @param pictureId 
+   */
   removePicture(pictureId: any) {
     this.authService.removePicture(pictureId);
   }
 
+  /**
+   * Go to Comment zone
+   * @param pictureId 
+   */
   goToComment(pictureId: any) {
     this.router.navigate(['comments',pictureId]);
   }
 
+  /**
+   * Like or dislike picture
+   * @param pictureId 
+   */
   likePicture(pictureId: any) {
     this.authService.likePicture(pictureId);
   }
