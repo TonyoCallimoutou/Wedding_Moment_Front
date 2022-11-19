@@ -1,16 +1,29 @@
 <h2> COMMENT </h2>
 
-<button (click)="addComment()">
-    + Comment
-</button>
+<div 
+    *ngFor="let comment of comments"
+    [ngClass]="currentUser.userId === comment.userId ? 'userComment' : 'comment'"
+    >
 
-<button (click)="removeComment()">
-    - Comment
-</button>
+    <div class="user-banner">
+        <div class="photo-profil">
+            <img src="{{ comment.photoUrl }}" alt="{{ comment.userId}}">
+        </div>
+    </div>
+    <div>
+        <p> {{ comment.userName}}</p>
+        <p> {{ comment.comment}}</p>
+    </div>
 
-<div *ngFor="let comment of comments">
-    <p> id : {{ comment.commentId}}</p>
-    <p> picId :{{ comment.pictureId}}</p>
-    <p> userID : {{ comment.userId}}</p>
-    <p> comment : {{ comment.comment}}</p>
+    <div class="like-button">
+        <button  (click)="likeComment(comment.commentId)">
+            + like
+        </button>
+        <p> like : {{ comment.countLikeComment }} </p>
+    </div>
+
 </div>
+
+<input #newComment (keyup.enter)="addComment(newComment.value)" (blur)="addComment(newComment.value); newComment.value='' ">
+
+<button type="button" (click)="addComment(newComment.value)">Add</button>

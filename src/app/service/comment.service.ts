@@ -24,8 +24,8 @@ export class CommentService {
     return this.http.get<Comment>(`${baseUrl}/${CommentId}`);
   }
 
-  getCommentsByUserId(userId: number): Observable<Comment> {
-    return this.http.get<Comment>(`${baseUrl}/user/${userId}`);
+  getCommentsByPictureId(pictureId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${baseUrl}/picture/${pictureId}`);
   }
 
   delete(commentId: number): Observable<any> {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Comment } from 'src/app/model/comment.model';
 import { Picture } from 'src/app/model/picture.model';
 import { AuthService } from 'src/app/service/auth.service';
@@ -17,7 +18,8 @@ export class PictureTestComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private pictureService: PictureService,
-    private commentService: CommentService) {
+    private commentService: CommentService,
+    public router: Router ) {
     }
 
   ngOnInit() {
@@ -37,8 +39,8 @@ export class PictureTestComponent implements OnInit {
     this.authService.removePicture(pictureId);
   }
 
-  addComment(pictureId: any) {
-    this.authService.createComment(pictureId);
+  goToComment(pictureId: any) {
+    this.router.navigate(['comments',pictureId]);
   }
 
   likePicture(pictureId: any) {

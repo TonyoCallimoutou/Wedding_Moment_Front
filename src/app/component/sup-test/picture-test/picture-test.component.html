@@ -16,7 +16,7 @@
             </div>
             <p> {{ picture.userName}}</p>
         </div>
-    </div>
+    </div>  
     <div class="picture">
         <img src="{{ picture.pictureUrl }}" alt="{{ picture.pictureId}}">
     </div>
@@ -26,7 +26,7 @@
     </div>
     <div class="footer">
         <button (click)="likePicture(picture.pictureId)"> Like </button>
-        <button (click)="addComment(picture.pictureId)"> Comment </button>
+        <button (click)="goToComment(picture.pictureId)"> Comment </button>
         <button> Share </button>
     </div>
 </div>

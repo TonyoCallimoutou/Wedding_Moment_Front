@@ -36,6 +36,18 @@ export class UserService {
     return this.http.post<any>(`${baseUrl}/dislikesPicture`,data);
   }
 
+  getlikeComment(id: string): Observable<number[]> {
+    return this.http.get<number[]>(`${baseUrl}/likesComment/${id}`);
+  }
+
+  likeComment(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/likesComment`,data);
+  }
+
+  dislikeComment(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/dislikesComment`,data);
+  }
+
   delete(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
   }

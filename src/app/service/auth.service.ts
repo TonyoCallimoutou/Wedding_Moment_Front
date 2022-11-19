@@ -15,7 +15,8 @@ import { UserUtils } from '../utils/user.utils';
   })
 export class AuthService {
     userData: any;
-    listPictureId : number[] = [];
+    listLikePictureId : number[] = [];
+    listLikeCommentId : number[] = [];
 
     constructor(
         public userService: UserService,
@@ -30,6 +31,7 @@ export class AuthService {
             if (user) {
             this.userData = UserUtils.createUserFromFirebase(user);
             this.getListOfLikePictureId();
+            this.getListOfLikeCommentId();
 
             localStorage.setItem('user', JSON.stringify(this.userData));
             JSON.parse(localStorage.getItem('user')!);
@@ -145,51 +147,14 @@ export class AuthService {
             });
 
         this.getListOfLikePictureId();
+        this.getListOfLikeCommentId();
     }
 
-
-    /**
-     *  Methode autre que L'authentification
-     */
 
     // Return Current User
      getCurrentUser() {
         if (this.isLoggedIn) {
             return JSON.parse(localStorage.getItem('user')!);
-        }
-    }
-
-    // Return List Of Like PictureId
-    getListOfLikePictureId() {
-        this.userService.getlikePicture(this.userData.userId)
-        .subscribe( data => {
-            this.listPictureId = [];
-            data.forEach((data : any) => {
-                this.listPictureId.push(data.pictureId);
-            });
-        });
-    }
-
-    // Like Or Dislike Picture
-    likePicture(pictureId: number) {
-        var data = {
-            userId : this.userData.userId,
-            pictureId : pictureId
-        }
-
-        if (this.listPictureId.includes(pictureId)) {
-            this.userService.dislikePicture(data)
-            .subscribe( data => {
-                console.log(data)
-                this.listPictureId = this.listPictureId.filter((item:number) => item !== pictureId);
-            })
-        }
-        else {
-            this.userService.likePicture(data)
-            .subscribe( data => {
-                console.log(data)
-                this.listPictureId.push(pictureId);
-            })
         }
     }
 
@@ -203,11 +168,50 @@ export class AuthService {
      */
 
     // Create Comment
-    createComment(pictureId: number) {
-        this.commentService.create(new Comment(pictureId,this.userData.userId,"test_commment"))
+    createComment(pictureId: number, comment: string) {
+        const data = {
+            pictureId: pictureId,
+            userId: this.userData.userId,
+            comment: comment
+        }
+        this.commentService.create(data)
         .subscribe( data => {
           console.log(data);
         })
+    }
+
+    // Return List Of Like CommentId
+    getListOfLikeCommentId() {
+        this.userService.getlikeComment(this.userData.userId)
+        .subscribe( data => {
+            this.listLikeCommentId = [];
+            data.forEach((data : any) => {
+                this.listLikeCommentId.push(data.commentId);
+            });
+        });
+    }
+    
+    // Like Or Dislike Comment
+    likeComment(commentId: number) {
+        var data = {
+            userId : this.userData.userId,
+            commentId : commentId
+        }
+
+        if (this.listLikeCommentId.includes(commentId)) {
+            this.userService.dislikeComment(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== commentId);
+            })
+        }
+        else {
+            this.userService.likeComment(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listLikeCommentId.push(commentId);
+            })
+        }
     }
 
     // Remove Comment
@@ -235,6 +239,40 @@ export class AuthService {
         .subscribe( data => {
           console.log(data);
         })
+    }
+
+    // Return List Of Like PictureId
+    getListOfLikePictureId() {
+        this.userService.getlikePicture(this.userData.userId)
+        .subscribe( data => {
+            this.listLikePictureId = [];
+            data.forEach((data : any) => {
+                this.listLikePictureId.push(data.pictureId);
+            });
+        });
+    }
+
+    // Like Or Dislike Picture
+    likePicture(pictureId: number) {
+        var data = {
+            userId : this.userData.userId,
+            pictureId : pictureId
+        }
+
+        if (this.listLikePictureId.includes(pictureId)) {
+            this.userService.dislikePicture(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== pictureId);
+            })
+        }
+        else {
+            this.userService.likePicture(data)
+            .subscribe( data => {
+                console.log(data)
+                this.listLikePictureId.push(pictureId);
+            })
+        }
     }
 
     // Remove Picture
