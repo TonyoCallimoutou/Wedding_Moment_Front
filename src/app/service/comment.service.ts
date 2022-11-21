@@ -1,9 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { environment } from "src/environments/environment";
 import { Comment } from "../model/comment.model";
 
-const baseUrl = 'http://localhost:3000/api/comments';
+const baseUrl = environment.Back_Host + '/api/comments';
 
 @Injectable({
   providedIn: 'root'

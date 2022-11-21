@@ -16,6 +16,7 @@ import { ForgotPasswordComponent } from './component/firebase-auth-component/for
 import { VerifyEmailComponent } from './component/firebase-auth-component/verify-email/verify-email.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './service/auth.service';
+import { SocketIoService } from './service/socket-io.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { AuthService } from './service/auth.service';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, SocketIoService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

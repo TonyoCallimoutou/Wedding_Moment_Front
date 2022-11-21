@@ -1,44 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { Picture } from 'src/app/model/picture.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { PictureService } from 'src/app/service/picture.service';
+import { PictureModelService } from 'src/app/viewModel/picture-model.service';
+import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
   selector: 'app-picture-test',
   templateUrl: './picture-test.component.html',
   styleUrls: ['./picture-test.component.scss']
 })
-export class PictureTestComponent implements OnInit {
+export class PictureTestComponent implements OnInit, OnDestroy {
+  onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   pictures: Picture[] = [];
 
   constructor(
-    private authService: AuthService,
-    private pictureService: PictureService,
+    private pictureModelService: PictureModelService,
+    private userModelService: UserModelService,
     public router: Router ) {
     }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.initPictures()
+  }
+
+  ngOnDestroy(): void {
+      this.onDestroy$.next(true);
+      this.onDestroy$.unsubscribe();
   }
 
   /**
    * init list of picture
    */
   initPictures() {
-    this.pictureService.getAll()
-    .subscribe( (data) => {
-      this.pictures = data;
-    })
+    this.pictureModelService.getAll()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data:any) => {
+        this.pictures = data;
+      })
   }
 
   /**
    * Create new Picture
    */
   addPicture() {
-    this.authService.createPicture({
-      pictureUrl: "testUrl"
+    this.pictureModelService.createPicture({
+      pictureUrl: "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg"
     })
   }
 
@@ -47,7 +57,7 @@ export class PictureTestComponent implements OnInit {
    * @param pictureId 
    */
   removePicture(pictureId: any) {
-    this.authService.removePicture(pictureId);
+    this.pictureModelService.removePicture(pictureId);
   }
 
   /**
@@ -63,6 +73,7 @@ export class PictureTestComponent implements OnInit {
    * @param pictureId 
    */
   likePicture(pictureId: any) {
-    this.authService.likePicture(pictureId);
+    //this.initPictures()
+    this.userModelService.likePicture(pictureId);
   }
 }

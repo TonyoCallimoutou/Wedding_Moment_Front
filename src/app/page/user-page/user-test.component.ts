@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
+import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
   selector: 'app-user-test',
@@ -11,7 +12,7 @@ export class UserTestComponent implements OnInit {
   user: any;
 
   constructor(
-    private authService: AuthService) {}
+    private userModelService: UserModelService) {}
 
   ngOnInit() {
     this.initUser()
@@ -21,7 +22,7 @@ export class UserTestComponent implements OnInit {
    * init data
    */
   initUser() {
-    this.user = this.authService.getCurrentUser();
+    this.user = this.userModelService.getCurrentUser();
     console.log(this.user)
   }
 
@@ -29,7 +30,7 @@ export class UserTestComponent implements OnInit {
    * Delete user
    */
   removeUser() {
-    this.authService.removeUser();
+    this.userModelService.removeUser();
   }
 
 }

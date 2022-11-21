@@ -3,6 +3,8 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Comment } from 'src/app/model/comment.model';
 import { AuthService } from 'src/app/service/auth.service';
 import { CommentService } from 'src/app/service/comment.service';
+import { CommentModelService } from 'src/app/viewModel/comment-model.service';
+import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
   selector: 'app-comment-test',
@@ -16,8 +18,8 @@ export class CommentTestComponent implements OnInit {
   comments: Comment[] = [];
 
   constructor(
-    private commentService: CommentService,
-    private authService: AuthService,
+    private commentModelService: CommentModelService,
+    private userModelservice: UserModelService,
     private route: ActivatedRoute) {
     }
 
@@ -30,13 +32,14 @@ export class CommentTestComponent implements OnInit {
    */
   initData() {
 
-    this.currentUser = this.authService.getCurrentUser();
+    this.currentUser = this.userModelservice.getCurrentUser();
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.pictureId = params.get('id');
+    this.route.paramMap
+    .subscribe((params: ParamMap) => {
+      this.pictureId = Number(params.get('id'));
     })
 
-    this.commentService.getCommentsByPictureId(this.pictureId)
+    this.commentModelService.getCommentsByPictureId(this.pictureId)
     .subscribe( (data) => {
       this.comments = data;
     })
@@ -48,7 +51,7 @@ export class CommentTestComponent implements OnInit {
    */
   addComment(comment:string) {
     if (comment) {
-      this.authService.createComment(this.pictureId, comment)
+      this.commentModelService.createComment(this.pictureId, comment)
     }
   }
 
@@ -57,14 +60,14 @@ export class CommentTestComponent implements OnInit {
    * @param comment 
    */
   removeComment(comment: Comment) {
-    this.authService.removeComment(comment);
+    this.commentModelService.removeComment(comment);
   }
 
   /**
    * Like or Dislike comment
    * @param commentId 
    */
-  likeComment(commentId: number) {
-    this.authService.likeComment(commentId);
+  likeComment(comment: Comment) {
+    this.userModelservice.likeComment(comment);
   }
 }

@@ -4,7 +4,7 @@ export class Comment {
       public pictureId: number,
       public comment: string,
       public countLikeComment: number,
-      public userId: number,
+      public userId: string,
       public userName: string,
       public photoUrl: string
       ) {
