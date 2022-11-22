@@ -19,7 +19,7 @@ export class CommentTestComponent implements OnInit {
 
   constructor(
     private commentModelService: CommentModelService,
-    private userModelservice: UserModelService,
+    private userModelService: UserModelService,
     private route: ActivatedRoute) {
     }
 
@@ -32,7 +32,7 @@ export class CommentTestComponent implements OnInit {
    */
   initData() {
 
-    this.currentUser = this.userModelservice.getCurrentUser();
+    this.currentUser = this.userModelService.getCurrentUser();
 
     this.route.paramMap
     .subscribe((params: ParamMap) => {
@@ -68,6 +68,14 @@ export class CommentTestComponent implements OnInit {
    * @param commentId 
    */
   likeComment(comment: Comment) {
-    this.userModelservice.likeComment(comment);
+    this.userModelService.likeComment(comment);
+  }
+
+  /**
+   * Return if comment is like or not
+   * @param commentId 
+   */
+  commentIsLike(commentId: number): boolean {
+    return this.userModelService.isLikeComment(commentId)
   }
 }

@@ -41,7 +41,7 @@ export class PictureModelService {
     
     // Create Picture
     createPicture(data: any) {
-        const picture = {
+        const picture = {   
             userId: this.userData.userId,
             pictureUrl: data.pictureUrl
         }

@@ -3,8 +3,6 @@ import { Comment } from '../model/comment.model';
 import { User } from '../model/user.model';
 import { SocketIoService } from '../service/socket-io.service';
 import { UserService } from '../service/user.service';
-import { CommentModelService } from './comment-model.service';
-import { PictureModelService } from './picture-model.service';
 
 
 @Injectable({
@@ -13,6 +11,7 @@ import { PictureModelService } from './picture-model.service';
 export class UserModelService {
 
     public userData: any;
+
     private listLikeCommentId : number[] = [];
     private listLikePictureId : number[] = [];
 
@@ -75,6 +74,11 @@ export class UserModelService {
             });
         });
     }
+
+    // return true if comment is in list of like picture
+    isLikeComment(commentId: number) {
+        return this.listLikeCommentId.includes(commentId);
+    }
     
     // Like Or Dislike Comment
     likeComment(comment: Comment) {
@@ -86,15 +90,15 @@ export class UserModelService {
         if (this.listLikeCommentId.includes(comment.commentId)) {
             this.userService.dislikeComment(data)
             .subscribe( data => {
-                this.socketService.refreshListComment(comment.pictureId);
                 this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
+                this.socketService.refreshListComment(comment.pictureId);
             })
         }
         else {
             this.userService.likeComment(data)
             .subscribe( data => {
-                this.socketService.refreshListComment(comment.pictureId);
                 this.listLikeCommentId.push(comment.commentId);
+                this.socketService.refreshListComment(comment.pictureId);
             })
         }
     }
@@ -114,6 +118,16 @@ export class UserModelService {
         });
     }
 
+    // return tru if picture is in list of like picture
+    isLikePicture(pictureId: number) {
+        return this.listLikePictureId.includes(pictureId);
+    }
+
+    // Return if picture is like by user or not
+    pictureIsLike(pictureId: number) : boolean {
+        return this.listLikePictureId.includes(pictureId);
+    }
+
     // Like Or Dislike Picture
     likePicture(pictureId: number) {
         var data = {
@@ -124,15 +138,15 @@ export class UserModelService {
         if (this.listLikePictureId.includes(pictureId)) {
             this.userService.dislikePicture(data)
             .subscribe( data => {
-                this.socketService.refreshListPicture();
                 this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== pictureId);
+                this.socketService.refreshListPicture();
             })
         }
         else {
             this.userService.likePicture(data)
             .subscribe( data => {
-                this.socketService.refreshListPicture();
                 this.listLikePictureId.push(pictureId);
+                this.socketService.refreshListPicture();
             })
         }
     }

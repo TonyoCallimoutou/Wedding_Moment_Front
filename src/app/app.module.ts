@@ -17,6 +17,7 @@ import { VerifyEmailComponent } from './component/firebase-auth-component/verify
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './service/auth.service';
 import { SocketIoService } from './service/socket-io.service';
+import { LikeButtonComponent } from './component/like-button/like-button.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SocketIoService } from './service/socket-io.service';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    LikeButtonComponent
   ],
   imports: [
     BrowserModule,

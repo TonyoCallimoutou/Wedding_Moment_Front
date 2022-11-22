@@ -24,7 +24,7 @@ export class PictureTestComponent implements OnInit, OnDestroy {
     }
 
   ngOnInit(): void {
-    this.initPictures()
+    this.initData()
   }
 
   ngOnDestroy(): void {
@@ -35,7 +35,8 @@ export class PictureTestComponent implements OnInit, OnDestroy {
   /**
    * init list of picture
    */
-  initPictures() {
+  initData() {
+
     this.pictureModelService.getAll()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data:any) => {
@@ -72,8 +73,12 @@ export class PictureTestComponent implements OnInit, OnDestroy {
    * Like or dislike picture
    * @param pictureId 
    */
-  likePicture(pictureId: any) {
-    //this.initPictures()
+  likePicture(pictureId: number) {
     this.userModelService.likePicture(pictureId);
+  }
+
+  pictureIsLike(pictureId: number): boolean {
+    console.log("pictureId",this.userModelService.isLikePicture(pictureId));
+    return this.userModelService.isLikePicture(pictureId)
   }
 }

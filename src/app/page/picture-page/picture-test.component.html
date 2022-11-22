@@ -8,7 +8,7 @@
     - Picture
 </button>
 
-<div class="card" *ngFor="let picture of pictures">
+<div class="card" *ngFor="let picture of pictures; let index = index">
     <div class="header">
         <div class="user-banner">
             <div class="photo-profil">
@@ -21,11 +21,15 @@
         <img src="{{ picture.pictureUrl }}" alt="{{ picture.pictureId}}">
     </div>
     <div class="counter">
+        <app-like-button
+            [isLike]="pictureIsLike(picture.pictureId)"
+            (click)="likePicture(picture.pictureId)" 
+        >
+        </app-like-button>
         <p> like : {{ picture.countLike }} </p>
         <p> comment : {{ picture.countComment }} </p>
     </div>
     <div class="footer">
-        <button (click)="likePicture(picture.pictureId)"> Like </button>
         <button (click)="goToComment(picture.pictureId)"> Comment </button>
         <button> Share </button>
     </div>
