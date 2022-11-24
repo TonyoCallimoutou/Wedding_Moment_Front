@@ -4,7 +4,7 @@
     + Picture
 </button>
 
-<button (click)="removePicture(1)">
+<button (click)="removePicture()">
     - Picture
 </button>
 
@@ -23,7 +23,7 @@
     <div class="counter">
         <app-like-button
             [isLike]="pictureIsLike(picture.pictureId)"
-            (click)="likePicture(picture.pictureId)" 
+            (click)="likePicture(picture)" 
         >
         </app-like-button>
         <p> like : {{ picture.countLike }} </p>

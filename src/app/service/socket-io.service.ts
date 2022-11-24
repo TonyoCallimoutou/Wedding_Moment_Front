@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { environment } from 'src/environments/environment';
-import { PictureModelService } from '../viewModel/picture-model.service';
+import { Comment } from '../model/comment.model';
+import { Picture } from '../model/picture.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,12 +22,52 @@ export class SocketIoService {
     }
   }
 
-  refreshListPicture() {
-    this.socket.emit('Pictures');
+  /**
+   * Notify other when you add picture
+   * @param picture 
+   */
+  addPicture(picture: Picture) {
+    this.socket.emit('addPicture', picture);
   }
 
-  refreshListComment(pictureId: number) {
-    this.socket.emit('Comments', pictureId);
+  /**
+   * Notify other when you remove picture
+   * @param picture 
+   */
+  removePicture(picture: Picture) {
+    this.socket.emit('removePicture', picture);
+  }
+
+    /**
+   * Notify other when you like or comment picture
+   * @param picture 
+   */
+  setPicture(picture: Picture) {
+    this.socket.emit('setPicture', picture);
+  }
+
+  /**
+   * Notify other when you add comment
+   * @param picture 
+   */
+   addComment(picture: Picture, comment: Comment) {
+    this.socket.emit('addComment', picture, comment);
+  }
+
+  /**
+   * Notify other when you remove comment
+   * @param picture 
+   */
+  removeComment(comment: Comment) {
+    this.socket.emit('removeComment', comment);
+  }
+
+    /**
+   * Notify other when you like comment
+   * @param picture 
+   */
+  setComment(comment: Comment) {
+    this.socket.emit('setComment', comment);
   }
 }
 

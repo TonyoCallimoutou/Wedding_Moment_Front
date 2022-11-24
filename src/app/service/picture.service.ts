@@ -30,7 +30,6 @@ export class PictureService {
   }
 
   delete(id: number): Observable<any> {
-    this.socketService.refreshListPicture();
     return this.http.delete(`${baseUrl}/${id}`);
   }
 }

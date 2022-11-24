@@ -12,7 +12,6 @@ export class LikeButtonComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.isLike)
   }
 
 }

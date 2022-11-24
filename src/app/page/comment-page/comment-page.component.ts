@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Comment } from 'src/app/model/comment.model';
-import { AuthService } from 'src/app/service/auth.service';
-import { CommentService } from 'src/app/service/comment.service';
 import { CommentModelService } from 'src/app/viewModel/comment-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
-  selector: 'app-comment-test',
-  templateUrl: './comment-test.component.html',
-  styleUrls: ['./comment-test.component.scss']
+  selector: 'app-comment-page',
+  templateUrl: './comment-page.component.html',
+  styleUrls: ['./comment-page.component.scss']
 })
-export class CommentTestComponent implements OnInit {
+export class CommentPageComponent implements OnInit {
 
   currentUser: any;
   pictureId: any;

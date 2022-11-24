@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Comment } from '../model/comment.model';
+import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { CommentService } from '../service/comment.service';
 import { SocketIoService } from '../service/socket-io.service';
@@ -16,6 +17,7 @@ export class CommentModelService {
 
     private pictureId : any;
 
+    private listOfComment : Comment[] = [];
     private listOfCommentObs$: Subject<Comment[]> = new Subject<Comment[]>;
 
     constructor(
@@ -25,27 +27,48 @@ export class CommentModelService {
     ) {
         this.userData = this.userModelService.getCurrentUser();
 
-        this.socketService.socket.on('ListComments', (data: any) => {
-            if (data === this.pictureId) {
-                this.commentService.getCommentsByPictureId(this.pictureId).subscribe((data:any) => {
-                    this.listOfCommentObs$.next(data);
-                })
-            }
-          });
+        this.initListeningFromSocket();
     }
 
+    initListeningFromSocket() {
+
+        this.socketService.socket.on('listeningAddComment', (comment: any) => {
+            this.listOfComment.push(comment);
+            this.listOfCommentObs$.next(this.listOfComment);
+        });
+
+        this.socketService.socket.on('ListeningRemoveComment', (comment: any) => {
+            this.listOfComment = this.listOfComment.filter(item => item.commentId !== comment.commentId);
+            this.listOfCommentObs$.next(this.listOfComment);
+        });
+
+        this.socketService.socket.on('ListeningSetComment', (comment: any) => {
+
+            this.listOfComment.forEach((item, i) => { 
+                if (item.commentId == comment.commentId) {
+                    this.listOfComment[i] = comment; 
+                }
+            });
+            
+            this.listOfCommentObs$.next(this.listOfComment);
+        });
+    }
 
     // Create Comment
-    createComment(pictureId: number, comment: string) {
-        this.pictureId = pictureId;
+    createComment(picture: Picture, comment: string) {
+        this.pictureId = picture.pictureId;
         const data = {
-            pictureId: pictureId,
+            pictureId: this.pictureId,
             userId: this.userData.userId,
-            comment: comment
+            comment: comment,         
+            countLikeComment: 0,
+            userName: this.userData.userName,
+            photoUrl: this.userData.photoUrl
         }
         this.commentService.create(data)
         .subscribe( data => {
-            this.socketService.refreshListComment(this.pictureId)
+            picture.countComment ++;
+            this.socketService.addComment(picture, data)
         })
     }
 
@@ -53,6 +76,7 @@ export class CommentModelService {
     getCommentsByPictureId(pictureId: number) {
         this.pictureId = pictureId;
         this.commentService.getCommentsByPictureId(pictureId).subscribe(list => {
+            this.listOfComment = list;
             this.listOfCommentObs$.next(list);
         })
         return this.listOfCommentObs$;
@@ -65,7 +89,7 @@ export class CommentModelService {
         if (comment.userId == this.userData.userId) {
             this.commentService.delete(comment.commentId!)
             .subscribe( data => {
-                this.socketService.refreshListComment(this.pictureId)
+                this.socketService.removeComment(comment)
             })
         }
     }

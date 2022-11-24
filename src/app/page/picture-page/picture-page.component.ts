@@ -2,18 +2,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Picture } from 'src/app/model/picture.model';
-import { AuthService } from 'src/app/service/auth.service';
-import { PictureService } from 'src/app/service/picture.service';
 import { PictureModelService } from 'src/app/viewModel/picture-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
-  selector: 'app-picture-test',
-  templateUrl: './picture-test.component.html',
-  styleUrls: ['./picture-test.component.scss']
+  selector: 'app-picture-page',
+  templateUrl: './picture-page.component.html',
+  styleUrls: ['./picture-page.component.scss']
 })
-export class PictureTestComponent implements OnInit, OnDestroy {
-  onDestroy$: Subject<boolean> = new Subject<boolean>();
+export class PicturePageComponent implements OnInit, OnDestroy {
+
+  private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   pictures: Picture[] = [];
 
@@ -28,8 +27,8 @@ export class PictureTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.onDestroy$.next(true);
-      this.onDestroy$.unsubscribe();
+    this.onDestroy$.next(true);
+    this.onDestroy$.unsubscribe();
   }
 
   /**
@@ -57,8 +56,8 @@ export class PictureTestComponent implements OnInit, OnDestroy {
    * Delete Picture
    * @param pictureId 
    */
-  removePicture(pictureId: any) {
-    this.pictureModelService.removePicture(pictureId);
+  removePicture() {
+    this.pictureModelService.removePicture(this.pictures[2]);
   }
 
   /**
@@ -73,12 +72,11 @@ export class PictureTestComponent implements OnInit, OnDestroy {
    * Like or dislike picture
    * @param pictureId 
    */
-  likePicture(pictureId: number) {
-    this.userModelService.likePicture(pictureId);
+  likePicture(picture: Picture) {
+    this.userModelService.likePicture(picture);
   }
 
   pictureIsLike(pictureId: number): boolean {
-    console.log("pictureId",this.userModelService.isLikePicture(pictureId));
     return this.userModelService.isLikePicture(pictureId)
   }
 }

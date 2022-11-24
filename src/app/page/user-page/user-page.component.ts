@@ -3,11 +3,11 @@ import { AuthService } from 'src/app/service/auth.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
-  selector: 'app-user-test',
-  templateUrl: './user-test.component.html',
-  styleUrls: ['./user-test.component.scss']
+  selector: 'app-user-page',
+  templateUrl: './user-page.component.html',
+  styleUrls: ['./user-page.component.scss']
 })
-export class UserTestComponent implements OnInit {
+export class UserPageComponent implements OnInit {
 
   user: any;
 
@@ -23,7 +23,6 @@ export class UserTestComponent implements OnInit {
    */
   initUser() {
     this.user = this.userModelService.getCurrentUser();
-    console.log(this.user)
   }
 
   /**

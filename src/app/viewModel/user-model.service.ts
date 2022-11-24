@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Comment } from '../model/comment.model';
+import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { SocketIoService } from '../service/socket-io.service';
 import { UserService } from '../service/user.service';
@@ -90,15 +91,17 @@ export class UserModelService {
         if (this.listLikeCommentId.includes(comment.commentId)) {
             this.userService.dislikeComment(data)
             .subscribe( data => {
+                comment.countLikeComment --;
                 this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
-                this.socketService.refreshListComment(comment.pictureId);
+                this.socketService.setComment(comment);
             })
         }
         else {
             this.userService.likeComment(data)
             .subscribe( data => {
+                comment.countLikeComment ++;
                 this.listLikeCommentId.push(comment.commentId);
-                this.socketService.refreshListComment(comment.pictureId);
+                this.socketService.setComment(comment);
             })
         }
     }
@@ -129,24 +132,26 @@ export class UserModelService {
     }
 
     // Like Or Dislike Picture
-    likePicture(pictureId: number) {
+    likePicture(picture: Picture) {
         var data = {
             userId : this.userData.userId,
-            pictureId : pictureId
+            pictureId : picture.pictureId
         }
 
-        if (this.listLikePictureId.includes(pictureId)) {
+        if (this.listLikePictureId.includes(picture.pictureId)) {
             this.userService.dislikePicture(data)
             .subscribe( data => {
-                this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== pictureId);
-                this.socketService.refreshListPicture();
+                picture.countLike --;
+                this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== picture.pictureId);
+                this.socketService.setPicture(picture);
             })
         }
         else {
             this.userService.likePicture(data)
             .subscribe( data => {
-                this.listLikePictureId.push(pictureId);
-                this.socketService.refreshListPicture();
+                picture.countLike ++;
+                this.listLikePictureId.push(picture.pictureId);
+                this.socketService.setPicture(picture);
             })
         }
     }
