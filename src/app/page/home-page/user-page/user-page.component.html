@@ -1,0 +1,16 @@
+
+<h2> USER </h2>
+
+<app-setting-button
+    class="setting"
+    (click)="goToSetting()"
+>
+</app-setting-button>
+<div class="header">
+    <img src="{{ user.photoUrl }}" alt="{{ user.userId}}" (click)="switchPicture()">
+    <p> {{ user.userName}}</p>
+</div>
+
+<button (click)="signOut()">
+    Sign Out
+</button>

@@ -1,0 +1,16 @@
+.setting {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+}

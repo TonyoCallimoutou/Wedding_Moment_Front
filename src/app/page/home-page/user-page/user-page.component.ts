@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/auth.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
@@ -9,11 +10,12 @@ import { UserModelService } from 'src/app/viewModel/user-model.service';
 })
 export class UserPageComponent implements OnInit {
 
-  user: any;
+  public user: any;
 
   constructor(
     private userModelService: UserModelService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
     ) {}
 
   ngOnInit() {
@@ -34,6 +36,9 @@ export class UserPageComponent implements OnInit {
     this.authService.RemoveUser();
   }
 
+  /**
+   * Change picture
+   */
   switchPicture() {
     if (this.user.photoUrl != "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg") {
       this.userModelService.setPhotoUrl("https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg")
@@ -48,6 +53,13 @@ export class UserPageComponent implements OnInit {
   */
   signOut() {
     this.authService.SignOut();
+  }
+
+  /**
+   * Navigate to setting
+   */
+  goToSetting() {
+    this.router.navigateByUrl('/setting', { state: this.user });
   }
 
 }

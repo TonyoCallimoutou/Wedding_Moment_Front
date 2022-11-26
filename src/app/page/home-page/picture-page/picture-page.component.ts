@@ -15,14 +15,14 @@ export class PicturePageComponent implements OnInit, OnDestroy {
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
-  pictures: Picture[] = [];
-  currentUser: User;
+  public pictures: Picture[] = [];
+  public currentUser: User;
 
 
   constructor(
     private pictureModelService: PictureModelService,
     private userModelService: UserModelService,
-    public router: Router ) {
+    private router: Router ) {
       this.currentUser = userModelService.getCurrentUser()
     }
 
@@ -70,8 +70,8 @@ export class PicturePageComponent implements OnInit, OnDestroy {
    * Go to Comment zone
    * @param pictureId 
    */
-  goToComment(pictureId: any) {
-    this.router.navigate(['comments',pictureId]);
+  goToComment(picture: any) {
+    this.router.navigateByUrl('/comments', { state: picture });
   }
 
   /**

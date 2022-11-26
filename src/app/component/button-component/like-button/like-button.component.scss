@@ -1,0 +1,14 @@
+.component {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#like {
+    width: 3rem;
+    height: 3rem;
+}
+
+#like.active {
+    color: red;
+}

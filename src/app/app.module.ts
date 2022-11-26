@@ -13,8 +13,9 @@ import { VerifyEmailComponent } from './component/firebase-auth-component/verify
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './service/auth.service';
 import { SocketIoService } from './service/socket-io.service';
-import { DashboardModule } from './page/dashboard/dashboard.module';
+import { DashboardModule } from './page/home-page/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
+import { SettingPageComponent } from './page/setting-page/setting-page.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PageNotFoundComponent } from './page/page-not-found/page-not-found.comp
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    SettingPageComponent
   ],
   imports: [
     DashboardModule,

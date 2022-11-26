@@ -58,8 +58,8 @@ export class SocketIoService {
    * Notify other when you remove comment
    * @param picture 
    */
-  removeComment(comment: Comment) {
-    this.socket.emit('removeComment', comment);
+  removeComment(picture: Picture, comment: Comment) {
+    this.socket.emit('removeComment', picture, comment);
   }
 
     /**

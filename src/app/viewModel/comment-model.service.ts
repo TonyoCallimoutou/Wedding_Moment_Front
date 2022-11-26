@@ -87,13 +87,14 @@ export class CommentModelService {
 
     
     // Remove Comment
-    removeComment(comment: Comment) {
+    removeComment(picture: Picture, comment: Comment) {
         this.pictureId = this.pictureId;
         if (comment.userId == this.userData.userId) {
             this.commentService.delete(comment.commentId!)
                 .pipe(take(1))
                 .subscribe( data => {
-                    this.socketService.removeComment(comment)
+                    picture.countComment --;
+                    this.socketService.removeComment(picture, comment)
                 })
         }
     }

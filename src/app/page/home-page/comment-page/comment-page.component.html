@@ -31,6 +31,6 @@
 
 </div>
 
-<input #newComment (keyup.enter)="addComment(newComment.value)" (blur)="addComment(newComment.value); newComment.value='' ">
+<input #newComment (keyup.enter)="addComment(newComment.value); newComment.value=''">
 
-<button type="button" (click)="addComment(newComment.value)">Add</button>
+<button type="button" (click)="addComment(newComment.value); newComment.value=''">Add</button>
