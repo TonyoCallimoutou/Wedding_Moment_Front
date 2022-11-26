@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, take } from 'rxjs';
+import { BehaviorSubject, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';

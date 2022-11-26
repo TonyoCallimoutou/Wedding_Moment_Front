@@ -1,5 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, take } from 'rxjs';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { PictureService } from '../service/picture.service';
