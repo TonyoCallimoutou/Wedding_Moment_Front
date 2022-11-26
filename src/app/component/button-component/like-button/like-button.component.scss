@@ -5,10 +5,16 @@
 }
 
 #like {
-    width: 3rem;
-    height: 3rem;
-}
+    width: 1.5rem;
+    height: 1.5rem;
+    stroke:black;
+    fill:transparent;
+    transition: all 200ms ease-in;
+} 
 
 #like.active {
     color: red;
+    fill: currentColor;
+    stroke: none;
+    transform: scale(1.2);
 }

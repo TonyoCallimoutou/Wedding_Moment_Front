@@ -4,6 +4,7 @@ import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { PictureService } from '../service/picture.service';
 import { SocketIoService } from '../service/socket-io.service';
+import { PictureUtils } from '../utils/picture.utils';
 import { UserModelService } from './user-model.service';
 
 
@@ -54,7 +55,7 @@ export class PictureModelService {
         this.socketService.socket.on('ListeningSetPicture', (picture: any) => {
             this.listOfPicture.forEach((item, i) => { 
                 if (item.pictureId == picture.pictureId) {
-                    this.listOfPicture[i] = picture; 
+                    PictureUtils.SetPicture(this.listOfPicture[i], picture); 
                 }
             });
             this.listOfPictureObs$.next(this.listOfPicture);

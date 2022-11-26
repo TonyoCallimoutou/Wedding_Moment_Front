@@ -18,7 +18,7 @@
     </div>
     <div class="footer">
         <app-like-button
-        [isLike]="pictureIsLike(picture.pictureId)"
+        [isLike]="likePictureId.includes(picture.pictureId)"
         [countLike]="picture.countLike"
         (click)="likePicture(picture)" 
         >

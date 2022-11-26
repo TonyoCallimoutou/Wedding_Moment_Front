@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, take } from 'rxjs';
+import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
@@ -16,6 +16,9 @@ export class UserModelService {
 
     private listLikeCommentId : number[] = [];
     private listLikePictureId : number[] = [];
+
+    private listLikeCommentIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+    private listLikePictureIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
     constructor(
         private userService: UserService,
@@ -143,17 +146,23 @@ export class UserModelService {
                 data.forEach((data : any) => {
                     this.listLikePictureId.push(data.pictureId);
                 });
+
+                this.listLikePictureIdObs$.next(this.listLikePictureId);
             });
     }
 
     // return tru if picture is in list of like picture
-    isLikePicture(pictureId: number) {
-        return this.listLikePictureId.includes(pictureId);
-    }
+    // isLikePicture(pictureId: number): boolean {
+    //     return this.listLikePictureId.includes(pictureId);
+    // }
 
-    // Return if picture is like by user or not
-    pictureIsLike(pictureId: number) : boolean {
-        return this.listLikePictureId.includes(pictureId);
+    // // Return if picture is like by user or not
+    // pictureIsLike(pictureId: number) : boolean {
+    //     return this.listLikePictureId.includes(pictureId);
+    // }
+
+    getObsListOfLikePicture():Observable<any> {
+        return this.listLikePictureIdObs$;
     }
 
     // Like Or Dislike Picture
@@ -169,6 +178,7 @@ export class UserModelService {
                 .subscribe( data => {
                     picture.countLike --;
                     this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== picture.pictureId);
+                    this.listLikePictureIdObs$.next(this.listLikePictureId);
                     this.socketService.setPicture(picture);
                 })
         }
@@ -178,6 +188,7 @@ export class UserModelService {
                 .subscribe( data => {
                     picture.countLike ++;
                     this.listLikePictureId.push(picture.pictureId);
+                    this.listLikePictureIdObs$.next(this.listLikePictureId);
                     this.socketService.setPicture(picture);
                 })
         }

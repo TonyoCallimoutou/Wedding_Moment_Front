@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/service/auth.service';
+import { User } from 'src/app/model/user.model';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
 @Component({
@@ -10,30 +10,16 @@ import { UserModelService } from 'src/app/viewModel/user-model.service';
 })
 export class UserPageComponent implements OnInit {
 
-  public user: any;
+  public user: User;
 
   constructor(
     private userModelService: UserModelService,
-    private authService: AuthService,
     private router: Router
-    ) {}
+    ) {
+      this.user = this.userModelService.getCurrentUser();
+    }
 
   ngOnInit() {
-    this.initUser()
-  }
-
-  /**
-   * init data
-   */
-  initUser() {
-    this.user = this.userModelService.getCurrentUser();
-  }
-
-  /**
-   * Delete user
-   */
-  removeUser() {
-    this.authService.RemoveUser();
   }
 
   /**
@@ -46,13 +32,6 @@ export class UserPageComponent implements OnInit {
     else {
       this.userModelService.setPhotoUrl("https://lh3.googleusercontent.com/a/ALm5wu0VgI6sRIEJezlrivPk95_aYMUEvzoHB_o0GRwA=s96-c")
     }
-  }
-
-  /**
-  * Delete user
-  */
-  signOut() {
-    this.authService.SignOut();
   }
 
   /**

@@ -5,6 +5,7 @@ import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { CommentService } from '../service/comment.service';
 import { SocketIoService } from '../service/socket-io.service';
+import { CommentUtils } from '../utils/comment.utils';
 import { UserModelService } from './user-model.service';
 
 
@@ -46,7 +47,7 @@ export class CommentModelService {
 
             this.listOfComment.forEach((item, i) => { 
                 if (item.commentId == comment.commentId) {
-                    this.listOfComment[i] = comment; 
+                    CommentUtils.SetComment(this.listOfComment[i], comment); 
                 }
             });
             

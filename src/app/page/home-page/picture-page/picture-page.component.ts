@@ -16,6 +16,7 @@ export class PicturePageComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public pictures: Picture[] = [];
+  public likePictureId: number[] = [];
   public currentUser: User;
 
 
@@ -44,6 +45,12 @@ export class PicturePageComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data:any) => {
         this.pictures = data;
+      })
+
+    this.userModelService.getObsListOfLikePicture()
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((data:any) => {
+        this.likePictureId = data;
       })
   }
 
@@ -87,7 +94,7 @@ export class PicturePageComponent implements OnInit, OnDestroy {
    * @param pictureId 
    * @returns boolean
    */
-  pictureIsLike(pictureId: number): boolean {
-    return this.userModelService.isLikePicture(pictureId)
-  }
+  // pictureIsLike(pictureId: number): boolean {
+  //   return this.userModelService.isLikePicture(pictureId)
+  // }
 }
