@@ -49,6 +49,10 @@ export class UserService {
     return this.http.post<any>(`${baseUrl}/dislikesComment`,data);
   }
 
+  setPhotoUrl(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/photoUrl`,data)
+  }
+
   delete(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
   }

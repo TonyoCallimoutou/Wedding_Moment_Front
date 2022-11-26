@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
@@ -21,14 +22,21 @@ export class UserModelService {
         private socketService: SocketIoService
     ) {
         this.setUserData();
-        this.getListOfLikePictureId();
-        this.getListOfLikeCommentId();
+        if (this.userData != null) {
+            this.getListOfLikePictureId();
+            this.getListOfLikeCommentId();
+        }
+    }
+
+    // Get User from Databas
+    getUserFromDB(userId : string): Observable<User> {
+        return this.userService.getUserById(userId);
     }
 
     /* Setting up user data when sign in with username/password, 
     sign up with username/password and sign in with social auth  
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-    CreateUser(user: any) {
+    CreateUser(user: any): Observable<any> {
         this.userData = new User(
             user.displayName,
             user.email,
@@ -37,13 +45,10 @@ export class UserModelService {
             user.uid
         );
 
-        this.userService.create(this.userData)
-            .subscribe( data => {   
-                console.log(data);
-            });
-
         this.getListOfLikePictureId();
         this.getListOfLikeCommentId();
+
+        return this.userService.create(this.userData)
     }
 
     setUserData() {
@@ -56,9 +61,25 @@ export class UserModelService {
         return JSON.parse(localStorage.getItem('user')!);
     }
 
+    // SET USER
+
+    setPhotoUrl(url: string) {
+        const data = {
+            userId: this.userData.userId,
+            photoUrl: url
+        }
+        this.userService.setPhotoUrl(data)
+            .pipe(take(1))
+            .subscribe((data: any) => {
+                console.log(data)
+                this.userData.photoUrl = url;
+                localStorage.setItem('user', JSON.stringify(this.userData));
+            });
+    }
+
     //Remove User
-    removeUser() {
-        this.userService.delete(this.userData.userId)
+    removeUser(): Observable<any> {
+        return this.userService.delete(this.userData.userId)
     }
 
     /**
@@ -68,12 +89,13 @@ export class UserModelService {
     // Return List Of Like CommentId
     getListOfLikeCommentId() {
         this.userService.getlikeComment(this.userData.userId)
-        .subscribe( data => {
-            this.listLikeCommentId = [];
-            data.forEach((data : any) => {
-                this.listLikeCommentId.push(data.commentId);
+            .pipe(take(1))
+            .subscribe( data => {
+                this.listLikeCommentId = [];
+                data.forEach((data : any) => {
+                    this.listLikeCommentId.push(data.commentId);
+                });
             });
-        });
     }
 
     // return true if comment is in list of like picture
@@ -90,19 +112,21 @@ export class UserModelService {
 
         if (this.listLikeCommentId.includes(comment.commentId)) {
             this.userService.dislikeComment(data)
-            .subscribe( data => {
-                comment.countLikeComment --;
-                this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
-                this.socketService.setComment(comment);
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    comment.countLikeComment --;
+                    this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
+                    this.socketService.setComment(comment);
+                })
         }
         else {
             this.userService.likeComment(data)
-            .subscribe( data => {
-                comment.countLikeComment ++;
-                this.listLikeCommentId.push(comment.commentId);
-                this.socketService.setComment(comment);
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    comment.countLikeComment ++;
+                    this.listLikeCommentId.push(comment.commentId);
+                    this.socketService.setComment(comment);
+                })
         }
     }
 
@@ -113,12 +137,13 @@ export class UserModelService {
     // Return List Of Like PictureId
     getListOfLikePictureId() {
         this.userService.getlikePicture(this.userData.userId)
-        .subscribe( data => {
-            this.listLikePictureId = [];
-            data.forEach((data : any) => {
-                this.listLikePictureId.push(data.pictureId);
+            .pipe(take(1))
+            .subscribe( data => {
+                this.listLikePictureId = [];
+                data.forEach((data : any) => {
+                    this.listLikePictureId.push(data.pictureId);
+                });
             });
-        });
     }
 
     // return tru if picture is in list of like picture
@@ -140,19 +165,21 @@ export class UserModelService {
 
         if (this.listLikePictureId.includes(picture.pictureId)) {
             this.userService.dislikePicture(data)
-            .subscribe( data => {
-                picture.countLike --;
-                this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== picture.pictureId);
-                this.socketService.setPicture(picture);
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    picture.countLike --;
+                    this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== picture.pictureId);
+                    this.socketService.setPicture(picture);
+                })
         }
         else {
             this.userService.likePicture(data)
-            .subscribe( data => {
-                picture.countLike ++;
-                this.listLikePictureId.push(picture.pictureId);
-                this.socketService.setPicture(picture);
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    picture.countLike ++;
+                    this.listLikePictureId.push(picture.pictureId);
+                    this.socketService.setPicture(picture);
+                })
         }
     }
 

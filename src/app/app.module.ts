@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './service/auth.service';
 import { SocketIoService } from './service/socket-io.service';
 import { DashboardModule } from './page/dashboard/dashboard.module';
+import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { DashboardModule } from './page/dashboard/dashboard.module';
     SignInComponent,
     SignUpComponent,
     ForgotPasswordComponent,
-    VerifyEmailComponent
+    VerifyEmailComponent,
+    PageNotFoundComponent
   ],
   imports: [
     DashboardModule,

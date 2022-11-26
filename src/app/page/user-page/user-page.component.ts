@@ -12,7 +12,9 @@ export class UserPageComponent implements OnInit {
   user: any;
 
   constructor(
-    private userModelService: UserModelService) {}
+    private userModelService: UserModelService,
+    private authService: AuthService
+    ) {}
 
   ngOnInit() {
     this.initUser()
@@ -29,7 +31,23 @@ export class UserPageComponent implements OnInit {
    * Delete user
    */
   removeUser() {
-    this.userModelService.removeUser();
+    this.authService.RemoveUser();
+  }
+
+  switchPicture() {
+    if (this.user.photoUrl != "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg") {
+      this.userModelService.setPhotoUrl("https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg")
+    }
+    else {
+      this.userModelService.setPhotoUrl("https://lh3.googleusercontent.com/a/ALm5wu0VgI6sRIEJezlrivPk95_aYMUEvzoHB_o0GRwA=s96-c")
+    }
+  }
+
+  /**
+  * Delete user
+  */
+  signOut() {
+    this.authService.SignOut();
   }
 
 }

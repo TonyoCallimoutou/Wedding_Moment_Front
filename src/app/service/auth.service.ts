@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { UserUtils } from '../utils/user.utils';
 import { UserModelService } from '../viewModel/user-model.service';
+import { pipe, take } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -20,21 +21,24 @@ export class AuthService {
     ) { 
         /* Saving user data in localstorage when 
         logged in and setting up null when logged out */
-        this.afAuth.authState.subscribe((user) => {
-            if (user) {
-            this.userData = UserUtils.createUserFromFirebase(user);
+        this.afAuth.authState
+            .pipe(take(1))
+            .subscribe((user) => {
+                if (user) {
+                // this.userData = UserUtils.createUserFromFirebase(user);
 
-            localStorage.setItem('user', JSON.stringify(this.userData));
-            JSON.parse(localStorage.getItem('user')!);
-            } else {
-            localStorage.setItem('user', 'null');
-            JSON.parse(localStorage.getItem('user')!);
-            }
-            
-            this.userModelService.setUserData()
-            this.userModelService.getListOfLikePictureId();
-            this.userModelService.getListOfLikeCommentId();
+                // localStorage.setItem('user', JSON.stringify(this.userData));
+                // JSON.parse(localStorage.getItem('user')!);
+                // } else {
+                // localStorage.setItem('user', 'null');
+                // JSON.parse(localStorage.getItem('user')!);
+                // }
+                
+                this.userModelService.setUserData()
+                this.userModelService.getListOfLikePictureId();
+                this.userModelService.getListOfLikeCommentId();
 
+                };
         });
     }
 
@@ -43,12 +47,14 @@ export class AuthService {
         return this.afAuth
             .signInWithEmailAndPassword(email, password)
             .then((result) => {
-                this.userModelService.CreateUser(result.user);
-                this.afAuth.authState.subscribe((user) => {
-                    if (user) {
-                        this.router.navigate(['dashboard']);
-                    }
-                });
+                if (result.user) {
+                    this.userModelService.getUserFromDB(result.user.uid)
+                        .pipe(take(1))
+                        .subscribe((user:User) => {
+                            localStorage.setItem('user', JSON.stringify(user));
+                            this.router.navigate(['dashboard']);
+                        });
+                };
             })
             .catch((error) => {
                 window.alert(error.message);
@@ -63,7 +69,12 @@ export class AuthService {
             /* Call the SendVerificaitonMail() function when new user sign 
             up and returns promise */
                 this.SendVerificationMail();
-                this.userModelService.CreateUser(result.user);
+                this.userModelService.CreateUser(result.user)
+                    .pipe(take(1))
+                    .subscribe((user:User) => {
+                        localStorage.setItem('user', JSON.stringify(user));
+                        this.router.navigate(['dashboard']);
+                    });
             })
             .catch((error) => {
                 window.alert(error.message);
@@ -100,7 +111,7 @@ export class AuthService {
     // Sign in with Google
     GoogleAuth() {
         return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-            //this.router.navigate(['dashboard']);
+            this.router.navigate(['dashboard']);
       });
     }
 
@@ -109,8 +120,24 @@ export class AuthService {
         return this.afAuth
             .signInWithPopup(provider)
             .then((result) => {
-                this.router.navigate(['dashboard']);
-                this.userModelService.CreateUser(result.user);
+                if (result.user) {
+                    this.userModelService.getUserFromDB(result.user.uid)        
+                        .pipe(take(1))
+                        .subscribe((user:User) => {
+                        if (user != null) {
+                            localStorage.setItem('user', JSON.stringify(user));
+                            this.router.navigate(['dashboard']);
+                        }
+                        else {
+                            this.userModelService.CreateUser(result.user)
+                                .pipe(take(1))
+                                .subscribe((user:User) => {
+                                    localStorage.setItem('user', JSON.stringify(user));
+                                    this.router.navigate(['dashboard']);
+                                });
+                        }
+                    }); 
+                }
             })
             .catch((error) => {
                 window.alert(error);
@@ -120,7 +147,27 @@ export class AuthService {
     // Sign out
     SignOut() {
         return this.afAuth.signOut().then(() => {
-            // Remove User
+            localStorage.removeItem("user")
+            this.router.navigate(['sign-in']);
+        });
+    }
+
+    // Remove user
+    RemoveUser() {
+        
+        this.userModelService.removeUser()
+            .pipe(take(1))
+            .subscribe((data:any) => {
+                this.afAuth.signOut().then(() => {
+                    localStorage.removeItem("user")
+                    this.router.navigate(['sign-in']);
+                })
+            })
+
+
+        return this.afAuth.signOut().then(() => {
+            this.userModelService.removeUser();
+            localStorage.removeItem("user")
             this.router.navigate(['sign-in']);
         });
     }

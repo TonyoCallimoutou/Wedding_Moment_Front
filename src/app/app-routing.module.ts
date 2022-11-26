@@ -7,6 +7,7 @@ import { SignUpComponent } from "./component/firebase-auth-component/sign-up/sig
 import { VerifyEmailComponent } from "./component/firebase-auth-component/verify-email/verify-email.component";
 import { AuthGuard } from './service/auth.guard';
 import { CommentPageComponent } from './page/comment-page/comment-page.component';
+import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -15,8 +16,10 @@ const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'verify-email-address', component: VerifyEmailComponent },
+    { path: 'comments/:id', component: CommentPageComponent, canActivate: [AuthGuard] },
 
-    { path: 'comments/:id', component: CommentPageComponent },
+    // Last Path
+    {path: '**', component: PageNotFoundComponent, canActivate:[AuthGuard] },
   ];
   @NgModule({
     imports: [RouterModule.forRoot(routes)],

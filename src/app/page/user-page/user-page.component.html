@@ -5,10 +5,15 @@
     - User
 </button>
 
+<button (click)="signOut()">
+    Sign out
+</button>
+
+
 
 <div>
 
-    <img src="{{ user.photoUrl }}" alt="{{ user.userId}}">
+    <img src="{{ user.photoUrl }}" alt="{{ user.userId}}" (click)="switchPicture()">
     <p> {{ user.userName}}</p>
     <p> email : {{ user.email}}</p>
     <p> emailVerified : {{ user.emailVerified}}</p>

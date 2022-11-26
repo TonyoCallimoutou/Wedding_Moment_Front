@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, take } from 'rxjs';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
 import { PictureService } from '../service/picture.service';
@@ -15,7 +15,7 @@ export class PictureModelService {
     userData: User;
 
     private listOfPicture: Picture[] = [];
-    private listOfPictureObs$: Subject<Picture[]> = new Subject<Picture[]>;
+    private listOfPictureObs$: BehaviorSubject<Picture[]> = new BehaviorSubject<Picture[]>([]);
 
 
     constructor(
@@ -31,10 +31,12 @@ export class PictureModelService {
     }
     
     initList() {
-        this.pictureService.getAll().subscribe((data:any) => {
-            this.listOfPicture = data;
-            this.listOfPictureObs$.next(data);
-        });
+        this.pictureService.getAll()
+            .pipe(take(1))
+            .subscribe((data:any) => {
+                this.listOfPicture = data;
+                this.listOfPictureObs$.next(data);
+            });
     }
 
     initListeningFromSocket() {
@@ -70,14 +72,14 @@ export class PictureModelService {
             photoUrl: this.userData.photoUrl
         }
         this.pictureService.create(picture)
-        .subscribe( data => {
-            this.socketService.addPicture(data);
-        })
+            .pipe(take(1))
+            .subscribe( data => {
+                this.socketService.addPicture(data);
+            })
     }
 
     // Get All Picture
     getAll() {
-        console.log(this.listOfPicture)
         return this.listOfPictureObs$;
     }
 
@@ -85,9 +87,10 @@ export class PictureModelService {
     removePicture(picture: Picture) {
         if (picture.userId == this.userData.userId) {
             this.pictureService.delete(picture.pictureId!)
-            .subscribe( data => {
-                this.socketService.removePicture(picture);
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    this.socketService.removePicture(picture);
+                })
         }
     }
 }

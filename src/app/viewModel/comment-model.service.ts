@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
 import { Picture } from '../model/picture.model';
 import { User } from '../model/user.model';
@@ -18,7 +18,7 @@ export class CommentModelService {
     private pictureId : any;
 
     private listOfComment : Comment[] = [];
-    private listOfCommentObs$: Subject<Comment[]> = new Subject<Comment[]>;
+    private listOfCommentObs$: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
 
     constructor(
         private userModelService: UserModelService,
@@ -66,19 +66,22 @@ export class CommentModelService {
             photoUrl: this.userData.photoUrl
         }
         this.commentService.create(data)
-        .subscribe( data => {
-            picture.countComment ++;
-            this.socketService.addComment(picture, data)
+            .pipe(take(1))
+            .subscribe( data => {
+                picture.countComment ++;
+                this.socketService.addComment(picture, data)
         })
     }
 
     // Get Comment by picture ID
     getCommentsByPictureId(pictureId: number) {
         this.pictureId = pictureId;
-        this.commentService.getCommentsByPictureId(pictureId).subscribe(list => {
-            this.listOfComment = list;
-            this.listOfCommentObs$.next(list);
-        })
+        this.commentService.getCommentsByPictureId(pictureId)   
+            .pipe(take(1))
+            .subscribe(list => {
+                this.listOfComment = list;
+                this.listOfCommentObs$.next(list);
+            })
         return this.listOfCommentObs$;
     }
 
@@ -88,9 +91,10 @@ export class CommentModelService {
         this.pictureId = this.pictureId;
         if (comment.userId == this.userData.userId) {
             this.commentService.delete(comment.commentId!)
-            .subscribe( data => {
-                this.socketService.removeComment(comment)
-            })
+                .pipe(take(1))
+                .subscribe( data => {
+                    this.socketService.removeComment(comment)
+                })
         }
     }
 }
