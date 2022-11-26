@@ -16,7 +16,7 @@ const routes: Routes = [
     { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
     { path: 'forgot-password', component: ForgotPasswordComponent },
     { path: 'verify-email-address', component: VerifyEmailComponent },
-    { path: 'comments/:id', component: CommentPageComponent, canActivate: [AuthGuard] },
+    { path: 'comments', component: CommentPageComponent, canActivate: [AuthGuard] },
 
     // Last Path
     {path: '**', component: PageNotFoundComponent, canActivate:[AuthGuard] },

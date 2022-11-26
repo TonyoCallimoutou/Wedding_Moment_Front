@@ -64,8 +64,9 @@ export class PicturePageComponent implements OnInit, OnDestroy {
    * Go to Comment zone
    * @param pictureId 
    */
-  goToComment(pictureId: any) {
-    this.router.navigate(['comments',pictureId]);
+  goToComment(picture: any) {
+    //this.router.navigate(['comments',picture]);
+    this.router.navigateByUrl('/comments', { state: picture });
   }
 
   /**
