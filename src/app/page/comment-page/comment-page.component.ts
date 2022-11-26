@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subject, take, takeUntil } from 'rxjs';
 import { Comment } from 'src/app/model/comment.model';
+import { User } from 'src/app/model/user.model';
 import { CommentModelService } from 'src/app/viewModel/comment-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
@@ -14,7 +15,7 @@ export class CommentPageComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
 
-  currentUser: any;
+  currentUser: User;
   pictureId: any;
   comments: Comment[] = [];
 
@@ -22,6 +23,7 @@ export class CommentPageComponent implements OnInit, OnDestroy {
     private commentModelService: CommentModelService,
     private userModelService: UserModelService,
     private route: ActivatedRoute) {
+      this.currentUser = userModelService.getCurrentUser();
     }
 
   ngOnInit(): void {
@@ -37,8 +39,6 @@ export class CommentPageComponent implements OnInit, OnDestroy {
    * Init data
    */
   initData() {
-
-    this.currentUser = this.userModelService.getCurrentUser();
 
     this.route.paramMap
       .pipe(take(1))

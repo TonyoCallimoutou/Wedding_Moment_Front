@@ -18,10 +18,15 @@
     <div class="like-button">
         <app-like-button
             [isLike]="commentIsLike(comment.commentId)"
+            [countLike]="comment.countLikeComment"
             (click)="likeComment(comment)" 
         >
         </app-like-button>
-        <p> like : {{ comment.countLikeComment }} </p>
+        <app-delete-button
+            *ngIf="comment.userId == currentUser.userId"
+            (click)="removeComment(comment)"
+        >
+        </app-delete-button>
     </div>
 
 </div>

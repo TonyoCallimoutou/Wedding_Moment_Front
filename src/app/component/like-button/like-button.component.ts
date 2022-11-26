@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LikeButtonComponent implements OnInit {
 
   @Input() isLike: boolean = false;
+  @Input() countLike: any = null;
 
   constructor() { }
 

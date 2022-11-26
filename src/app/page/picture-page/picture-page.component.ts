@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Picture } from 'src/app/model/picture.model';
+import { User } from 'src/app/model/user.model';
 import { PictureModelService } from 'src/app/viewModel/picture-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 
@@ -15,11 +16,14 @@ export class PicturePageComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   pictures: Picture[] = [];
+  currentUser: User;
+
 
   constructor(
     private pictureModelService: PictureModelService,
     private userModelService: UserModelService,
     public router: Router ) {
+      this.currentUser = userModelService.getCurrentUser()
     }
 
   ngOnInit(): void {
@@ -52,12 +56,14 @@ export class PicturePageComponent implements OnInit, OnDestroy {
     })
   }
 
+
+
   /**
    * Delete Picture
    * @param pictureId 
    */
-  removePicture() {
-    this.pictureModelService.removePicture(this.pictures[2]);
+  removePicture(picture: Picture) {
+    this.pictureModelService.removePicture(picture);
   }
 
   /**
@@ -76,6 +82,11 @@ export class PicturePageComponent implements OnInit, OnDestroy {
     this.userModelService.likePicture(picture);
   }
 
+  /**
+   * Picture is like or not
+   * @param pictureId 
+   * @returns boolean
+   */
   pictureIsLike(pictureId: number): boolean {
     return this.userModelService.isLikePicture(pictureId)
   }

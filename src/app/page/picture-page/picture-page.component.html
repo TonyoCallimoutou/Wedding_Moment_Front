@@ -4,10 +4,6 @@
     + Picture
 </button>
 
-<button (click)="removePicture()">
-    - Picture
-</button>
-
 <div class="card" *ngFor="let picture of pictures; let index = index">
     <div class="header">
         <div class="user-banner">
@@ -20,17 +16,25 @@
     <div class="picture">
         <img src="{{ picture.pictureUrl }}" alt="{{ picture.pictureId}}">
     </div>
-    <div class="counter">
+    <div class="footer">
         <app-like-button
-            [isLike]="pictureIsLike(picture.pictureId)"
-            (click)="likePicture(picture)" 
+        [isLike]="pictureIsLike(picture.pictureId)"
+        [countLike]="picture.countLike"
+        (click)="likePicture(picture)" 
         >
         </app-like-button>
-        <p> like : {{ picture.countLike }} </p>
-        <p> comment : {{ picture.countComment }} </p>
-    </div>
-    <div class="footer">
-        <button (click)="goToComment(picture.pictureId)"> Comment </button>
+
+        <app-comment-button
+            [countComment]="picture.countComment"
+            (click)="goToComment(picture.pictureId)"
+        >
+        </app-comment-button>
+
+        <app-delete-button
+            *ngIf="picture.userId == currentUser.userId"
+            (click)="removePicture(picture)"
+        >
+        </app-delete-button>
         <button> Share </button>
     </div>
 </div>
