@@ -89,9 +89,15 @@ export class CommentModelService {
     
     // Remove Comment
     removeComment(picture: Picture, comment: Comment) {
-        this.pictureId = this.pictureId;
+        this.pictureId = picture.pictureId;
         if (comment.userId == this.userData.userId) {
-            this.commentService.delete(comment.commentId!)
+
+            const data = {
+                commentId: comment.commentId,
+                pictureId: picture.pictureId
+            }
+
+            this.commentService.delete(data)
                 .pipe(take(1))
                 .subscribe( data => {
                     picture.countComment --;

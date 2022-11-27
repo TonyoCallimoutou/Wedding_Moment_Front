@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
@@ -29,7 +29,16 @@ export class CommentService {
     return this.http.get<Comment[]>(`${baseUrl}/picture/${pictureId}`);
   }
 
-  delete(commentId: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${commentId}`);
+  delete(data: any): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        commentId: data.commentId,
+        pictureId: data.pictureId,
+      },
+    };
+    return this.http.delete( baseUrl, options);
   }
 }

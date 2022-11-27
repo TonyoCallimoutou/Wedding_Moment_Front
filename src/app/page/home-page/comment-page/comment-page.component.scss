@@ -9,18 +9,27 @@
     }
 }
 
+app-like-button, app-delete-button {
+    margin: 0 1rem 0 1rem;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}
+
 .comment {
     display: flex;
+
+    .buttons {
+        margin-left: auto;
+    }
 }
 
 .userComment {
     display: flex;
     flex-direction: row-reverse;
-}
-
-
-.like-button {
-    display: flex;
-    align-items: center;
-    margin: 0 1rem 0 1rem;
+    .buttons {
+        margin-right: auto;
+    }
 }
