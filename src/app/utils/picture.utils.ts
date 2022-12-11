@@ -10,4 +10,10 @@ export class PictureUtils {
         refPicture.userName = newData.userName
         refPicture.photoUrl = newData.photoUrl
     }
+
+    static SetUser(picture: Picture, user : any) {
+        picture.userId = user.userId;
+        picture.userName = user.userName;
+        picture.photoUrl = user.photoUrl;
+    }
 }

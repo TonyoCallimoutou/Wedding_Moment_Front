@@ -12,4 +12,10 @@ export class CommentUtils {
         refComment.photoUrl = newData.photoUrl
         
     }
+
+    static SetUser(comment: Comment, user : any) {
+        comment.userId = user.userId;
+        comment.userName = user.userName;
+        comment.photoUrl = user.photoUrl;
+    }
 }

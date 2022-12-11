@@ -22,7 +22,7 @@
         >
         </app-delete-button>
         <app-like-button
-            [isLike]="commentIsLike(comment.commentId)"
+            [isLike]="likeCommentId.includes(comment.commentId)"
             [countLike]="comment.countLikeComment"
             (click)="likeComment(comment)" 
         >

@@ -41,11 +41,11 @@ export class UserModelService {
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
     CreateUser(user: any): Observable<any> {
         this.userData = new User(
+            user.uid,
             user.displayName,
             user.email,
             user.emailVerified,
-            user.photoURL,
-            user.uid
+            user.photoURL
         );
 
         this.getListOfLikePictureId();
@@ -69,14 +69,15 @@ export class UserModelService {
     setPhotoUrl(url: string) {
         const data = {
             userId: this.userData.userId,
+            userName: this.userData.userName,
             photoUrl: url
         }
         this.userService.setPhotoUrl(data)
             .pipe(take(1))
             .subscribe((data: any) => {
-                console.log(data)
                 this.userData.photoUrl = url;
                 localStorage.setItem('user', JSON.stringify(this.userData));
+                this.socketService.setUser(data);
             });
     }
 
@@ -98,12 +99,14 @@ export class UserModelService {
                 data.forEach((data : any) => {
                     this.listLikeCommentId.push(data.commentId);
                 });
+
+                this.listLikeCommentIdObs$.next(this.listLikeCommentId);
             });
     }
 
-    // return true if comment is in list of like picture
-    isLikeComment(commentId: number) {
-        return this.listLikeCommentId.includes(commentId);
+
+    getObsListOfLikeComment():Observable<any> {
+        return this.listLikeCommentIdObs$;
     }
     
     // Like Or Dislike Comment
@@ -119,6 +122,7 @@ export class UserModelService {
                 .subscribe( data => {
                     comment.countLikeComment --;
                     this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
+                    this.listLikeCommentIdObs$.next(this.listLikeCommentId);
                     this.socketService.setComment(comment);
                 })
         }
@@ -128,6 +132,7 @@ export class UserModelService {
                 .subscribe( data => {
                     comment.countLikeComment ++;
                     this.listLikeCommentId.push(comment.commentId);
+                    this.listLikeCommentIdObs$.next(this.listLikeCommentId);
                     this.socketService.setComment(comment);
                 })
         }
@@ -150,16 +155,6 @@ export class UserModelService {
                 this.listLikePictureIdObs$.next(this.listLikePictureId);
             });
     }
-
-    // return tru if picture is in list of like picture
-    // isLikePicture(pictureId: number): boolean {
-    //     return this.listLikePictureId.includes(pictureId);
-    // }
-
-    // // Return if picture is like by user or not
-    // pictureIsLike(pictureId: number) : boolean {
-    //     return this.listLikePictureId.includes(pictureId);
-    // }
 
     getObsListOfLikePicture():Observable<any> {
         return this.listLikePictureIdObs$;

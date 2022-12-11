@@ -53,6 +53,16 @@ export class CommentModelService {
             
             this.listOfCommentObs$.next(this.listOfComment);
         });
+
+        this.socketService.socket.on('ListeningSetUser', (user: any) => {
+            this.listOfComment.forEach((item, i) => { 
+                if (item.userId == user.userId) {
+                    CommentUtils.SetUser(this.listOfComment[i], user)
+                    
+                }
+            });
+            this.listOfCommentObs$.next(this.listOfComment);
+        });
     }
 
     // Create Comment

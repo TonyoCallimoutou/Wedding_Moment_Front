@@ -60,6 +60,16 @@ export class PictureModelService {
             });
             this.listOfPictureObs$.next(this.listOfPicture);
         });
+
+        this.socketService.socket.on('ListeningSetUser', (user: any) => {
+            this.listOfPicture.forEach((item, i) => { 
+                if (item.userId == user.userId) {
+                    PictureUtils.SetUser(this.listOfPicture[i], user)
+                    
+                }
+            });
+            this.listOfPictureObs$.next(this.listOfPicture);
+        });
     }
     
     // Create Picture

@@ -15,9 +15,10 @@ export class CommentPageComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
 
-  currentUser: User;
-  picture: any;
-  comments: Comment[] = [];
+  public currentUser: User;
+  public picture: any;
+  public comments: Comment[] = [];
+  public likeCommentId: number[] = [];
 
   constructor(
     private commentModelService: CommentModelService,
@@ -47,6 +48,13 @@ export class CommentPageComponent implements OnInit, OnDestroy {
       .subscribe( (data) => {
         this.comments = data;
       })
+
+  
+    this.userModelService.getObsListOfLikeComment()
+    .pipe(takeUntil(this.onDestroy$))
+    .subscribe((data:any) => {
+      this.likeCommentId = data;
+    })
   }
 
   /**
@@ -73,13 +81,5 @@ export class CommentPageComponent implements OnInit, OnDestroy {
    */
   likeComment(comment: Comment) {
     this.userModelService.likeComment(comment);
-  }
-
-  /**
-   * Return if comment is like or not
-   * @param commentId 
-   */
-  commentIsLike(commentId: number): boolean {
-    return this.userModelService.isLikeComment(commentId)
   }
 }

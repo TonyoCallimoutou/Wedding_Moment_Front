@@ -69,5 +69,13 @@ export class SocketIoService {
   setComment(comment: Comment) {
     this.socket.emit('setComment', comment);
   }
+
+   /**
+   * Notify other when you like comment
+   * @param picture 
+   */
+  setUser(user: any) {
+    this.socket.emit('setUser', user);
+  }
 }
 
