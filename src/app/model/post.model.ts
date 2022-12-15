@@ -1,6 +1,7 @@
-export class Picture {
+export class Post {
     constructor(
-      public pictureId: number,
+      public postId: number,
+      public categorieId: number,
       public pictureUrl: string,
       public countLike: number,
       public countComment: number,

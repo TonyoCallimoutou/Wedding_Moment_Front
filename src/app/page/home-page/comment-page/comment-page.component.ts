@@ -16,7 +16,7 @@ export class CommentPageComponent implements OnInit, OnDestroy {
 
 
   public currentUser: User;
-  public picture: any;
+  public post: any;
   public comments: Comment[] = [];
   public likeCommentId: number[] = [];
 
@@ -41,9 +41,9 @@ export class CommentPageComponent implements OnInit, OnDestroy {
    */
   initData() {
 
-    this.picture = history.state;
+    this.post = history.state;
 
-    this.commentModelService.getCommentsByPictureId(this.picture.pictureId)
+    this.commentModelService.getCommentsByPostId(this.post.postId)
       .pipe(takeUntil(this.onDestroy$))
       .subscribe( (data) => {
         this.comments = data;
@@ -63,7 +63,7 @@ export class CommentPageComponent implements OnInit, OnDestroy {
    */
   addComment(comment:string) {
     if (comment) {
-      this.commentModelService.createComment(this.picture, comment)
+      this.commentModelService.createComment(this.post, comment)
     }
   }
 
@@ -72,7 +72,7 @@ export class CommentPageComponent implements OnInit, OnDestroy {
    * @param comment 
    */
   removeComment(comment: Comment) {
-    this.commentModelService.removeComment(this.picture, comment);
+    this.commentModelService.removeComment(this.post, comment);
   }
 
   /**

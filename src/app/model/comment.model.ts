@@ -1,7 +1,7 @@
 export class Comment {
     constructor(
       public commentId: number,
-      public pictureId: number,
+      public postId: number,
       public comment: string,
       public countLikeComment: number,
       public userId: string,

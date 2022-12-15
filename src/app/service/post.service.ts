@@ -2,15 +2,15 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { environment } from "src/environments/environment";
-import { Picture } from "../model/picture.model";
+import { Post } from "../model/post.model";
 import { SocketIoService } from "./socket-io.service";
 
-const baseUrl = environment.Back_Host + '/api/pictures';
+const baseUrl = environment.Back_Host + '/api/posts';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PictureService {
+export class PostService {
 
   constructor(
     private http: HttpClient,
@@ -21,12 +21,12 @@ export class PictureService {
     return this.http.post(baseUrl, data);
   }
 
-  getAll(): Observable<Picture[]> {
-    return this.http.get<Picture[]>(baseUrl);
+  getAll(): Observable<Post[]> {
+    return this.http.get<Post[]>(baseUrl);
   }
 
-  getPictureById(id: number): Observable<Picture> {
-    return this.http.get<Picture>(`${baseUrl}/${id}`);
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>(`${baseUrl}/${id}`);
   }
 
   delete(id: number): Observable<any> {

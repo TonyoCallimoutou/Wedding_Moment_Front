@@ -34,7 +34,7 @@ export class AuthService {
                 // }
                 
                 this.userModelService.setUserData()
-                this.userModelService.getListOfLikePictureId();
+                this.userModelService.getListOfLikePostId();
                 this.userModelService.getListOfLikeCommentId();
 
                 };

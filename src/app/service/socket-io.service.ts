@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import { environment } from 'src/environments/environment';
 import { Comment } from '../model/comment.model';
-import { Picture } from '../model/picture.model';
+import { Post } from '../model/post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,48 +23,48 @@ export class SocketIoService {
   }
 
   /**
-   * Notify other when you add picture
-   * @param picture 
+   * Notify other when you add post
+   * @param post 
    */
-  addPicture(picture: Picture) {
-    this.socket.emit('addPicture', picture);
+  addPost(post: Post) {
+    this.socket.emit('addPost', post);
   }
 
   /**
-   * Notify other when you remove picture
-   * @param picture 
+   * Notify other when you remove post
+   * @param post 
    */
-  removePicture(picture: Picture) {
-    this.socket.emit('removePicture', picture);
+  removePost(post: Post) {
+    this.socket.emit('removePost', post);
   }
 
     /**
-   * Notify other when you like or comment picture
-   * @param picture 
+   * Notify other when you like or comment post
+   * @param post 
    */
-  setPicture(picture: Picture) {
-    this.socket.emit('setPicture', picture);
+  setPost(post: Post) {
+    this.socket.emit('setPost', post);
   }
 
   /**
    * Notify other when you add comment
-   * @param picture 
+   * @param post 
    */
-   addComment(picture: Picture, comment: Comment) {
-    this.socket.emit('addComment', picture, comment);
+   addComment(post: Post, comment: Comment) {
+    this.socket.emit('addComment', post, comment);
   }
 
   /**
    * Notify other when you remove comment
-   * @param picture 
+   * @param post 
    */
-  removeComment(picture: Picture, comment: Comment) {
-    this.socket.emit('removeComment', picture, comment);
+  removeComment(post: Post, comment: Comment) {
+    this.socket.emit('removeComment', post, comment);
   }
 
     /**
    * Notify other when you like comment
-   * @param picture 
+   * @param post 
    */
   setComment(comment: Comment) {
     this.socket.emit('setComment', comment);
@@ -72,7 +72,7 @@ export class SocketIoService {
 
    /**
    * Notify other when you like comment
-   * @param picture 
+   * @param post 
    */
   setUser(user: any) {
     this.socket.emit('setUser', user);

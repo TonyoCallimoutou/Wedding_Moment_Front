@@ -9,7 +9,7 @@ import { finalize, Observable, take } from 'rxjs';
 })
 export class CreatePostComponent implements OnInit {
 
-  @Output() createPictureEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() createPostEvent: EventEmitter<string> = new EventEmitter<string>();
   
   public uploadProgress: Observable<number | undefined> = new Observable<number | undefined>();
   public downloadURL: string = ""
@@ -56,7 +56,7 @@ export class CreatePostComponent implements OnInit {
 
   create() {
     this.editMode = false;
-    this.createPictureEvent.emit(this.downloadURL);
+    this.createPostEvent.emit(this.downloadURL);
   }
   
 

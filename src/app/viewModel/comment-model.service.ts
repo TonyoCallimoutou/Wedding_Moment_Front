@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
-import { Picture } from '../model/picture.model';
+import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
 import { CommentService } from '../service/comment.service';
 import { SocketIoService } from '../service/socket-io.service';
@@ -16,7 +16,7 @@ export class CommentModelService {
 
     userData: User;
 
-    private pictureId : any;
+    private postId : any;
 
     private listOfComment : Comment[] = [];
     private listOfCommentObs$: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
@@ -66,10 +66,10 @@ export class CommentModelService {
     }
 
     // Create Comment
-    createComment(picture: Picture, comment: string) {
-        this.pictureId = picture.pictureId;
+    createComment(post: Post, comment: string) {
+        this.postId = post.postId;
         const data = {
-            pictureId: this.pictureId,
+            postId: this.postId,
             userId: this.userData.userId,
             comment: comment,         
             countLikeComment: 0,
@@ -79,15 +79,15 @@ export class CommentModelService {
         this.commentService.create(data)
             .pipe(take(1))
             .subscribe( data => {
-                picture.countComment ++;
-                this.socketService.addComment(picture, data)
+                post.countComment ++;
+                this.socketService.addComment(post, data)
         })
     }
 
-    // Get Comment by picture ID
-    getCommentsByPictureId(pictureId: number) {
-        this.pictureId = pictureId;
-        this.commentService.getCommentsByPictureId(pictureId)   
+    // Get Comment by post ID
+    getCommentsByPostId(postId: number) {
+        this.postId = postId;
+        this.commentService.getCommentsByPostId(postId)   
             .pipe(take(1))
             .subscribe(list => {
                 this.listOfComment = list;
@@ -98,20 +98,20 @@ export class CommentModelService {
 
     
     // Remove Comment
-    removeComment(picture: Picture, comment: Comment) {
-        this.pictureId = picture.pictureId;
+    removeComment(post: Post, comment: Comment) {
+        this.postId = post.postId;
         if (comment.userId == this.userData.userId) {
 
             const data = {
                 commentId: comment.commentId,
-                pictureId: picture.pictureId
+                postId: post.postId
             }
 
             this.commentService.delete(data)
                 .pipe(take(1))
                 .subscribe( data => {
-                    picture.countComment --;
-                    this.socketService.removeComment(picture, comment)
+                    post.countComment --;
+                    this.socketService.removeComment(post, comment)
                 })
         }
     }

@@ -25,16 +25,16 @@ export class UserService {
     return this.http.get<User>(`${baseUrl}/${id}`);
   }
 
-  getlikePicture(id: string): Observable<number[]> {
-    return this.http.get<number[]>(`${baseUrl}/likesPicture/${id}`);
+  getlikePost(id: string): Observable<number[]> {
+    return this.http.get<number[]>(`${baseUrl}/likesPost/${id}`);
   }
 
-  likePicture(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/likesPicture`,data);
+  likePost(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/likesPost`,data);
   }
 
-  dislikePicture(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/dislikesPicture`,data);
+  dislikePost(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/dislikesPost`,data);
   }
 
   getlikeComment(id: string): Observable<number[]> {

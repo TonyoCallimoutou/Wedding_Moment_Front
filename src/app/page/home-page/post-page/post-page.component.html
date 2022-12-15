@@ -1,0 +1,40 @@
+<h2> PICTURE </h2>
+
+<app-create-post
+    (createPostEvent)="addPost($event)"
+></app-create-post>
+
+<div class="card" *ngFor="let post of posts; let index = index">
+    <div class="header">
+        <div class="user-banner">
+            <div class="photo-profil">
+                <img src="{{ post.photoUrl }}" alt="{{ post.userId}}">
+            </div>
+            <p> {{ post.userName}}</p>
+        </div>
+    </div>  
+    <div class="post">
+        <img src="{{ post.pictureUrl }}" alt="{{ post.postId}}">
+    </div>
+    <div class="footer">
+        <app-like-button
+        [isLike]="likePostId.includes(post.postId)"
+        [countLike]="post.countLike"
+        (click)="likePost(post)" 
+        >
+        </app-like-button>
+
+        <app-comment-button
+            [countComment]="post.countComment"
+            (click)="goToComment(post)"
+        >
+        </app-comment-button>
+
+        <app-delete-button
+            *ngIf="post.userId == currentUser.userId"
+            (click)="removePost(post)"
+        >
+        </app-delete-button>
+        <button> Share </button>
+    </div>
+</div>

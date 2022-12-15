@@ -4,7 +4,7 @@
       <app-user-page></app-user-page>
     </div>
     <div *ngIf = "tabselector == 2">
-      <app-picture-page></app-picture-page>
+      <app-post-page></app-post-page>
     </div>
     <div *ngIf = "tabselector == 3">
       <app-comment-page></app-comment-page>
@@ -13,7 +13,7 @@
 
   <div class="navigation-bar" >
     <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabselector == 1}">User</a>
-    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Picture</a>
+    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Post</a>
     <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabselector == 3}">Comment</a>
   </div>
 

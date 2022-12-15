@@ -4,14 +4,14 @@ import { CommentButtonModule } from 'src/app/component/button-component/comment-
 import { DeleteButtonModule } from 'src/app/component/button-component/delete-button/delete-button.module';
 import { LikeButtonModule } from 'src/app/component/button-component/like-button/like-button.module';
 import { CreatePostModule } from 'src/app/component/create-post/create-post.module';
-import { PictureModelService } from 'src/app/viewModel/picture-model.service';
+import { PostModelService } from 'src/app/viewModel/post-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
-import { PicturePageComponent } from './picture-page.component';
+import { PostPageComponent } from './post-page.component';
 
 
 @NgModule({
   declarations: [
-    PicturePageComponent
+    PostPageComponent
   ],
   imports: [
     CommonModule,
@@ -20,7 +20,7 @@ import { PicturePageComponent } from './picture-page.component';
     DeleteButtonModule,
     CreatePostModule
   ],
-  exports: [PicturePageComponent],
-  providers: [PictureModelService, UserModelService]
+  exports: [PostPageComponent],
+  providers: [PostModelService, UserModelService]
 })
-export class PicturePageModule { }
+export class PostPageModule { }

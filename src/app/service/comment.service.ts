@@ -25,8 +25,8 @@ export class CommentService {
     return this.http.get<Comment>(`${baseUrl}/${CommentId}`);
   }
 
-  getCommentsByPictureId(pictureId: number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${baseUrl}/picture/${pictureId}`);
+  getCommentsByPostId(postId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(`${baseUrl}/post/${postId}`);
   }
 
   delete(data: any): Observable<any> {
@@ -36,7 +36,7 @@ export class CommentService {
       }),
       body: {
         commentId: data.commentId,
-        pictureId: data.pictureId,
+        postId: data.postId,
       },
     };
     return this.http.delete( baseUrl, options);

@@ -4,7 +4,7 @@ import { Comment } from "../model/comment.model"
 // Creer User depuis FirebaseUser
 export class CommentUtils {
     static SetComment(refComment: Comment, newData: any) {
-        refComment.pictureId = newData.pictureId
+        refComment.postId = newData.postId
         refComment.comment = newData.comment
         refComment.countLikeComment = newData.countLikeComment
         refComment.userId = newData.userId

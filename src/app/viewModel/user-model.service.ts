@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { Comment } from '../model/comment.model';
-import { Picture } from '../model/picture.model';
+import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
 import { SocketIoService } from '../service/socket-io.service';
 import { UserService } from '../service/user.service';
@@ -15,10 +15,10 @@ export class UserModelService {
     public userData: any;
 
     private listLikeCommentId : number[] = [];
-    private listLikePictureId : number[] = [];
+    private listLikePostId : number[] = [];
 
     private listLikeCommentIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-    private listLikePictureIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+    private listLikePostIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
     constructor(
         private userService: UserService,
@@ -26,7 +26,7 @@ export class UserModelService {
     ) {
         this.setUserData();
         if (this.userData != null) {
-            this.getListOfLikePictureId();
+            this.getListOfLikePostId();
             this.getListOfLikeCommentId();
         }
     }
@@ -42,13 +42,14 @@ export class UserModelService {
     CreateUser(user: any): Observable<any> {
         this.userData = new User(
             user.uid,
+            2,
             user.displayName,
             user.email,
             user.emailVerified,
             user.photoURL
         );
 
-        this.getListOfLikePictureId();
+        this.getListOfLikePostId();
         this.getListOfLikeCommentId();
 
         return this.userService.create(this.userData)
@@ -139,52 +140,52 @@ export class UserModelService {
     }
 
     /**
-     * Picture
+     * Post
      */
         
-    // Return List Of Like PictureId
-    getListOfLikePictureId() {
-        this.userService.getlikePicture(this.userData.userId)
+    // Return List Of Like PostId
+    getListOfLikePostId() {
+        this.userService.getlikePost(this.userData.userId)
             .pipe(take(1))
             .subscribe( data => {
-                this.listLikePictureId = [];
+                this.listLikePostId = [];
                 data.forEach((data : any) => {
-                    this.listLikePictureId.push(data.pictureId);
+                    this.listLikePostId.push(data.postId);
                 });
 
-                this.listLikePictureIdObs$.next(this.listLikePictureId);
+                this.listLikePostIdObs$.next(this.listLikePostId);
             });
     }
 
-    getObsListOfLikePicture():Observable<any> {
-        return this.listLikePictureIdObs$;
+    getObsListOfLikePost():Observable<any> {
+        return this.listLikePostIdObs$;
     }
 
-    // Like Or Dislike Picture
-    likePicture(picture: Picture) {
+    // Like Or Dislike Post
+    likePost(post: Post) {
         var data = {
             userId : this.userData.userId,
-            pictureId : picture.pictureId
+            postId : post.postId
         }
 
-        if (this.listLikePictureId.includes(picture.pictureId)) {
-            this.userService.dislikePicture(data)
+        if (this.listLikePostId.includes(post.postId)) {
+            this.userService.dislikePost(data)
                 .pipe(take(1))
                 .subscribe( data => {
-                    picture.countLike --;
-                    this.listLikePictureId = this.listLikePictureId.filter((item:number) => item !== picture.pictureId);
-                    this.listLikePictureIdObs$.next(this.listLikePictureId);
-                    this.socketService.setPicture(picture);
+                    post.countLike --;
+                    this.listLikePostId = this.listLikePostId.filter((item:number) => item !== post.postId);
+                    this.listLikePostIdObs$.next(this.listLikePostId);
+                    this.socketService.setPost(post);
                 })
         }
         else {
-            this.userService.likePicture(data)
+            this.userService.likePost(data)
                 .pipe(take(1))
                 .subscribe( data => {
-                    picture.countLike ++;
-                    this.listLikePictureId.push(picture.pictureId);
-                    this.listLikePictureIdObs$.next(this.listLikePictureId);
-                    this.socketService.setPicture(picture);
+                    post.countLike ++;
+                    this.listLikePostId.push(post.postId);
+                    this.listLikePostIdObs$.next(this.listLikePostId);
+                    this.socketService.setPost(post);
                 })
         }
     }
