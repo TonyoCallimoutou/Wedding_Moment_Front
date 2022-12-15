@@ -1,0 +1,23 @@
+<div *ngIf="editMode == false">
+
+    <label for="file">File:</label>
+    <input type="file" (change)="upload($event)" accept=".png,.jpg" />
+
+</div>
+
+<div *ngIf="editMode">
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width]="(uploadProgress | async) + '%'" [attr.aria-valuenow]="(uploadProgress | async)" aria-valuemin="0" aria-valuemax="100"></div>
+    </div> 
+
+    <img height="125" width="50" id="your_img_id" [src]="downloadURL"/>
+
+    <p> {{downloadURL}}</p>
+    
+
+    <button (click)="create()">
+        create
+    </button>
+</div>
+
+

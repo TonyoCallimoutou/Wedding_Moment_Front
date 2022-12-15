@@ -1,8 +1,8 @@
 <h2> PICTURE </h2>
 
-<button (click)="addPicture()">
-    + Picture
-</button>
+<app-create-post
+    (createPictureEvent)="addPicture($event)"
+></app-create-post>
 
 <div class="card" *ngFor="let picture of pictures; let index = index">
     <div class="header">

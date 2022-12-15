@@ -57,9 +57,9 @@ export class PicturePageComponent implements OnInit, OnDestroy {
   /**
    * Create new Picture
    */
-  addPicture() {
+  addPicture(pictureUrl: string) {
     this.pictureModelService.createPicture({
-      pictureUrl: "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg"
+      pictureUrl: pictureUrl
     })
   }
 
@@ -89,12 +89,4 @@ export class PicturePageComponent implements OnInit, OnDestroy {
     this.userModelService.likePicture(picture);
   }
 
-  /**
-   * Picture is like or not
-   * @param pictureId 
-   * @returns boolean
-   */
-  // pictureIsLike(pictureId: number): boolean {
-  //   return this.userModelService.isLikePicture(pictureId)
-  // }
 }

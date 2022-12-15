@@ -7,13 +7,13 @@ export const environment = {
 	Back_Host: 'http://localhost:3000',
 
   firebaseConfig: {
-    apiKey: "AIzaSyDH-l7LRHT9H2I4oJHYS3APoMJGm9paq5M",
-    authDomain: "projetsecret-e5c31.firebaseapp.com",
-    projectId: "projetsecret-e5c31",
-    storageBucket: "projetsecret-e5c31.appspot.com",
-    messagingSenderId: "631832184793",
-    appId: "1:631832184793:web:dff6d51f6a0f2f0554bbc8",
-    measurementId: "G-X44ZD0Y8DP"
+    apiKey: "AIzaSyCId75FJIWbc66OkXF4Qk6QoJDmDXogx0c",
+    authDomain: "projet-secret-a86d6.firebaseapp.com",
+    projectId: "projet-secret-a86d6",
+    storageBucket: "projet-secret-a86d6.appspot.com",
+    messagingSenderId: "840433403363",
+    appId: "1:840433403363:web:a89670e6edf9343b630cd6",
+    measurementId: "G-C34019KJF7"
   }
 
 };
