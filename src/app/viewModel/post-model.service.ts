@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
 import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
+import { EventService } from '../service/event.service';
 import { PostService } from '../service/post.service';
 import { SocketIoService } from '../service/socket-io.service';
 import { PostUtils } from '../utils/post.utils';
+import { StorageModelService } from './storage-model.service';
 import { UserModelService } from './user-model.service';
 
 
@@ -13,7 +15,12 @@ import { UserModelService } from './user-model.service';
   })
 export class PostModelService {
 
-    userData: User;
+    private userData: User;
+
+    /**
+     * REPLACE BY EVENT ID
+     */
+        private eventId:number;
 
     private listOfPost: Post[] = [];
     private listOfPostObs$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
@@ -23,7 +30,10 @@ export class PostModelService {
         private userModelService: UserModelService,
         public postService: PostService,
         private socketService: SocketIoService,
+        private eventService: EventService,
+        private storageModelService: StorageModelService,
     ) {
+        this.eventId = this.eventService.getEventId();
         this.userData = this.userModelService.getCurrentUser();
 
         this.initList();
@@ -31,8 +41,8 @@ export class PostModelService {
         this.initListeningFromSocket();
     }
     
-    initList() {
-        this.postService.getAll()
+    private initList() {
+        this.postService.getAll(this.eventId)
             .pipe(take(1))
             .subscribe((data:any) => {
                 this.listOfPost = data;
@@ -40,7 +50,7 @@ export class PostModelService {
             });
     }
 
-    initListeningFromSocket() {
+    private initListeningFromSocket() {
 
         this.socketService.socket.on('listeningAddPost', (post: any) => {
             this.listOfPost.push(post);
@@ -73,31 +83,49 @@ export class PostModelService {
     }
     
     // Create Post
-    createPost(data: any) {
+    public createPost(data: any) {
+
+        const pictureUrl = data.pictureUrl;
+
         const post = {   
-            pictureUrl: data.pictureUrl,
-            categorieId: 1,
+            pictureUrl: "",
+            eventId: this.eventId,
+            categorieId: data.categorieId,
             countLike: 0,
             countComment: 0,
             userId: this.userData.userId,
             userName: this.userData.userName,
             photoUrl: this.userData.photoUrl
         }
+
+
         this.postService.create(post)
             .pipe(take(1))
             .subscribe( data => {
-                this.socketService.addPost(data);
+                const postId = data.postId;
+                this.storageModelService.UploadPictureAndGetUrl(postId, pictureUrl).then(url => {
+                    this.postService.setPictureOfPost({
+                        postId: postId, 
+                        pictureUrl: url,
+                    })
+                    .pipe(take(1))
+                    .subscribe(() => {
+                        data.pictureUrl = url;
+                        this.socketService.addPost(data);
+                    })
+                })
             })
     }
 
     // Get All Post
-    getAll() {
+    public getAll() {
         return this.listOfPostObs$;
     }
 
     // Remove Post
-    removePost(post: Post) {
+    public removePost(post: Post) {
         if (post.userId == this.userData.userId) {
+            this.storageModelService.deletePictureFromStorage(post.pictureUrl);
             this.postService.delete(post.postId!)
                 .pipe(take(1))
                 .subscribe( data => {

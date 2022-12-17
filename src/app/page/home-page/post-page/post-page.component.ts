@@ -39,7 +39,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   /**
    * init list of post
    */
-  initData() {
+  private initData() {
 
     this.postModelService.getAll()
       .pipe(takeUntil(this.onDestroy$))
@@ -57,9 +57,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
   /**
    * Create new Post
    */
-  addPost(pictureUrl: string) {
+  public addPost(data :any) {
     this.postModelService.createPost({
-      pictureUrl: pictureUrl
+      pictureUrl: data.downloadURL,
+      categorieId: 4,
     })
   }
 
@@ -69,7 +70,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
    * Delete Post
    * @param postId 
    */
-  removePost(post: Post) {
+  public removePost(post: Post) {
     this.postModelService.removePost(post);
   }
 
@@ -77,7 +78,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
    * Go to Comment zone
    * @param postId 
    */
-  goToComment(post: any) {
+  public goToComment(post: any) {
     this.router.navigateByUrl('/comments', { state: post });
   }
 
@@ -85,7 +86,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
    * Like or dislike post
    * @param postId 
    */
-  likePost(post: Post) {
+  public likePost(post: Post) {
     this.userModelService.likePost(post);
   }
 

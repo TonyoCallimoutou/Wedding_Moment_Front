@@ -1,4 +1,4 @@
-<h2> PICTURE </h2>
+<h2> POST </h2>
 
 <app-create-post
     (createPostEvent)="addPost($event)"
@@ -11,6 +11,7 @@
                 <img src="{{ post.photoUrl }}" alt="{{ post.userId}}">
             </div>
             <p> {{ post.userName}}</p>
+            <p> {{post.categorieId}}</p>
         </div>
     </div>  
     <div class="post">

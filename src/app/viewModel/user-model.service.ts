@@ -12,7 +12,7 @@ import { UserService } from '../service/user.service';
   })
 export class UserModelService {
 
-    public userData: any;
+    private userData: any;
 
     private listLikeCommentId : number[] = [];
     private listLikePostId : number[] = [];
@@ -31,18 +31,17 @@ export class UserModelService {
         }
     }
 
-    // Get User from Databas
-    getUserFromDB(userId : string): Observable<User> {
+    // Get User from Database
+    public getUserFromDB(userId : string): Observable<User> {
         return this.userService.getUserById(userId);
     }
 
     /* Setting up user data when sign in with username/password, 
     sign up with username/password and sign in with social auth  
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-    CreateUser(user: any): Observable<any> {
+    public createUser(user: any): Observable<any> {
         this.userData = new User(
             user.uid,
-            2,
             user.displayName,
             user.email,
             user.emailVerified,
@@ -55,19 +54,19 @@ export class UserModelService {
         return this.userService.create(this.userData)
     }
 
-    setUserData() {
+    public setUserData() {
         this.userData = this.getCurrentUser();
     }
 
 
     // Return Current User
-    getCurrentUser() {
+    public getCurrentUser() {
         return JSON.parse(localStorage.getItem('user')!);
     }
 
     // SET USER
 
-    setPhotoUrl(url: string) {
+    public setPhotoUrl(url: string) {
         const data = {
             userId: this.userData.userId,
             userName: this.userData.userName,
@@ -83,16 +82,16 @@ export class UserModelService {
     }
 
     //Remove User
-    removeUser(): Observable<any> {
+    public removeUser(): Observable<any> {
         return this.userService.delete(this.userData.userId)
     }
 
     /**
-     * Comment
+     * COMMENT
      */
 
     // Return List Of Like CommentId
-    getListOfLikeCommentId() {
+    public getListOfLikeCommentId() {
         this.userService.getlikeComment(this.userData.userId)
             .pipe(take(1))
             .subscribe( data => {
@@ -106,12 +105,12 @@ export class UserModelService {
     }
 
 
-    getObsListOfLikeComment():Observable<any> {
+    public getObsListOfLikeComment():Observable<any> {
         return this.listLikeCommentIdObs$;
     }
     
     // Like Or Dislike Comment
-    likeComment(comment: Comment) {
+    public likeComment(comment: Comment) {
         var data = {
             userId : this.userData.userId,
             commentId : comment.commentId
@@ -140,11 +139,11 @@ export class UserModelService {
     }
 
     /**
-     * Post
+     * POST
      */
         
     // Return List Of Like PostId
-    getListOfLikePostId() {
+    public getListOfLikePostId() {
         this.userService.getlikePost(this.userData.userId)
             .pipe(take(1))
             .subscribe( data => {
@@ -157,12 +156,12 @@ export class UserModelService {
             });
     }
 
-    getObsListOfLikePost():Observable<any> {
+    public getObsListOfLikePost():Observable<any> {
         return this.listLikePostIdObs$;
     }
 
     // Like Or Dislike Post
-    likePost(post: Post) {
+    public likePost(post: Post) {
         var data = {
             userId : this.userData.userId,
             postId : post.postId

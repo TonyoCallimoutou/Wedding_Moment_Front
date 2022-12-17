@@ -1,6 +1,7 @@
 export class Post {
     constructor(
       public postId: number,
+      public eventId: number,
       public categorieId: number,
       public pictureUrl: string,
       public countLike: number,

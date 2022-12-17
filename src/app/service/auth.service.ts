@@ -24,14 +24,6 @@ export class AuthService {
             .pipe(take(1))
             .subscribe((user) => {
                 if (user) {
-                // this.userData = UserUtils.createUserFromFirebase(user);
-
-                // localStorage.setItem('user', JSON.stringify(this.userData));
-                // JSON.parse(localStorage.getItem('user')!);
-                // } else {
-                // localStorage.setItem('user', 'null');
-                // JSON.parse(localStorage.getItem('user')!);
-                // }
                 
                 this.userModelService.setUserData()
                 this.userModelService.getListOfLikePostId();
@@ -68,7 +60,7 @@ export class AuthService {
             /* Call the SendVerificaitonMail() function when new user sign 
             up and returns promise */
                 this.SendVerificationMail();
-                this.userModelService.CreateUser(result.user)
+                this.userModelService.createUser(result.user)
                     .pipe(take(1))
                     .subscribe((user:User) => {
                         localStorage.setItem('user', JSON.stringify(user));
@@ -128,7 +120,7 @@ export class AuthService {
                             this.router.navigate(['dashboard']);
                         }
                         else {
-                            this.userModelService.CreateUser(result.user)
+                            this.userModelService.createUser(result.user)
                                 .pipe(take(1))
                                 .subscribe((user:User) => {
                                     localStorage.setItem('user', JSON.stringify(user));

@@ -21,12 +21,16 @@ export class PostService {
     return this.http.post(baseUrl, data);
   }
 
-  getAll(): Observable<Post[]> {
-    return this.http.get<Post[]>(baseUrl);
+  getAll(id: number): Observable<Post[]> {
+    return this.http.get<Post[]>(`${baseUrl}/event/${id}`);
   }
 
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>(`${baseUrl}/${id}`);
+  }
+
+  setPictureOfPost(data: any): Observable<any> {
+    return this.http.post(`${baseUrl}/setter`, data);
   }
 
   delete(id: number): Observable<any> {
