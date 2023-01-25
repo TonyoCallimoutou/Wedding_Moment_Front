@@ -17,10 +17,7 @@ export class PostModelService {
 
     private userData: User;
 
-    /**
-     * REPLACE BY EVENT ID
-     */
-        private eventId:number;
+    private eventId:number;
 
     private listOfPost: Post[] = [];
     private listOfPostObs$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
@@ -40,9 +37,9 @@ export class PostModelService {
 
         this.initListeningFromSocket();
     }
-    
+
     private initList() {
-        this.postService.getAll(this.eventId)
+        this.postService.getAllPost(this.eventId)
             .pipe(take(1))
             .subscribe((data:any) => {
                 this.listOfPost = data;
@@ -63,49 +60,47 @@ export class PostModelService {
         });
 
         this.socketService.socket.on('ListeningSetPost', (post: any) => {
-            this.listOfPost.forEach((item, i) => { 
+            this.listOfPost.forEach((item, i) => {
                 if (item.postId == post.postId) {
-                    PostUtils.SetPost(this.listOfPost[i], post); 
+                    PostUtils.SetPost(this.listOfPost[i], post);
                 }
             });
             this.listOfPostObs$.next(this.listOfPost);
         });
 
         this.socketService.socket.on('ListeningSetUser', (user: any) => {
-            this.listOfPost.forEach((item, i) => { 
+            this.listOfPost.forEach((item, i) => {
                 if (item.userId == user.userId) {
                     PostUtils.SetUser(this.listOfPost[i], user)
-                    
+
                 }
             });
             this.listOfPostObs$.next(this.listOfPost);
         });
     }
-    
+
     // Create Post
     public createPost(data: any) {
 
-        const pictureUrl = data.pictureUrl;
+        const pictureUrl = data;
 
-        const post = {   
+        const post = {
             pictureUrl: "",
             eventId: this.eventId,
-            categorieId: data.categorieId,
             countLike: 0,
-            countComment: 0,
             userId: this.userData.userId,
             userName: this.userData.userName,
             photoUrl: this.userData.photoUrl
         }
 
 
-        this.postService.create(post)
+        this.postService.createPost(post)
             .pipe(take(1))
             .subscribe( data => {
                 const postId = data.postId;
                 this.storageModelService.UploadPictureAndGetUrl(postId, pictureUrl).then(url => {
                     this.postService.setPictureOfPost({
-                        postId: postId, 
+                        postId: postId,
                         pictureUrl: url,
                     })
                     .pipe(take(1))
@@ -126,7 +121,7 @@ export class PostModelService {
     public removePost(post: Post) {
         if (post.userId == this.userData.userId) {
             this.storageModelService.deletePictureFromStorage(post.pictureUrl);
-            this.postService.delete(post.postId!)
+            this.postService.deletePost(post.postId!)
                 .pipe(take(1))
                 .subscribe( data => {
                     this.socketService.removePost(post);

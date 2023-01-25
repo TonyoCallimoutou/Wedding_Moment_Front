@@ -7,16 +7,17 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
-import { SignInComponent } from './component/firebase-auth-component/sign-in/sign-in.component';
-import { SignUpComponent } from './component/firebase-auth-component/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './component/firebase-auth-component/forgot-password/forgot-password.component';
-import { VerifyEmailComponent } from './component/firebase-auth-component/verify-email/verify-email.component';
+import { SignInComponent } from './page/firebase-auth-component/sign-in/sign-in.component';
+import { SignUpComponent } from './page/firebase-auth-component/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './page/firebase-auth-component/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './page/firebase-auth-component/verify-email/verify-email.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from './service/auth.service';
 import { SocketIoService } from './service/socket-io.service';
 import { DashboardModule } from './page/home-page/dashboard/dashboard.module';
 import { PageNotFoundComponent } from './page/page-not-found/page-not-found.component';
 import { SettingPageComponent } from './page/setting-page/setting-page.component';
+import { HomePageComponent } from './page/home-page/home-page.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { SettingPageComponent } from './page/setting-page/setting-page.component
     ForgotPasswordComponent,
     VerifyEmailComponent,
     PageNotFoundComponent,
-    SettingPageComponent
+    SettingPageComponent,
+    HomePageComponent
   ],
   imports: [
     DashboardModule,

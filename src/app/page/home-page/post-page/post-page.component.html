@@ -13,15 +13,15 @@
             <p> {{ post.userName}}</p>
             <p> {{post.categorieId}}</p>
         </div>
-    </div>  
+    </div>
     <div class="post">
         <img src="{{ post.pictureUrl }}" alt="{{ post.postId}}">
     </div>
     <div class="footer">
         <app-like-button
-        [isLike]="likePostId.includes(post.postId)"
+        [isLike]="reactPostId.includes(post.postId)"
         [countLike]="post.countLike"
-        (click)="likePost(post)" 
+        (click)="likePost(post)"
         >
         </app-like-button>
 

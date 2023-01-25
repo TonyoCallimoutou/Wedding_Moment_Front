@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from 'src/app/model/user.model';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
+import {EventModelService} from "../../../viewModel/event-model.service";
 
 @Component({
   selector: 'app-user-page',
@@ -14,6 +15,7 @@ export class UserPageComponent implements OnInit {
 
   constructor(
     private userModelService: UserModelService,
+    private eventModelService: EventModelService,
     private router: Router
     ) {
       this.user = this.userModelService.getCurrentUser();
@@ -39,6 +41,14 @@ export class UserPageComponent implements OnInit {
    */
   goToSetting() {
     this.router.navigateByUrl('/setting', { state: this.user });
+  }
+
+  /**
+   * Navigate to home page
+   */
+  switchEvent() {
+    this.eventModelService.resetActualEvent();
+    this.router.navigateByUrl('/HomePage');
   }
 
 }

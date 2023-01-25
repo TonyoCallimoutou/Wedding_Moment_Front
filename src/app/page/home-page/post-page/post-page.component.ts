@@ -16,7 +16,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public posts: Post[] = [];
-  public likePostId: number[] = [];
+  public reactPostId: number[] = [];
   public currentUser: User;
 
 
@@ -47,10 +47,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
         this.posts = data;
       })
 
-    this.userModelService.getObsListOfLikePost()
+    this.userModelService.getObsListOfReactPost()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data:any) => {
-        this.likePostId = data;
+        this.reactPostId = data;
       })
   }
 
@@ -58,17 +58,14 @@ export class PostPageComponent implements OnInit, OnDestroy {
    * Create new Post
    */
   public addPost(data :any) {
-    this.postModelService.createPost({
-      pictureUrl: data.downloadURL,
-      categorieId: 4,
-    })
+    this.postModelService.createPost(data.downloadURL);
   }
 
 
 
   /**
    * Delete Post
-   * @param postId 
+   * @param postId
    */
   public removePost(post: Post) {
     this.postModelService.removePost(post);
@@ -76,7 +73,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   /**
    * Go to Comment zone
-   * @param postId 
+   * @param postId
    */
   public goToComment(post: any) {
     this.router.navigateByUrl('/comments', { state: post });
@@ -84,10 +81,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   /**
    * Like or dislike post
-   * @param postId 
+   * @param postId
    */
   public likePost(post: Post) {
-    this.userModelService.likePost(post);
+    this.userModelService.reactPost(post);
   }
 
 }

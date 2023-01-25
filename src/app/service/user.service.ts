@@ -13,47 +13,35 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  create(data: any): Observable<any> {
+  createUser(data: any): Observable<any> {
     return this.http.post(baseUrl, data);
-  }
-
-  getAll(): Observable<User[]> {
-    return this.http.get<User[]>(baseUrl);
-  }
-
-  getUserById(id: string): Observable<User> {
-    return this.http.get<User>(`${baseUrl}/${id}`);
-  }
-
-  getlikePost(id: string): Observable<number[]> {
-    return this.http.get<number[]>(`${baseUrl}/likesPost/${id}`);
-  }
-
-  likePost(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/likesPost`,data);
-  }
-
-  dislikePost(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/dislikesPost`,data);
-  }
-
-  getlikeComment(id: string): Observable<number[]> {
-    return this.http.get<number[]>(`${baseUrl}/likesComment/${id}`);
-  }
-
-  likeComment(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/likesComment`,data);
-  }
-
-  dislikeComment(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/dislikesComment`,data);
   }
 
   setPhotoUrl(data: any): Observable<any> {
     return this.http.post<any>(`${baseUrl}/photoUrl`,data)
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+  getUserById(userId: string): Observable<User> {
+    return this.http.get<User>(`${baseUrl}/${userId}`);
+  }
+
+  getReactPosts(userId: string): Observable<number[]> {
+    return this.http.get<number[]>(`${baseUrl}/reactPost/${userId}`);
+  }
+
+  addReactPost(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/reactPost`,data);
+  }
+
+  unReactPost(data: any): Observable<any> {
+    return this.http.post<any>(`${baseUrl}/unReactPost`,data);
+  }
+
+  getNotification(data: any): Observable<number[]> {
+    return this.http.get<number[]>(`${baseUrl}/notification`);
+  }
+
+  deleteUser(userId: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/${userId}`);
   }
 }

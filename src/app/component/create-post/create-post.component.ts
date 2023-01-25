@@ -18,13 +18,12 @@ export class CreatePostComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // fonction pour télécharger le fichier 
-  upload(event: any) { 
-    
+  // fonction pour télécharger le fichier
+  upload(event: any) {
+
     const fileUpload = event.target.files[0];
     this.downloadURL = fileUpload;
     this.editMode = true;
-
   }
 
   create() {
@@ -33,6 +32,6 @@ export class CreatePostComponent implements OnInit {
       downloadURL: this.downloadURL
     });
   }
-  
+
 
 }

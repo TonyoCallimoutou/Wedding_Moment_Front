@@ -1,9 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommentPageModule } from '../comment-page/comment-page.module';
+import { PresentationPageModule } from '../presentation-page/presentation-page.module';
 import { PostPageModule } from '../post-page/post-page.module';
 import { UserPageModule } from '../user-page/user-page.module';
 import { DashboardComponent } from './dashboard.component';
+import {PlanTablePageModule} from "../plan-table-page/plan-table-page.module";
+import {MenuPageModule} from "../menu-page/menu-page.module";
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { DashboardComponent } from './dashboard.component';
     CommonModule,
     PostPageModule,
     UserPageModule,
-    CommentPageModule
+    PresentationPageModule,
+    PlanTablePageModule,
+    MenuPageModule
   ]
 })
 export class DashboardModule { }

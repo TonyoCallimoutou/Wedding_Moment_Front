@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
-import { Comment } from '../model/comment.model';
 import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
 import { SocketIoService } from '../service/socket-io.service';
@@ -14,11 +13,9 @@ export class UserModelService {
 
     private userData: any;
 
-    private listLikeCommentId : number[] = [];
-    private listLikePostId : number[] = [];
+    private listReactPostId : number[] = [];
 
-    private listLikeCommentIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
-    private listLikePostIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+    private listReactPostIdObs$ : BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
     constructor(
         private userService: UserService,
@@ -26,8 +23,7 @@ export class UserModelService {
     ) {
         this.setUserData();
         if (this.userData != null) {
-            this.getListOfLikePostId();
-            this.getListOfLikeCommentId();
+            this.getListOfReactPostId();
         }
     }
 
@@ -36,8 +32,8 @@ export class UserModelService {
         return this.userService.getUserById(userId);
     }
 
-    /* Setting up user data when sign in with username/password, 
-    sign up with username/password and sign in with social auth  
+    /* Setting up user data when sign in with username/password,
+    sign up with username/password and sign in with social auth
     provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
     public createUser(user: any): Observable<any> {
         this.userData = new User(
@@ -48,10 +44,9 @@ export class UserModelService {
             user.photoURL
         );
 
-        this.getListOfLikePostId();
-        this.getListOfLikeCommentId();
+        this.getListOfReactPostId();
 
-        return this.userService.create(this.userData)
+        return this.userService.createUser(this.userData)
     }
 
     public setUserData() {
@@ -83,107 +78,55 @@ export class UserModelService {
 
     //Remove User
     public removeUser(): Observable<any> {
-        return this.userService.delete(this.userData.userId)
-    }
-
-    /**
-     * COMMENT
-     */
-
-    // Return List Of Like CommentId
-    public getListOfLikeCommentId() {
-        this.userService.getlikeComment(this.userData.userId)
-            .pipe(take(1))
-            .subscribe( data => {
-                this.listLikeCommentId = [];
-                data.forEach((data : any) => {
-                    this.listLikeCommentId.push(data.commentId);
-                });
-
-                this.listLikeCommentIdObs$.next(this.listLikeCommentId);
-            });
-    }
-
-
-    public getObsListOfLikeComment():Observable<any> {
-        return this.listLikeCommentIdObs$;
-    }
-    
-    // Like Or Dislike Comment
-    public likeComment(comment: Comment) {
-        var data = {
-            userId : this.userData.userId,
-            commentId : comment.commentId
-        }
-
-        if (this.listLikeCommentId.includes(comment.commentId)) {
-            this.userService.dislikeComment(data)
-                .pipe(take(1))
-                .subscribe( data => {
-                    comment.countLikeComment --;
-                    this.listLikeCommentId = this.listLikeCommentId.filter((item:number) => item !== comment.commentId);
-                    this.listLikeCommentIdObs$.next(this.listLikeCommentId);
-                    this.socketService.setComment(comment);
-                })
-        }
-        else {
-            this.userService.likeComment(data)
-                .pipe(take(1))
-                .subscribe( data => {
-                    comment.countLikeComment ++;
-                    this.listLikeCommentId.push(comment.commentId);
-                    this.listLikeCommentIdObs$.next(this.listLikeCommentId);
-                    this.socketService.setComment(comment);
-                })
-        }
+        return this.userService.deleteUser(this.userData.userId)
     }
 
     /**
      * POST
      */
-        
+
     // Return List Of Like PostId
-    public getListOfLikePostId() {
-        this.userService.getlikePost(this.userData.userId)
+    public getListOfReactPostId() {
+        this.userService.getReactPosts(this.userData.userId)
             .pipe(take(1))
             .subscribe( data => {
-                this.listLikePostId = [];
+                this.listReactPostId = [];
                 data.forEach((data : any) => {
-                    this.listLikePostId.push(data.postId);
+                    this.listReactPostId.push(data.postId);
                 });
 
-                this.listLikePostIdObs$.next(this.listLikePostId);
+                this.listReactPostIdObs$.next(this.listReactPostId);
             });
     }
 
-    public getObsListOfLikePost():Observable<any> {
-        return this.listLikePostIdObs$;
+    public getObsListOfReactPost():Observable<any> {
+        return this.listReactPostIdObs$;
     }
 
     // Like Or Dislike Post
-    public likePost(post: Post) {
+    public reactPost(post: Post) {
         var data = {
             userId : this.userData.userId,
             postId : post.postId
         }
 
-        if (this.listLikePostId.includes(post.postId)) {
-            this.userService.dislikePost(data)
+        if (this.listReactPostId.includes(post.postId)) {
+            this.userService.unReactPost(data)
                 .pipe(take(1))
                 .subscribe( data => {
                     post.countLike --;
-                    this.listLikePostId = this.listLikePostId.filter((item:number) => item !== post.postId);
-                    this.listLikePostIdObs$.next(this.listLikePostId);
+                    this.listReactPostId = this.listReactPostId.filter((item:number) => item !== post.postId);
+                    this.listReactPostIdObs$.next(this.listReactPostId);
                     this.socketService.setPost(post);
                 })
         }
         else {
-            this.userService.likePost(data)
+            this.userService.addReactPost(data)
                 .pipe(take(1))
                 .subscribe( data => {
                     post.countLike ++;
-                    this.listLikePostId.push(post.postId);
-                    this.listLikePostIdObs$.next(this.listLikePostId);
+                    this.listReactPostId.push(post.postId);
+                    this.listReactPostIdObs$.next(this.listReactPostId);
                     this.socketService.setPost(post);
                 })
         }

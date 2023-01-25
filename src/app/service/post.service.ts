@@ -13,27 +13,22 @@ const baseUrl = environment.Back_Host + '/api/posts';
 export class PostService {
 
   constructor(
-    private http: HttpClient,
-    private socketService: SocketIoService    
+    private http: HttpClient
     ) { }
 
-  create(data: any): Observable<any> {
+  createPost(data: any): Observable<any> {
     return this.http.post(baseUrl, data);
   }
 
-  getAll(id: number): Observable<Post[]> {
+  getAllPost(id: number): Observable<Post[]> {
     return this.http.get<Post[]>(`${baseUrl}/event/${id}`);
-  }
-
-  getPostById(id: number): Observable<Post> {
-    return this.http.get<Post>(`${baseUrl}/${id}`);
   }
 
   setPictureOfPost(data: any): Observable<any> {
     return this.http.post(`${baseUrl}/setter`, data);
   }
 
-  delete(id: number): Observable<any> {
+  deletePost(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 }

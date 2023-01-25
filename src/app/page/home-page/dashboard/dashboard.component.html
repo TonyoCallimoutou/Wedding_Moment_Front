@@ -1,20 +1,28 @@
 <div class="home-page">
   <div class="onglet">
     <div *ngIf = "tabselector == 1">
-      <app-user-page></app-user-page>
+      <app-presentation-page></app-presentation-page>
     </div>
     <div *ngIf = "tabselector == 2">
-      <app-post-page></app-post-page>
+      <app-menu-page></app-menu-page>
     </div>
     <div *ngIf = "tabselector == 3">
-      <app-comment-page></app-comment-page>
+      <app-post-page></app-post-page>
+    </div>
+    <div *ngIf = "tabselector == 4">
+      <app-plan-table-page></app-plan-table-page>
+    </div>
+    <div *ngIf = "tabselector == 5">
+      <app-user-page></app-user-page>
     </div>
   </div>
 
   <div class="navigation-bar" >
-    <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabselector == 1}">User</a>
-    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Post</a>
-    <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabselector == 3}">Comment</a>
+    <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabselector == 1}">Presentation</a>
+    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Menu</a>
+    <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabselector == 3}">Post</a>
+    <a class="tab" (click)="tab(4)" [ngClass]="{'activetab' : tabselector == 4}">Plan Table</a>
+    <a class="tab" (click)="tab(5)" [ngClass]="{'activetab' : tabselector == 5}">User</a>
   </div>
 
 </div>

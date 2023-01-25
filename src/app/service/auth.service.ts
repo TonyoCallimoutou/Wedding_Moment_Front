@@ -17,17 +17,16 @@ export class AuthService {
         public userModelService: UserModelService,
         public afAuth: AngularFireAuth,
         public router: Router,
-    ) { 
-        /* Saving user data in localstorage when 
+    ) {
+        /* Saving user data in localstorage when
         logged in and setting up null when logged out */
         this.afAuth.authState
             .pipe(take(1))
             .subscribe((user) => {
                 if (user) {
-                
+
                 this.userModelService.setUserData()
-                this.userModelService.getListOfLikePostId();
-                this.userModelService.getListOfLikeCommentId();
+                this.userModelService.getListOfReactPostId();
 
                 };
         });
@@ -57,7 +56,7 @@ export class AuthService {
         return this.afAuth
             .createUserWithEmailAndPassword(email, password)
             .then((result) => {
-            /* Call the SendVerificaitonMail() function when new user sign 
+            /* Call the SendVerificaitonMail() function when new user sign
             up and returns promise */
                 this.SendVerificationMail();
                 this.userModelService.createUser(result.user)
@@ -112,7 +111,7 @@ export class AuthService {
             .signInWithPopup(provider)
             .then((result) => {
                 if (result.user) {
-                    this.userModelService.getUserFromDB(result.user.uid)        
+                    this.userModelService.getUserFromDB(result.user.uid)
                         .pipe(take(1))
                         .subscribe((user:User) => {
                         if (user != null) {
@@ -127,7 +126,7 @@ export class AuthService {
                                     this.router.navigate(['dashboard']);
                                 });
                         }
-                    }); 
+                    });
                 }
             })
             .catch((error) => {
@@ -145,7 +144,7 @@ export class AuthService {
 
     // Remove user
     RemoveUser() {
-        
+
         this.userModelService.removeUser()
             .pipe(take(1))
             .subscribe((data:any) => {
