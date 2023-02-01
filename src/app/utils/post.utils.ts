@@ -4,8 +4,7 @@ import { Post } from "../model/post.model";
 export class PostUtils {
     static SetPost(refPost: Post, newData: any) {
         refPost.pictureUrl = newData.pictureUrl
-        refPost.countLike = newData.countLike
-        refPost.countComment = newData.countComment
+        refPost.countReact = newData.countReact
         refPost.userId = newData.userId
         refPost.userName = newData.userName
         refPost.photoUrl = newData.photoUrl

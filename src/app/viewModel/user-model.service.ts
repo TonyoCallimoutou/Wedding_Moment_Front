@@ -85,7 +85,7 @@ export class UserModelService {
      * POST
      */
 
-    // Return List Of Like PostId
+    // Return List Of React PostId
     public getListOfReactPostId() {
         this.userService.getReactPosts(this.userData.userId)
             .pipe(take(1))
@@ -103,18 +103,19 @@ export class UserModelService {
         return this.listReactPostIdObs$;
     }
 
-    // Like Or Dislike Post
+    // React Or Dislike Post
     public reactPost(post: Post) {
-        var data = {
+        let data = {
             userId : this.userData.userId,
-            postId : post.postId
+            postId : post.postId,
+            reaction: "testReaction"
         }
 
         if (this.listReactPostId.includes(post.postId)) {
             this.userService.unReactPost(data)
                 .pipe(take(1))
                 .subscribe( data => {
-                    post.countLike --;
+                    post.countReact --;
                     this.listReactPostId = this.listReactPostId.filter((item:number) => item !== post.postId);
                     this.listReactPostIdObs$.next(this.listReactPostId);
                     this.socketService.setPost(post);
@@ -124,7 +125,7 @@ export class UserModelService {
             this.userService.addReactPost(data)
                 .pipe(take(1))
                 .subscribe( data => {
-                    post.countLike ++;
+                    post.countReact ++;
                     this.listReactPostId.push(post.postId);
                     this.listReactPostIdObs$.next(this.listReactPostId);
                     this.socketService.setPost(post);

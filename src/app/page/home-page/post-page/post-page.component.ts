@@ -71,18 +71,10 @@ export class PostPageComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Go to Comment zone
-   * @param postId
-   */
-  public goToComment(post: any) {
-    this.router.navigateByUrl('/comments', { state: post });
-  }
-
-  /**
    * Like or dislike post
    * @param postId
    */
-  public likePost(post: Post) {
+  public reactPost(post: Post) {
     this.postModelService.reactPost(post);
   }
 
