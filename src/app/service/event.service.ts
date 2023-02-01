@@ -35,8 +35,24 @@ export class EventService {
     return this.http.delete(`${baseUrl}/${id}`);
   }
 
+  createMenu(data: any): Observable<any> {
+    return this.http.post(`${baseUrl}/Menu`, data);
+  }
+
+  getMenu(id: number): Observable<any> {
+    return this.http.get(`${baseUrl}/Menu/${id}`);
+  }
+
+  deleteMenu(id: number): Observable<any> {
+    return this.http.delete(`${baseUrl}/Menu/${id}`);
+  }
+
   createPlanTable(data: any): Observable<any> {
     return this.http.post(`${baseUrl}/PlanTable`, data);
+  }
+
+  getPlanTable(id: number): Observable<any> {
+    return this.http.get(`${baseUrl}/PlanTable/${id}`);
   }
 
   deletePlanTable(id: number): Observable<any> {

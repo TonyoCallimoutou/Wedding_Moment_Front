@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, OnDestroy, OnInit} from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
 import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
@@ -17,7 +17,7 @@ export class PostModelService {
 
     private userData: User;
 
-    private eventId:number;
+    private eventId: number;
 
     private listOfPost: Post[] = [];
     private listOfPostObs$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
@@ -30,7 +30,11 @@ export class PostModelService {
         private eventService: EventService,
         private storageModelService: StorageModelService,
     ) {
-        this.eventId = this.eventService.getEventId();
+
+      /**
+       * this.initPostModelService
+       */
+      this.eventId = this.eventService.getEventId();
         this.userData = this.userModelService.getCurrentUser();
 
         this.initList();
@@ -38,7 +42,16 @@ export class PostModelService {
         this.initListeningFromSocket();
     }
 
-    private initList() {
+    public initPostModelService() {
+      this.eventId = this.eventService.getEventId();
+      this.userData = this.userModelService.getCurrentUser();
+
+      this.initList();
+
+      this.initListeningFromSocket();
+    }
+
+  private initList() {
         this.postService.getAllPost(this.eventId)
             .pipe(take(1))
             .subscribe((data:any) => {
@@ -54,12 +67,12 @@ export class PostModelService {
             this.listOfPostObs$.next(this.listOfPost);
         });
 
-        this.socketService.socket.on('ListeningRemovePost', (post: any) => {
+        this.socketService.socket.on('listeningRemovePost', (post: any) => {
             this.listOfPost = this.listOfPost.filter(item => item.postId !== post.postId);
             this.listOfPostObs$.next(this.listOfPost);
         });
 
-        this.socketService.socket.on('ListeningSetPost', (post: any) => {
+        this.socketService.socket.on('listeningSetPost', (post: any) => {
             this.listOfPost.forEach((item, i) => {
                 if (item.postId == post.postId) {
                     PostUtils.SetPost(this.listOfPost[i], post);
@@ -68,7 +81,7 @@ export class PostModelService {
             this.listOfPostObs$.next(this.listOfPost);
         });
 
-        this.socketService.socket.on('ListeningSetUser', (user: any) => {
+        this.socketService.socket.on('listeningSetUser', (user: any) => {
             this.listOfPost.forEach((item, i) => {
                 if (item.userId == user.userId) {
                     PostUtils.SetUser(this.listOfPost[i], user)
@@ -128,4 +141,20 @@ export class PostModelService {
                 })
         }
     }
+
+  /**
+   * USER
+   */
+
+  getCurrentUser() {
+    return this.userModelService.getCurrentUser();
+  }
+
+  getObsListOfReactPost() {
+    return this.userModelService.getObsListOfReactPost();
+  }
+
+  reactPost(post : Post) {
+    this.userModelService.reactPost(post);
+  }
 }

@@ -22,9 +22,8 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private postModelService: PostModelService,
-    private userModelService: UserModelService,
     private router: Router ) {
-      this.currentUser = userModelService.getCurrentUser()
+      this.currentUser = postModelService.getCurrentUser()
     }
 
   ngOnInit(): void {
@@ -47,7 +46,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
         this.posts = data;
       })
 
-    this.userModelService.getObsListOfReactPost()
+    this.postModelService.getObsListOfReactPost()
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data:any) => {
         this.reactPostId = data;
@@ -84,7 +83,7 @@ export class PostPageComponent implements OnInit, OnDestroy {
    * @param postId
    */
   public likePost(post: Post) {
-    this.userModelService.reactPost(post);
+    this.postModelService.reactPost(post);
   }
 
 }

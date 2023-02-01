@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserModelService} from "../../viewModel/user-model.service";
 import {User} from "../../model/user.model";
 import {EventModelService} from "../../viewModel/event-model.service";
 import {Event} from "../../model/event.model";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-home-page',

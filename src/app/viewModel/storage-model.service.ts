@@ -8,7 +8,7 @@ import { UserModelService } from './user-model.service';
     providedIn: 'root',
   })
 export class StorageModelService {
-    
+
     private basePathPost: string;
 
     constructor(

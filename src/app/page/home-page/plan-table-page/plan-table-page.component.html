@@ -1,1 +1,35 @@
-<p>plan-table-page works!</p>
+<h1> Plan de Table </h1>
+
+<div *ngIf="isMaster">
+  <label for="categorie"> Creer Table</label>
+  <input id="categorie" [(ngModel)]="table">
+
+  <button (click)="addPlanTable()">
+    Add Plan Table
+  </button>
+
+
+  <label for="description"> Creer Invite</label>
+  <input id="description" list="listOfTable" [(ngModel)]="inviteTable">
+  <datalist id="listOfTable">
+    <option *ngFor="let item of planTableMap | keyvalue"  value="{{item.key }}">{{ item.key }}</option>
+  </datalist>
+  <input [(ngModel)]="inviteName">
+
+  <button (click)="addInvite()">
+    Add Invite
+  </button>
+</div>
+
+<details *ngFor="let item of planTableMap | keyvalue ">
+  <summary> {{ item.key.tableName }}  </summary>
+  <div *ngFor="let values of item.value; index as j " >
+    <div *ngIf="values.inviteId">
+      <p> {{ values.inviteName }}</p>
+      <div *ngIf="isMaster">
+        <button (click)="removePlanTable(item.key)"> remove Plan Table</button>
+        <button (click)="removeInvite(values)"> remove Invite</button>
+      </div>
+    </div>
+  </div>
+</details>

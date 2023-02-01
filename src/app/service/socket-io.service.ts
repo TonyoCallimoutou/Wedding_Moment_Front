@@ -54,11 +54,43 @@ export class SocketIoService {
   }
 
   /**
+   * Notify other when add invites
+   * @param invite
+   */
+  addInvite(invite: any) {
+    this.socket.emit('addInvite', invite);
+  }
+
+  /**
+   * Notify other when remove invite
+   * @param invite
+   */
+  removeInvite(invite: any) {
+    this.socket.emit('removeInvite', invite);
+  }
+
+  /**
    * Notify other when set Event
    * @param invite
    */
   setInvite(invite: any) {
     this.socket.emit('setInvite', invite);
+  }
+
+  /**
+   * Notify other when add Plan Table
+   * @param planTable
+   */
+  addPlanTable(planTable: any) {
+    this.socket.emit('addPlanTable', planTable);
+  }
+
+  /**
+   * Notify other when remove Plan table
+   * @param planTable
+   */
+  removePlanTable(planTable: any) {
+    this.socket.emit('removePlanTable', planTable);
   }
 
   /**
@@ -70,7 +102,23 @@ export class SocketIoService {
   }
 
   /**
-   * Notify other when set Event
+   * Notify other when add Menu
+   * @param menu
+   */
+  addMenu(menu: any) {
+    this.socket.emit('addMenu', menu);
+  }
+
+  /**
+   * Notify other when remove Menu
+   * @param menu
+   */
+  removeMenu(menu: any) {
+    this.socket.emit('removeMenu', menu);
+  }
+
+  /**
+   * Notify other when set Menu
    * @param menu
    */
   setMenu(menu: any) {
