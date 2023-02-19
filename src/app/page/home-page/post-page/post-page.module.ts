@@ -6,6 +6,8 @@ import { CreatePostModule } from 'src/app/component/create-post/create-post.modu
 import { PostModelService } from 'src/app/viewModel/post-model.service';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 import { PostPageComponent } from './post-page.component';
+import {AppModule} from "../../../app.module";
+import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 
 
 @NgModule({
@@ -16,7 +18,8 @@ import { PostPageComponent } from './post-page.component';
     CommonModule,
     LikeButtonModule,
     DeleteButtonModule,
-    CreatePostModule
+    CreatePostModule,
+    SignInModule,
   ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]

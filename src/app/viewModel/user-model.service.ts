@@ -4,6 +4,7 @@ import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
 import { SocketIoService } from '../service/socket-io.service';
 import { UserService } from '../service/user.service';
+import {LocalModel} from "../model/local.model";
 
 
 @Injectable({
@@ -21,10 +22,18 @@ export class UserModelService {
         private userService: UserService,
         private socketService: SocketIoService
     ) {
-        this.setUserData();
-        if (this.userData != null) {
-            this.getListOfReactPostId();
-        }
+      this.initUserData();
+    }
+
+    initUserData() {
+      this.setUserData();
+      if (this.userData != null) {
+        this.getListOfReactPostId();
+      }
+    }
+
+    public canAccess() {
+      return this.userData.userId != "0";
     }
 
     // Get User from Database
@@ -56,7 +65,7 @@ export class UserModelService {
 
     // Return Current User
     public getCurrentUser() {
-        return JSON.parse(localStorage.getItem('user')!);
+        return JSON.parse(localStorage.getItem(LocalModel.USER)!);
     }
 
     // SET USER
@@ -71,7 +80,7 @@ export class UserModelService {
             .pipe(take(1))
             .subscribe((data: any) => {
                 this.userData.photoUrl = url;
-                localStorage.setItem('user', JSON.stringify(this.userData));
+                localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
                 this.socketService.setUser(data);
             });
     }

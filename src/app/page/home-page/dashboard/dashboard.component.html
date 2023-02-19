@@ -1,28 +1,50 @@
 <div class="home-page">
   <div class="onglet">
-    <div *ngIf = "tabselector == 1">
-      <app-presentation-page></app-presentation-page>
+    <div *ngIf = "tabSelector == 1">
+      <app-presentation-page
+      >
+      </app-presentation-page>
     </div>
-    <div *ngIf = "tabselector == 2">
-      <app-menu-page></app-menu-page>
+    <div *ngIf = "tabSelector == 2">
+      <app-menu-page
+        [isMaster] = "isMaster"
+        [menuList] = "menuList"
+      >
+      </app-menu-page>
     </div>
-    <div *ngIf = "tabselector == 3">
-      <app-post-page></app-post-page>
+    <div *ngIf = "tabSelector == 3">
+      <app-post-page
+        [canAccess] = "canAccess"
+        [currentUser] = "currentUser"
+        [posts] = "posts"
+        [reactPostId] = "reactPostId"
+      >
+      </app-post-page>
     </div>
-    <div *ngIf = "tabselector == 4">
-      <app-plan-table-page></app-plan-table-page>
+    <div *ngIf = "tabSelector == 4">
+      <app-plan-table-page
+        [isMaster] = "isMaster"
+        [planTableList] = "planTableList"
+        [planTableMap] = "planTableMap"
+
+      >
+      </app-plan-table-page>
     </div>
-    <div *ngIf = "tabselector == 5">
-      <app-user-page></app-user-page>
+    <div *ngIf = "tabSelector == 5">
+      <app-user-page
+        [canAccess] = "canAccess"
+        [currentUser] = "currentUser"
+      >
+      </app-user-page>
     </div>
   </div>
 
   <div class="navigation-bar" >
-    <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabselector == 1}">Presentation</a>
-    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabselector == 2}">Menu</a>
-    <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabselector == 3}">Post</a>
-    <a class="tab" (click)="tab(4)" [ngClass]="{'activetab' : tabselector == 4}">Plan Table</a>
-    <a class="tab" (click)="tab(5)" [ngClass]="{'activetab' : tabselector == 5}">User</a>
+    <a class="tab" (click)="tab(1)" [ngClass]="{'activetab' : tabSelector == 1}">Presentation</a>
+    <a class="tab" (click)="tab(2)" [ngClass]="{'activetab' : tabSelector == 2}">Menu</a>
+    <a class="tab" (click)="tab(3)" [ngClass]="{'activetab' : tabSelector == 3}">Post</a>
+    <a class="tab" (click)="tab(4)" [ngClass]="{'activetab' : tabSelector == 4}">Plan Table</a>
+    <a class="tab" (click)="tab(5)" [ngClass]="{'activetab' : tabSelector == 5}">User</a>
   </div>
 
 </div>

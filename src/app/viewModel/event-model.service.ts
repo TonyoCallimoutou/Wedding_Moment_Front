@@ -7,6 +7,7 @@ import { UserModelService } from './user-model.service';
 import {Event} from "../model/event.model";
 import {PostUtils} from "../utils/post.utils";
 import {PostModelService} from "./post-model.service";
+import {LocalModel} from "../model/local.model";
 
 
 @Injectable({
@@ -50,8 +51,14 @@ export class EventModelService {
           this.listOfEventObs$.next(data);
         });
 
+      if (this.event == null) {
+        this.event = JSON.parse(localStorage.getItem(LocalModel.EVENT)!)
+        if (this.event != null) {
+          this.goToEvent(this.event);
+        }
+      }
+
       if (this.event != null) {
-        // TODO Recuperer this.event lors d'un refresh
         this.initEventData();
       }
     }

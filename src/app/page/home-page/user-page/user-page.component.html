@@ -6,11 +6,19 @@
     (click)="goToSetting()"
 >
 </app-setting-button>
-<div class="header">
-    <img src="{{ user.photoUrl }}" alt="{{ user.userId}}" (click)="switchPost()">
-    <p> {{ user.userName}}</p>
+
+<div *ngIf="canAccess">
+  <div class="header">
+    <img src="{{ currentUser.photoUrl }}" alt="{{ currentUser.userId}}" (click)="switchPost()">
+    <p> {{ currentUser.userName}}</p>
+  </div>
+
+  <button (click)="switchEvent()">
+    Change Event
+  </button>
 </div>
 
-<button (click)="switchEvent()">
-  Change Event
-</button>
+<div *ngIf="!canAccess">
+  <app-sign-in></app-sign-in>
+</div>
+

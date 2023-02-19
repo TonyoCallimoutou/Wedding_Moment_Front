@@ -5,6 +5,7 @@ import * as auth from 'firebase/auth';
 import { take } from 'rxjs';
 import { User } from '../model/user.model';
 import { UserModelService } from '../viewModel/user-model.service';
+import {LocalModel} from "../model/local.model";
 
 @Injectable({
     providedIn: 'root',
@@ -24,10 +25,7 @@ export class AuthService {
             .pipe(take(1))
             .subscribe((user) => {
                 if (user) {
-
-                this.userModelService.setUserData()
-                this.userModelService.getListOfReactPostId();
-
+                  this.userModelService.initUserData();
                 };
         });
     }
@@ -41,8 +39,10 @@ export class AuthService {
                     this.userModelService.getUserFromDB(result.user.uid)
                         .pipe(take(1))
                         .subscribe((user:User) => {
-                            localStorage.setItem('user', JSON.stringify(user));
-                            this.router.navigate(['dashboard']);
+                            localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                            this.userModelService.initUserData();
+
+                            this.router.navigate(['home-page']);
                         });
                 };
             })
@@ -62,8 +62,9 @@ export class AuthService {
                 this.userModelService.createUser(result.user)
                     .pipe(take(1))
                     .subscribe((user:User) => {
-                        localStorage.setItem('user', JSON.stringify(user));
-                        this.router.navigate(['dashboard']);
+                        localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                        this.userModelService.initUserData();
+                        window.location.reload();
                     });
             })
             .catch((error) => {
@@ -94,15 +95,13 @@ export class AuthService {
 
     // Returns true when user is looged in and email is verified
     get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('user')!);
+        const user = JSON.parse(localStorage.getItem(LocalModel.USER)!);
         return user !== null && user.emailVerified;
     }
 
     // Sign in with Google
     GoogleAuth() {
-        return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-            this.router.navigate(['dashboard']);
-      });
+        return this.AuthLogin(new auth.GoogleAuthProvider());
     }
 
     // Auth logic to run auth providers
@@ -115,15 +114,17 @@ export class AuthService {
                         .pipe(take(1))
                         .subscribe((user:User) => {
                         if (user != null) {
-                            localStorage.setItem('user', JSON.stringify(user));
-                            this.router.navigate(['dashboard']);
+                            localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                            this.userModelService.initUserData();
+                            this.router.navigate(['home-page']);
                         }
                         else {
                             this.userModelService.createUser(result.user)
                                 .pipe(take(1))
                                 .subscribe((user:User) => {
-                                    localStorage.setItem('user', JSON.stringify(user));
-                                    this.router.navigate(['dashboard']);
+                                    localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                                    this.userModelService.initUserData();
+                                    this.router.navigate(['home-page']);
                                 });
                         }
                     });
@@ -134,22 +135,31 @@ export class AuthService {
             });
     }
 
+  passWithoutSignIn() {
+    this.userModelService.getUserFromDB("0")
+      .pipe(take(1))
+      .subscribe((user:User) => {
+        localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+        this.userModelService.initUserData();
+        this.router.navigate(['home-page']);
+      });
+  }
+
     // Sign out
     SignOut() {
         return this.afAuth.signOut().then(() => {
-            localStorage.removeItem("user")
+            localStorage.removeItem(LocalModel.USER)
             this.router.navigate(['sign-in']);
         });
     }
 
     // Remove user
     RemoveUser() {
-
         this.userModelService.removeUser()
             .pipe(take(1))
             .subscribe((data:any) => {
                 this.afAuth.signOut().then(() => {
-                    localStorage.removeItem("user")
+                    localStorage.removeItem(LocalModel.USER)
                     this.router.navigate(['sign-in']);
                 })
             })
@@ -157,7 +167,7 @@ export class AuthService {
 
         return this.afAuth.signOut().then(() => {
             this.userModelService.removeUser();
-            localStorage.removeItem("user")
+            localStorage.removeItem(LocalModel.USER)
             this.router.navigate(['sign-in']);
         });
     }

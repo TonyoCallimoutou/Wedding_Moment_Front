@@ -12,8 +12,8 @@ import { SettingPageComponent } from './page/setting-page/setting-page.component
 import { HomePageComponent } from "./page/home-page/home-page.component";
 
 const routes: Routes = [
-    { path: '', redirectTo: '/HomePage', pathMatch: 'full' },
-    { path: 'HomePage', component: HomePageComponent, canActivate: [AuthGuard] },
+    { path: '', redirectTo: '/home-page', pathMatch: 'full' },
+    { path: 'home-page', component: HomePageComponent, canActivate: [AuthGuard] },
     { path: 'sign-in', component: SignInComponent },
     { path: 'register-user', component: SignUpComponent },
     { path: 'forgot-password', component: ForgotPasswordComponent },

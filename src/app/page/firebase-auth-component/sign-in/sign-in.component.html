@@ -29,5 +29,8 @@
       <div class="redirectToLogin">
         <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
       </div>
+      <div class="formGroup">
+        <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.passWithoutSignIn()">
+      </div>
     </div>
   </div>

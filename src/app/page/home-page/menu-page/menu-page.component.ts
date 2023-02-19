@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {Subject, takeUntil} from "rxjs";
 
@@ -7,43 +7,19 @@ import {Subject, takeUntil} from "rxjs";
   templateUrl: './menu-page.component.html',
   styleUrls: ['./menu-page.component.scss']
 })
-export class MenuPageComponent implements OnInit, OnDestroy {
+export class MenuPageComponent {
 
-  private onDestroy$: Subject<boolean> = new Subject<boolean>();
-
-  isMaster: boolean = false;
-
-  menuList : any[] = [];
+  @Input() public isMaster: boolean = false;
+  @Input() public menuList : any[] = [];
 
   cat : string = "";
   des : string = "";
 
   constructor(
     private eventModelService: EventModelService
-  ) {
-    this.isMaster = eventModelService.getIsMaster();
-  }
-
-  ngOnInit(): void {
-    this.initData();
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy$.next(true);
-    this.onDestroy$.unsubscribe();
-  }
-
-  initData() {
-    this.eventModelService
-      .getMenu()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any) => {
-        this.menuList = data;
-      })
-  }
+  ) { }
 
   addMenu() {
-
     this.eventModelService.createMenu({
       eventId : this.eventModelService.getActualEvent().eventId,
       menuCategorie : this.cat,
@@ -52,7 +28,9 @@ export class MenuPageComponent implements OnInit, OnDestroy {
   }
 
   removeMenu(index : number) {
-    this.eventModelService.deleteMenu(this.menuList[index]);
+    if (this.isMaster) {
+      this.eventModelService.deleteMenu(this.menuList[index]);
+    }
   }
 
 }

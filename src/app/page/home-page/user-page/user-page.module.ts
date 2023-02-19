@@ -3,6 +3,8 @@ import { LikeButtonModule } from 'src/app/component/button-component/like-button
 import { SettingButtonModule } from 'src/app/component/button-component/setting-button/setting-button.module';
 import { UserModelService } from 'src/app/viewModel/user-model.service';
 import { UserPageComponent } from './user-page.component';
+import {NgIf} from "@angular/common";
+import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { UserPageComponent } from './user-page.component';
   ],
   imports: [
     LikeButtonModule,
-    SettingButtonModule
+    SettingButtonModule,
+    NgIf,
+    SignInModule
   ],
   exports: [UserPageComponent],
   providers: [UserModelService]

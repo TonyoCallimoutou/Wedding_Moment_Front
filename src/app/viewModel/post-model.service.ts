@@ -1,4 +1,4 @@
-import {Injectable, OnDestroy, OnInit} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, take } from 'rxjs';
 import { Post } from '../model/post.model';
 import { User } from '../model/user.model';
@@ -24,10 +24,10 @@ export class PostModelService {
 
 
     constructor(
+        private eventService: EventService,
         private userModelService: UserModelService,
         public postService: PostService,
         private socketService: SocketIoService,
-        private eventService: EventService,
         private storageModelService: StorageModelService,
     ) {
 
@@ -35,21 +35,21 @@ export class PostModelService {
        * this.initPostModelService
        */
       this.eventId = this.eventService.getEventId();
-        this.userData = this.userModelService.getCurrentUser();
-
-        this.initList();
-
-        this.initListeningFromSocket();
-    }
-
-    public initPostModelService() {
-      this.eventId = this.eventService.getEventId();
       this.userData = this.userModelService.getCurrentUser();
 
       this.initList();
 
       this.initListeningFromSocket();
     }
+
+  public initPostModelService() {
+    this.eventId = this.eventService.getEventId();
+    this.userData = this.userModelService.getCurrentUser();
+
+    this.initList();
+
+    this.initListeningFromSocket();
+  }
 
   private initList() {
         this.postService.getAllPost(this.eventId)
@@ -146,9 +146,6 @@ export class PostModelService {
    * USER
    */
 
-  getCurrentUser() {
-    return this.userModelService.getCurrentUser();
-  }
 
   getObsListOfReactPost() {
     return this.userModelService.getObsListOfReactPost();

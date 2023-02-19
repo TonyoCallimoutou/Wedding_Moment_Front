@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { Post } from 'src/app/model/post.model';
@@ -15,42 +15,22 @@ export class PostPageComponent implements OnInit, OnDestroy {
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
-  public posts: Post[] = [];
-  public reactPostId: number[] = [];
-  public currentUser: User;
+  @Input() public canAccess: boolean = false;
+  @Input() public currentUser! : User;
+  @Input() public posts: Post[] = [];
+  @Input() public reactPostId: number[] = [];
 
 
   constructor(
-    private postModelService: PostModelService,
-    private router: Router ) {
-      this.currentUser = postModelService.getCurrentUser()
-    }
+    private postModelService: PostModelService
+  ) { }
 
   ngOnInit(): void {
-    this.initData()
   }
 
   ngOnDestroy(): void {
     this.onDestroy$.next(true);
     this.onDestroy$.unsubscribe();
-  }
-
-  /**
-   * init list of post
-   */
-  private initData() {
-
-    this.postModelService.getAll()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any) => {
-        this.posts = data;
-      })
-
-    this.postModelService.getObsListOfReactPost()
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any) => {
-        this.reactPostId = data;
-      })
   }
 
   /**

@@ -1,34 +1,42 @@
 <h2> POST </h2>
 
-<app-create-post
-    (createPostEvent)="addPost($event)"
-></app-create-post>
+<div *ngIf="canAccess">
 
-<div class="card" *ngFor="let post of posts; let index = index">
+  <app-create-post
+    (createPostEvent)="addPost($event)"
+  ></app-create-post>
+
+  <div class="card" *ngFor="let post of posts; let index = index">
     <div class="header">
-        <div class="user-banner">
-            <div class="photo-profil">
-                <img src="{{ post.photoUrl }}" alt="{{ post.userId}}">
-            </div>
-            <p> {{ post.userName}}</p>
+      <div class="user-banner">
+        <div class="photo-profil">
+          <img src="{{ post.photoUrl }}" alt="{{ post.userId}}">
         </div>
+        <p> {{ post.userName}}</p>
+      </div>
     </div>
     <div class="post">
-        <img src="{{ post.pictureUrl }}" alt="{{ post.postId}}">
+      <img src="{{ post.pictureUrl }}" alt="{{ post.postId}}">
     </div>
     <div class="footer">
-        <app-like-button
+      <app-like-button
         [isLike]="reactPostId.includes(post.postId)"
         [countLike]="post.countReact"
         (click)="reactPost(post)"
-        >
-        </app-like-button>
+      >
+      </app-like-button>
 
-        <app-delete-button
-            *ngIf="post.userId == currentUser.userId"
-            (click)="removePost(post)"
-        >
-        </app-delete-button>
-        <button> Share </button>
+      <app-delete-button
+        *ngIf="post.userId == currentUser.userId"
+        (click)="removePost(post)"
+      >
+      </app-delete-button>
+      <button> Share </button>
     </div>
+  </div>
+
+</div>
+
+<div *ngIf="!canAccess">
+  <app-sign-in></app-sign-in>
 </div>

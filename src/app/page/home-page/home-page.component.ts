@@ -6,13 +6,14 @@ import {Event} from "../../model/event.model";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
+import {LocalModel} from "../../model/local.model";
 
 @Component({
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']
 })
-export class HomePageComponent implements OnInit {
+export class HomePageComponent implements OnInit, OnDestroy {
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -31,7 +32,13 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    localStorage.removeItem(LocalModel.EVENT)
     this.initData()
+  }
+
+  ngOnDestroy() {
+    localStorage.setItem(LocalModel.EVENT, JSON.stringify(this.eventModelService.event));
+    console.log(this.eventModelService.event)
   }
 
   /**
