@@ -6,6 +6,7 @@ import {Subject, takeUntil} from "rxjs";
 import {Post} from "../../../model/post.model";
 import {User} from "../../../model/user.model";
 import {Router} from "@angular/router";
+import {LocalModel} from "../../../model/local.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -40,6 +41,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
+    this.tabSelector = Number(localStorage.getItem(LocalModel.TAB));
+    this.tabSelector = this.tabSelector ? this.tabSelector : 1;
+
     if (!this.eventModelService.getActualEvent()) {
       this.router.navigate(['home-page'])
     }
@@ -50,6 +54,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.initPlanTable();
 
+  }
+
+
+  ngOnDestroy() {
+    this.onDestroy$.next(true);
+    this.onDestroy$.unsubscribe();
   }
 
   initMenu() {
@@ -121,13 +131,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
   }
 
-  ngOnDestroy() {
-    this.onDestroy$.next(true);
-    this.onDestroy$.unsubscribe();
-  }
-
   tab(tabulation: number) {
     this.tabSelector = tabulation;
+    localStorage.setItem(LocalModel.TAB, String(this.tabSelector));
   }
 
 }
