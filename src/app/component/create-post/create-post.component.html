@@ -1,19 +1,19 @@
 <div *ngIf="editMode == false">
 
-    <input type="file" (change)="upload($event)" accept=".png,.jpg" />
+  <input (change)="upload($event)" accept=".png,.jpg" type="file"/>
 
 </div>
 
 <div *ngIf="editMode">
 
-    <img height="125" width="50" id="your_img_id" [src]="downloadURL"/>
+  <img [src]="downloadURL" height="125" id="your_img_id" width="50"/>
 
-    <p> {{downloadURL}}</p>
+  <p> {{downloadURL}}</p>
 
 
-    <button (click)="create()">
-        create
-    </button>
+  <button (click)="create()">
+    create
+  </button>
 </div>
 
 

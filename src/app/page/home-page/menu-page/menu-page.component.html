@@ -1,10 +1,9 @@
-
 <h1> Menu</h1>
 <div *ngIf="isMaster">
   <label for="categorie"> Catégorie</label>
-  <input id="categorie" [(ngModel)]="cat">
+  <input [(ngModel)]="cat" id="categorie">
   <label for="description"> Description</label>
-  <input id="description" [(ngModel)]="des">
+  <input [(ngModel)]="des" id="description">
 
   <button (click)="addMenu()">
     Add Menu

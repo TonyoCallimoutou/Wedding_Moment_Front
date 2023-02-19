@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import * as socketIo from 'socket.io-client';
-import { environment } from 'src/environments/environment';
-import { Post } from '../model/post.model';
+import {environment} from 'src/environments/environment';
+import {Post} from '../model/post.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,14 +10,13 @@ export class SocketIoService {
 
   public socket;
 
-  constructor(
-  ) {
+  constructor() {
     this.socket = socketIo.connect(environment.Back_Host)
   }
 
   disconnect() {
     if (this.socket) {
-        this.socket.disconnect();
+      this.socket.disconnect();
     }
   }
 
@@ -37,7 +36,7 @@ export class SocketIoService {
     this.socket.emit('removePost', post);
   }
 
-    /**
+  /**
    * Notify other when you like or comment post
    * @param post
    */
@@ -125,7 +124,7 @@ export class SocketIoService {
     this.socket.emit('setMenu', menu);
   }
 
-   /**
+  /**
    * Notify other when you like comment
    * @param post
    */

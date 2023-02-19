@@ -1,6 +1,5 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
-import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-menu-page',
@@ -10,24 +9,25 @@ import {Subject, takeUntil} from "rxjs";
 export class MenuPageComponent {
 
   @Input() public isMaster: boolean = false;
-  @Input() public menuList : any[] = [];
+  @Input() public menuList: any[] = [];
 
-  cat : string = "";
-  des : string = "";
+  cat: string = "";
+  des: string = "";
 
   constructor(
     private eventModelService: EventModelService
-  ) { }
+  ) {
+  }
 
   addMenu() {
     this.eventModelService.createMenu({
-      eventId : this.eventModelService.getActualEvent().eventId,
-      menuCategorie : this.cat,
-      menuDescription : this.des
+      eventId: this.eventModelService.getActualEvent().eventId,
+      menuCategorie: this.cat,
+      menuDescription: this.des
     });
   }
 
-  removeMenu(index : number) {
+  removeMenu(index: number) {
     if (this.isMaster) {
       this.eventModelService.deleteMenu(this.menuList[index]);
     }

@@ -4,7 +4,6 @@ import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
 import {Subject, takeUntil} from "rxjs";
 import {Post} from "../../../model/post.model";
-import {Event} from "../../../model/event.model";
 import {User} from "../../../model/user.model";
 import {Router} from "@angular/router";
 
@@ -15,30 +14,23 @@ import {Router} from "@angular/router";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  private onDestroy$: Subject<boolean> = new Subject<boolean>();
-
   public tabSelector: number = 1;
-
-
-  public menuList : any[] = [];
-
+  public menuList: any[] = [];
   public posts: Post[] = [];
   public reactPostId: number[] = [];
-
   public planTableList: any[] = [];
   public inviteList: any[] = [];
   public planTableMap: Map<any, any[]> = new Map<any, any[]>();
-
   public currentUser: User;
-  public canAccess : boolean;
-
-  public isMaster : boolean;
+  public canAccess: boolean;
+  public isMaster: boolean;
+  private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private postModelService: PostModelService,
-    private router : Router
+    private router: Router
   ) {
 
     this.currentUser = this.userModelService.getCurrentUser();
@@ -64,7 +56,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.eventModelService
       .getMenu()
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.menuList = data;
       })
   }
@@ -73,13 +65,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.canAccess) {
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((data:any) => {
+        .subscribe((data: any) => {
           this.posts = data;
         })
 
       this.postModelService.getObsListOfReactPost()
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((data:any) => {
+        .subscribe((data: any) => {
           this.reactPostId = data;
         })
     }
@@ -89,38 +81,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.eventModelService
       .getPlanTable()
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any[]) => {
+      .subscribe((data: any[]) => {
 
         this.planTableMap = new Map<any, any[]>();
         this.planTableList = [];
         this.inviteList = [];
 
-        for (let i=0; i<data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           let planTable = {
-            eventId : data[i].eventId,
-            planTableId : data[i].planTableId,
-            tableName : data[i].tableName
+            eventId: data[i].eventId,
+            planTableId: data[i].planTableId,
+            tableName: data[i].tableName
           }
 
           let invite = {
-            inviteId : data[i].inviteId,
-            eventId : data[i].eventId,
-            planTableId : data[i].planTableId,
-            inviteName : data[i].inviteName
+            inviteId: data[i].inviteId,
+            eventId: data[i].eventId,
+            planTableId: data[i].planTableId,
+            inviteName: data[i].inviteName
           }
 
           let planTableFilter = this.planTableList.filter(item => item.planTableId === planTable.planTableId);
 
-          if ( planTableFilter.length > 0) {
+          if (planTableFilter.length > 0) {
 
             let list = this.planTableMap.get(planTableFilter[0]);
             // @ts-ignore
             list.push(invite);
             // @ts-ignore
             this.planTableMap.set(planTableFilter[0], list)
-          }
-          else {
-            this.planTableMap.set(planTable,[invite]);
+          } else {
+            this.planTableMap.set(planTable, [invite]);
             this.planTableList.push(planTable);
             if (data[i].inviteId != null) {
               this.inviteList.push((invite));

@@ -1,7 +1,7 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {environment} from "src/environments/environment";
 import {Event} from "../model/event.model";
 
 const baseUrl = environment.Back_Host + '/api/events';
@@ -11,11 +11,12 @@ const baseUrl = environment.Back_Host + '/api/events';
 })
 export class EventService {
 
-  currentEventId : number = 0;
+  currentEventId: number = 0;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  goToEvent(event : Event) {
+  goToEvent(event: Event) {
     this.currentEventId = event.eventId;
   }
 

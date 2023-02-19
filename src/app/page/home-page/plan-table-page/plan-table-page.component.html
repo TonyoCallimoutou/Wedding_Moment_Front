@@ -2,7 +2,7 @@
 
 <div *ngIf="isMaster">
   <label for="categorie"> Creer Table</label>
-  <input id="categorie" [(ngModel)]="table">
+  <input [(ngModel)]="table" id="categorie">
 
   <button (click)="addPlanTable()">
     Add Plan Table
@@ -10,9 +10,9 @@
 
 
   <label for="description"> Creer Invite</label>
-  <input id="description" list="listOfTable" [(ngModel)]="inviteTable">
+  <input [(ngModel)]="inviteTable" id="description" list="listOfTable">
   <datalist id="listOfTable">
-    <option *ngFor="let item of planTableMap | keyvalue"  value="{{item.key }}">{{ item.key }}</option>
+    <option *ngFor="let item of planTableMap | keyvalue" value="{{item.key }}">{{ item.key }}</option>
   </datalist>
   <input [(ngModel)]="inviteName">
 
@@ -23,7 +23,7 @@
 
 <details *ngFor="let item of planTableMap | keyvalue ">
   <summary> {{ item.key.tableName }}  </summary>
-  <div *ngFor="let values of item.value; index as j " >
+  <div *ngFor="let values of item.value; index as j ">
     <div *ngIf="values.inviteId">
       <p> {{ values.inviteName }}</p>
       <div *ngIf="isMaster">

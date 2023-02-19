@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { CreatePostComponent } from './create-post.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CreatePostComponent} from './create-post.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { CreatePostComponent } from './create-post.component';
   ],
   exports: [CreatePostComponent]
 })
-export class CreatePostModule { }
+export class CreatePostModule {
+}

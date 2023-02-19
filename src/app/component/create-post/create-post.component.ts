@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-create-post',
@@ -13,7 +13,8 @@ export class CreatePostComponent implements OnInit {
 
   public editMode: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
   }

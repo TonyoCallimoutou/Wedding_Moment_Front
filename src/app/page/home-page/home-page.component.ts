@@ -5,7 +5,6 @@ import {EventModelService} from "../../viewModel/event-model.service";
 import {Event} from "../../model/event.model";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
-import {Location} from "@angular/common";
 import {LocalModel} from "../../model/local.model";
 
 @Component({
@@ -15,20 +14,19 @@ import {LocalModel} from "../../model/local.model";
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
+  public listEvent: Event[] = [];
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
-
-  private user : User;
-  public listEvent : Event[] = [];
+  private user: User;
 
   constructor(
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private router: Router
   ) {
-      if (eventModelService.getActualEvent() != null) {
-        this.goToEvent(eventModelService.getActualEvent());
-      }
-      this.user = this.userModelService.getCurrentUser();
+    if (eventModelService.getActualEvent() != null) {
+      this.goToEvent(eventModelService.getActualEvent());
+    }
+    this.user = this.userModelService.getCurrentUser();
   }
 
   ngOnInit(): void {
@@ -41,6 +39,11 @@ export class HomePageComponent implements OnInit, OnDestroy {
     console.log(this.eventModelService.event)
   }
 
+  public goToEvent(event: Event) {
+    this.eventModelService.goToEvent(event);
+    this.router.navigateByUrl("/dashboard")
+  }
+
   /**
    * init list of post
    */
@@ -48,14 +51,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
     this.eventModelService.getAllEvent()
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe((data:any) => {
+      .subscribe((data: any) => {
         this.listEvent = data;
       })
-  }
-
-  public goToEvent(event : Event) {
-    this.eventModelService.goToEvent(event);
-    this.router.navigateByUrl("/dashboard")
   }
 
 }

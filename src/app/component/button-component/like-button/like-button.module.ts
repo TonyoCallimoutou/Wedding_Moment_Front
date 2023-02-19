@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { LikeButtonComponent } from './like-button.component'
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {LikeButtonComponent} from './like-button.component'
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { LikeButtonComponent } from './like-button.component'
   ],
   exports: [LikeButtonComponent]
 })
-export class LikeButtonModule { }
+export class LikeButtonModule {
+}

@@ -1,5 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {Subject, takeUntil} from "rxjs";
+import {Component, Input} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 
 @Component({
@@ -9,15 +8,12 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 })
 export class PlanTablePageComponent {
 
-  private onDestroy$: Subject<boolean> = new Subject<boolean>();
-
   @Input() public isMaster: boolean = false;
   @Input() public planTableList: any[] = [];
   @Input() public planTableMap: Map<any, any[]> = new Map<any, any[]>();
-
-  table : string = "";
-  inviteTable : string = "";
-  inviteName : string = "";
+  table: string = "";
+  inviteTable: string = "";
+  inviteName: string = "";
 
   constructor(
     private eventModelService: EventModelService
@@ -36,13 +32,13 @@ export class PlanTablePageComponent {
 
     let plan = this.planTableList.filter(item => item.tableName == this.inviteTable);
 
-    this.eventModelService.createInvite( {
-      planTableId : plan[0].planTableId,
-      inviteName : this.inviteName
+    this.eventModelService.createInvite({
+      planTableId: plan[0].planTableId,
+      inviteName: this.inviteName
     });
   }
 
-  removeInvite(invite : any) {
+  removeInvite(invite: any) {
     this.eventModelService.deleteInvite(invite);
   }
 }

@@ -1,7 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-import { User } from 'src/app/model/user.model';
-import { UserModelService } from 'src/app/viewModel/user-model.service';
+import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
+import {User} from 'src/app/model/user.model';
+import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {EventModelService} from "../../../viewModel/event-model.service";
 
 @Component({
@@ -9,20 +9,18 @@ import {EventModelService} from "../../../viewModel/event-model.service";
   templateUrl: './user-page.component.html',
   styleUrls: ['./user-page.component.scss']
 })
-export class UserPageComponent implements OnInit {
+export class UserPageComponent {
 
 
-  @Input() public canAccess! : boolean;
-  @Input() public currentUser! : User;
+  @Input() public canAccess!: boolean;
+  @Input() public currentUser!: User;
 
 
   constructor(
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private router: Router
-    ) { }
-
-  ngOnInit() {
+  ) {
   }
 
   /**
@@ -31,8 +29,7 @@ export class UserPageComponent implements OnInit {
   switchPost() {
     if (this.currentUser.photoUrl != "https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg") {
       this.userModelService.setPhotoUrl("https://cdn.pixabay.com/photo/2015/05/31/16/03/teddy-bear-792273_1280.jpg")
-    }
-    else {
+    } else {
       this.userModelService.setPhotoUrl("https://lh3.googleusercontent.com/a/ALm5wu0VgI6sRIEJezlrivPk95_aYMUEvzoHB_o0GRwA=s96-c")
     }
   }
@@ -41,7 +38,7 @@ export class UserPageComponent implements OnInit {
    * Navigate to setting
    */
   goToSetting() {
-    this.router.navigateByUrl('/setting', { state: this.currentUser });
+    this.router.navigateByUrl('/setting', {state: this.currentUser});
   }
 
   /**

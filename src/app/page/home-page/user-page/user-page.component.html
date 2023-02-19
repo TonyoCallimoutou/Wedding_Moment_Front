@@ -1,15 +1,14 @@
-
 <h2> USER </h2>
 
 <app-setting-button
-    class="setting"
-    (click)="goToSetting()"
+  (click)="goToSetting()"
+  class="setting"
 >
 </app-setting-button>
 
 <div *ngIf="canAccess">
   <div class="header">
-    <img src="{{ currentUser.photoUrl }}" alt="{{ currentUser.userId}}" (click)="switchPost()">
+    <img (click)="switchPost()" alt="{{ currentUser.userId}}" src="{{ currentUser.photoUrl }}">
     <p> {{ currentUser.userName}}</p>
   </div>
 

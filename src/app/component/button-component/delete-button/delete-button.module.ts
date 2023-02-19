@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { DeleteButtonComponent } from './delete-button.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {DeleteButtonComponent} from './delete-button.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { DeleteButtonComponent } from './delete-button.component';
   ],
   exports: [DeleteButtonComponent]
 })
-export class DeleteButtonModule { }
+export class DeleteButtonModule {
+}

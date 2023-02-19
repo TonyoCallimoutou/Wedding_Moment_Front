@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {NgModule} from '@angular/core';
 
 import {SignInComponent} from "./sign-in.component";
 
@@ -9,4 +9,5 @@ import {SignInComponent} from "./sign-in.component";
   ],
   exports: [SignInComponent]
 })
-export class SignInModule { }
+export class SignInModule {
+}

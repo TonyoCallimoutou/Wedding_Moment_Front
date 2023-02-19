@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {PlanTablePageComponent} from "./plan-table-page.component";
 import {FormsModule} from "@angular/forms";
 
@@ -8,10 +8,11 @@ import {FormsModule} from "@angular/forms";
   declarations: [
     PlanTablePageComponent
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+  ],
   exports: [PlanTablePageComponent],
 })
-export class PlanTablePageModule { }
+export class PlanTablePageModule {
+}

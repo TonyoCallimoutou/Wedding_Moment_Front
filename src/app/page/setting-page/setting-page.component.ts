@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/service/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-setting-page',
@@ -10,21 +10,22 @@ export class SettingPageComponent implements OnInit {
 
   constructor(
     private authService: AuthService
-    ) { }
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
   /**
-  * Delete user
-  */
+   * Delete user
+   */
   signOut() {
     this.authService.SignOut();
   }
 
   /**
- * Delete user
- */
+   * Delete user
+   */
   removeUser() {
     this.authService.RemoveUser();
   }

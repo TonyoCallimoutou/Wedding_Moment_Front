@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SocketIoService } from './service/socket-io.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {SocketIoService} from './service/socket-io.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +9,8 @@ import { SocketIoService } from './service/socket-io.service';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'FrontEnd';
 
-  constructor(private socketService: SocketIoService) {}
+  constructor(private socketService: SocketIoService) {
+  }
 
   ngOnInit() {
   }
@@ -18,5 +19,5 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.socketService.disconnect();
   }
-  
+
 }

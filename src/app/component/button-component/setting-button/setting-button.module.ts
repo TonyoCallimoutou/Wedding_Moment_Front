@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { SettingButtonComponent } from './setting-button.component';
+import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {SettingButtonComponent} from './setting-button.component';
 
 
 @NgModule({
@@ -12,4 +12,5 @@ import { SettingButtonComponent } from './setting-button.component';
   ],
   exports: [SettingButtonComponent]
 })
-export class SettingButtonModule { }
+export class SettingButtonModule {
+}

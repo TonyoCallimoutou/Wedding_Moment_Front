@@ -1,8 +1,8 @@
-import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { environment } from "src/environments/environment";
-import { User } from "../model/user.model";
+import {HttpClient} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {Observable} from "rxjs";
+import {environment} from "src/environments/environment";
+import {User} from "../model/user.model";
 
 const baseUrl = environment.Back_Host + '/api/users';
 
@@ -11,14 +11,15 @@ const baseUrl = environment.Back_Host + '/api/users';
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   createUser(data: any): Observable<any> {
     return this.http.post(baseUrl, data);
   }
 
   setPhotoUrl(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/photoUrl`,data)
+    return this.http.post<any>(`${baseUrl}/photoUrl`, data)
   }
 
   getUserById(userId: string): Observable<User> {
@@ -30,11 +31,11 @@ export class UserService {
   }
 
   addReactPost(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/reactPost`,data);
+    return this.http.post<any>(`${baseUrl}/reactPost`, data);
   }
 
   unReactPost(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/unReactPost`,data);
+    return this.http.post<any>(`${baseUrl}/unReactPost`, data);
   }
 
   getNotification(data: any): Observable<number[]> {
