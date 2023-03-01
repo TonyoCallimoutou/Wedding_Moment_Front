@@ -1,4 +1,3 @@
-import {Post} from "../model/post.model";
 
 // Creer User depuis FirebaseUser
 export class PostUtils {

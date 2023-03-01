@@ -1,7 +1,9 @@
 import {Component, Input} from '@angular/core';
-import {Post} from 'src/app/model/post.model';
-import {User} from 'src/app/model/user.model';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
+// @ts-ignore
+import {Post} from 'src/app/model/post.model';
+// @ts-ignore
+import {User} from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-post-page',

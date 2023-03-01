@@ -2,7 +2,6 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
-import {Post} from "../model/post.model";
 
 const baseUrl = environment.Back_Host + '/api/posts';
 
@@ -16,7 +15,7 @@ export class PostService {
   ) {
   }
 
-  createPost(data: any): Observable<any> {
+  createPost(data: Post): Observable<any> {
     return this.http.post(baseUrl, data);
   }
 

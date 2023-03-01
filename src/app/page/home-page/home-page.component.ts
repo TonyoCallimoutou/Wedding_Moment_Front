@@ -1,11 +1,14 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {UserModelService} from "../../viewModel/user-model.service";
-import {User} from "../../model/user.model";
 import {EventModelService} from "../../viewModel/event-model.service";
-import {Event} from "../../model/event.model";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
 import {LocalModel} from "../../model/local.model";
+// @ts-ignore
+import {User} from "../../model/user.model";
+// @ts-ignore
+import {Evenement} from "../../model/event.model";
+
 
 @Component({
   selector: 'app-home-page',
@@ -14,7 +17,7 @@ import {LocalModel} from "../../model/local.model";
 })
 export class HomePageComponent implements OnInit, OnDestroy {
 
-  public listEvent: Event[] = [];
+  public listEvent: EventModel[] = [];
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
   private user: User;
 
@@ -36,10 +39,9 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     localStorage.setItem(LocalModel.EVENT, JSON.stringify(this.eventModelService.event));
-    console.log(this.eventModelService.event)
   }
 
-  public goToEvent(event: Event) {
+  public goToEvent(event: EventModel) {
     this.eventModelService.goToEvent(event);
     this.router.navigateByUrl("/dashboard")
   }

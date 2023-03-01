@@ -3,19 +3,22 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Router} from '@angular/router';
 import * as auth from 'firebase/auth';
 import {take} from 'rxjs';
-import {User} from '../model/user.model';
 import {UserModelService} from '../viewModel/user-model.service';
 import {LocalModel} from "../model/local.model";
+import {EventModelService} from "../viewModel/event-model.service";
+// @ts-ignore
+import {User} from '../model/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  userData: any;
+  userData: User;
 
   constructor(
     public userModelService: UserModelService,
+    public eventModelService: EventModelService,
     public afAuth: AngularFireAuth,
     public router: Router,
   ) {
@@ -26,6 +29,7 @@ export class AuthService {
       .subscribe((user) => {
         if (user) {
           this.userModelService.initUserData();
+          this.eventModelService.initUserData();
         }
 
       });
@@ -48,6 +52,7 @@ export class AuthService {
             .subscribe((user: User) => {
               localStorage.setItem(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
+              this.eventModelService.initUserData();
 
               this.router.navigate(['home-page']);
             });
@@ -72,6 +77,7 @@ export class AuthService {
           .subscribe((user: User) => {
             localStorage.setItem(LocalModel.USER, JSON.stringify(user));
             this.userModelService.initUserData();
+            this.eventModelService.initUserData();
             window.location.reload();
           });
       })
@@ -118,6 +124,7 @@ export class AuthService {
               if (user != null) {
                 localStorage.setItem(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
+                this.eventModelService.initUserData();
                 this.router.navigate(['home-page']);
               } else {
                 this.userModelService.createUser(result.user)
@@ -125,6 +132,7 @@ export class AuthService {
                   .subscribe((user: User) => {
                     localStorage.setItem(LocalModel.USER, JSON.stringify(user));
                     this.userModelService.initUserData();
+                    this.eventModelService.initUserData();
                     this.router.navigate(['home-page']);
                   });
               }
@@ -142,6 +150,7 @@ export class AuthService {
       .subscribe((user: User) => {
         localStorage.setItem(LocalModel.USER, JSON.stringify(user));
         this.userModelService.initUserData();
+        this.eventModelService.initUserData();
         this.router.navigate(['home-page']);
       });
   }

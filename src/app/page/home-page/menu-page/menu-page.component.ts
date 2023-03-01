@@ -9,7 +9,7 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 export class MenuPageComponent {
 
   @Input() public isMaster: boolean = false;
-  @Input() public menuList: any[] = [];
+  @Input() public menuList: Menu[] = [];
 
   cat: string = "";
   des: string = "";

@@ -2,7 +2,6 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
-import {Event} from "../model/event.model";
 
 const baseUrl = environment.Back_Host + '/api/events';
 
@@ -16,7 +15,7 @@ export class EventService {
   constructor(private http: HttpClient) {
   }
 
-  goToEvent(event: Event) {
+  goToEvent(event: EventModel) {
     this.currentEventId = event.eventId;
   }
 
@@ -24,11 +23,11 @@ export class EventService {
     return this.currentEventId;
   }
 
-  getAllEvent() {
+  getAllEvent(): Observable<any> {
     return this.http.get(baseUrl);
   }
 
-  createEvent(data: any): Observable<any> {
+  createEvent(data: EventModel): Observable<any> {
     return this.http.post(baseUrl, data);
   }
 

@@ -1,13 +1,15 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, take} from 'rxjs';
-import {Post} from '../model/post.model';
-import {User} from '../model/user.model';
 import {EventService} from '../service/event.service';
 import {PostService} from '../service/post.service';
 import {SocketIoService} from '../service/socket-io.service';
 import {PostUtils} from '../utils/post.utils';
 import {StorageModelService} from './storage-model.service';
 import {UserModelService} from './user-model.service';
+// @ts-ignore
+import {Post} from '../model/post.model';
+// @ts-ignore
+import {User} from '../model/user.model';
 
 
 @Injectable({
@@ -52,11 +54,11 @@ export class PostModelService {
   }
 
   // Create Post
-  public createPost(data: any) {
+  public createPost(data: string) {
 
     const pictureUrl = data;
 
-    const post = {
+    const post : Post = {
       pictureUrl: "",
       eventId: this.eventId,
       countLike: 0,
@@ -85,7 +87,7 @@ export class PostModelService {
   }
 
   // Get All Post
-  public getAll() {
+  public getAll(): BehaviorSubject<Post[]> {
     return this.listOfPostObs$;
   }
 
@@ -106,7 +108,7 @@ export class PostModelService {
    */
 
 
-  getObsListOfReactPost() {
+  getObsListOfReactPost(): BehaviorSubject<any[]> {
     return this.userModelService.getObsListOfReactPost();
   }
 
@@ -125,17 +127,17 @@ export class PostModelService {
 
   private initListeningFromSocket() {
 
-    this.socketService.socket.on('listeningAddPost', (post: any) => {
+    this.socketService.socket.on('listeningAddPost', (post: Post) => {
       this.listOfPost.push(post);
       this.listOfPostObs$.next(this.listOfPost);
     });
 
-    this.socketService.socket.on('listeningRemovePost', (post: any) => {
+    this.socketService.socket.on('listeningRemovePost', (post: Post) => {
       this.listOfPost = this.listOfPost.filter(item => item.postId !== post.postId);
       this.listOfPostObs$.next(this.listOfPost);
     });
 
-    this.socketService.socket.on('listeningSetPost', (post: any) => {
+    this.socketService.socket.on('listeningSetPost', (post: Post) => {
       this.listOfPost.forEach((item, i) => {
         if (item.postId == post.postId) {
           PostUtils.SetPost(this.listOfPost[i], post);
@@ -144,7 +146,7 @@ export class PostModelService {
       this.listOfPostObs$.next(this.listOfPost);
     });
 
-    this.socketService.socket.on('listeningSetUser', (user: any) => {
+    this.socketService.socket.on('listeningSetUser', (user: User) => {
       this.listOfPost.forEach((item, i) => {
         if (item.userId == user.userId) {
           PostUtils.SetUser(this.listOfPost[i], user)

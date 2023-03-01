@@ -1,8 +1,6 @@
-export class Event {
-  constructor(
-    public eventId: number,
-    public userId: string,
-    public name: string
-  ) {
-  }
+interface EventModel {
+  eventId: number,
+  userId: string,
+  name: string
 }
+

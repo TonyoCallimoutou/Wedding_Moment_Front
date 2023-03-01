@@ -3,10 +3,12 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
 import {Subject, takeUntil} from "rxjs";
-import {Post} from "../../../model/post.model";
-import {User} from "../../../model/user.model";
 import {Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
+// @ts-ignore
+import {Post} from "../../../model/post.model";
+// @ts-ignore
+import {User} from "../../../model/user.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,12 +18,12 @@ import {LocalModel} from "../../../model/local.model";
 export class DashboardComponent implements OnInit, OnDestroy {
 
   public tabSelector: number = 1;
-  public menuList: any[] = [];
+  public menuList: Menu[] = [];
   public posts: Post[] = [];
   public reactPostId: number[] = [];
-  public planTableList: any[] = [];
-  public inviteList: any[] = [];
-  public planTableMap: Map<any, any[]> = new Map<any, any[]>();
+  public tableInviteList: TableInvite[] = [];
+  public inviteList: Invite[] = [];
+  public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
   public currentUser: User;
   public canAccess: boolean;
   public isMaster: boolean;
@@ -36,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.currentUser = this.userModelService.getCurrentUser();
     this.canAccess = this.userModelService.canAccess();
-    this.isMaster = eventModelService.getIsMaster();
+    this.isMaster = this.eventModelService.getIsMaster();
   }
 
   ngOnInit() {
@@ -93,36 +95,36 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any[]) => {
 
-        this.planTableMap = new Map<any, any[]>();
-        this.planTableList = [];
+        this.tableInviteMap = new Map<PlanTable, Invite[]>();
+        this.tableInviteList = [];
         this.inviteList = [];
 
         for (let i = 0; i < data.length; i++) {
-          let planTable = {
+          let planTable: PlanTable = {
             eventId: data[i].eventId,
             planTableId: data[i].planTableId,
             tableName: data[i].tableName
           }
 
-          let invite = {
+          let invite: Invite = {
             inviteId: data[i].inviteId,
             eventId: data[i].eventId,
             planTableId: data[i].planTableId,
             inviteName: data[i].inviteName
           }
 
-          let planTableFilter = this.planTableList.filter(item => item.planTableId === planTable.planTableId);
+          let planTableFilter = this.tableInviteList.filter(item => item.planTableId === planTable.planTableId);
 
           if (planTableFilter.length > 0) {
 
-            let list = this.planTableMap.get(planTableFilter[0]);
+            let list = this.tableInviteMap.get(planTableFilter[0]);
             // @ts-ignore
             list.push(invite);
             // @ts-ignore
-            this.planTableMap.set(planTableFilter[0], list)
+            this.tableInviteMap.set(planTableFilter[0], list)
           } else {
-            this.planTableMap.set(planTable, [invite]);
-            this.planTableList.push(planTable);
+            this.tableInviteMap.set(planTable, [invite]);
+            this.tableInviteList.push(<TableInvite>planTable);
             if (data[i].inviteId != null) {
               this.inviteList.push((invite));
             }

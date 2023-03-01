@@ -2,7 +2,6 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
-import {User} from "../model/user.model";
 
 const baseUrl = environment.Back_Host + '/api/users';
 
@@ -42,7 +41,7 @@ export class UserService {
     return this.http.get<number[]>(`${baseUrl}/notification`);
   }
 
-  deleteUser(userId: number): Observable<any> {
+  deleteUser(userId: string): Observable<any> {
     return this.http.delete(`${baseUrl}/${userId}`);
   }
 }

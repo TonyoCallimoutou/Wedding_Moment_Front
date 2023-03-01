@@ -9,8 +9,8 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 export class PlanTablePageComponent {
 
   @Input() public isMaster: boolean = false;
-  @Input() public planTableList: any[] = [];
-  @Input() public planTableMap: Map<any, any[]> = new Map<any, any[]>();
+  @Input() public tableInviteList: TableInvite[] = [];
+  @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
   table: string = "";
   inviteTable: string = "";
   inviteName: string = "";
@@ -21,7 +21,10 @@ export class PlanTablePageComponent {
   }
 
   addPlanTable() {
-    this.eventModelService.createPlanTable(this.table);
+    this.eventModelService.createPlanTable({
+      eventId: this.tableInviteList[0].eventId,
+      tableName: this.table
+    });
   }
 
   removePlanTable(table: any) {
@@ -30,15 +33,16 @@ export class PlanTablePageComponent {
 
   addInvite() {
 
-    let plan = this.planTableList.filter(item => item.tableName == this.inviteTable);
+    let plan = this.tableInviteList.filter(item => item.tableName == this.inviteTable);
 
     this.eventModelService.createInvite({
+      eventId: plan[0].eventId,
       planTableId: plan[0].planTableId,
       inviteName: this.inviteName
     });
   }
 
-  removeInvite(invite: any) {
+  removeInvite(invite: Invite) {
     this.eventModelService.deleteInvite(invite);
   }
 }

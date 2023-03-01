@@ -1,10 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, take} from 'rxjs';
-import {Post} from '../model/post.model';
-import {User} from '../model/user.model';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserService} from '../service/user.service';
 import {LocalModel} from "../model/local.model";
+// @ts-ignore
+import {Post} from '../model/post.model';
+// @ts-ignore
+import {User} from '../model/user.model';
+import {PostUtils} from "../utils/post.utils";
 
 
 @Injectable({
@@ -12,7 +15,7 @@ import {LocalModel} from "../model/local.model";
 })
 export class UserModelService {
 
-  private userData: any;
+  private userData!: User;
 
   private listReactPostId: number[] = [];
 
@@ -28,11 +31,11 @@ export class UserModelService {
   initUserData() {
     this.setUserData();
     if (this.userData != null) {
-      this.getListOfReactPostId();
+      this.initListOfReactPostId();
     }
   }
 
-  public canAccess() {
+  public canAccess(): boolean {
     return this.userData.userId != "0";
   }
 
@@ -53,7 +56,7 @@ export class UserModelService {
       user.photoURL
     );
 
-    this.getListOfReactPostId();
+    this.initListOfReactPostId();
 
     return this.userService.createUser(this.userData)
   }
@@ -64,7 +67,7 @@ export class UserModelService {
 
 
   // Return Current User
-  public getCurrentUser() {
+  public getCurrentUser(): User {
     return JSON.parse(localStorage.getItem(LocalModel.USER)!);
   }
 
@@ -95,7 +98,7 @@ export class UserModelService {
    */
 
   // Return List Of React PostId
-  public getListOfReactPostId() {
+  public initListOfReactPostId() {
     this.userService.getReactPosts(this.userData.userId)
       .pipe(take(1))
       .subscribe(data => {
@@ -108,7 +111,7 @@ export class UserModelService {
       });
   }
 
-  public getObsListOfReactPost(): Observable<any> {
+  public getObsListOfReactPost(): BehaviorSubject<any> {
     return this.listReactPostIdObs$;
   }
 

@@ -1,3 +1,4 @@
+// @ts-ignore
 import {User} from "../model/user.model";
 
 // Creer User depuis FirebaseUser

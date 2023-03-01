@@ -1,8 +1,9 @@
 import {Component, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {User} from 'src/app/model/user.model';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {EventModelService} from "../../../viewModel/event-model.service";
+// @ts-ignore
+import {User} from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-user-page',
@@ -10,7 +11,6 @@ import {EventModelService} from "../../../viewModel/event-model.service";
   styleUrls: ['./user-page.component.scss']
 })
 export class UserPageComponent {
-
 
   @Input() public canAccess!: boolean;
   @Input() public currentUser!: User;
@@ -46,7 +46,7 @@ export class UserPageComponent {
    */
   switchEvent() {
     this.eventModelService.resetActualEvent();
-    this.router.navigateByUrl('/HomePage');
+    this.router.navigateByUrl('/home-page');
   }
 
 }

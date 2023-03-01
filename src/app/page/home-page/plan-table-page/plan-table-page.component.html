@@ -12,7 +12,7 @@
   <label for="description"> Creer Invite</label>
   <input [(ngModel)]="inviteTable" id="description" list="listOfTable">
   <datalist id="listOfTable">
-    <option *ngFor="let item of planTableMap | keyvalue" value="{{item.key }}">{{ item.key }}</option>
+    <option *ngFor="let item of tableInviteMap | keyvalue" value="{{item.key.tableName}}">{{ item.key.tableName }}</option>
   </datalist>
   <input [(ngModel)]="inviteName">
 
@@ -21,7 +21,7 @@
   </button>
 </div>
 
-<details *ngFor="let item of planTableMap | keyvalue ">
+<details *ngFor="let item of tableInviteMap | keyvalue ">
   <summary> {{ item.key.tableName }}  </summary>
   <div *ngFor="let values of item.value; index as j ">
     <div *ngIf="values.inviteId">

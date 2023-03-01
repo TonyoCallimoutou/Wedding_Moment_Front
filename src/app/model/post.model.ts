@@ -1,12 +1,9 @@
-export class Post {
-  constructor(
-    public postId: number,
-    public eventId: number,
-    public pictureUrl: string,
-    public countReact: number,
-    public userId: string,
-    public userName: string,
-    public photoUrl: string) {
-  }
-
+interface Post {
+    postId: number,
+    eventId: number,
+    pictureUrl: string,
+    countReact: number,
+    userId: string,
+    userName: string,
+    photoUrl: string
 }

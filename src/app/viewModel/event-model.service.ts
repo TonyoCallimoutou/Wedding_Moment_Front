@@ -1,12 +1,18 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject, take} from 'rxjs';
-import {User} from '../model/user.model';
 import {EventService} from '../service/event.service';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserModelService} from './user-model.service';
-import {Event} from "../model/event.model";
 import {PostModelService} from "./post-model.service";
 import {LocalModel} from "../model/local.model";
+// @ts-ignore
+import {User} from '../model/user.model';
+// @ts-ignore
+import {EventModel} from "../model/event.model";
+// @ts-ignore
+import {Menu} from "../model/menu.model";
+// @ts-ignore
+import {TableInvite} from "../model/table-invite.model";
 
 
 @Injectable({
@@ -15,18 +21,16 @@ import {LocalModel} from "../model/local.model";
 export class EventModelService {
 
   userData: User;
-
+  event: EventModel;
   isMaster: boolean = false;
 
-  event: any;
+  private listOfEvent: EventModel[] = [];
+  private listOfMenu: Menu[] = [];
+  private listOfTableInvite: TableInvite[] = [];
 
-  private listOfEvent: any[] = [];
-  private listOfMenu: any[] = [];
-  private listOfPlanTable: any[] = [];
-
-  private listOfEventObs$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private listOfMenuObs$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  private listOfPlanTableObs$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  private listOfEventObs$: BehaviorSubject<EventModel[]> = new BehaviorSubject<EventModel[]>([]);
+  private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
+  private listOfTableInviteObs$: BehaviorSubject<TableInvite[]> = new BehaviorSubject<TableInvite[]>([]);
 
   constructor(
     private userModelService: UserModelService,
@@ -34,11 +38,18 @@ export class EventModelService {
     public eventService: EventService,
     public socketService: SocketIoService
   ) {
-    this.userData = this.userModelService.getCurrentUser();
+    this.initUserData()
 
     this.initList();
 
     this.initListeningFromSocket();
+  }
+
+  initUserData() {
+    this.userData = this.userModelService.getCurrentUser();
+    if (!!this.event && !!this.userData) {
+      this.isMaster = this.event.userId === this.userData.userId;
+    }
   }
 
   initList() {
@@ -80,48 +91,48 @@ export class EventModelService {
     });
 
     this.socketService.socket.on('listeningAddInvite', (invite: any) => {
-      this.listOfPlanTable.push(invite);
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+      this.listOfTableInvite.push(invite);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
 
     this.socketService.socket.on('listeningRemoveInvite', (invite: any) => {
-      for (let i = 0; i < this.listOfPlanTable.length; i++) {
-        if (this.listOfPlanTable[i].inviteId == invite.inviteId) {
-          this.listOfPlanTable[i].inviteId = null;
-          this.listOfPlanTable[i].inviteName = null;
+      for (let i = 0; i < this.listOfTableInvite.length; i++) {
+        if (this.listOfTableInvite[i].inviteId == invite.inviteId) {
+          this.listOfTableInvite[i].inviteId = null;
+          this.listOfTableInvite[i].inviteName = null;
         }
       }
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
 
     this.socketService.socket.on('listeningSetInvite', (invite: any) => {
-      this.listOfPlanTable = this.listOfPlanTable.filter(item => item.inviteId !== invite.inviteId);
-      this.listOfPlanTable.push(invite);
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+      this.listOfTableInvite = this.listOfTableInvite.filter(item => item.inviteId !== invite.inviteId);
+      this.listOfTableInvite.push(invite);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
 
-    this.socketService.socket.on('listeningAddPlanTable', (planTable: any) => {
-      this.listOfPlanTable.push(planTable);
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+    this.socketService.socket.on('listeningAddPlanTable', (tableInvite: any) => {
+      this.listOfTableInvite.push(tableInvite);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
 
-    this.socketService.socket.on('listeningRemovePlanTable', (planTable: any) => {
-      this.listOfPlanTable = this.listOfPlanTable.filter(item => item.planTableId !== planTable.planTableId);
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+    this.socketService.socket.on('listeningRemovePlanTable', (tableInvite: any) => {
+      this.listOfTableInvite = this.listOfTableInvite.filter(item => item.planTableId !== tableInvite.planTableId);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
 
-    this.socketService.socket.on('listeningSetPlanTable', (planTable: any) => {
-      this.listOfPlanTable = this.listOfPlanTable.filter(item => item.planTableId !== planTable.planTableId);
-      this.listOfPlanTable.push(planTable);
-      this.listOfPlanTableObs$.next(this.listOfPlanTable);
+    this.socketService.socket.on('listeningSetPlanTable', (tableInvite: any) => {
+      this.listOfTableInvite = this.listOfTableInvite.filter(item => item.planTableId !== tableInvite.planTableId);
+      this.listOfTableInvite.push(tableInvite);
+      this.listOfTableInviteObs$.next(this.listOfTableInvite);
     });
   }
 
-  getAllEvent() {
+  getAllEvent(): BehaviorSubject<EventModel[]> {
     return this.listOfEventObs$;
   }
 
-  goToEvent(event: Event) {
+  goToEvent(event: EventModel) {
     this.event = event;
     this.eventService.goToEvent(event);
 
@@ -130,11 +141,11 @@ export class EventModelService {
     this.initEventData();
   }
 
-  getActualEvent() {
+  getActualEvent(): EventModel {
     return this.event;
   }
 
-  getIsMaster() {
+  getIsMaster(): boolean {
     return this.isMaster;
   }
 
@@ -153,8 +164,8 @@ export class EventModelService {
     this.eventService.getPlanTable(this.event.eventId)
       .pipe(take(1))
       .subscribe((data: any) => {
-        this.listOfPlanTable = data;
-        this.listOfPlanTableObs$.next(data);
+        this.listOfTableInvite = data;
+        this.listOfTableInviteObs$.next(data);
       });
 
     this.postModelService.initPostModelService();
@@ -162,7 +173,7 @@ export class EventModelService {
 
   // Create Event
   createEvents(name: string) {
-    const data = {
+    const data: EventModel = {
       userId: this.userData.userId,
       name: name
     }
@@ -174,7 +185,7 @@ export class EventModelService {
   }
 
   // Remove Event
-  deleteEvent(event: any) {
+  deleteEvent(event: EventModel) {
     if (this.isMaster) {
       this.eventService.deleteEvent(event.eventId)
         .pipe(take(1))
@@ -185,7 +196,7 @@ export class EventModelService {
   }
 
   // Create Menu
-  createMenu(menu: any) {
+  createMenu(menu: Menu) {
     if (this.isMaster) {
       this.eventService.createMenu(menu)
         .pipe(take(1))
@@ -195,12 +206,12 @@ export class EventModelService {
     }
   }
 
-  getMenu() {
+  getMenu(): BehaviorSubject<Menu[]>  {
     return this.listOfMenuObs$
   }
 
   // Remove Menu
-  deleteMenu(menu: any) {
+  deleteMenu(menu: Menu) {
     if (menu.eventId == this.event.eventId && this.isMaster) {
       this.eventService.deleteMenu(menu.menuId)
         .pipe(take(1))
@@ -210,18 +221,14 @@ export class EventModelService {
     }
   }
 
-  getPlanTable() {
-    return this.listOfPlanTableObs$
+  getPlanTable(): BehaviorSubject<TableInvite[]> {
+    return this.listOfTableInviteObs$
   }
 
   // Create PlanTable
-  createPlanTable(name: string) {
-    const data = {
-      eventId: this.event.eventId,
-      tableName: name
-    }
+  createPlanTable(planTable: PlanTable) {
     if (this.isMaster) {
-      this.eventService.createPlanTable(data)
+      this.eventService.createPlanTable(planTable)
         .pipe(take(1))
         .subscribe(data => {
           this.socketService.addPlanTable(data)
@@ -231,18 +238,18 @@ export class EventModelService {
 
 
   // Remove Plan Table
-  deletePlanTable(planTable: any) {
-    if (planTable.eventId == this.event.eventId && this.isMaster) {
-      this.eventService.deletePlanTable(planTable.planTableId)
+  deletePlanTable(tableInvite: PlanTable) {
+    if (tableInvite.planTableId && tableInvite.eventId == this.event.eventId && this.isMaster) {
+      this.eventService.deletePlanTable(tableInvite.planTableId)
         .pipe(take(1))
         .subscribe(data => {
-          this.socketService.removePlanTable(planTable)
+          this.socketService.removePlanTable(tableInvite)
         })
     }
   }
 
   // Create invite
-  createInvite(invite: any) {
+  createInvite(invite: Invite) {
     if (this.isMaster) {
       this.eventService.createInvite(invite)
         .pipe(take(1))
@@ -253,8 +260,8 @@ export class EventModelService {
   }
 
   // Remove invite
-  deleteInvite(invite: any) {
-    if (invite.eventId == this.event.eventId && this.isMaster) {
+  deleteInvite(invite: Invite) {
+    if (!!invite.inviteId && invite.eventId == this.event.eventId && this.isMaster) {
       this.eventService.deleteInvite(invite.inviteId)
         .pipe(take(1))
         .subscribe(data => {
