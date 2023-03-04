@@ -1,0 +1,70 @@
+.card {
+  background: var(--black);
+  padding: 1rem;
+  border: 0.5rem solid var(--primary);
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5rem;
+
+  h1 {
+    color: var(--primary-light);
+  }
+
+  .input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    gap: 3.5rem;
+
+    .formGroup {
+      position: relative;
+      width: 100%;
+
+      input {
+        display: block;
+        width: -webkit-fill-available;
+        border: none;
+        padding: 1rem;
+      }
+
+      span {
+        position: absolute;
+        text-align: left;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+        width: 8rem;
+        top: 50%;
+        right: 100%;
+        transform: translate(100% , -50%);
+        pointer-events: none;
+        transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
+      }
+
+      input:valid~span,
+      input:focus~span {
+        transform: translateY(-50%);
+        text-align: center;
+        margin-right: 1rem;
+        top: 0;
+        right: 0;
+        background: black;
+        border: 1px solid var(--primary-dark);
+        color: var(--primary-light);
+
+      }
+    }
+  }
+  .button {
+    background: var(--secondary-light);
+    padding: 1rem;
+  }
+
+  .forgotPassword {
+    align-self: flex-end;
+    color: var(--primary-light);
+  }
+}

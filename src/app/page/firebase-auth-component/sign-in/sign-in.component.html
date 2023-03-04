@@ -1,37 +1,8 @@
-<div class="displayTable">
-  <div class="displayTableCell">
-    <div class="authBlock">
-      <h3>Sign In</h3>
-      <div class="formGroup">
-        <input #userName class="formControl" placeholder="Username" required type="text">
-      </div>
-      <div class="formGroup">
-        <input #userPassword class="formControl" placeholder="Password" required type="password">
-      </div>
-      <!-- Calling SignIn Api from AuthService -->
-      <div class="formGroup">
-        <input (click)="authService.SignIn(userName.value, userPassword.value)" class="btn btnPrimary" type="button"
-               value="Log in">
-      </div>
-      <div class="formGroup">
-        <span class="or"><span class="orInner">Or</span></span>
-      </div>
-      <!-- Calling GoogleAuth Api from AuthService -->
-      <div class="formGroup">
-        <button (click)="authService.GoogleAuth()" class="btn googleBtn" type="button">
-          <i class="fab fa-google-plus-g"></i>
-          Log in with Google
-        </button>
-      </div>
-      <div class="forgotPassword">
-        <span routerLink="/forgot-password">Forgot Password?</span>
-      </div>
-    </div>
-    <div class="redirectToLogin">
-      <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>
-    </div>
-    <div class="formGroup">
-      <input (click)="authService.passWithoutSignIn()" class="btn btnPrimary" type="button" value="PASS">
-    </div>
+<div class="formulaire">
+  <app-login></app-login>
+  <div class="pass">
+    <span (click)="authService.passWithoutSignIn()">Pass without login</span>
+    <!-- TODO -->
+    <!-- <app-arrow nbrArrow=1  direction=left ></app-arrow>-->
   </div>
 </div>

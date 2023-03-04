@@ -1,0 +1,34 @@
+<div class="card">
+  <h1 class="font-default-24">Sign In</h1>
+  <div class="input">
+    <div class="formGroup">
+      <input class="font-default-16" #userEmail type="email" required="required">
+      <span class="font-default-20"> Email </span>
+    </div>
+    <div class="formGroup">
+      <input class="font-default-16" #userPassword type="password" required="required">
+      <span class="font-default-20"> Password </span>
+    </div>
+  </div>
+
+  <!-- Calling SignIn Api from AuthService -->
+  <div class="formGroup">
+    <div class="button" (click)="authService.SignIn(userEmail.value, userPassword.value)">
+      <h2 class="font-default-20"> Log in </h2>
+    </div>
+  </div>
+  <!-- Calling GoogleAuth Api from AuthService -->
+  <div class="formGroup">
+    <div class="button" (click)="authService.GoogleAuth()">
+      <h2 class="font-default-20"> Log in with Google </h2>
+    </div>
+  </div>
+  <div class="forgotPassword">
+    <h2 class="font-default-20" routerLink="/forgot-password">Forgot Password ?</h2>
+  </div>
+
+  <!-- TODO -->
+<!--    <div class="redirectToLogin">-->
+<!--      <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>-->
+<!--    </div>-->
+</div>

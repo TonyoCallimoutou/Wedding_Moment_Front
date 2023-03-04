@@ -1,1 +1,89 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "GreatVibes";
+  src: local("GreatVibes"), url(./assets/fonts/GreatVibes-Regular.ttf) format("truetype");
+}
+@font-face {
+  font-family: "BreeSerif";
+  src: local("BreeSerif"), url(./assets/fonts/BreeSerif-Regular.ttf) format("truetype");
+}
+
+:root {
+  --primary: #C7AA81;
+  --primary-light: #FBDCB1;
+  --primary-dark: #644E29;
+  --secondary: #C0C0C0;
+  --secondary-light: #F3F3F3;
+  --secondary-dark: #909090;
+  --black: #000000;
+
+  --font-size-default: 0.75rem;
+  --font-size-default-16: 1rem;
+  --font-size-default-20: 1.25rem;
+  --font-size-default-24: 2.5rem;
+
+  --font-size-title: 0.75rem;
+  --font-size-title-20: 1.25rem;
+
+}
+
+body {
+  margin: 0;
+}
+
+.font-default {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default);
+  margin: 0;
+  font-weight: normal;
+}
+.font-default-16 {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-16);
+  margin: 0;
+  font-weight: normal;
+}
+.font-default-20 {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-20);
+  margin: 0;
+  font-weight: normal;
+}
+.font-default-24 {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-24);
+  margin: 0;
+  font-weight: normal;
+}
+.font-title {
+  font-family: GreatVibes, serif;
+  font-size: var(--font-size-title);
+  margin: 0;
+  font-weight: normal;
+}
+.font-title-20 {
+  font-family: GreatVibes, serif;
+  font-size: var(--font-size-title-20);
+  margin: 0;
+  font-weight: normal;
+}
+
+
+
+//h1 {
+//  font-family: breeSerif, serif;
+//  font-size: var(--font-size-default-24);
+//  margin: 0;
+//}
+//h2 {
+//  font-family: BreeSerif, serif;
+//  font-size: var(--font-size-default-20);
+//  margin: 0;
+//}
+//
+//h3 {
+//  font-family: BreeSerif, serif;
+//  font-size: var(--font-size-default-16);
+//  margin: 0;
+//}
+

@@ -136,8 +136,9 @@ export class EventModelService {
     this.event = event;
     this.eventService.goToEvent(event);
 
-    this.isMaster = this.event.userId === this.userData.userId;
-
+    if(this.userData) {
+      this.isMaster = this.event.userId === this.userData.userId;
+    }
     this.initEventData();
   }
 
