@@ -1,0 +1,11 @@
+<div class="card">
+  <h1 class="font-default-24"> {{ 'Menu.title' | translate | uppercase }}</h1>
+
+  <div class="menu">
+    <div *ngFor="let item of menuList; index as i" >
+      <p class="categorie font-default-20"> ~ {{ item.menuCategorie | uppercase }} ~ </p>
+      <p class="description"> {{ item.menuDescription }} </p>
+    </div>
+  </div>
+
+</div>

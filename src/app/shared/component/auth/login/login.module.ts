@@ -1,6 +1,8 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
 import {LoginComponent} from "./login.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {CapitalizeFirstLetterPipeModule} from "../../../pipes/capitalize-first-lettre.module";
 
 
 @NgModule({
@@ -8,7 +10,9 @@ import {LoginComponent} from "./login.component";
     LoginComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    TranslateModule,
+    CapitalizeFirstLetterPipeModule
   ],
   exports: [LoginComponent]
 })

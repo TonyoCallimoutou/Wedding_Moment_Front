@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
@@ -17,6 +17,9 @@ import {DashboardModule} from './page/home-page/dashboard/dashboard.module';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
 import {SettingPageComponent} from './page/setting-page/setting-page.component';
 import {HomePageComponent} from './page/home-page/home-page.component';
+import { TranslateLoader, TranslateModule} from "@ngx-translate/core";
+import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {CapitalizeFirstLetterPipe} from "./shared/pipes/capitalize-first-letter.pipe";
 
 @NgModule({
   declarations: [
@@ -29,6 +32,15 @@ import {HomePageComponent} from './page/home-page/home-page.component';
     HomePageComponent
   ],
   imports: [
+    // ngx-translate and the loader module
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
     DashboardModule,
     BrowserModule,
     AppRoutingModule,
@@ -40,5 +52,10 @@ import {HomePageComponent} from './page/home-page/home-page.component';
   providers: [AuthService, SocketIoService],
   bootstrap: [AppComponent]
 })
+
 export class AppModule {
+}
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

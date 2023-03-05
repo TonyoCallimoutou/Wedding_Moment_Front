@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 
 import {SignInComponent} from "./sign-in.component";
-import {LoginModule} from "../../../component/auth/login/login.module";
+import {LoginModule} from "../../../shared/component/auth/login/login.module";
 
 
 @NgModule({

@@ -1,18 +1,19 @@
-<h1> Menu</h1>
-<div *ngIf="isMaster">
-  <label for="categorie"> Catégorie</label>
-  <input [(ngModel)]="cat" id="categorie">
-  <label for="description"> Description</label>
-  <input [(ngModel)]="des" id="description">
+<div class="page">
+  <app-card-menu
+    [menuList]="menuList"
+  ></app-card-menu>
 
-  <button (click)="addMenu()">
-    Add Menu
-  </button>
-</div>
-
-<div *ngFor="let item of menuList; index as i">
-  <p> {{ item.menuCategorie }} : {{ item.menuDescription }}</p>
   <div *ngIf="isMaster">
-    <button (click)="removeMenu(i)"> remove Menu</button>
+    <label for="categorie"> Catégorie</label>
+    <input [(ngModel)]="cat" id="categorie">
+    <label for="description"> Description</label>
+    <input [(ngModel)]="des" id="description">
+
+    <button (click)="addMenu()">
+      Add Menu
+    </button>
+
+    <!-- TODO -->
+    <!-- REMOVE MENU -->
   </div>
 </div>
