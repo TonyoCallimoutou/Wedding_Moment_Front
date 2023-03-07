@@ -1,0 +1,60 @@
+.card {
+  position: relative;
+  background: var(--black);
+  padding: 1rem;
+  border: 0.5rem solid var(--primary);
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.5rem;
+  margin: auto;
+}
+
+.table {
+  cursor: move;
+  background: #fff;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.text {
+  margin: 0;
+}
+
+
+mwlResizable {
+  box-sizing: border-box; // required for the enableGhostResize option to work
+}
+
+.resize-handle-top,
+.resize-handle-bottom {
+  position: absolute;
+  height: 5px;
+  cursor: row-resize;
+  width: 100%;
+}
+
+.resize-handle-top {
+  top: 0;
+}
+
+.resize-handle-bottom {
+  bottom: 0;
+}
+
+.resize-handle-left,
+.resize-handle-right {
+  position: absolute;
+  height: 100%;
+  cursor: col-resize;
+  width: 5px;
+}
+
+.resize-handle-left {
+  left: 0;
+}
+
+.resize-handle-right {
+  right: 0;
+}

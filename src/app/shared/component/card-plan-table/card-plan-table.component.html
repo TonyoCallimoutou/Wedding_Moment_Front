@@ -1,0 +1,45 @@
+<button *ngIf="isMaster && !isEdit" (click)="isEdit = !isEdit"> Edit </button>
+<button *ngIf="isEdit" (click)="save()"> Save </button>
+<div #card class="card"
+     mwlResizable
+     [ngStyle]="style"
+     (resizeEnd)="onResizeEnd($event)">
+
+  <div #table *ngFor="let item of tableInviteMap | keyvalue"
+       class="table"
+       cdkDragBoundary=".card" cdkDrag
+       [cdkDragDisabled]="!isEdit"
+       [cdkDragFreeDragPosition]="item.key.position"
+       (cdkDragEnded)="checkPosition(item.key, $event)">
+    <input
+      *ngIf="isEdit"
+      class="input font-default-20"
+      type="text"
+      [style.width.px]="(item.key.tableName.length + 1) * 8"
+      oninput="this.style.width = ((this.value.length + 1) * 8) + 'px';"
+      [(ngModel)]="item.key.tableName">
+    <p class="text font-default-20" *ngIf="!isEdit"> {{item.key.tableName}}</p>
+
+  </div>
+
+  <div
+    class="resize-handle-top"
+    mwlResizeHandle
+    [resizeEdges]="{ top: isEdit }"
+  ></div>
+  <div
+    class="resize-handle-left"
+    mwlResizeHandle
+    [resizeEdges]="{ left: isEdit }"
+  ></div>
+  <div
+    class="resize-handle-right"
+    mwlResizeHandle
+    [resizeEdges]="{ right: isEdit }"
+  ></div>
+  <div
+    class="resize-handle-bottom"
+    mwlResizeHandle
+    [resizeEdges]="{ bottom: isEdit }"
+  ></div>
+</div>
