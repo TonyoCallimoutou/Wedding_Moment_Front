@@ -18,12 +18,27 @@
     flex-direction: column;
     gap: 3.5rem;
 
+    .champ-input {
+      display: flex;
+    }
+
+    .button-remove {
+      position: absolute;
+    }
+
     .categorie,
     .description {
+      display: block;
       color: var(--primary-light);
       margin: auto;
       text-align: center;
       width: 70%;
+    }
+
+    input.categorie,
+    input.description {
+      background: transparent;
+      border: 0;
     }
   }
 

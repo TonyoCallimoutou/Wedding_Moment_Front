@@ -85,9 +85,11 @@ export class EventModelService {
     });
 
     this.socketService.socket.on('listeningSetMenu', (menu: any) => {
-      this.listOfMenu = this.listOfMenu.filter(item => item.postmenuId !== menu.menuId);
-      this.listOfMenu.push(menu);
-      this.listOfMenuObs$.next(this.listOfMenu);
+      const index = this.listOfMenu.findIndex((obj) => obj.menuId === menu.menuId);
+      if (index !== -1) {
+        this.listOfMenu.splice(index, 1, menu);
+        this.listOfMenuObs$.next(this.listOfMenu);
+      }
     });
 
     this.socketService.socket.on('listeningAddInvite', (invite: any) => {
@@ -203,6 +205,16 @@ export class EventModelService {
         .pipe(take(1))
         .subscribe(data => {
           this.socketService.addMenu(data)
+        })
+    }
+  }
+
+  updateMenu(menu: Menu) {
+    if (this.isMaster) {
+      this.eventService.updateMenu(menu)
+        .pipe(take(1))
+        .subscribe(data => {
+          this.socketService.setMenu(data)
         })
     }
   }

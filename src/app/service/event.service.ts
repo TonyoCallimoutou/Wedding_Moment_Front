@@ -39,6 +39,10 @@ export class EventService {
     return this.http.post(`${baseUrl}/Menu`, data);
   }
 
+  updateMenu(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/Menu`, data);
+  }
+
   getMenu(id: number): Observable<any> {
     return this.http.get(`${baseUrl}/Menu/${id}`);
   }

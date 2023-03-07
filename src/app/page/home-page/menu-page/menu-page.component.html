@@ -1,19 +1,9 @@
 <div class="page">
   <app-card-menu
     [menuList]="menuList"
+    [isMaster]="isMaster"
+    (addMenu)="addMenu($event)"
+    (removeMenu)="removeMenu($event)"
   ></app-card-menu>
 
-  <div *ngIf="isMaster">
-    <label for="categorie"> Catégorie</label>
-    <input [(ngModel)]="cat" id="categorie">
-    <label for="description"> Description</label>
-    <input [(ngModel)]="des" id="description">
-
-    <button (click)="addMenu()">
-      Add Menu
-    </button>
-
-    <!-- TODO -->
-    <!-- REMOVE MENU -->
-  </div>
 </div>

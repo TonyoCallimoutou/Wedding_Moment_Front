@@ -11,25 +11,27 @@ export class MenuPageComponent {
   @Input() public isMaster: boolean = false;
   @Input() public menuList: Menu[] = [];
 
-  cat: string = "";
-  des: string = "";
-
   constructor(
     private eventModelService: EventModelService
   ) {
   }
 
-  addMenu() {
-    this.eventModelService.createMenu({
-      eventId: this.eventModelService.getActualEvent().eventId,
-      menuCategorie: this.cat,
-      menuDescription: this.des
-    });
+  addMenu(menu : Menu) {
+
+    menu.eventId = this.eventModelService.getActualEvent().eventId
+
+    if (menu.menuId) {
+      this.eventModelService.updateMenu(menu);
+    }
+    else {
+      this.eventModelService.createMenu(menu);
+    }
+
   }
 
-  removeMenu(index: number) {
+  removeMenu(menu: Menu) {
     if (this.isMaster) {
-      this.eventModelService.deleteMenu(this.menuList[index]);
+      this.eventModelService.deleteMenu(menu);
     }
   }
 

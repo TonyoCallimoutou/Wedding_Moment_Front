@@ -1,11 +1,42 @@
 <div class="card">
-  <h1 class="font-default-24"> {{ 'Menu.title' | translate | uppercase }}</h1>
+  <div>
+    <h1 class="font-default-24"> {{ 'Menu.title' | translate | uppercase }}</h1>
 
-  <div class="menu">
-    <div *ngFor="let item of menuList; index as i" >
-      <p class="categorie font-default-20"> ~ {{ item.menuCategorie | uppercase }} ~ </p>
-      <p class="description"> {{ item.menuDescription }} </p>
+    <div>
+      <button *ngIf="isMaster" class="button-modifier" (click)="isEdit = !isEdit"> modifier </button>
+      <button *ngIf="isEdit" class="button-save" (click)="save()"> save </button>
     </div>
   </div>
 
+
+  <div class="menu">
+    <div *ngFor="let item of menuList; index as i" >
+      <!-- Categorie -->
+      <p *ngIf="!isEdit" class="categorie font-default-20"> ~ {{ item.menuCategorie }} ~</p>
+      <div class="champ-input"
+        *ngIf="isEdit">
+        <input
+          class="categorie font-default-20"
+          (ngModelChange)="onInputChange(item.menuId)"
+          type="text"
+          [(ngModel)]="item.menuCategorie">
+        <button class="button-remove" (click)="delete(item)"> remove </button>
+      </div>
+
+      <!-- Description -->
+      <p *ngIf="!isEdit" class="description font-default-16"> {{ item.menuDescription }}</p>
+      <div class="champ-input"
+        *ngIf="isEdit">
+        <input
+          class="description font-default-16"
+          (ngModelChange)="onInputChange(item.menuId)"
+          type="text"
+          [(ngModel)]="item.menuDescription">
+      </div>
+    </div>
+    <div *ngIf="isEdit">
+      <input  *ngIf="isEdit" [(ngModel)]="categorie" class="categorie font-default-20" placeholder="+" >
+      <input *ngIf="isEdit" [(ngModel)]="description" class="description font-default-16" type="text" placeholder="+">
+    </div>
+  </div>
 </div>

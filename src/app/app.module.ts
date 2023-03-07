@@ -19,7 +19,6 @@ import {SettingPageComponent} from './page/setting-page/setting-page.component';
 import {HomePageComponent} from './page/home-page/home-page.component';
 import { TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-import {CapitalizeFirstLetterPipe} from "./shared/pipes/capitalize-first-letter.pipe";
 
 @NgModule({
   declarations: [
