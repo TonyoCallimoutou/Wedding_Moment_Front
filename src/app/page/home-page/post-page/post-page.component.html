@@ -1,4 +1,13 @@
-<h2> POST </h2>
+<div class="switch">
+  <button class="switch-list" [ngClass]="listViewSelected ? 'selected' : 'unselected'"
+    (click)="listViewSelected = true">
+      <p> LISTE </p>
+  </button>
+  <button class="switch-grid" [ngClass]="listViewSelected ? 'unselected' : 'selected'"
+    (click)="listViewSelected = false">
+    <p> GRILLE </p>
+  </button>
+</div>
 
 <div *ngIf="canAccess">
 
@@ -6,34 +15,44 @@
     (createPostEvent)="addPost($event)"
   ></app-create-post>
 
-  <div *ngFor="let post of posts; let index = index" class="card">
-    <div class="header">
-      <div class="user-banner">
-        <div class="photo-profil">
-          <img alt="{{ post.userId}}" src="{{ post.photoUrl }}">
-        </div>
-        <p> {{ post.userName}}</p>
-      </div>
-    </div>
-    <div class="post">
-      <img alt="{{ post.postId}}" src="{{ post.pictureUrl }}">
-    </div>
-    <div class="footer">
-      <app-like-button
-        (click)="reactPost(post)"
-        [countLike]="post.countReact"
-        [isLike]="reactPostId.includes(post.postId)"
-      >
-      </app-like-button>
-
-      <app-delete-button
-        (click)="removePost(post)"
-        *ngIf="post.userId == currentUser.userId"
-      >
-      </app-delete-button>
-      <button> Share</button>
-    </div>
+  <div *ngIf="listViewSelected">
+    <app-card-post
+      *ngFor="let post of posts; let index = index"
+      [post]="post"
+      [reactPostId]="reactPostId"
+      [currentUser]="currentUser"
+      (reaction)="reactPost($event)"
+      (delete)="removePost($event)"
+    >
+    </app-card-post>
   </div>
+
+  <div *ngIf="!listViewSelected" class="view-grid">
+
+    <div class="image-grid">
+      <img
+        *ngFor="let post of posts; let i = index"
+        [src]="post.pictureUrl"
+        [ngClass]="{'big': isBigImage(i), 'small': !isBigImage(i) }"
+        (click)="openDialog(posts[i])">
+    </div>
+
+
+    <div *ngIf="isDialogOpen" class="dialog" #dialog>
+      <app-card-post
+        [post]="postDetail"
+        [reactPostId]="reactPostId"
+        [currentUser]="currentUser"
+        [style]="'border-radius: 1.5rem; border: 0.5rem solid var(--secondary-dark);'"
+        (reaction)="reactPost($event)"
+        (delete)="removePost($event)"
+      >
+      </app-card-post>
+    </div>
+
+  </div>
+
+
 
 </div>
 

@@ -80,6 +80,7 @@ export class PostModelService {
             .pipe(take(1))
             .subscribe(() => {
               data.pictureUrl = url;
+              console.log(data);
               this.socketService.addPost(data);
             })
         })

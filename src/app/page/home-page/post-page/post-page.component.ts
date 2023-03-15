@@ -1,9 +1,5 @@
-import {Component, Input} from '@angular/core';
+import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
-// @ts-ignore
-import {Post} from 'src/app/model/post.model';
-// @ts-ignore
-import {User} from 'src/app/model/user.model';
 
 @Component({
   selector: 'app-post-page',
@@ -17,9 +13,32 @@ export class PostPageComponent {
   @Input() public posts: Post[] = [];
   @Input() public reactPostId: number[] = [];
 
+  public listViewSelected: boolean = true;
+  public isDialogOpen : boolean = false;
+  public postDetail: any;
+
+  @ViewChild('dialog') dialog: ElementRef | undefined;
+
+
   constructor(
-    private postModelService: PostModelService
+    private postModelService: PostModelService,
+    private renderer: Renderer2,
   ) {
+    this.renderer.listen('window', 'click',(e:Event)=>{
+      if (this.isDialogOpen) {
+        if(!this.dialog?.nativeElement.contains(e.target)){
+          this.isDialogOpen = false;
+          this.postDetail = null;
+        }
+      }
+      else if (this.postDetail) {
+        this.isDialogOpen = true;
+      }
+    });
+  }
+
+  public isBigImage(index : number) {
+    return index % 10 === 3 || index % 10 === 9;
   }
 
   /**
@@ -44,6 +63,10 @@ export class PostPageComponent {
    */
   public reactPost(post: Post) {
     this.postModelService.reactPost(post);
+  }
+
+  public openDialog(post: Post) {
+    this.postDetail = post;
   }
 
 }
