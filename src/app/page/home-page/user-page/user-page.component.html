@@ -1,10 +1,6 @@
-<h2> USER </h2>
-
-<app-setting-button
-  (click)="goToSetting()"
-  class="setting"
->
-</app-setting-button>
+<button (click)="switchEvent()">
+  Change Event
+</button>
 
 <div *ngIf="canAccess">
   <div class="header">
@@ -12,9 +8,27 @@
     <p> {{ currentUser.userName}}</p>
   </div>
 
-  <button (click)="switchEvent()">
-    Change Event
-  </button>
+  <div class="accordeons">
+
+    <div class="wrap_title" (click)="viewContent1 = !viewContent1"> {{ 'Users.tab_title_1' | translate | titlecase }}</div>
+    <div class="content" [ngClass]="viewContent1 ? 'visible' : 'invisible'">
+      <div class="param">{{ 'Users.nom_utilisateur' | translate | capitalizeFirstLetter }}</div>
+    </div>
+
+    <div class="wrap_title" (click)="viewContent2 = !viewContent2">{{ 'Users.tab_title_2' | translate | titlecase }}</div>
+    <div class="content" [ngClass]="viewContent2 ? 'visible' : 'invisible'">
+      <div class="param">{{ 'Users.langue' | translate | capitalizeFirstLetter }}</div>
+      <div class="param">{{ 'Users.confidentialite' | translate | capitalizeFirstLetter }}</div>
+      <div class="param">{{ 'Users.notification_push' | translate | capitalizeFirstLetter }}</div>
+    </div>
+
+    <div class="wrap_title" (click)="viewContent3 = !viewContent3">{{ 'Users.tab_title_3' | translate | titlecase }}</div>
+    <div class="content" [ngClass]="viewContent3 ? 'visible' : 'invisible'">
+      <div class="param" (click)="signOut()">{{ 'Users.deconnexion' | translate | capitalizeFirstLetter }}</div>
+      <div class="param" (click)="removeUser()">{{ 'Users.supprimer' | translate | capitalizeFirstLetter }}</div>
+    </div>
+
+  </div>
 </div>
 
 <div *ngIf="!canAccess">

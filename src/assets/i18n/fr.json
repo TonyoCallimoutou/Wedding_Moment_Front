@@ -9,5 +9,20 @@
   },
   "Menu": {
     "title" : "menu"
+  },
+  "Posts": {
+    "list" : "liste",
+    "grid" : "grille"
+  },
+  "Users": {
+    "tab_title_1": "information personnel",
+    "tab_title_2": "général",
+    "tab_title_3": "compte",
+    "nom_utilisateur": "nom d'utilisateur",
+    "langue": "langue",
+    "confidentialite": "confidentialité",
+    "notification_push": "notification push",
+    "deconnexion": "deconnexion",
+    "supprimer": "supprimer le compte"
   }
 }

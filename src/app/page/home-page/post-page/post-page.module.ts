@@ -8,20 +8,22 @@ import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {PostPageComponent} from './post-page.component';
 import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {CardPostModule} from "../../../shared/component/card-post/card-post.module";
+import {TranslateModule} from "@ngx-translate/core";
 
 
 @NgModule({
   declarations: [
     PostPageComponent
   ],
-    imports: [
-      CommonModule,
-      LikeButtonModule,
-      DeleteButtonModule,
-      CreatePostModule,
-      SignInModule,
-      CardPostModule
-    ],
+  imports: [
+    CommonModule,
+    LikeButtonModule,
+    DeleteButtonModule,
+    CreatePostModule,
+    SignInModule,
+    CardPostModule,
+    TranslateModule
+  ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]
 })

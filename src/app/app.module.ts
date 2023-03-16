@@ -15,7 +15,6 @@ import {AuthService} from './service/auth.service';
 import {SocketIoService} from './service/socket-io.service';
 import {DashboardModule} from './page/home-page/dashboard/dashboard.module';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
-import {SettingPageComponent} from './page/setting-page/setting-page.component';
 import {HomePageComponent} from './page/home-page/home-page.component';
 import { TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
@@ -27,7 +26,6 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
     ForgotPasswordComponent,
     VerifyEmailComponent,
     PageNotFoundComponent,
-    SettingPageComponent,
     HomePageComponent
   ],
   imports: [

@@ -8,7 +8,6 @@ import {VerifyEmailComponent} from "./page/firebase-auth-component/verify-email/
 import {AuthGuard} from './service/auth.guard';
 import {PresentationPageComponent} from './page/home-page/presentation-page/presentation-page.component';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
-import {SettingPageComponent} from './page/setting-page/setting-page.component';
 import {HomePageComponent} from "./page/home-page/home-page.component";
 
 const routes: Routes = [
@@ -20,8 +19,6 @@ const routes: Routes = [
   {path: 'verify-email-address', component: VerifyEmailComponent},
 
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
-  {path: 'comments', component: PresentationPageComponent, canActivate: [AuthGuard]},
-  {path: 'setting', component: SettingPageComponent, canActivate: [AuthGuard]},
 
   // Last Path
   {path: '**', component: PageNotFoundComponent, canActivate: [AuthGuard]},

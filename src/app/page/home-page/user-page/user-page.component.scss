@@ -7,10 +7,36 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: var(--primary-light);
+  img {
+    border-radius: 50%;
+    height: 5rem;
+    width: 5rem;
+  }
 }
 
-img {
-  border-radius: 50%;
-  height: 5rem;
-  width: 5rem;
+.accordeons {
+
+  gap: 0;
+
+  .wrap_title {
+    color: var(--primary-light);
+    background-color: var(--secondary-dark);
+    font-size: var(--font-size-default-20);
+    padding: 1rem 1rem 1rem 2rem;
+  }
+
+  .content.invisible {
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .param {
+    font-size: var(--font-size-default-16);
+    color: var(--primary-dark);
+    padding: 1rem;
+    background-color: var(--secondary-light);
+    transition: max-height, 1s;
+  }
 }
+

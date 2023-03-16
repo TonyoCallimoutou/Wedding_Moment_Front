@@ -3,8 +3,10 @@ import {LikeButtonModule} from 'src/app/shared/component/button-component/like-b
 import {SettingButtonModule} from 'src/app/shared/component/button-component/setting-button/setting-button.module';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {UserPageComponent} from './user-page.component';
-import {NgIf} from "@angular/common";
+import {NgClass, NgIf, TitleCasePipe} from "@angular/common";
 import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
+import {TranslateModule} from "@ngx-translate/core";
+import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 
 
 @NgModule({
@@ -15,7 +17,11 @@ import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module
     LikeButtonModule,
     SettingButtonModule,
     NgIf,
-    SignInModule
+    SignInModule,
+    NgClass,
+    TranslateModule,
+    TitleCasePipe,
+    CapitalizeFirstLetterPipeModule
   ],
   exports: [UserPageComponent],
   providers: [UserModelService]

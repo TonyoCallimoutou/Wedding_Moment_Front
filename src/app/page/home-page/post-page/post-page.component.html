@@ -1,11 +1,11 @@
 <div class="switch">
   <button class="switch-list" [ngClass]="listViewSelected ? 'selected' : 'unselected'"
     (click)="listViewSelected = true">
-      <p> LISTE </p>
+      <p> {{ 'Posts.list' | translate | uppercase }} </p>
   </button>
   <button class="switch-grid" [ngClass]="listViewSelected ? 'unselected' : 'selected'"
     (click)="listViewSelected = false">
-    <p> GRILLE </p>
+    <p> {{ 'Posts.grid' | translate | uppercase }} </p>
   </button>
 </div>
 
