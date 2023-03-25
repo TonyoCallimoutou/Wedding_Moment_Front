@@ -1,0 +1,24 @@
+.navigation-bar {
+  background-color: var(--primary);
+  border: 1px black solid;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.2rem;
+}
+
+mat-icon {
+  padding: 0.625rem;
+}
+
+.activetab  {
+  color: var(--primary-light);
+  mat-icon {
+    background-color: var(--primary-dark);
+    border-radius: 100%;
+  }
+}

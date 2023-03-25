@@ -8,6 +8,8 @@ import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
 import {PostUtils} from "../utils/post.utils";
+import {StorageModelService} from "./storage-model.service";
+import {user} from "@angular/fire/auth";
 
 
 @Injectable({
@@ -23,7 +25,8 @@ export class UserModelService {
 
   constructor(
     private userService: UserService,
-    private socketService: SocketIoService
+    private socketService: SocketIoService,
+    private storageModelService: StorageModelService,
   ) {
     this.initUserData();
   }
@@ -73,19 +76,22 @@ export class UserModelService {
 
   // SET USER
 
-  public setPhotoUrl(url: string) {
-    const data = {
-      userId: this.userData.userId,
-      userName: this.userData.userName,
-      photoUrl: url
-    }
-    this.userService.setPhotoUrl(data)
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        this.userData.photoUrl = url;
-        localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
-        this.socketService.setUser(data);
-      });
+  public setPhotoUrl(pictureUrl: string) {
+
+    this.storageModelService.uploadUserPictureAndGetUrl(this.userData.userId, pictureUrl).then(url => {
+      const data = {
+        userId: this.userData.userId,
+        userName: this.userData.userName,
+        photoUrl: url
+      }
+      this.userService.setPhotoUrl(data)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.userData.photoUrl = url;
+          localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
+          this.socketService.setUser(data);
+        });
+    })
   }
 
   //Remove User

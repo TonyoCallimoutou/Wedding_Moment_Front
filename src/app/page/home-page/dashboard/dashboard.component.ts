@@ -113,6 +113,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
             inviteName: data[i].inviteName
           }
 
+          if (data[i].inviteId != null) {
+            this.inviteList.push(invite);
+          }
+
           let planTableFilter = this.tableInviteList.filter(item => item.planTableId === planTable.planTableId);
 
           if (planTableFilter.length > 0) {
@@ -125,9 +129,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
           } else {
             this.tableInviteMap.set(planTable, [invite]);
             this.tableInviteList.push(<TableInvite>planTable);
-            if (data[i].inviteId != null) {
-              this.inviteList.push((invite));
-            }
           }
         }
       })

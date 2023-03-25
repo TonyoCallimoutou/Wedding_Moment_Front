@@ -1,42 +1,22 @@
-<h1> Plan de Table </h1>
-
-<!--<div *ngIf="isMaster">-->
-<!--  <label for="categorie"> Creer Table</label>-->
-<!--  <input [(ngModel)]="table" id="categorie">-->
-
-<!--  <button (click)="addPlanTable()">-->
-<!--    Add Plan Table-->
-<!--  </button>-->
-
-
-<!--  <label for="description"> Creer Invite</label>-->
-<!--  <input [(ngModel)]="inviteTable" id="description" list="listOfTable">-->
-<!--  <datalist id="listOfTable">-->
-<!--    <option *ngFor="let item of tableInviteMap | keyvalue" value="{{item.key.tableName}}">{{ item.key.tableName }}</option>-->
-<!--  </datalist>-->
-<!--  <input [(ngModel)]="inviteName">-->
-
-<!--  <button (click)="addInvite()">-->
-<!--    Add Invite-->
-<!--  </button>-->
-<!--</div>-->
-
-<!--<details *ngFor="let item of tableInviteMap | keyvalue ">-->
-<!--  <summary> {{ item.key.tableName }}  </summary>-->
-<!--  <div *ngFor="let values of item.value; index as j ">-->
-<!--    <div *ngIf="values.inviteId">-->
-<!--      <p> {{ values.inviteName }}</p>-->
-<!--      <div *ngIf="isMaster">-->
-<!--        <button (click)="removePlanTable(item.key)"> remove Plan Table</button>-->
-<!--        <button (click)="removeInvite(values)"> remove Invite</button>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</details>-->
 <div class="page">
+
+  <app-search-bar
+    [inviteList]="inviteList"
+    (clickOnInvite)="getSearchResult($event)"
+  >
+  </app-search-bar>
+
   <app-card-plan-table
     [tableInviteMap]="tableInviteMap"
     [isMaster]="isMaster"
+    (getDetail)="getDetail($event)"
   ></app-card-plan-table>
+  <app-card-detail-plan-table
+    *ngIf="tableInfos"
+    [tableInfos]="tableInfos"
+    [isMaster]="isMaster"
+    (addInvite)="addInvite($event)"
+    (removeInvite)="removeInvite($event)"
+  ></app-card-detail-plan-table>
 </div>
 

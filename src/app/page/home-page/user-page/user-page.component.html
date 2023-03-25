@@ -4,7 +4,8 @@
 
 <div *ngIf="canAccess">
   <div class="header">
-    <img (click)="switchPost()" alt="{{ currentUser.userId}}" src="{{ currentUser.photoUrl }}">
+    <img alt="{{ currentUser.userId}}" src="{{ currentUser.photoUrl }}">
+    <input (change)="switchPost($event)" accept=".png,.jpg" type="file"/>
     <p> {{ currentUser.userName}}</p>
   </div>
 

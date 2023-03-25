@@ -72,7 +72,7 @@ export class PostModelService {
       .pipe(take(1))
       .subscribe(data => {
         const postId = data.postId;
-        this.storageModelService.UploadPictureAndGetUrl(postId, pictureUrl).then(url => {
+        this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, postId, pictureUrl).then(url => {
           this.postService.setPictureOfPost({
             postId: postId,
             pictureUrl: url,

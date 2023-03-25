@@ -1,0 +1,9 @@
+<input matInput type="text"  [(ngModel)]="searchWord"(input)="searchInvite()">
+<div class="search-result" *ngIf="searchResult.length > 0">
+  <p
+    *ngFor="let result of searchResult"
+    (click)="onClick(result)"
+  >
+    {{ result.inviteName }}
+  </p>
+</div>

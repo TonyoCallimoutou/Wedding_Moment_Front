@@ -10,21 +10,33 @@ import {UserModelService} from './user-model.service';
 export class StorageModelService {
 
   private basePathPost: string;
+  private basePathUser: string;
 
   constructor(
     private eventService: EventService,
     private storageService: FirebaseStorageService,
-    private userModelService: UserModelService,
   ) {
     this.basePathPost = "/event/" + this.eventService.getEventId();
+    this.basePathUser = "/users";
   }
 
-  public UploadPictureAndGetUrl(postId: number, fileUpload: any): Promise<string> {
+  public uploadPictureAndGetUrl(userId: string, postId: number, fileUpload: any): Promise<string> {
 
     return new Promise(resolve => {
-      const user = this.userModelService.getCurrentUser();
 
-      let filePath = (`${this.basePathPost}/${user.userId}/${postId}`);
+      let filePath = (`${this.basePathPost}/${userId}/${postId}`);
+
+      this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
+        resolve(url)
+      })
+    });
+  }
+
+  public uploadUserPictureAndGetUrl(userId: string, fileUpload: any): Promise<string> {
+
+    return new Promise(resolve => {
+
+      let filePath = (`${this.basePathUser}/${userId}`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
         resolve(url)

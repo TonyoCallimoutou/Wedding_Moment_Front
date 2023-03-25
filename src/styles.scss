@@ -8,6 +8,9 @@
   src: local("BreeSerif"), url(./assets/fonts/BreeSerif-Regular.ttf) format("truetype");
 }
 
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+
 :root {
   --primary: #C7AA81;
   --primary-light: #FBDCB1;
@@ -67,23 +70,4 @@ body {
   margin: 0;
   font-weight: normal;
 }
-
-
-
-//h1 {
-//  font-family: breeSerif, serif;
-//  font-size: var(--font-size-default-24);
-//  margin: 0;
-//}
-//h2 {
-//  font-family: BreeSerif, serif;
-//  font-size: var(--font-size-default-20);
-//  margin: 0;
-//}
-//
-//h3 {
-//  font-family: BreeSerif, serif;
-//  font-size: var(--font-size-default-16);
-//  margin: 0;
-//}
 

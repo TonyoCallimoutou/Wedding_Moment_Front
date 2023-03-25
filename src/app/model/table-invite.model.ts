@@ -19,3 +19,8 @@ interface Invite {
   inviteName: string,
 }
 
+interface TableInfos {
+  key: PlanTable,
+  value: Invite[],
+}
+

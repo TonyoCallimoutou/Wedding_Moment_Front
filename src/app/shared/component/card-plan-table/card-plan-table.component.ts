@@ -1,5 +1,4 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {CdkDragEnd} from "@angular/cdk/drag-drop";
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ResizeEvent} from "angular-resizable-element";
 
 @Component({
@@ -11,6 +10,7 @@ export class CardPlanTableComponent implements OnInit, AfterViewInit {
 
   @Input() tableInviteMap: Map<any, Invite[]> = new Map<any, Invite[]>()
   @Input() isMaster: boolean = false;
+  @Output() getDetail: EventEmitter<TableInfos> = new EventEmitter<TableInfos>();
 
   @ViewChild('card') card: ElementRef | undefined;
 
@@ -84,4 +84,9 @@ export class CardPlanTableComponent implements OnInit, AfterViewInit {
     })
   }
 
+  onClick(invites: TableInfos) {
+    if (!this.isEdit) {
+      this.getDetail.emit(invites);
+    }
+  }
 }

@@ -24,9 +24,9 @@
     <div *ngIf="tabSelector == 4">
       <app-plan-table-page
         [isMaster]="isMaster"
+        [inviteList]="inviteList"
         [tableInviteList]="tableInviteList"
         [tableInviteMap]="tableInviteMap"
-
       >
       </app-plan-table-page>
     </div>
@@ -39,13 +39,11 @@
     </div>
   </div>
 
-  <div class="navigation-bar">
-    <a (click)="tab(1)" [ngClass]="{'activetab' : tabSelector == 1}" class="tab">Presentation</a>
-    <a (click)="tab(2)" [ngClass]="{'activetab' : tabSelector == 2}" class="tab">Menu</a>
-    <a (click)="tab(3)" [ngClass]="{'activetab' : tabSelector == 3}" class="tab">Post</a>
-    <a (click)="tab(4)" [ngClass]="{'activetab' : tabSelector == 4}" class="tab">Plan Table</a>
-    <a (click)="tab(5)" [ngClass]="{'activetab' : tabSelector == 5}" class="tab">User</a>
-  </div>
+  <app-bottom-navigation-bar
+    [tabSelector]="tabSelector"
+    (onclick)="tab($event)"
+  >
+  </app-bottom-navigation-bar>
 
 </div>
 

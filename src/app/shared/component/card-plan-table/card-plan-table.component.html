@@ -1,5 +1,6 @@
 <button *ngIf="isMaster && !isEdit" (click)="isEdit = !isEdit"> Edit </button>
 <button *ngIf="isEdit" (click)="save()"> Save </button>
+
 <div #card class="card"
      mwlResizable
      [ngStyle]="style"
@@ -7,6 +8,7 @@
 
   <div #table *ngFor="let item of tableInviteMap | keyvalue"
        class="table"
+       (click)="onClick(item)"
        cdkDragBoundary=".card" cdkDrag
        [cdkDragDisabled]="!isEdit"
        [cdkDragFreeDragPosition]="item.key.position"

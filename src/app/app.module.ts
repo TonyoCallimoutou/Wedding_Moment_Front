@@ -18,7 +18,7 @@ import {PageNotFoundComponent} from './page/page-not-found/page-not-found.compon
 import {HomePageComponent} from './page/home-page/home-page.component';
 import { TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
-
+import {MatIconModule} from "@angular/material/icon";
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +39,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
       }
     }),
     DashboardModule,
+    MatIconModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

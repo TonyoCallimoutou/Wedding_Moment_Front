@@ -10,10 +10,14 @@ export class PlanTablePageComponent {
 
   @Input() public isMaster: boolean = false;
   @Input() public tableInviteList: TableInvite[] = [];
+  @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
+
   table: string = "";
-  inviteTable: string = "";
-  inviteName: string = "";
+  tableInfos : TableInfos | null = null;
+  searchWord: any;
+  searchResult : Invite[] = [];
+
 
   constructor(
     private eventModelService: EventModelService
@@ -27,19 +31,45 @@ export class PlanTablePageComponent {
     });
   }
 
+  getDetail(invites: TableInfos) {
+    if (this.tableInfos == invites) {
+      this.tableInfos = null;
+    }
+    else {
+      this.tableInfos = invites;
+    }
+
+    console.log(invites);
+  }
+
+  searchInvite() {
+    console.log(this.searchWord);
+
+    if (this.searchWord) {
+      this.searchResult = this.inviteList.filter(invite => invite.inviteName.toLowerCase().includes(this.searchWord.toLowerCase()));
+    }
+    else {
+      this.searchResult = this.inviteList;
+    }
+  }
+
+  getSearchResult(invite: Invite) {
+    this.tableInviteMap.forEach((value,key) => {
+      if (key.planTableId === invite.planTableId) {
+        this.tableInfos = {
+          key: key,
+          value: value,
+        }
+      }
+    });
+  }
+
   removePlanTable(table: any) {
     this.eventModelService.deletePlanTable(table);
   }
 
-  addInvite() {
-
-    let plan = this.tableInviteList.filter(item => item.tableName == this.inviteTable);
-
-    this.eventModelService.createInvite({
-      eventId: plan[0].eventId,
-      planTableId: plan[0].planTableId,
-      inviteName: this.inviteName
-    });
+  addInvite(invite : Invite) {
+    this.eventModelService.createInvite(invite);
   }
 
   removeInvite(invite: Invite) {
