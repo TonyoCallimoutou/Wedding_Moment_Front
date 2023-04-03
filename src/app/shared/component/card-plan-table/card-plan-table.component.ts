@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ResizeEvent} from "angular-resizable-element";
+import {EventModelService} from "../../../viewModel/event-model.service";
 
 @Component({
   selector: 'app-card-plan-table',
@@ -11,20 +12,25 @@ export class CardPlanTableComponent implements OnInit, AfterViewInit {
   @Input() tableInviteMap: Map<any, Invite[]> = new Map<any, Invite[]>()
   @Input() isMaster: boolean = false;
   @Output() getDetail: EventEmitter<TableInfos> = new EventEmitter<TableInfos>();
+  @Output() addPlanTable: EventEmitter<any> = new EventEmitter<any>();
+  @Output() removePlanTable: EventEmitter<any> = new EventEmitter<any>();
 
   @ViewChild('card') card: ElementRef | undefined;
 
+  height: number = 100;
 
   public style: object = {};
+  public listOfNewTable: any [] = [];
+  public isEdit = false;
 
-  isEdit = false;
-
-  constructor() {
+  constructor(
+    private eventModelService: EventModelService,
+  ) {
   }
 
   ngOnInit() {
     this.tableInviteMap.forEach((value,key) => {
-      key.position = { x: 0, y:0};
+      key.position = { x:0, y:0};
     })
   }
 
@@ -76,12 +82,30 @@ export class CardPlanTableComponent implements OnInit, AfterViewInit {
     //console.log(item.position)
   }
 
+  addTable() {
+    // Replace ANY by PLANTABLE
+    let newTable : any = {
+      eventId: this.eventModelService.getActualEvent().eventId,
+      tableName: 'newTable',
+      position: { x:0, y:0},
+    }
+
+    this.listOfNewTable.push(newTable);
+    this.tableInviteMap.set(newTable,[]);
+  }
+
   save() {
     this.isEdit = ! this.isEdit;
 
     this.tableInviteMap.forEach((value,key) => {
       console.log(key.position);
     })
+
+    this.listOfNewTable.forEach(table => {
+      this.addPlanTable.emit(table);
+    })
+
+
   }
 
   onClick(invites: TableInfos) {

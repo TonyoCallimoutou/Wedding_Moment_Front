@@ -1,6 +1,7 @@
 interface EventModel {
   eventId: number,
   userId: string,
-  name: string
+  name: string,
+  pictureUrl: string,
 }
 

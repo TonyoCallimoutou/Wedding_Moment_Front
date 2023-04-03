@@ -1,1 +1,14 @@
-<h2> PRESENTATION </h2>
+<app-dropdown-menu
+  [options]="dropdownOptions"
+  (optionSelected)="onOptionSelected($event)">
+</app-dropdown-menu>
+
+<ng-template #dialogContent>
+  <app-generic-image-cropper
+    [maintainAspectRatio]="true"
+    [imageChangedEvent]="backgroundSrc"
+    [ratio]="1/2"
+    (croppedImage)="setBackground($event)"
+  >
+  </app-generic-image-cropper>
+</ng-template>

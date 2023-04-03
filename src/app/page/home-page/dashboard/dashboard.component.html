@@ -1,42 +1,39 @@
 <div class="home-page">
-  <div class="onglet">
-    <div *ngIf="tabSelector == 1">
-      <app-presentation-page
-      >
-      </app-presentation-page>
-    </div>
-    <div *ngIf="tabSelector == 2">
-      <app-menu-page
-        [isMaster]="isMaster"
-        [menuList]="menuList"
-      >
-      </app-menu-page>
-    </div>
-    <div *ngIf="tabSelector == 3">
-      <app-post-page
-        [canAccess]="canAccess"
-        [currentUser]="currentUser"
-        [posts]="posts"
-        [reactPostId]="reactPostId"
-      >
-      </app-post-page>
-    </div>
-    <div *ngIf="tabSelector == 4">
-      <app-plan-table-page
-        [isMaster]="isMaster"
-        [inviteList]="inviteList"
-        [tableInviteList]="tableInviteList"
-        [tableInviteMap]="tableInviteMap"
-      >
-      </app-plan-table-page>
-    </div>
-    <div *ngIf="tabSelector == 5">
-      <app-user-page
-        [canAccess]="canAccess"
-        [currentUser]="currentUser"
-      >
-      </app-user-page>
-    </div>
+  <div class="onglet" style="background-image: url({{ background ? background : event.pictureUrl }})">
+    <app-presentation-page
+      *ngIf="tabSelector == 1"
+      (sendTemporaryBackground)="setTemporaryBackground($event)"
+      (sendFinallyBackground)="setFinallyBackground($event)"
+    >
+    </app-presentation-page>
+    <app-menu-page
+      *ngIf="tabSelector == 2"
+      [isMaster]="isMaster"
+      [menuList]="menuList"
+    >
+    </app-menu-page>
+    <app-post-page
+      *ngIf="tabSelector == 3"
+      [canAccess]="canAccess"
+      [currentUser]="currentUser"
+      [posts]="posts"
+      [reactPostId]="reactPostId"
+    >
+    </app-post-page>
+    <app-plan-table-page
+      *ngIf="tabSelector == 4"
+      [isMaster]="isMaster"
+      [inviteList]="inviteList"
+      [tableInviteList]="tableInviteList"
+      [tableInviteMap]="tableInviteMap"
+    >
+    </app-plan-table-page>
+    <app-user-page
+      *ngIf="tabSelector == 5"
+      [canAccess]="canAccess"
+      [currentUser]="currentUser"
+    >
+    </app-user-page>
   </div>
 
   <app-bottom-navigation-bar

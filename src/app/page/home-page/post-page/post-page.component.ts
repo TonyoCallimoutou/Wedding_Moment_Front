@@ -1,5 +1,7 @@
-import {Component, ElementRef, Input, Renderer2, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, Renderer2, TemplateRef, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
+import {MatDialog} from "@angular/material/dialog";
+import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 
 @Component({
   selector: 'app-post-page',
@@ -13,28 +15,17 @@ export class PostPageComponent {
   @Input() public posts: Post[] = [];
   @Input() public reactPostId: number[] = [];
 
-  public listViewSelected: boolean = true;
-  public isDialogOpen : boolean = false;
-  public postDetail: any;
+  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
 
-  @ViewChild('dialog') dialog: ElementRef | undefined;
+  public listViewSelected: boolean = true;
+
+  public postDetail: any = null;
 
 
   constructor(
     private postModelService: PostModelService,
-    private renderer: Renderer2,
+    private dialog: MatDialog,
   ) {
-    this.renderer.listen('window', 'click',(e:Event)=>{
-      if (this.isDialogOpen) {
-        if(!this.dialog?.nativeElement.contains(e.target)){
-          this.isDialogOpen = false;
-          this.postDetail = null;
-        }
-      }
-      else if (this.postDetail) {
-        this.isDialogOpen = true;
-      }
-    });
   }
 
   public isBigImage(index : number) {
@@ -67,6 +58,9 @@ export class PostPageComponent {
 
   public openDialog(post: Post) {
     this.postDetail = post;
+    this.dialog.open(GenericDialogComponent, {
+      data: { contentTemplate: this.dialogContent }
+    });
   }
 
 }

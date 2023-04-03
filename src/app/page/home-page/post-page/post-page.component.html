@@ -38,8 +38,9 @@
     </div>
 
 
-    <div *ngIf="isDialogOpen" class="dialog" #dialog>
+    <ng-template #dialogContent>
       <app-card-post
+        class="dialog"
         [post]="postDetail"
         [reactPostId]="reactPostId"
         [currentUser]="currentUser"
@@ -48,7 +49,8 @@
         (delete)="removePost($event)"
       >
       </app-card-post>
-    </div>
+    </ng-template>
+
 
   </div>
 

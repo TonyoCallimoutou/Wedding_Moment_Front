@@ -13,6 +13,7 @@ import {EventModel} from "../model/event.model";
 import {Menu} from "../model/menu.model";
 // @ts-ignore
 import {TableInvite} from "../model/table-invite.model";
+import {StorageModelService} from "./storage-model.service";
 
 
 @Injectable({
@@ -36,6 +37,8 @@ export class EventModelService {
     private userModelService: UserModelService,
     private postModelService: PostModelService,
     public eventService: EventService,
+
+    private storageModelService: StorageModelService,
     public socketService: SocketIoService
   ) {
     this.initUserData()
@@ -73,6 +76,12 @@ export class EventModelService {
   }
 
   initListeningFromSocket() {
+
+    this.socketService.socket.on('listeningSetEvent', (event: EventModel) => {
+      if (this.event.eventId == event.eventId) {
+        this.event = event;
+      }
+    })
 
     this.socketService.socket.on('listeningAddMenu', (menu: any) => {
       this.listOfMenu.push(menu);
@@ -185,6 +194,17 @@ export class EventModelService {
       .subscribe(data => {
         this.socketService.setEvent(data)
       })
+  }
+
+  setEventPicture(pictureUrl: any) {
+    this.storageModelService.uploadEventPictureAndGetUrl(pictureUrl).then(url => {
+      this.event.pictureUrl = url;
+      this.eventService.setEventPicture(this.event)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.socketService.setEvent(this.event);
+        });
+    });
   }
 
   // Remove Event

@@ -27,7 +27,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public currentUser: User;
   public canAccess: boolean;
   public isMaster: boolean;
+  public event: EventModel;
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
+
+  public background: any;
 
   constructor(
     private userModelService: UserModelService,
@@ -35,7 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private postModelService: PostModelService,
     private router: Router
   ) {
-
+    this.event = this.eventModelService.getActualEvent();
     this.currentUser = this.userModelService.getCurrentUser();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
@@ -137,6 +140,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   tab(tabulation: number) {
     this.tabSelector = tabulation;
     localStorage.setItem(LocalModel.TAB, String(this.tabSelector));
+  }
+
+  setTemporaryBackground(image: any) {
+    this.background = image;
+  }
+
+  setFinallyBackground(image: any) {
+    console.log(image);
+    this.eventModelService.setEventPicture(image);
   }
 
 }

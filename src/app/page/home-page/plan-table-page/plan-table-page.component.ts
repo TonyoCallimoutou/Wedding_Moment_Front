@@ -13,22 +13,15 @@ export class PlanTablePageComponent {
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
 
-  table: string = "";
   tableInfos : TableInfos | null = null;
-  searchWord: any;
-  searchResult : Invite[] = [];
-
 
   constructor(
     private eventModelService: EventModelService
   ) {
   }
 
-  addPlanTable() {
-    this.eventModelService.createPlanTable({
-      eventId: this.tableInviteList[0].eventId,
-      tableName: this.table
-    });
+  addPlanTable(planTable: PlanTable) {
+    this.eventModelService.createPlanTable(planTable);
   }
 
   getDetail(invites: TableInfos) {
@@ -42,17 +35,6 @@ export class PlanTablePageComponent {
     console.log(invites);
   }
 
-  searchInvite() {
-    console.log(this.searchWord);
-
-    if (this.searchWord) {
-      this.searchResult = this.inviteList.filter(invite => invite.inviteName.toLowerCase().includes(this.searchWord.toLowerCase()));
-    }
-    else {
-      this.searchResult = this.inviteList;
-    }
-  }
-
   getSearchResult(invite: Invite) {
     this.tableInviteMap.forEach((value,key) => {
       if (key.planTableId === invite.planTableId) {
@@ -64,7 +46,7 @@ export class PlanTablePageComponent {
     });
   }
 
-  removePlanTable(table: any) {
+  removePlanTable(table: PlanTable) {
     this.eventModelService.deletePlanTable(table);
   }
 

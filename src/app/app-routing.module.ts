@@ -9,6 +9,7 @@ import {AuthGuard} from './service/auth.guard';
 import {PresentationPageComponent} from './page/home-page/presentation-page/presentation-page.component';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
 import {HomePageComponent} from "./page/home-page/home-page.component";
+import {GenericImageCropperComponent} from "./shared/component/generic-image-cropper/generic-image-cropper.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home-page', pathMatch: 'full'},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'register-user', component: SignUpComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
   {path: 'verify-email-address', component: VerifyEmailComponent},
+  {path: 'test', component: GenericImageCropperComponent},
 
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
 

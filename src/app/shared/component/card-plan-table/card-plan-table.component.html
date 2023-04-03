@@ -1,4 +1,4 @@
-<button *ngIf="isMaster && !isEdit" (click)="isEdit = !isEdit"> Edit </button>
+<button *ngIf="isMaster" (click)="isEdit = !isEdit"> Edit </button>
 <button *ngIf="isEdit" (click)="save()"> Save </button>
 
 <div #card class="card"
@@ -24,6 +24,9 @@
 
   </div>
 
+
+  <div *ngIf="isEdit" class="remove-zone"></div>
+
   <div
     class="resize-handle-top"
     mwlResizeHandle
@@ -45,3 +48,4 @@
     [resizeEdges]="{ bottom: isEdit }"
   ></div>
 </div>
+<button *ngIf="isEdit" (click)="addTable()"> ADD TABLE </button>

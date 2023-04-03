@@ -10,6 +10,8 @@
     [tableInviteMap]="tableInviteMap"
     [isMaster]="isMaster"
     (getDetail)="getDetail($event)"
+    (addPlanTable)="addPlanTable($event)"
+    (removePlanTable)="removePlanTable($event)"
   ></app-card-plan-table>
   <app-card-detail-plan-table
     *ngIf="tableInfos"

@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {EventService} from '../service/event.service';
 import {FirebaseStorageService} from '../service/firebaseStorage.service';
 import {UserModelService} from './user-model.service';
+import {base64ToFile} from "ngx-image-cropper";
 
 
 @Injectable({
@@ -37,6 +38,20 @@ export class StorageModelService {
     return new Promise(resolve => {
 
       let filePath = (`${this.basePathUser}/${userId}`);
+
+      this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
+        resolve(url)
+      })
+    });
+  }
+
+  public uploadEventPictureAndGetUrl(fileUpload: any): Promise<string> {
+    return new Promise(resolve => {
+
+
+      fileUpload = base64ToFile(fileUpload);
+
+      let filePath = (`${this.basePathPost  }/fond`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
         resolve(url)
