@@ -7,6 +7,7 @@ import {NgClass, NgIf, TitleCasePipe} from "@angular/common";
 import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
+import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-
     NgClass,
     TranslateModule,
     TitleCasePipe,
-    CapitalizeFirstLetterPipeModule
+    CapitalizeFirstLetterPipeModule,
+    GenericImageCropperModule
   ],
   exports: [UserPageComponent],
   providers: [UserModelService]

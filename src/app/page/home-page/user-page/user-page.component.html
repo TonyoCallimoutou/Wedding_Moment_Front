@@ -5,7 +5,7 @@
 <div *ngIf="canAccess">
   <div class="header">
     <img alt="{{ currentUser.userId}}" src="{{ currentUser.photoUrl }}">
-    <input (change)="switchPost($event)" accept=".png,.jpg" type="file"/>
+    <button (click)="changePicture()"> TEST </button>
     <p> {{ currentUser.userName}}</p>
   </div>
 
@@ -30,9 +30,22 @@
     </div>
 
   </div>
+
+  <ng-template #dialogContent>
+    <app-generic-image-cropper
+      [maintainAspectRatio]="true"
+      [imageChangedEvent]="pictureSrc"
+      [ratio]="1"
+      (croppedImage)="getNewPicture($event)"
+    >
+    </app-generic-image-cropper>
+  </ng-template>
+
 </div>
 
 <div *ngIf="!canAccess">
   <app-sign-in></app-sign-in>
 </div>
+
+
 

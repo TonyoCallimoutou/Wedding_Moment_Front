@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, Renderer2, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-dropdown-menu',
@@ -9,16 +9,30 @@ export class DropdownMenuComponent {
 
   @Input() matIcon: string = 'more_vert'
   @Input() matIconColor: string = '';
-  @Input() options: string[] = [];
-  @Output() optionSelected = new EventEmitter<string>();
-  showDropdown = false;
+  @Input() options: DropdownOption[] = [];
+  @Output() optionSelected = new EventEmitter<DropdownOption>();
+  public showDropdown = false;
+
+  @ViewChild('menu') menu: ElementRef | undefined;
+
+
+  constructor(
+    private renderer : Renderer2
+  ) {
+    this.renderer.listen('window', 'click',(e:Event)=>{
+      if (this.showDropdown) {
+        if(!this.menu?.nativeElement.contains(e.target) && this.menu) {
+          this.showDropdown = false;
+        }
+      }
+    });
+  }
 
   toggleDropdown() {
     this.showDropdown = !this.showDropdown;
   }
 
-  selectOption(option: string) {
-    console.log(option)
+  selectOption(option: DropdownOption) {
     this.optionSelected.emit(option);
     this.toggleDropdown();
   }

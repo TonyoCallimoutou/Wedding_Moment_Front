@@ -37,6 +37,8 @@ export class StorageModelService {
 
     return new Promise(resolve => {
 
+      fileUpload = base64ToFile(fileUpload);
+
       let filePath = (`${this.basePathUser}/${userId}`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
@@ -47,7 +49,6 @@ export class StorageModelService {
 
   public uploadEventPictureAndGetUrl(fileUpload: any): Promise<string> {
     return new Promise(resolve => {
-
 
       fileUpload = base64ToFile(fileUpload);
 

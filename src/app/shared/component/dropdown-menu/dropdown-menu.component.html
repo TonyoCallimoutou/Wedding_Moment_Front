@@ -1,6 +1,9 @@
-<div class="menu">
+<div #menu class="menu">
   <mat-icon (click)="toggleDropdown()" style="color: {{ matIconColor}}"> {{matIcon}}</mat-icon>
-  <div *ngIf="showDropdown" class="dropdown-content" [ngClass]="{ 'show': showDropdown }">
-    <button class="dropdown-option" *ngFor="let option of options" (click)="selectOption(option)">{{ option }}</button>
+  <div *ngIf="showDropdown" class="burger-menu" [ngClass]="{ 'show': showDropdown }">
+    <div class="dropdown-option" *ngFor="let option of options" (click)="selectOption(option)">
+      <p>{{ option.icon }}</p>
+      <p>{{ option.optionText }}</p>
+    </div>
   </div>
 </div>

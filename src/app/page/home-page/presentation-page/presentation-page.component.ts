@@ -13,7 +13,7 @@ export class PresentationPageComponent {
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
 
-  dropdownOptions = ['Option 1', 'Importer une image'];
+  dropdownOptions: DropdownOption[];
 
   backgroundSrc: any = '';
 
@@ -25,11 +25,21 @@ export class PresentationPageComponent {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
   ) {
+    let option1 : DropdownOption = {
+      optionText: "Option 1",
+      icon: "icon 1",
+    }
+    let option2: DropdownOption = {
+      optionText: "Importer une image",
+      icon: "icon 2",
+    }
+
+    this.dropdownOptions = [option1,option2];
   }
 
 
-  onOptionSelected(option: string) {
-    if (option === 'Importer une image') {
+  onOptionSelected(option: DropdownOption) {
+    if (option === this.dropdownOptions[1]) {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
       fileInput.accept = '.png,.jpg';
