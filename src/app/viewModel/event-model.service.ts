@@ -80,6 +80,7 @@ export class EventModelService {
     this.socketService.socket.on('listeningSetEvent', (event: EventModel) => {
       if (this.event.eventId == event.eventId) {
         this.event = event;
+        localStorage.setItem(LocalModel.EVENT, JSON.stringify(this.event));
       }
     })
 
@@ -205,6 +206,17 @@ export class EventModelService {
           this.socketService.setEvent(this.event);
         });
     });
+  }
+
+  setPresentationText(presentation: EventModelPresentation) {
+    this.event.presentationText = presentation.presentationText;
+    this.event.presentationTextSize = presentation.presentationTextSize;
+    this.event.presentationTextAlign = presentation.presentationTextAlign;
+    this.eventService.setPresentationText(this.event)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.socketService.setEvent(this.event);
+      })
   }
 
   // Remove Event

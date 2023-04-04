@@ -31,6 +31,10 @@ export class EventService {
     return this.http.put(`${baseUrl}/setEventPicture`, data)
   }
 
+  setPresentationText(data: EventModel): Observable<any> {
+    return this.http.put(`${baseUrl}/setEventPresentation`, data)
+  }
+
   createEvent(data: EventModel): Observable<any> {
     return this.http.post(baseUrl, data);
   }

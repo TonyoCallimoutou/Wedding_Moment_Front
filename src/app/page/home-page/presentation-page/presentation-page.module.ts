@@ -9,6 +9,8 @@ import {AppModule} from "../../../app.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 import {MatIconModule} from "@angular/material/icon";
 import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdown-menu.module";
+import {FormsModule} from "@angular/forms";
+import {AutosizeModule} from "ngx-autosize";
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdo
     DeleteButtonModule,
     GenericImageCropperModule,
     MatIconModule,
-    DropdownMenuModule
+    DropdownMenuModule,
+    FormsModule,
+    AutosizeModule
   ],
   exports: [PresentationPageComponent],
   providers: [EventModelService, UserModelService]

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
@@ -10,10 +10,16 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 })
 export class PresentationPageComponent {
 
+  event: EventModel;
+
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
 
-  dropdownOptions: DropdownOption[];
+  dropdownOptions: DropdownOption[] = [];
+  isSetPresentationText : boolean = false;
+  fontSize : number;
+  fontSizeString : string
+  textAlign: string;
 
   backgroundSrc: any = '';
 
@@ -25,8 +31,20 @@ export class PresentationPageComponent {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
   ) {
+
+    this.event = this.eventModelService.getActualEvent();
+
+    this.initDropDownOption();
+
+    this.fontSize = this.event.presentationTextSize ? this.event.presentationTextSize : 96;
+    this.fontSizeString = this.fontSize + 'px'
+    this.textAlign = this.event.presentationTextAlign ? this.event.presentationTextAlign : 'center';
+
+  }
+
+  initDropDownOption() {
     let option1 : DropdownOption = {
-      optionText: "Option 1",
+      optionText: "Modifier le texte de presentation",
       icon: "icon 1",
     }
     let option2: DropdownOption = {
@@ -37,20 +55,30 @@ export class PresentationPageComponent {
     this.dropdownOptions = [option1,option2];
   }
 
-
+  /**
+   * Select Option on burgerMenu
+   * @param option
+   */
   onOptionSelected(option: DropdownOption) {
     if (option === this.dropdownOptions[1]) {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
       fileInput.accept = '.png,.jpg';
       fileInput.addEventListener('change', (event: any) => {
-        this.changeBackground(event);
+        this.openDialog(event);
       });
       fileInput.click();
     }
+    else if (option === this.dropdownOptions[0]) {
+      this.isSetPresentationText = true;
+    }
   }
 
-  changeBackground(event: any) {
+  /**
+   * Open dialog --> Change Background
+   * @param event
+   */
+  openDialog(event: any) {
     this.backgroundSrc = event;
 
     const dialogRef = this.dialog.open(GenericDialogComponent, {
@@ -66,9 +94,42 @@ export class PresentationPageComponent {
     });
   }
 
+  /**
+   * Set new Image to Background
+   * @param image
+   */
   setBackground(image : any) {
     this.sendTemporaryBackground.emit(image);
     this.background = image;
+  }
+
+
+  /**
+   * When user change font size
+   * @param size
+   */
+  onFontSizeChange(more: boolean) {
+    more ? this.fontSize++ : this.fontSize--;
+    this.fontSizeString = this.fontSize + 'px'
+  }
+
+  /**
+   * When user change text align
+   * @param align
+   */
+  onAlignChange(align: string) {
+    this.textAlign = align;
+  }
+
+  save() {
+    console.log(this.eventModelService.event)
+    this.isSetPresentationText = false;
+    var presentation : EventModelPresentation = {
+      presentationText: this.event.presentationText,
+      presentationTextSize: this.fontSize,
+      presentationTextAlign: this.textAlign,
+    }
+    this.eventModelService.setPresentationText(presentation);
   }
 
 }

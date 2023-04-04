@@ -11,9 +11,12 @@ export class MenuPageComponent {
   @Input() public isMaster: boolean = false;
   @Input() public menuList: Menu[] = [];
 
+  public event: EventModel
+
   constructor(
     private eventModelService: EventModelService
   ) {
+    this.event = eventModelService.getActualEvent();
   }
 
   addMenu(menu : Menu) {

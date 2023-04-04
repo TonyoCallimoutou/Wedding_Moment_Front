@@ -6,11 +6,18 @@
 }
 
 .onglet {
+  display: flex;
   flex: 1;
   margin-bottom: 3.5rem;
   background-color: var(--secondary);
-  background-size: cover
+
+  * {
+    flex: 1;
+  }
 }
+
+
+
 
 app-bottom-navigation-bar {
   position: fixed;

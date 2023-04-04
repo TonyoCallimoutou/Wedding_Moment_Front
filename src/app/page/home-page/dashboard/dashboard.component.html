@@ -1,5 +1,5 @@
 <div class="home-page">
-  <div class="onglet" style="background-image: url({{ background ? background : event.pictureUrl }})">
+  <div class="onglet">
     <app-presentation-page
       *ngIf="tabSelector == 1"
       (sendTemporaryBackground)="setTemporaryBackground($event)"

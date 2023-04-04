@@ -13,11 +13,14 @@ export class PlanTablePageComponent {
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
 
+  public event: EventModel;
+
   tableInfos : TableInfos | null = null;
 
   constructor(
     private eventModelService: EventModelService
   ) {
+    this.event = eventModelService.getActualEvent();
   }
 
   addPlanTable(planTable: PlanTable) {
