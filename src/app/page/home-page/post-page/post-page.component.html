@@ -1,13 +1,9 @@
-<div class="switch">
-  <button class="switch-list" [ngClass]="listViewSelected ? 'selected' : 'unselected'"
-    (click)="listViewSelected = true">
-      <p> {{ 'Posts.list' | translate | uppercase }} </p>
-  </button>
-  <button class="switch-grid" [ngClass]="listViewSelected ? 'unselected' : 'selected'"
-    (click)="listViewSelected = false">
-    <p> {{ 'Posts.grid' | translate | uppercase }} </p>
-  </button>
-</div>
+<app-switch-button
+  [switchOptions]="switchOptions"
+  [isFirstSelected]="listViewSelected"
+  (selected)="listViewSelected = $event"
+>
+</app-switch-button>
 
 <div *ngIf="canAccess">
 

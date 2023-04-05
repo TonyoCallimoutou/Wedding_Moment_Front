@@ -10,5 +10,8 @@
 .dropdown-option {
   display: flex;
   gap: 1rem;
+}
+
+.dropdown-option:not( :nth-child(1)) {
   border-top: solid 1px var(--secondary-dark);
 }

@@ -1,4 +1,4 @@
-interface DropdownOption {
+interface OptionStringIcon {
   optionText: string;
   icon: string;
 }

@@ -19,6 +19,8 @@ export class PostPageComponent {
 
   public listViewSelected: boolean = true;
 
+  public switchOptions: OptionStringIcon[];
+
   public postDetail: any = null;
 
 
@@ -26,6 +28,17 @@ export class PostPageComponent {
     private postModelService: PostModelService,
     private dialog: MatDialog,
   ) {
+
+    const optionOne : OptionStringIcon = {
+      optionText: "Posts.list",
+      icon: "list",
+    }
+    const optionTwo : OptionStringIcon = {
+      optionText: "Posts.grid",
+      icon: "grid_on",
+    }
+
+    this.switchOptions = [optionOne, optionTwo];
   }
 
   public isBigImage(index : number) {

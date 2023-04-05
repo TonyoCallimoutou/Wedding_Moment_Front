@@ -8,7 +8,7 @@
   "files": [
     "src/main.ts",
     "src/polyfills.ts",
-    "src/app/shared/component/dropdown-menu/dropdown-menu.model.ts"
+    "src/app/model/option-string-icon.model.ts"
   ],
   "include": [
     "src/**/*.d.ts"

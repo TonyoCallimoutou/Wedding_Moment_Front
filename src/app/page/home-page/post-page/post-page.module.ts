@@ -9,6 +9,7 @@ import {PostPageComponent} from './post-page.component';
 import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {CardPostModule} from "../../../shared/component/card-post/card-post.module";
 import {TranslateModule} from "@ngx-translate/core";
+import {SwitchButtonModule} from "../../../shared/component/button-component/switch-button/switch-button.module";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {TranslateModule} from "@ngx-translate/core";
     CreatePostModule,
     SignInModule,
     CardPostModule,
-    TranslateModule
+    TranslateModule,
+    SwitchButtonModule
   ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]

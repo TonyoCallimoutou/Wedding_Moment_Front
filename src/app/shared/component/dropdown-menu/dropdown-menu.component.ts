@@ -9,8 +9,8 @@ export class DropdownMenuComponent {
 
   @Input() matIcon: string = 'more_vert'
   @Input() matIconColor: string = '';
-  @Input() options: DropdownOption[] = [];
-  @Output() optionSelected = new EventEmitter<DropdownOption>();
+  @Input() options: OptionStringIcon[] = [];
+  @Output() optionSelected = new EventEmitter<OptionStringIcon>();
   public showDropdown = false;
 
   @ViewChild('menu') menu: ElementRef | undefined;
@@ -32,7 +32,7 @@ export class DropdownMenuComponent {
     this.showDropdown = !this.showDropdown;
   }
 
-  selectOption(option: DropdownOption) {
+  selectOption(option: OptionStringIcon) {
     this.optionSelected.emit(option);
     this.toggleDropdown();
   }

@@ -15,7 +15,7 @@ export class PresentationPageComponent {
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
 
-  dropdownOptions: DropdownOption[] = [];
+  dropdownOptions: OptionStringIcon[] = [];
   isSetPresentationText : boolean = false;
   fontSize : number;
   fontSizeString : string
@@ -43,11 +43,11 @@ export class PresentationPageComponent {
   }
 
   initDropDownOption() {
-    let option1 : DropdownOption = {
+    let option1 : OptionStringIcon = {
       optionText: "Modifier le texte de presentation",
       icon: "icon 1",
     }
-    let option2: DropdownOption = {
+    let option2: OptionStringIcon = {
       optionText: "Importer une image",
       icon: "icon 2",
     }
@@ -59,7 +59,7 @@ export class PresentationPageComponent {
    * Select Option on burgerMenu
    * @param option
    */
-  onOptionSelected(option: DropdownOption) {
+  onOptionSelected(option: OptionStringIcon) {
     if (option === this.dropdownOptions[1]) {
       const fileInput = document.createElement('input');
       fileInput.type = 'file';
