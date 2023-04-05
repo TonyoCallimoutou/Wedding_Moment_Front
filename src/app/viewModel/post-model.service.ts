@@ -128,8 +128,10 @@ export class PostModelService {
   private initListeningFromSocket() {
 
     this.socketService.socket.on('listeningAddPost', (post: Post) => {
-      this.listOfPost.push(post);
-      this.listOfPostObs$.next(this.listOfPost);
+      if (!this.listOfPost.includes(post)) {
+        this.listOfPost.push(post);
+        this.listOfPostObs$.next(this.listOfPost);
+      }
     });
 
     this.socketService.socket.on('listeningRemovePost', (post: Post) => {
@@ -150,7 +152,6 @@ export class PostModelService {
       this.listOfPost.forEach((item, i) => {
         if (item.userId == user.userId) {
           PostUtils.SetUser(this.listOfPost[i], user)
-
         }
       });
       this.listOfPostObs$.next(this.listOfPost);
