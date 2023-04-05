@@ -9,11 +9,17 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 export class GenericDialogComponent {
   contentTemplate: TemplateRef<any>;
 
+  public isDisplayBouton: boolean = true;
+
   constructor(
     public dialogRef: MatDialogRef<GenericDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) data: { contentTemplate: TemplateRef<any>,
-    }) {
+    @Inject(MAT_DIALOG_DATA) data: any
+  ) {
+    if (data.isDisplayBouton != undefined) {
+      this.isDisplayBouton = data.isDisplayBouton;
+    }
     this.contentTemplate = data.contentTemplate;
+    console.log(this.isDisplayBouton)
   }
 
   onNoClick(): void {

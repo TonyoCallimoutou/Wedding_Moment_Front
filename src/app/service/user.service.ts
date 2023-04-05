@@ -18,7 +18,11 @@ export class UserService {
   }
 
   setPhotoUrl(data: any): Observable<any> {
-    return this.http.post<any>(`${baseUrl}/photoUrl`, data)
+    return this.http.put<any>(`${baseUrl}/photoUrl`, data)
+  }
+
+  setUserName(data: any): Observable<any> {
+    return this.http.put<any>(`${baseUrl}/userName`, data)
   }
 
   getUserById(userId: string): Observable<User> {

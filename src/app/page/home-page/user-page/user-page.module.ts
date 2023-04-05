@@ -8,23 +8,25 @@ import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
   declarations: [
     UserPageComponent
   ],
-  imports: [
-    LikeButtonModule,
-    SettingButtonModule,
-    NgIf,
-    SignInModule,
-    NgClass,
-    TranslateModule,
-    TitleCasePipe,
-    CapitalizeFirstLetterPipeModule,
-    GenericImageCropperModule
-  ],
+    imports: [
+        LikeButtonModule,
+        SettingButtonModule,
+        NgIf,
+        SignInModule,
+        NgClass,
+        TranslateModule,
+        TitleCasePipe,
+        CapitalizeFirstLetterPipeModule,
+        GenericImageCropperModule,
+        FormsModule
+    ],
   exports: [UserPageComponent],
   providers: [UserModelService]
 })

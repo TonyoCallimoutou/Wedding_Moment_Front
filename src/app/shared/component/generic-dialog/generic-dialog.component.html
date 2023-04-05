@@ -1,7 +1,7 @@
 <div mat-dialog-content>
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </div>
-<div mat-dialog-actions>
+<div mat-dialog-actions *ngIf="isDisplayBouton">
   <button (click)="onNoClick()">No Thanks</button>
   <button [mat-dialog-close]="true" >Ok</button>
 </div>

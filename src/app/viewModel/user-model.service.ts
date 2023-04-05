@@ -94,6 +94,15 @@ export class UserModelService {
     })
   }
 
+  public setUserName(user: User) {
+    this.userService.setUserName(user)
+      .pipe(take(1))
+      .subscribe(() => {
+        localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+        this.socketService.setUser(user);
+      });
+  }
+
   //Remove User
   public removeUser(): Observable<any> {
     return this.userService.deleteUser(this.userData.userId)

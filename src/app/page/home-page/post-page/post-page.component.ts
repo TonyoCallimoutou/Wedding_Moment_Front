@@ -59,7 +59,10 @@ export class PostPageComponent {
   public openDialog(post: Post) {
     this.postDetail = post;
     this.dialog.open(GenericDialogComponent, {
-      data: { contentTemplate: this.dialogContent }
+      data: {
+        contentTemplate: this.dialogContent,
+        isDisplayBouton: false
+      }
     });
   }
 

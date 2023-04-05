@@ -13,13 +13,13 @@
 
     <div class="wrap_title" (click)="viewContent1 = !viewContent1"> {{ 'Users.tab_title_1' | translate | titlecase }}</div>
     <div class="content" [ngClass]="viewContent1 ? 'visible' : 'invisible'">
-      <div class="param">{{ 'Users.nom_utilisateur' | translate | capitalizeFirstLetter }}</div>
+      <div class="param" (click)="changeUserName()">{{ 'Users.nom_utilisateur' | translate | capitalizeFirstLetter }}</div>
     </div>
 
     <div class="wrap_title" (click)="viewContent2 = !viewContent2">{{ 'Users.tab_title_2' | translate | titlecase }}</div>
     <div class="content" [ngClass]="viewContent2 ? 'visible' : 'invisible'">
-      <div class="param">{{ 'Users.langue' | translate | capitalizeFirstLetter }}</div>
-      <div class="param">{{ 'Users.confidentialite' | translate | capitalizeFirstLetter }}</div>
+      <div class="param" (click)="changeLanguage()">{{ 'Users.langue' | translate | capitalizeFirstLetter }}</div>
+      <div class="param" (click)="goToConfidentialite()">{{ 'Users.confidentialite' | translate | capitalizeFirstLetter }}</div>
       <div class="param">{{ 'Users.notification_push' | translate | capitalizeFirstLetter }}</div>
     </div>
 
@@ -31,7 +31,7 @@
 
   </div>
 
-  <ng-template #dialogContent>
+  <ng-template #dialogChangePicture>
     <app-generic-image-cropper
       [maintainAspectRatio]="true"
       [imageChangedEvent]="pictureSrc"
@@ -39,6 +39,18 @@
       (croppedImage)="getNewPicture($event)"
     >
     </app-generic-image-cropper>
+  </ng-template>
+
+  <ng-template #dialogChangeUserName>
+    <input [(ngModel)]="currentUser.userName" class="font-default-20">
+  </ng-template>
+
+  <ng-template #dialogChangeLanguage>
+    <p> LAngue</p>
+  </ng-template>
+
+  <ng-template #dialogConfidentialite>
+    <p> Confidentialité</p>
   </ng-template>
 
 </div>

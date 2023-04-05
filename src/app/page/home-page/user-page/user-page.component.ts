@@ -25,7 +25,10 @@ export class UserPageComponent {
   public viewContent2 : boolean = true;
   public viewContent3 : boolean = true;
 
-  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
+  @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
+  @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
+  @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
+  @ViewChild('dialogConfidentialite') dialogConfidentialite!: TemplateRef<any>;
 
 
   constructor(
@@ -54,7 +57,7 @@ export class UserPageComponent {
     this.pictureSrc = event;
 
     const dialogRef = this.dialog.open(GenericDialogComponent, {
-      data: {contentTemplate: this.dialogContent },
+      data: {contentTemplate: this.dialogChangePicture },
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -76,6 +79,49 @@ export class UserPageComponent {
     this.eventModelService.resetActualEvent();
     this.router.navigateByUrl('/home-page');
   }
+
+  changeUserName() {
+    console.log("change user name")
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogChangeUserName },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.userModelService.setUserName(this.currentUser);
+      }
+    });
+  }
+
+  changeLanguage() {
+    console.log("change language")
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogChangeLanguage },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result)
+      }
+    });
+  }
+
+  goToConfidentialite() {
+    console.log('confidentialité')
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogConfidentialite },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result)
+      }
+    });
+  }
+
+
+
+
 
   signOut() {
     this.authService.SignOut();
