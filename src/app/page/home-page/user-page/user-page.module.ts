@@ -9,24 +9,26 @@ import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 import {FormsModule} from "@angular/forms";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 
 @NgModule({
   declarations: [
     UserPageComponent
   ],
-    imports: [
-        LikeButtonModule,
-        SettingButtonModule,
-        NgIf,
-        SignInModule,
-        NgClass,
-        TranslateModule,
-        TitleCasePipe,
-        CapitalizeFirstLetterPipeModule,
-        GenericImageCropperModule,
-        FormsModule
-    ],
+  imports: [
+    LikeButtonModule,
+    SettingButtonModule,
+    NgIf,
+    SignInModule,
+    NgClass,
+    TranslateModule,
+    TitleCasePipe,
+    CapitalizeFirstLetterPipeModule,
+    GenericImageCropperModule,
+    FormsModule,
+    MatExpansionModule
+  ],
   exports: [UserPageComponent],
   providers: [UserModelService]
 })

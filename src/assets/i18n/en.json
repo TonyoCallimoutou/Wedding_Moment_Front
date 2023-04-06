@@ -1,0 +1,28 @@
+{
+  "Auth": {
+    "sign_in" : "sign In",
+    "email" : "email",
+    "password" : "password",
+    "log_in" : "log in",
+    "log_in_google" : "log in with Google",
+    "forgot_password" : "forgot Password ?"
+  },
+  "Menu": {
+    "title" : "menu"
+  },
+  "Posts": {
+    "list" : "list",
+    "grid" : "grid"
+  },
+  "Users": {
+    "tab_title_1": "personnal information",
+    "tab_title_2": "general",
+    "tab_title_3": "account",
+    "username": "username",
+    "language": "language",
+    "privacy": "privacy",
+    "push_notification": "push notification",
+    "logout": "logout",
+    "delete_account": "delete account"
+  }
+}

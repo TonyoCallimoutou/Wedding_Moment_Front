@@ -9,27 +9,41 @@
     <p> {{ currentUser.userName}}</p>
   </div>
 
-  <div class="accordeons">
-
-    <div class="wrap_title" (click)="viewContent1 = !viewContent1"> {{ 'Users.tab_title_1' | translate | titlecase }}</div>
-    <div class="content" [ngClass]="viewContent1 ? 'visible' : 'invisible'">
-      <div class="param" (click)="changeUserName()">{{ 'Users.nom_utilisateur' | translate | capitalizeFirstLetter }}</div>
-    </div>
-
-    <div class="wrap_title" (click)="viewContent2 = !viewContent2">{{ 'Users.tab_title_2' | translate | titlecase }}</div>
-    <div class="content" [ngClass]="viewContent2 ? 'visible' : 'invisible'">
-      <div class="param" (click)="changeLanguage()">{{ 'Users.langue' | translate | capitalizeFirstLetter }}</div>
-      <div class="param" (click)="goToConfidentialite()">{{ 'Users.confidentialite' | translate | capitalizeFirstLetter }}</div>
-      <div class="param">{{ 'Users.notification_push' | translate | capitalizeFirstLetter }}</div>
-    </div>
-
-    <div class="wrap_title" (click)="viewContent3 = !viewContent3">{{ 'Users.tab_title_3' | translate | titlecase }}</div>
-    <div class="content" [ngClass]="viewContent3 ? 'visible' : 'invisible'">
-      <div class="param" (click)="signOut()">{{ 'Users.deconnexion' | translate | capitalizeFirstLetter }}</div>
-      <div class="param" (click)="removeUser()">{{ 'Users.supprimer' | translate | capitalizeFirstLetter }}</div>
-    </div>
-
-  </div>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'Users.tab_title_1' | translate | titlecase }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="content">
+        <div class="param" (click)="changeUserName()">{{ 'Users.username' | translate | capitalizeFirstLetter }}</div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'Users.tab_title_2' | translate | titlecase }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="content">
+        <div class="param" (click)="changeLanguage()">{{ 'Users.language' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="goToConfidentialite()">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
+        <div class="param">{{ 'Users.push_notification' | translate | capitalizeFirstLetter }}</div>
+      </div>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ 'Users.tab_title_3' | translate | titlecase }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="content">
+        <div class="param" (click)="signOut()">{{ 'Users.logout' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="removeUser()">{{ 'Users.delete_account' | translate | capitalizeFirstLetter }}</div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 
   <ng-template #dialogChangePicture>
     <app-generic-image-cropper
@@ -46,6 +60,7 @@
   </ng-template>
 
   <ng-template #dialogChangeLanguage>
+
     <p> LAngue</p>
   </ng-template>
 

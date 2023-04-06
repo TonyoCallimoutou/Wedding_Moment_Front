@@ -7,6 +7,7 @@ import {User} from 'src/app/model/user.model';
 import {AuthService} from "../../../service/auth.service";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {LocalModel} from "../../../model/local.model";
 
 @Component({
   selector: 'app-user-page',
@@ -20,10 +21,6 @@ export class UserPageComponent {
 
   public pictureSrc: any;
   private newUserPicture: any;
-
-  public viewContent1 : boolean = true;
-  public viewContent2 : boolean = true;
-  public viewContent3 : boolean = true;
 
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
@@ -101,7 +98,8 @@ export class UserPageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result)
+        localStorage.setItem(LocalModel.LANGUAGE, "en");
+        window.location.reload();
       }
     });
   }

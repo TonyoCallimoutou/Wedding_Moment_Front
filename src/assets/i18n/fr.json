@@ -18,11 +18,11 @@
     "tab_title_1": "information personnel",
     "tab_title_2": "général",
     "tab_title_3": "compte",
-    "nom_utilisateur": "nom d'utilisateur",
-    "langue": "langue",
-    "confidentialite": "confidentialité",
-    "notification_push": "notification push",
-    "deconnexion": "deconnexion",
-    "supprimer": "supprimer le compte"
+    "username": "nom d'utilisateur",
+    "language": "langue",
+    "privacy": "confidentialité",
+    "push_notification": "notification push",
+    "logout": "deconnexion",
+    "delete_account": "supprimer le compte"
   }
 }
