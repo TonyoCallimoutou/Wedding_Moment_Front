@@ -1,19 +1,19 @@
 <div class="home-page">
   <div class="onglet">
     <app-presentation-page
-      *ngIf="tabSelector == 1"
+      *ngIf="tabSelector == 0"
       (sendTemporaryBackground)="setTemporaryBackground($event)"
       (sendFinallyBackground)="setFinallyBackground($event)"
     >
     </app-presentation-page>
     <app-menu-page
-      *ngIf="tabSelector == 2"
+      *ngIf="tabSelector == 1"
       [isMaster]="isMaster"
       [menuList]="menuList"
     >
     </app-menu-page>
     <app-post-page
-      *ngIf="tabSelector == 3"
+      *ngIf="tabSelector == 2"
       [canAccess]="canAccess"
       [currentUser]="currentUser"
       [posts]="posts"
@@ -21,7 +21,7 @@
     >
     </app-post-page>
     <app-plan-table-page
-      *ngIf="tabSelector == 4"
+      *ngIf="tabSelector == 3"
       [isMaster]="isMaster"
       [inviteList]="inviteList"
       [tableInviteList]="tableInviteList"
@@ -29,18 +29,46 @@
     >
     </app-plan-table-page>
     <app-user-page
-      *ngIf="tabSelector == 5"
+      *ngIf="tabSelector == 4"
       [canAccess]="canAccess"
       [currentUser]="currentUser"
     >
     </app-user-page>
   </div>
 
-  <app-bottom-navigation-bar
-    [tabSelector]="tabSelector"
-    (onclick)="tab($event)"
-  >
-  </app-bottom-navigation-bar>
+  <mat-tab-group
+    headerPosition="below"
+    disablePagination
+    disableRipple = true
+    [selectedIndex]="tabSelector"
+    (selectedIndexChange)="tab($event)"
+    [color]="'warn'">
+    <mat-tab class="tabuler">
+      <ng-template mat-tab-label>
+        <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">home</mat-icon>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [ngStyle]="{'color': tabSelector == 1 ? 'var(--primary-light)' : 'var(--primary-dark)'}">restaurant_menu</mat-icon>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [ngStyle]="{'color': tabSelector == 2 ? 'var(--primary-light)' : 'var(--primary-dark)'}">photo_camera</mat-icon>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [ngStyle]="{'color': tabSelector == 3 ? 'var(--primary-light)' : 'var(--primary-dark)'}">person_search</mat-icon>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon [ngStyle]="{'color': tabSelector == 4 ? 'var(--primary-light)' : 'var(--primary-dark)'}">account_circle</mat-icon>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
 
 </div>
 

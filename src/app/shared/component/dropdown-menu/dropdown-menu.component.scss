@@ -6,10 +6,15 @@
   border-radius: 1rem;
   padding: 0.5rem;
 }
-
+.options {
+  background-color: var(--secondary-light);
+  margin: -0.5rem 0;
+}
 .dropdown-option {
+  background-color: var(--secondary-light);
   display: flex;
   gap: 1rem;
+  padding: 0 1rem;
 }
 
 .dropdown-option:not( :nth-child(1)) {

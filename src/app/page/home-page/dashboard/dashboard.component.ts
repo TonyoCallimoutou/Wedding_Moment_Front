@@ -17,7 +17,7 @@ import {User} from "../../../model/user.model";
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  public tabSelector: number = 1;
+  public tabSelector: number = 0;
   public menuList: Menu[] = [];
   public posts: Post[] = [];
   public reactPostId: number[] = [];
@@ -28,6 +28,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public canAccess: boolean;
   public isMaster: boolean;
   public event: EventModel;
+
+  public tabColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+  public tabBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
+
+
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public background: any;
@@ -42,6 +47,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.currentUser = this.userModelService.getCurrentUser();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
+
+    console.log("color :", this.tabColor);
   }
 
   ngOnInit() {

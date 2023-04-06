@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {DropdownMenuComponent} from "./dropdown-menu.component";
 import {MatIconModule} from "@angular/material/icon";
+import {MatMenuModule} from "@angular/material/menu";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -11,7 +13,9 @@ import {MatIconModule} from "@angular/material/icon";
   ],
   imports: [
     CommonModule,
-    MatIconModule
+    MatIconModule,
+    MatMenuModule,
+    MatButtonModule
   ],
   exports: [
     DropdownMenuComponent

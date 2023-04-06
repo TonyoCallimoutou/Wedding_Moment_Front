@@ -21,7 +21,7 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatIconModule} from "@angular/material/icon";
 import { GenericDialogComponent } from './shared/component/generic-dialog/generic-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
 import { GenericImageCropperComponent } from './shared/component/generic-image-cropper/generic-image-cropper.component';
 import {ImageCropperModule} from "ngx-image-cropper";
 import { DropdownMenuComponent } from './shared/component/dropdown-menu/dropdown-menu.component';
@@ -45,6 +45,7 @@ import { DropdownMenuComponent } from './shared/component/dropdown-menu/dropdown
         deps: [HttpClient]
       }
     }),
+    BrowserAnimationsModule,
     DashboardModule,
     MatDialogModule,
     MatIconModule,
@@ -54,7 +55,6 @@ import { DropdownMenuComponent } from './shared/component/dropdown-menu/dropdown
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    NoopAnimationsModule
   ],
   providers: [AuthService, SocketIoService],
   bootstrap: [AppComponent]
