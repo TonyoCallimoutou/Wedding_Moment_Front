@@ -9,16 +9,16 @@
   justify-content: center;
   align-items: center;
 
-  app-search-bar {
+  //app-search-bar {
+  //  position: fixed;
+  //  top: 0;
+  //}
+
+  .searchBar {
     position: fixed;
     top: 0;
   }
 
-  .search-result {
-    height: 5rem;
-    overflow:hidden;
-    overflow-y:scroll;
-  }
 
   app-card-plan-table {
     width: 80%;

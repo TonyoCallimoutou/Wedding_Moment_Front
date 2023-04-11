@@ -3,32 +3,39 @@ import {LikeButtonModule} from 'src/app/shared/component/button-component/like-b
 import {SettingButtonModule} from 'src/app/shared/component/button-component/setting-button/setting-button.module';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {UserPageComponent} from './user-page.component';
-import {NgClass, NgIf, TitleCasePipe} from "@angular/common";
+import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
 import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 import {FormsModule} from "@angular/forms";
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
+import {MatAutocompleteModule} from "@angular/material/autocomplete";
 
 
 @NgModule({
   declarations: [
     UserPageComponent
   ],
-  imports: [
-    LikeButtonModule,
-    SettingButtonModule,
-    NgIf,
-    SignInModule,
-    NgClass,
-    TranslateModule,
-    TitleCasePipe,
-    CapitalizeFirstLetterPipeModule,
-    GenericImageCropperModule,
-    FormsModule,
-    MatExpansionModule
-  ],
+    imports: [
+        LikeButtonModule,
+        SettingButtonModule,
+        NgIf,
+        SignInModule,
+        NgClass,
+        TranslateModule,
+        TitleCasePipe,
+        CapitalizeFirstLetterPipeModule,
+        GenericImageCropperModule,
+        FormsModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        NgForOf
+    ],
   exports: [UserPageComponent],
   providers: [UserModelService]
 })

@@ -16,16 +16,24 @@
   }
 }
 
-mat-tab-group {
+app-bottom-navigation-bar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--primary);
   width: 100%;
-
-  ::ng-deep .mdc-tab {
-    min-width: auto;
-    height: 3.5rem;
-  }
 }
+
+//mat-tab-group {
+//  position: fixed;
+//  left: 0;
+//  right: 0;
+//  bottom: 0;
+//  background-color: var(--primary);
+//  width: 100%;
+//
+//  ::ng-deep .mdc-tab {
+//    min-width: auto;
+//    height: 3.5rem;
+//  }
+//}

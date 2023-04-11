@@ -1,10 +1,31 @@
 <div class="page" style="background-image: url({{ event.pictureUrl }})">
 
-  <app-search-bar
-    [inviteList]="inviteList"
-    (clickOnInvite)="getSearchResult($event)"
-  >
-  </app-search-bar>
+<!--  <app-search-bar-->
+<!--    [inviteList]="inviteList"-->
+<!--    (clickOnInvite)="getSearchResult($event)"-->
+<!--  >-->
+<!--  </app-search-bar>-->
+
+  <div class="searchBar">
+    <form class="example-form">
+      <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label> {{ 'Plan_table.search_invite' | translate | capitalizeFirstLetter }} </mat-label>
+        <input type="text"
+               placeholder=" {{ 'Plan_table.search_invite' | translate | capitalizeFirstLetter }} "
+               matInput
+               [formControl]="myControl"
+               [matAutocomplete]="auto">
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          [displayWith]="displayFn"
+          (optionSelected)="getSearchResult($event.option.value)">
+          <mat-option *ngFor="let invite of inviteListFiltered | async" [value]="invite">
+            {{invite.inviteName}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </div>
 
   <app-card-plan-table
     [tableInviteMap]="tableInviteMap"

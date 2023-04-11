@@ -14,12 +14,20 @@
     "list" : "liste",
     "grid" : "grille"
   },
+  "Plan_table" : {
+    "search_invite" : "Recherche un invité"
+  },
   "Users": {
     "tab_title_1": "information personnel",
     "tab_title_2": "général",
     "tab_title_3": "compte",
     "username": "nom d'utilisateur",
-    "language": "langue",
+    "Languages": {
+      "language": "Langue",
+      "title" : "Choisir la langue",
+      "french" : "Français",
+      "english" : "Englais"
+    },
     "privacy": "confidentialité",
     "push_notification": "notification push",
     "logout": "deconnexion",

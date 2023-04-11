@@ -36,39 +36,45 @@
     </app-user-page>
   </div>
 
-  <mat-tab-group
-    headerPosition="below"
-    disablePagination
-    disableRipple = true
-    [selectedIndex]="tabSelector"
-    (selectedIndexChange)="tab($event)"
-    [color]="'warn'">
-    <mat-tab class="tabuler">
-      <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">home</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 1 ? 'var(--primary-light)' : 'var(--primary-dark)'}">restaurant_menu</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 2 ? 'var(--primary-light)' : 'var(--primary-dark)'}">photo_camera</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 3 ? 'var(--primary-light)' : 'var(--primary-dark)'}">person_search</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 4 ? 'var(--primary-light)' : 'var(--primary-dark)'}">account_circle</mat-icon>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <app-bottom-navigation-bar
+    [tabSelector]="tabSelector"
+    (onclick)="tab($event)"
+    >
+  </app-bottom-navigation-bar>
+
+<!--  <mat-tab-group-->
+<!--    headerPosition="below"-->
+<!--    disablePagination-->
+<!--    disableRipple = true-->
+<!--    [selectedIndex]="tabSelector"-->
+<!--    (selectedIndexChange)="tab($event)"-->
+<!--    [color]="'warn'">-->
+<!--    <mat-tab class="tabuler">-->
+<!--      <ng-template mat-tab-label>-->
+<!--        <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(&#45;&#45;primary-light)' : 'var(&#45;&#45;primary-dark)'}">home</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab>-->
+<!--      <ng-template mat-tab-label>-->
+<!--        <mat-icon [ngStyle]="{'color': tabSelector == 1 ? 'var(&#45;&#45;primary-light)' : 'var(&#45;&#45;primary-dark)'}">restaurant_menu</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab>-->
+<!--      <ng-template mat-tab-label>-->
+<!--        <mat-icon [ngStyle]="{'color': tabSelector == 2 ? 'var(&#45;&#45;primary-light)' : 'var(&#45;&#45;primary-dark)'}">photo_camera</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab>-->
+<!--      <ng-template mat-tab-label>-->
+<!--        <mat-icon [ngStyle]="{'color': tabSelector == 3 ? 'var(&#45;&#45;primary-light)' : 'var(&#45;&#45;primary-dark)'}">person_search</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--    <mat-tab>-->
+<!--      <ng-template mat-tab-label>-->
+<!--        <mat-icon [ngStyle]="{'color': tabSelector == 4 ? 'var(&#45;&#45;primary-light)' : 'var(&#45;&#45;primary-dark)'}">account_circle</mat-icon>-->
+<!--      </ng-template>-->
+<!--    </mat-tab>-->
+<!--  </mat-tab-group>-->
 
 </div>
 

@@ -8,6 +8,12 @@ import {AuthService} from "../../../service/auth.service";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";
+import {TranslateService} from "@ngx-translate/core";
+
+interface Language {
+  code: string;
+  language: string;
+}
 
 @Component({
   selector: 'app-user-page',
@@ -22,6 +28,10 @@ export class UserPageComponent {
   public pictureSrc: any;
   private newUserPicture: any;
 
+  languages: Language[];
+
+  selectedLanguage: Language;
+
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
   @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
@@ -33,8 +43,27 @@ export class UserPageComponent {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService,
   ) {
+    this.languages = [
+      {
+        code: "en",
+        language: ""
+      },
+      {
+        code: "fr",
+        language: ""
+      }
+    ];
+    translate.get("Users.Languages.english").subscribe((res: string) => {
+      this.languages[0].language = res;
+    })
+    translate.get("Users.Languages.french").subscribe((res: string) => {
+      this.languages[1].language = res;
+    })
+    let defaultLanguageCode = localStorage.getItem(LocalModel.LANGUAGE);
+    this.selectedLanguage = this.languages.filter(language => language.code == defaultLanguageCode)[0];
   }
 
   /**
@@ -91,15 +120,16 @@ export class UserPageComponent {
   }
 
   changeLanguage() {
-    console.log("change language")
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeLanguage },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        localStorage.setItem(LocalModel.LANGUAGE, "en");
-        window.location.reload();
+        if (this.selectedLanguage.code !== localStorage.getItem(LocalModel.LANGUAGE)) {
+          localStorage.setItem(LocalModel.LANGUAGE, this.selectedLanguage.code);
+          window.location.reload();
+        }
       }
     });
   }

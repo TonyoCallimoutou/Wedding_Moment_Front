@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 })
 export class BottomNavigationBarComponent {
 
-  @Input() tabSelector: number = 1;
+  @Input() tabSelector: number = 0;
   @Output() onclick: EventEmitter<number> = new EventEmitter<number>();
 
   tab(index : number) {

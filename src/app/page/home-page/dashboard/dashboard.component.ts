@@ -47,8 +47,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.currentUser = this.userModelService.getCurrentUser();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
-
-    console.log("color :", this.tabColor);
   }
 
   ngOnInit() {

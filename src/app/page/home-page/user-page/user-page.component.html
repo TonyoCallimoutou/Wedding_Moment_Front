@@ -27,7 +27,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="content">
-        <div class="param" (click)="changeLanguage()">{{ 'Users.language' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="changeLanguage()">{{ 'Users.Languages.language' | translate | capitalizeFirstLetter }}</div>
         <div class="param" (click)="goToConfidentialite()">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
         <div class="param">{{ 'Users.push_notification' | translate | capitalizeFirstLetter }}</div>
       </div>
@@ -60,8 +60,14 @@
   </ng-template>
 
   <ng-template #dialogChangeLanguage>
-
-    <p> LAngue</p>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ 'Users.Languages.title' | translate | capitalizeFirstLetter }}</mat-label>
+      <mat-select [(value)]="selectedLanguage">
+        <mat-option *ngFor="let option of languages" [value]="option" >
+          {{ option.language }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </ng-template>
 
   <ng-template #dialogConfidentialite>
