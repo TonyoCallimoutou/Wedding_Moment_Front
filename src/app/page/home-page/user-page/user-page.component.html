@@ -4,8 +4,10 @@
 
 <div *ngIf="canAccess">
   <div class="header">
-    <img alt="{{ currentUser.userId}}" src="{{ currentUser.photoUrl }}">
-    <button (click)="changePicture()"> TEST </button>
+    <img
+      alt="{{ currentUser.userId}}"
+      src="{{ currentUser.photoUrl }}"
+      (click)="changePicture()">
     <p> {{ currentUser.userName}}</p>
   </div>
 
@@ -28,7 +30,7 @@
       </mat-expansion-panel-header>
       <div class="content">
         <div class="param" (click)="changeLanguage()">{{ 'Users.Languages.language' | translate | capitalizeFirstLetter }}</div>
-        <div class="param" (click)="goToConfidentialite()">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="goToConfidentiality()">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
         <div class="param">{{ 'Users.push_notification' | translate | capitalizeFirstLetter }}</div>
       </div>
     </mat-expansion-panel>

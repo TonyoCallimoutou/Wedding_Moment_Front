@@ -29,10 +29,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public isMaster: boolean;
   public event: EventModel;
 
-  public tabColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-  public tabBackgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--primary');
-
-
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public background: any;
@@ -52,7 +48,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.tabSelector = Number(localStorage.getItem(LocalModel.TAB));
-    this.tabSelector = this.tabSelector ? this.tabSelector : 1;
+    this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
     if (!this.eventModelService.getActualEvent()) {
       this.router.navigate(['home-page'])
@@ -72,6 +68,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.onDestroy$.unsubscribe();
   }
 
+  /**
+   * set menuList
+   */
   initMenu() {
     this.eventModelService
       .getMenu()
@@ -81,6 +80,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
   }
 
+  /**
+   * set posts && reactPostId
+   */
   initPost() {
     if (this.canAccess) {
       this.postModelService.getAll()
@@ -97,6 +99,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  /**
+   * set tableInviteMap && tableInviteList && inviteList
+   */
   initPlanTable() {
     this.eventModelService
       .getPlanTable()
@@ -142,17 +147,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
       })
   }
 
+  /**
+   * Function call when user change step
+   * @param tabulation
+   */
   tab(tabulation: number) {
     this.tabSelector = tabulation;
     localStorage.setItem(LocalModel.TAB, String(this.tabSelector));
   }
 
+  /**
+   * Set Background temporary
+   * @param image
+   */
   setTemporaryBackground(image: any) {
     this.background = image;
   }
 
+  /**
+   * Function call to change background of event
+   * @param image
+   */
   setFinallyBackground(image: any) {
-    console.log(image);
     this.eventModelService.setEventPicture(image);
   }
 

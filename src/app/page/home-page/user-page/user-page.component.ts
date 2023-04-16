@@ -28,9 +28,9 @@ export class UserPageComponent {
   public pictureSrc: any;
   private newUserPicture: any;
 
-  languages: Language[];
+  public languages: Language[];
 
-  selectedLanguage: Language;
+  public selectedLanguage: Language;
 
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
@@ -67,7 +67,7 @@ export class UserPageComponent {
   }
 
   /**
-   * Change picture Url
+   * Clique to change user picture
    */
   changePicture() {
     const fileInput = document.createElement('input');
@@ -79,6 +79,10 @@ export class UserPageComponent {
     fileInput.click();
   }
 
+  /**
+   * Open dialog for change user picture
+   * @param event
+   */
   switchPictureUrl(event: any) {
     this.pictureSrc = event;
 
@@ -94,6 +98,10 @@ export class UserPageComponent {
     });
   }
 
+  /**
+   * set cropped picture
+   * @param picture
+   */
   getNewPicture(picture: any) {
     this.newUserPicture = picture;
   }
@@ -106,8 +114,10 @@ export class UserPageComponent {
     this.router.navigateByUrl('/home-page');
   }
 
+  /**
+   * Open dialog to change User Name
+   */
   changeUserName() {
-    console.log("change user name")
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeUserName },
     });
@@ -119,6 +129,9 @@ export class UserPageComponent {
     });
   }
 
+  /**
+   * Open dialog to change language
+   */
   changeLanguage() {
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeLanguage },
@@ -134,8 +147,10 @@ export class UserPageComponent {
     });
   }
 
-  goToConfidentialite() {
-    console.log('confidentialité')
+  /**
+   * Open dialog for confidentiality
+   */
+  goToConfidentiality() {
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogConfidentialite },
     });
@@ -147,10 +162,9 @@ export class UserPageComponent {
     });
   }
 
-
-
-
-
+  /**
+   * Sign out
+   */
   signOut() {
     this.authService.SignOut();
   }

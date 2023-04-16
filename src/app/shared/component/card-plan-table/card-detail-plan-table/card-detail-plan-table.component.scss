@@ -13,7 +13,14 @@
   }
 
   .invite {
+    display: block;
     color: var(--primary-light);
+    text-align: center;
+  }
+
+  input.invite {
+    background: transparent;
+    border: 0;
   }
 
 }

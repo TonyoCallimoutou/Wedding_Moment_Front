@@ -10,22 +10,24 @@ import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module
 import {CardPostModule} from "../../../shared/component/card-post/card-post.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {SwitchButtonModule} from "../../../shared/component/button-component/switch-button/switch-button.module";
+import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 
 
 @NgModule({
   declarations: [
     PostPageComponent
   ],
-  imports: [
-    CommonModule,
-    LikeButtonModule,
-    DeleteButtonModule,
-    CreatePostModule,
-    SignInModule,
-    CardPostModule,
-    TranslateModule,
-    SwitchButtonModule
-  ],
+    imports: [
+        CommonModule,
+        LikeButtonModule,
+        DeleteButtonModule,
+        CreatePostModule,
+        SignInModule,
+        CardPostModule,
+        TranslateModule,
+        SwitchButtonModule,
+        GenericImageCropperModule
+    ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]
 })

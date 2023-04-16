@@ -9,27 +9,32 @@
   justify-content: center;
   align-items: center;
 
-  //app-search-bar {
-  //  position: fixed;
-  //  top: 0;
-  //}
-
   .searchBar {
     position: fixed;
     top: 0;
-  }
+    margin-top: 2rem;
 
+    ::ng-deep {
+      mat-form-field div:first-child {
+        background-color: var(--primary);
+        opacity: 0.8;
+      }
+    }
+
+  }
 
   app-card-plan-table {
     width: 80%;
     opacity: 0.8;
   }
 
-  app-card-detail-plan-table {
-    width: 70%;
-    opacity: 0.8;
-    margin-top: 1.5rem;
-  }
+}
+.dialog {
+  width: 70%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .page::before {
@@ -42,4 +47,8 @@
   background-color: black;
   opacity: 0.5;
   z-index: -1;
+}
+
+::ng-deep .mat-mdc-autocomplete-panel {
+  background-color: var(--primary);
 }

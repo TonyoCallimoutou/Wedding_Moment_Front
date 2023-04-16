@@ -41,6 +41,10 @@ export class HomePageComponent implements OnInit, OnDestroy {
     localStorage.setItem(LocalModel.EVENT, JSON.stringify(this.eventModelService.event));
   }
 
+  /**
+   * Go to event
+   * @param event
+   */
   public goToEvent(event: EventModel) {
     this.eventModelService.goToEvent(event);
     this.router.navigateByUrl("/dashboard")

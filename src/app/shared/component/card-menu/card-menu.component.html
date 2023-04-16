@@ -1,16 +1,22 @@
 <div class="card">
+  <div class="buttons">
+    <mat-icon *ngIf="isEdit" class="button-modifier" (click)="isEdit = !isEdit"> undo </mat-icon>
+    <mat-icon *ngIf="isMaster && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
+    <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
+  </div>
+
   <div>
     <h1 class="font-default-24"> {{ 'Menu.title' | translate | uppercase }}</h1>
-
-    <div>
-      <button *ngIf="isMaster" class="button-modifier" (click)="isEdit = !isEdit"> modifier </button>
-      <button *ngIf="isEdit" class="button-save" (click)="save()"> save </button>
-    </div>
   </div>
 
 
   <div class="menu">
     <div *ngFor="let item of menuList; index as i" >
+
+      <div class="remove">
+        <mat-icon class="button-remove" *ngIf="isEdit" (click)="delete(item)"> delete </mat-icon>
+      </div>
+
       <!-- Categorie -->
       <p *ngIf="!isEdit" class="categorie font-default-20"> ~ {{ item.menuCategorie }} ~</p>
       <div class="champ-input"
@@ -20,19 +26,20 @@
           (ngModelChange)="onInputChange(item.menuId)"
           type="text"
           [(ngModel)]="item.menuCategorie">
-        <button class="button-remove" (click)="delete(item)"> remove </button>
       </div>
 
       <!-- Description -->
-      <p *ngIf="!isEdit" class="description font-default-16"> {{ item.menuDescription }}</p>
-      <div class="champ-input"
-        *ngIf="isEdit">
-        <input
+      <div class="champ-input">
+        <textarea
+          autosize
+          [disabled]="!isEdit"
           class="description font-default-16"
-          (ngModelChange)="onInputChange(item.menuId)"
-          type="text"
           [(ngModel)]="item.menuDescription">
+  </textarea>
       </div>
+
+
+
     </div>
     <div *ngIf="isEdit">
       <input  *ngIf="isEdit" [(ngModel)]="categorie" class="categorie font-default-20" placeholder="+" >

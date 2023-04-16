@@ -19,6 +19,10 @@ export class MenuPageComponent {
     this.event = eventModelService.getActualEvent();
   }
 
+  /**
+   * Add new Menu
+   * @param menu
+   */
   addMenu(menu : Menu) {
 
     menu.eventId = this.eventModelService.getActualEvent().eventId
@@ -32,6 +36,10 @@ export class MenuPageComponent {
 
   }
 
+  /**
+   * Remove Menu
+   * @param menu
+   */
   removeMenu(menu: Menu) {
     if (this.isMaster) {
       this.eventModelService.deleteMenu(menu);

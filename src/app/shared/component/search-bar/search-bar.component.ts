@@ -12,8 +12,6 @@ export class SearchBarComponent {
   searchWord: any;
 
   searchInvite() {
-    console.log(this.searchWord);
-
     if (this.searchWord) {
       this.searchResult = this.inviteList.filter(invite => invite.inviteName.toLowerCase().includes(this.searchWord.toLowerCase()));
     }

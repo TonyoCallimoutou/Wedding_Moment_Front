@@ -2,6 +2,7 @@ import {Component, EventEmitter, HostListener, Input, Output, TemplateRef, ViewC
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-presentation-page',
@@ -10,26 +11,27 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 })
 export class PresentationPageComponent {
 
-  event: EventModel;
+  public event: EventModel;
 
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
 
-  dropdownOptions: OptionStringIcon[] = [];
-  isSetPresentationText : boolean = false;
-  fontSize : number;
-  fontSizeString : string
-  textAlign: string;
+  public dropdownOptions: OptionStringIcon[] = [];
+  public isSetPresentationText : boolean = false;
+  public fontSize : number;
+  public fontSizeString : string
+  public textAlign: string;
 
-  backgroundSrc: any = '';
+  public backgroundSrc: any = '';
 
-  background: any = '';
+  public background: any = '';
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
 
   constructor(
     private eventModelService: EventModelService,
     private dialog: MatDialog,
+    private translate: TranslateService,
   ) {
 
     this.event = this.eventModelService.getActualEvent();
@@ -42,17 +44,27 @@ export class PresentationPageComponent {
 
   }
 
+  /**
+   * Set dropdownOptions
+   */
   initDropDownOption() {
     let option1 : OptionStringIcon = {
-      optionText: "Modifier le texte de presentation",
-      icon: "icon 1",
+      optionText: "",
+      icon: "edit_note",
     }
     let option2: OptionStringIcon = {
-      optionText: "Importer une image",
-      icon: "icon 2",
+      optionText: "",
+      icon: "wallpaper",
     }
 
     this.dropdownOptions = [option1,option2];
+
+    this.translate.get("Presentation.Option.modify_presentation_text").subscribe((res: string) => {
+      this.dropdownOptions[0].optionText = res;
+    })
+    this.translate.get("Presentation.Option.import_picture").subscribe((res: string) => {
+      this.dropdownOptions[1].optionText = res;
+    })
   }
 
   /**
@@ -121,8 +133,10 @@ export class PresentationPageComponent {
     this.textAlign = align;
   }
 
+  /**
+   * Save presentation texte
+   */
   save() {
-    console.log(this.eventModelService.event)
     this.isSetPresentationText = false;
     var presentation : EventModelPresentation = {
       presentationText: this.event.presentationText,

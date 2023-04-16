@@ -1,5 +1,6 @@
 <div class="page" style="background-image: url({{ background ? background : event.pictureUrl }})">
   <app-dropdown-menu
+    [matIcon]="'edit'"
     [options]="dropdownOptions"
     (optionSelected)="onOptionSelected($event)">
   </app-dropdown-menu>

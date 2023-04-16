@@ -7,10 +7,9 @@
 
 <div *ngIf="canAccess">
 
-  <app-create-post
-    (createPostEvent)="addPost($event)"
-  ></app-create-post>
+  <button (click)="choosePicture()"> TEST </button>
 
+  <!-- LIST -->
   <div *ngIf="listViewSelected">
     <app-card-post
       *ngFor="let post of posts; let index = index"
@@ -21,8 +20,20 @@
       (delete)="removePost($event)"
     >
     </app-card-post>
+
+    <ng-template #dialogAddPost>
+      <app-generic-image-cropper
+        [maintainAspectRatio]="true"
+        [imageChangedEvent]="pictureSrc"
+        [ratio]="1/2"
+        (croppedImage)="getCroppedImage($event)"
+      >
+      </app-generic-image-cropper>
+    </ng-template>
+
   </div>
 
+  <!-- GRID -->
   <div *ngIf="!listViewSelected" class="view-grid">
 
     <div class="image-grid">
@@ -49,9 +60,6 @@
 
 
   </div>
-
-
-
 </div>
 
 <div *ngIf="!canAccess">

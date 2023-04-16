@@ -8,23 +8,25 @@ import {MatInputModule} from "@angular/material/input";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
   declarations: [
     PlanTablePageComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    CardPlanTableModule,
-    SearchBarModule,
-    MatInputModule,
-    MatAutocompleteModule,
-    ReactiveFormsModule,
-    TranslateModule,
-    CapitalizeFirstLetterPipeModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        CardPlanTableModule,
+        SearchBarModule,
+        MatInputModule,
+        MatAutocompleteModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        CapitalizeFirstLetterPipeModule,
+        MatIconModule
+    ],
   exports: [PlanTablePageComponent],
 })
 export class PlanTablePageModule {

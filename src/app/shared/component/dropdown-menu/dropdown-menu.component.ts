@@ -11,8 +11,11 @@ export class DropdownMenuComponent {
   @Input() matIconColor: string = '';
   @Input() options: OptionStringIcon[] = [];
   @Output() optionSelected = new EventEmitter<OptionStringIcon>();
-  public showDropdown = false;
 
+  /**
+   * Function call on click
+   * @param option
+   */
   selectOption(option: OptionStringIcon) {
     this.optionSelected.emit(option);
   }

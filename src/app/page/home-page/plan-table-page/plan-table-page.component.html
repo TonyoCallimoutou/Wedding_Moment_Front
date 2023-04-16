@@ -1,18 +1,16 @@
 <div class="page" style="background-image: url({{ event.pictureUrl }})">
 
-<!--  <app-search-bar-->
-<!--    [inviteList]="inviteList"-->
-<!--    (clickOnInvite)="getSearchResult($event)"-->
-<!--  >-->
-<!--  </app-search-bar>-->
-
   <div class="searchBar">
-    <form class="example-form">
-      <mat-form-field class="example-full-width" appearance="fill">
-        <mat-label> {{ 'Plan_table.search_invite' | translate | capitalizeFirstLetter }} </mat-label>
+    <form>
+      <mat-form-field
+        appearance="fill"
+        [color]="'primary'">
+        <mat-label style="color: var(--primary-dark)"> {{ 'Plan_table.search_invite' | translate | capitalizeFirstLetter }} </mat-label>
+        <mat-icon matPrefix style="color: var(--primary-dark)">search</mat-icon>
         <input type="text"
                placeholder=" {{ 'Plan_table.search_invite' | translate | capitalizeFirstLetter }} "
                matInput
+               style="color: var(--primary-dark)"
                [formControl]="myControl"
                [matAutocomplete]="auto">
         <mat-autocomplete
@@ -34,12 +32,16 @@
     (addPlanTable)="addPlanTable($event)"
     (removePlanTable)="removePlanTable($event)"
   ></app-card-plan-table>
-  <app-card-detail-plan-table
-    *ngIf="tableInfos"
-    [tableInfos]="tableInfos"
-    [isMaster]="isMaster"
-    (addInvite)="addInvite($event)"
-    (removeInvite)="removeInvite($event)"
-  ></app-card-detail-plan-table>
+
+  <ng-template #dialogPlanTableDetail>
+    <app-card-detail-plan-table
+      class="dialog"
+      *ngIf="tableInfos"
+      [tableInfos]="tableInfos"
+      [isMaster]="isMaster"
+      (addInvite)="addInvite($event)"
+      (removeInvite)="removeInvite($event)"
+    ></app-card-detail-plan-table>
+  </ng-template>
 </div>
 

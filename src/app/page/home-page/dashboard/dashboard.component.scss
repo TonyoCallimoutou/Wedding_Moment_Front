@@ -24,16 +24,22 @@ app-bottom-navigation-bar {
   width: 100%;
 }
 
-//mat-tab-group {
-//  position: fixed;
-//  left: 0;
-//  right: 0;
-//  bottom: 0;
-//  background-color: var(--primary);
-//  width: 100%;
-//
-//  ::ng-deep .mdc-tab {
-//    min-width: auto;
-//    height: 3.5rem;
-//  }
-//}
+mat-tab-group {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: var(--primary);
+
+  ::ng-deep {
+    .mdc-tab {
+      min-width: auto;
+      height: 3.5rem;
+      span {
+        border-color: var(--primary-dark) !important;
+        color: var(--primary-dark) !important;
+      }
+    }
+  }
+}

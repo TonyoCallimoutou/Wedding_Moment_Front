@@ -15,13 +15,18 @@ export class PostPageComponent {
   @Input() public posts: Post[] = [];
   @Input() public reactPostId: number[] = [];
 
-  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
-
   public listViewSelected: boolean = true;
 
   public switchOptions: OptionStringIcon[];
 
   public postDetail: any = null;
+
+  public pictureSrc : any;
+
+  private pictureCropped: any;
+
+  @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
+  @ViewChild('dialogAddPost') dialogAddPost!: TemplateRef<any>;
 
 
   constructor(
@@ -41,21 +46,58 @@ export class PostPageComponent {
     this.switchOptions = [optionOne, optionTwo];
   }
 
-  public isBigImage(index : number) {
+  /**
+   * determine if picture is Big or not
+   * @param index
+   * return boolean
+   */
+  public isBigImage(index : number): boolean {
     return index % 10 === 3 || index % 10 === 9;
   }
 
   /**
    * Create new Post
    */
-  public addPost(data: any) {
-    this.postModelService.createPost(data.downloadURL);
+  choosePicture() {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = '.png,.jpg';
+    fileInput.addEventListener('change', (event: any) => {
+      this.openDialogAddPost(event);
+    });
+    fileInput.click();
   }
 
 
   /**
-   * Delete Post
-   * @param postId
+   * Open Dialog to add post
+   * @param event
+   */
+  openDialogAddPost(event: any) {
+    this.pictureSrc = event;
+
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogAddPost },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.postModelService.createPost(this.pictureCropped);
+      }
+    });
+  }
+
+  /**
+   * Image crope in the dialog
+   * @param picture
+   */
+  getCroppedImage(picture : any) {
+    this.pictureCropped = picture;
+  }
+
+  /**
+   * remove post
+   * @param post
    */
   public removePost(post: Post) {
     this.postModelService.removePost(post);
@@ -69,6 +111,10 @@ export class PostPageComponent {
     this.postModelService.reactPost(post);
   }
 
+  /**
+   * Open dialog of detail post (in grid view)
+   * @param post
+   */
   public openDialog(post: Post) {
     this.postDetail = post;
     this.dialog.open(GenericDialogComponent, {

@@ -7,6 +7,12 @@
     "log_in_google" : "log in with Google",
     "forgot_password" : "forgot Password ?"
   },
+  "Presentation": {
+    "Option": {
+      "modify_presentation_text": "Modifier le texte de présentation",
+      "import_picture": "Importer une image"
+    }
+  },
   "Menu": {
     "title" : "menu"
   },
