@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, Renderer2, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";

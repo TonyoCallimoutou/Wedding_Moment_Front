@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";

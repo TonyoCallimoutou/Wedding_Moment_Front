@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {EventService} from '../service/event.service';
 import {FirebaseStorageService} from '../service/firebaseStorage.service';
-import {UserModelService} from './user-model.service';
 import {base64ToFile} from "ngx-image-cropper";
 
 

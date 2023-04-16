@@ -4,7 +4,7 @@ import {CardPlanTableComponent} from "./card-plan-table.component";
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {FormsModule} from "@angular/forms";
 import {ResizableModule} from "angular-resizable-element";
-import { CardDetailPlanTableComponent } from './card-detail-plan-table/card-detail-plan-table.component';
+import {CardDetailPlanTableComponent} from './card-detail-plan-table/card-detail-plan-table.component';
 import {TranslateModule} from "@ngx-translate/core";
 
 

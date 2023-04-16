@@ -7,9 +7,7 @@ import {LocalModel} from "../model/local.model";
 import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
-import {PostUtils} from "../utils/post.utils";
 import {StorageModelService} from "./storage-model.service";
-import {user} from "@angular/fire/auth";
 
 
 @Injectable({

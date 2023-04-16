@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
+import {ImageCroppedEvent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-generic-image-cropper',

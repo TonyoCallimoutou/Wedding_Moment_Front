@@ -6,7 +6,6 @@ import {SignInComponent} from "./page/firebase-auth-component/sign-in/sign-in.co
 import {SignUpComponent} from "./page/firebase-auth-component/sign-up/sign-up.component";
 import {VerifyEmailComponent} from "./page/firebase-auth-component/verify-email/verify-email.component";
 import {AuthGuard} from './service/auth.guard';
-import {PresentationPageComponent} from './page/home-page/presentation-page/presentation-page.component';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
 import {HomePageComponent} from "./page/home-page/home-page.component";
 import {GenericImageCropperComponent} from "./shared/component/generic-image-cropper/generic-image-cropper.component";

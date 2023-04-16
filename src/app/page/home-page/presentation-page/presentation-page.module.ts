@@ -5,7 +5,6 @@ import {LikeButtonModule} from 'src/app/shared/component/button-component/like-b
 import {EventModelService} from 'src/app/viewModel/event-model.service';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {PresentationPageComponent} from './presentation-page.component';
-import {AppModule} from "../../../app.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
 import {MatIconModule} from "@angular/material/icon";
 import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdown-menu.module";
