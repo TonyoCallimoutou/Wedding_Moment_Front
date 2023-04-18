@@ -10,17 +10,27 @@
     justify-content: flex-end;
   }
 
-  textarea {
-    width: 100%;
-    background: transparent;
-    border: 0;
-    position: fixed;
-    top: 35%;
-  }
+  .text-zone {
+    height: 90%;
 
-  .text-presentation {
-    font-family: GreatVibes, serif;
-    color: var(--primary-light);
+    .buttons {
+      position: absolute;
+    }
+
+    .text {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      textarea {
+        font-family: GreatVibes, serif;
+        color: var(--primary-light);
+        width: 100%;
+        background: transparent;
+        border: 0;
+        position: fixed;
+      }
+    }
   }
 }
 

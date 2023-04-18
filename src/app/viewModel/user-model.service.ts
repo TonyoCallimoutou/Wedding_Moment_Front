@@ -16,9 +16,7 @@ import {StorageModelService} from "./storage-model.service";
 export class UserModelService {
 
   private userData!: User;
-
   private listReactPostId: number[] = [];
-
   private listReactPostIdObs$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
   constructor(
@@ -29,6 +27,9 @@ export class UserModelService {
     this.initUserData();
   }
 
+  /**
+   * Init user Data
+   */
   initUserData() {
     this.setUserData();
     if (this.userData != null) {
@@ -36,18 +37,25 @@ export class UserModelService {
     }
   }
 
+  /**
+   * If user is identify
+   */
   public canAccess(): boolean {
     return this.userData.userId != "0";
   }
 
-  // Get User from Database
+  /**
+   * Get User from Database
+   * @param userId
+   */
   public getUserFromDB(userId: string): Observable<User> {
     return this.userService.getUserById(userId);
   }
 
-  /* Setting up user data when sign in with username/password,
-  sign up with username/password and sign in with social auth
-  provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
+  /**
+   * Create user
+   * @param user
+   */
   public createUser(user: any): Observable<any> {
     this.userData = new User(
       user.uid,
@@ -62,18 +70,28 @@ export class UserModelService {
     return this.userService.createUser(this.userData)
   }
 
+  /**
+   * init userData
+   */
   public setUserData() {
     this.userData = this.getCurrentUser();
   }
 
-
-  // Return Current User
   public getCurrentUser(): User {
     return JSON.parse(localStorage.getItem(LocalModel.USER)!);
   }
 
   // SET USER
 
+  public setNbrOfPostUser(nbrOfPost: number) {
+    this.userData.nbrOfPost = nbrOfPost;
+    localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
+  }
+
+  /**
+   * Set picture of User
+   * @param pictureUrl
+   */
   public setPhotoUrl(pictureUrl: string) {
 
     this.storageModelService.uploadUserPictureAndGetUrl(this.userData.userId, pictureUrl).then(url => {
@@ -92,6 +110,10 @@ export class UserModelService {
     })
   }
 
+  /**
+   * Set User Name
+   * @param user
+   */
   public setUserName(user: User) {
     this.userService.setUserName(user)
       .pipe(take(1))
@@ -101,7 +123,9 @@ export class UserModelService {
       });
   }
 
-  //Remove User
+  /**
+   * Remove User
+   */
   public removeUser(): Observable<any> {
     return this.userService.deleteUser(this.userData.userId)
   }
@@ -110,7 +134,10 @@ export class UserModelService {
    * POST
    */
 
-  // Return List Of React PostId
+
+  /**
+   * Init list of React Post ID
+   */
   public initListOfReactPostId() {
     this.userService.getReactPosts(this.userData.userId)
       .pipe(take(1))
@@ -124,11 +151,17 @@ export class UserModelService {
       });
   }
 
+  /**
+   * return list of react post Id
+   */
   public getObsListOfReactPost(): BehaviorSubject<any> {
     return this.listReactPostIdObs$;
   }
 
-  // React Or Dislike Post
+  /**
+   * React to post
+   * @param post
+   */
   public reactPost(post: Post) {
     let data = {
       userId: this.userData.userId,

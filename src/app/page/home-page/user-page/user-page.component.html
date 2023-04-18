@@ -5,10 +5,14 @@
 <div *ngIf="canAccess">
   <div class="header">
     <img
-      alt="{{ currentUser.userId}}"
+      alt="{{ currentUser.userId }}"
       src="{{ currentUser.photoUrl }}"
       (click)="changePicture()">
-    <p> {{ currentUser.userName}}</p>
+    <p class="font-primary-dark font-default-20" > {{ currentUser.userName }} </p>
+    <div class="nbr-post">
+      <p class="font-primary-dark font-default-20"> {{ currentUser.nbrOfPost }} </p>
+      <p class="font-primary-dark font-default-16"> {{ 'Users.nbr_of_post' | translate | capitalizeFirstLetter}} </p>
+    </div>
   </div>
 
   <mat-accordion class="example-headers-align" multi>

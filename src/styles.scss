@@ -71,6 +71,18 @@ body {
   font-weight: normal;
 }
 
+.font-primary {
+  color: var(--primary)
+}
+
+.font-primary-light {
+  color: var(--primary-light)
+}
+
+.font-primary-dark {
+  color: var(--primary-dark)
+}
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

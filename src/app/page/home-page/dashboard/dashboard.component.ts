@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {Subject, takeUntil} from "rxjs";
+import {Observable, Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
 // @ts-ignore
@@ -40,7 +40,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.event = this.eventModelService.getActualEvent();
-    this.currentUser = this.userModelService.getCurrentUser();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
   }
@@ -54,6 +53,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['home-page'])
     }
 
+    this.initUser();
+
     this.initMenu();
 
     this.initPost();
@@ -66,6 +67,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.onDestroy$.next(true);
     this.onDestroy$.unsubscribe();
+  }
+
+  /**
+   * Set Current User
+   */
+  initUser() {
+    this.currentUser = this.userModelService.getCurrentUser();
   }
 
   /**
@@ -87,8 +95,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
     if (this.canAccess) {
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
-        .subscribe((data: any) => {
+        .subscribe((data: Post[]) => {
           this.posts = data;
+          let postsOfUser = this.posts.filter((post) => post.userId === this.userModelService.getCurrentUser().userId)
+          this.userModelService.setNbrOfPostUser(postsOfUser.length)
         })
 
       this.postModelService.getObsListOfReactPost()

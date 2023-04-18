@@ -19,17 +19,14 @@ export class HomePageComponent implements OnInit, OnDestroy {
 
   public listEvent: EventModel[] = [];
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
-  private user: User;
 
   constructor(
-    private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private router: Router
   ) {
     if (eventModelService.getActualEvent() != null) {
       this.goToEvent(eventModelService.getActualEvent());
     }
-    this.user = this.userModelService.getCurrentUser();
   }
 
   ngOnInit(): void {

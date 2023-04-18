@@ -5,33 +5,28 @@
     (optionSelected)="onOptionSelected($event)">
   </app-dropdown-menu>
 
-  <div *ngIf="isSetPresentationText">
-    <button (click)="save()"> SAVE </button>
-    <div>
-      <button (click)="onFontSizeChange(true)">+</button>
-      <button (click)="onFontSizeChange(false)">-</button>
-      <button (click)="onAlignChange('left')">Gauche</button>
-      <button (click)="onAlignChange('center')">Centre</button>
-      <button (click)="onAlignChange('right')">Droite</button>
+  <div class="text-zone">
+    <div *ngIf="isSetPresentationText" class="buttons">
+      <button (click)="save()"> SAVE </button>
+      <div>
+        <button (click)="onFontSizeChange(true)">+</button>
+        <button (click)="onFontSizeChange(false)">-</button>
+        <button (click)="onAlignChange('left')">Gauche</button>
+        <button (click)="onAlignChange('center')">Centre</button>
+        <button (click)="onAlignChange('right')">Droite</button>
+      </div>
     </div>
-    <div>
+
+    <div class="text">
       <textarea
         autosize
+        [disabled]="!isSetPresentationText"
         class="text-presentation"
         [ngStyle]="{'font-size': fontSizeString, 'text-align': textAlign }"
         [(ngModel)]="event.presentationText">
-  </textarea>
+      </textarea>
     </div>
   </div>
-
-  <textarea
-      *ngIf="!isSetPresentationText"
-      autosize
-      disabled = true
-      class="text-presentation"
-      [ngStyle]="{'font-size': fontSizeString, 'text-align': textAlign }"
-      [(ngModel)]="event.presentationText">
-  </textarea>
 
 </div>
 

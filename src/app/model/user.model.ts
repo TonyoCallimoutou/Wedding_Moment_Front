@@ -3,5 +3,6 @@ interface User {
   userName: string,
   email: string,
   emailVerified: boolean,
-  photoUrl: string
+  photoUrl: string,
+  nbrOfPost: number,
 }

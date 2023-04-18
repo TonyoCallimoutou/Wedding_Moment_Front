@@ -24,6 +24,7 @@
     "search_invite" : "Recherche un invité"
   },
   "Users": {
+    "nbr_of_post": "posts",
     "tab_title_1": "information personnel",
     "tab_title_2": "général",
     "tab_title_3": "compte",

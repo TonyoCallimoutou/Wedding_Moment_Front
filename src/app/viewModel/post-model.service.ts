@@ -54,7 +54,7 @@ export class PostModelService {
   }
 
   // Create Post
-  public createPost(data: string) {
+  public createPost(data: any) {
 
     const pictureUrl = data;
 
@@ -66,7 +66,6 @@ export class PostModelService {
       userName: this.userData.userName,
       photoUrl: this.userData.photoUrl
     }
-
 
     this.postService.createPost(post)
       .pipe(take(1))

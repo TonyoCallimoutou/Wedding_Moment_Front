@@ -24,6 +24,7 @@
     "search_invite" : "Search Invite"
   },
   "Users": {
+    "nbr_of_post": "posts",
     "tab_title_1": "personnal information",
     "tab_title_2": "general",
     "tab_title_3": "account",
