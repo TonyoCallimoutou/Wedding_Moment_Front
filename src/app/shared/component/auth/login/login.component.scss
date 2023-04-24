@@ -8,8 +8,15 @@
   align-items: center;
   gap: 3.5rem;
 
-  h1 {
-    color: var(--primary-light);
+  .switch-button {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+
+    .title-selected {
+      font-size: var(--font-size-default-24);
+    }
   }
 
   .input {
@@ -20,7 +27,7 @@
     width: 100%;
     gap: 3.5rem;
 
-    .formGroup {
+    .formControl {
       position: relative;
       width: 100%;
 
@@ -44,7 +51,16 @@
         transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
       }
 
-      input:valid~span,
+      .see-password {
+        position: absolute;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+        top: 50%;
+        left: 100%;
+        transform: translate(-100%, -50%);
+      }
+
+      .input-not-null~span,
       input:focus~span {
         transform: translateY(-50%);
         text-align: center;
@@ -54,17 +70,14 @@
         background: black;
         border: 1px solid var(--primary-dark);
         color: var(--primary-light);
-
       }
     }
   }
-  .button {
-    background: var(--secondary-light);
-    padding: 1rem;
-  }
 
   .forgotPassword {
-    align-self: flex-end;
+    width: 100%;
+    text-align: end;
+    margin-top: -2rem;
     color: var(--primary-light);
   }
 }

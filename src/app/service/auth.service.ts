@@ -8,6 +8,7 @@ import {LocalModel} from "../model/local.model";
 import {EventModelService} from "../viewModel/event-model.service";
 // @ts-ignore
 import {User} from '../model/user.model';
+import {StorageModelService} from "../viewModel/storage-model.service";
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,7 @@ export class AuthService {
   constructor(
     public userModelService: UserModelService,
     public eventModelService: EventModelService,
+    public storageModelService: StorageModelService,
     public afAuth: AngularFireAuth,
     public router: Router,
   ) {
@@ -35,8 +37,14 @@ export class AuthService {
       });
   }
 
-  // Returns true when user is looged in and email is verified
+  // Returns true when user is connected
   get isLoggedIn(): boolean {
+    const user = JSON.parse(localStorage.getItem(LocalModel.USER)!);
+    return user !== null;
+  }
+
+  // Returns true when user is connected but email isn't verified
+  get isVerified(): boolean {
     const user = JSON.parse(localStorage.getItem(LocalModel.USER)!);
     return user !== null && user.emailVerified;
   }
@@ -50,6 +58,14 @@ export class AuthService {
           this.userModelService.getUserFromDB(result.user.uid)
             .pipe(take(1))
             .subscribe((user: User) => {
+              if (!user.emailVerified && result.user?.emailVerified) {
+                this.userModelService.setUserIsVerified(user.userId)
+                  .pipe(take(1))
+                  .subscribe(() => {
+                    console.log("ok")
+                  })
+              }
+              user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
               localStorage.setItem(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
               this.eventModelService.initUserData();
@@ -65,21 +81,14 @@ export class AuthService {
   }
 
   // Sign up with email/password
-  SignUp(email: string, password: string) {
+  SignUp(name: string, email: string, password: string) {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign
         up and returns promise */
         this.SendVerificationMail();
-        this.userModelService.createUser(result.user)
-          .pipe(take(1))
-          .subscribe((user: User) => {
-            localStorage.setItem(LocalModel.USER, JSON.stringify(user));
-            this.userModelService.initUserData();
-            this.eventModelService.initUserData();
-            window.location.reload();
-          });
+        this.createUser(result, name);
       })
       .catch((error) => {
         window.alert(error.message);
@@ -127,14 +136,7 @@ export class AuthService {
                 this.eventModelService.initUserData();
                 this.router.navigate(['home-page']);
               } else {
-                this.userModelService.createUser(result.user)
-                  .pipe(take(1))
-                  .subscribe((user: User) => {
-                    localStorage.setItem(LocalModel.USER, JSON.stringify(user));
-                    this.userModelService.initUserData();
-                    this.eventModelService.initUserData();
-                    this.router.navigate(['home-page']);
-                  });
+                this.createUser(result);
               }
             });
         }
@@ -142,6 +144,44 @@ export class AuthService {
       .catch((error) => {
         window.alert(error);
       });
+  }
+
+  private createUser(result: any,  name : string = result.user.name) {
+    if (!!result.user) {
+      this.userData = {
+        userId : result.user.uid,
+        userName: result.user.displayName,
+        email:  result.user.email,
+        emailVerified: result.user.emailVerified,
+        photoUrl: "https://firebasestorage.googleapis.com/v0/b/projet-secret-a86d6.appspot.com/o/users%2F0?alt=media&token=da247115-af2f-466d-b4e7-526d1860bec6",
+        nbrOfPost: 0
+      }
+      // If user have picture
+      if (result.user.photoUrl) {
+        this.storageModelService.uploadUserPictureAndGetUrl(result.user.uid, result.user.photoUrl)
+          .then(url => {
+            this.userData.photoUrl = url;
+            this.userModelService.createUser(this.userData)
+              .pipe(take(1))
+              .subscribe((user: User) => {
+                localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                this.userModelService.initUserData();
+                this.eventModelService.initUserData();
+                this.router.navigate(['home-page']);
+              });
+          })
+      }
+      // If User do not have picture
+      this.userModelService.createUser(this.userData)
+        .pipe(take(1))
+        .subscribe((user: User) => {
+          localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+          this.userModelService.initUserData();
+          this.eventModelService.initUserData();
+          this.router.navigate(['home-page']);
+        });
+
+    }
   }
 
   passWithoutSignIn() {

@@ -56,18 +56,21 @@ export class UserModelService {
    * Create user
    * @param user
    */
-  public createUser(user: any): Observable<any> {
-    this.userData = new User(
-      user.uid,
-      user.displayName,
-      user.email,
-      user.emailVerified,
-      user.photoURL
-    );
+  public createUser(user: User): Observable<any> {
+    this.userData = user;
 
     this.initListOfReactPostId();
 
     return this.userService.createUser(this.userData)
+  }
+
+  /**
+   * When user is Verified
+   * @param user
+   */
+  public setUserIsVerified(userId: string): Observable<any> {
+
+    return this.userService.setUserIsVerified({userId: userId});
   }
 
   /**

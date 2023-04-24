@@ -1,11 +1,22 @@
 {
+  "Utils": {
+    "Errors": {
+      "required": "ce champ est obligatoire",
+      "email": "veuillez entrer une adresse email valide",
+      "different_password": "Les mots de passe sont différents"
+    }
+  },
   "Auth": {
     "sign_in" : "sign In",
+    "register" : "register",
+    "user_name" : "nom",
     "email" : "email",
     "password" : "password",
+    "verify_password" : "password",
     "log_in" : "log in",
     "log_in_google" : "log in with Google",
-    "forgot_password" : "forgot Password ?"
+    "forgot_password" : "forgot Password ?",
+    "create_account" : "create account"
   },
   "Presentation": {
     "Option": {

@@ -85,4 +85,15 @@ body {
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-16);
+}
+
+mat-error {
+  position: absolute;
+  padding: 0.2rem;
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-16);
+}

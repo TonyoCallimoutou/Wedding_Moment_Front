@@ -1,34 +1,119 @@
-<div class="card">
-  <h1 class="font-default-24"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
+<div [formGroup]="form" class="card">
+  <div class="switch-button">
+    <h1 class="font-default-20 font-primary-light" [ngClass]="!isRegister ? 'title-selected': ''" (click)="isRegister = false"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
+    <h1 class="font-default-20 font-primary-light" [ngClass]="isRegister ? 'title-selected': ''" (click)="isRegister = true"> {{ 'Auth.register' | translate | capitalizeFirstLetter }}</h1>
+  </div>
+
   <div class="input">
-    <div class="formGroup">
-      <input class="font-default-16" #userEmail type="email" required="required">
-      <span class="font-default-20"> {{ 'Auth.email' | translate | capitalizeFirstLetter  }} </span>
+    <div class="formControl" *ngIf="isRegister">
+      <input
+        class="font-default-20"
+        [ngClass]="form.get('name')?.value !== '' ? 'input-not-null' : '' "
+        [formControlName]="'name'"
+        #userName
+        type="text"
+        required="required">
+      <span class="font-default-20"> {{ 'Auth.user_name' | translate | capitalizeFirstLetter  }} </span>
+
+      <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
+        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+      </mat-error>
     </div>
-    <div class="formGroup">
-      <input class="font-default-16" #userPassword type="password" required="required">
+
+    <div class="formControl">
+      <input
+        class="font-default-20"
+        [ngClass]="form.get('email')?.value !== '' ? 'input-not-null' : '' "
+        [formControlName]="'email'"
+        #userEmail
+        type="email"
+        required="required">
+      <span class="font-default-20"> {{ 'Auth.email' | translate | capitalizeFirstLetter  }} </span>
+
+      <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email') && !form.get('email')?.hasError('required')">
+        {{ 'Utils.Errors.email' | translate | capitalizeFirstLetter  }}
+      </mat-error>
+      <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
+        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+      </mat-error>
+    </div>
+
+    <div class="formControl">
+      <input
+        class="font-default-20"
+        [ngClass]="form.get('password')?.value !== '' ? 'input-not-null' : '' "
+        [formControlName]="'password'"
+        #userPassword
+        type="{{ viewPassword ? 'text' : 'password'}}"
+        required="required">
       <span class="font-default-20"> {{ 'Auth.password' | translate | capitalizeFirstLetter  }} </span>
+
+      <mat-icon
+        class="see-password"
+        *ngIf="form.get('password')?.value !== ''"
+        (click)="viewPassword = !viewPassword"
+      > {{ viewPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+
+      <mat-error *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
+        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+      </mat-error>
+    </div>
+
+    <div class="forgotPassword" *ngIf="!isRegister">
+      <h2 class="font-default-16" routerLink="/forgot-password">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
+    </div>
+
+    <div class="formControl" *ngIf="isRegister">
+      <input
+        class="font-default-20"
+        [ngClass]="form.get('verifyPassword')?.value !== '' ? 'input-not-null' : '' "
+        [formControlName]="'verifyPassword'"
+        #userVerifyPassword
+        type="{{ viewVerifyPassword ? 'text' : 'password'}}"
+        required="required">
+      <span class="font-default-20"> {{ 'Auth.verify_password' | translate | capitalizeFirstLetter  }} </span>
+
+      <mat-icon
+        class="see-password"
+        *ngIf="form.get('verifyPassword')?.value !== ''"
+        (click)="viewVerifyPassword = !viewVerifyPassword"
+      > {{ viewVerifyPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+
+      <mat-error *ngIf="form.get('verifyPassword')?.value !== '' && form.get('verifyPassword')?.value !== form.get('password')?.value && !form.get('verifyPassword')?.hasError('required')">
+        {{ 'Utils.Errors.different_password' | translate | capitalizeFirstLetter  }}
+      </mat-error>
+      <mat-error *ngIf="form.get('verifyPassword')?.touched && form.get('verifyPassword')?.hasError('required')">
+        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+      </mat-error>
     </div>
   </div>
+
+  <!-- Calling Create Account -->
+  <button
+    mat-raised-button
+    class="font-default-20"
+    *ngIf="isRegister"
+    (click)="authService.SignUp(nameControl.value, userEmail.value, userPassword.value)"
+  >
+    {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
+  </button>
 
   <!-- Calling SignIn Api from AuthService -->
-  <div class="formGroup">
-    <div class="button" (click)="authService.SignIn(userEmail.value, userPassword.value)">
-      <h2 class="font-default-20"> {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }} </h2>
-    </div>
-  </div>
+  <button
+    mat-raised-button
+    class="font-default-20"
+    *ngIf="!isRegister"
+    (click)="authService.SignIn(userEmail.value, userPassword.value)"
+  >
+    {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
+  </button>
   <!-- Calling GoogleAuth Api from AuthService -->
-  <div class="formGroup">
-    <div class="button" (click)="authService.GoogleAuth()">
-      <h2 class="font-default-20"> {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }} </h2>
-    </div>
-  </div>
-  <div class="forgotPassword">
-    <h2 class="font-default-20" routerLink="/forgot-password">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
-  </div>
-
-  <!-- TODO -->
-<!--    <div class="redirectToLogin">-->
-<!--      <span>Don't have an account?<span class="redirect" routerLink="/register-user"> Sign Up</span></span>-->
-<!--    </div>-->
+  <button
+    mat-raised-button
+    class="font-default-20"
+    *ngIf="!isRegister"
+    (click)="authService.GoogleAuth()"
+  >
+    {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
+  </button>
 </div>

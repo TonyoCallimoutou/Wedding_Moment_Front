@@ -24,7 +24,12 @@ export class StorageModelService {
 
     return new Promise(resolve => {
 
-      fileUpload = base64ToFile(fileUpload);
+      try {
+        fileUpload = base64ToFile(fileUpload);
+      }
+      catch (e) {
+        console.log(e);
+      }
 
       let filePath = (`${this.basePathPost}/${userId}/${postId}`);
 
@@ -38,7 +43,12 @@ export class StorageModelService {
 
     return new Promise(resolve => {
 
-      fileUpload = base64ToFile(fileUpload);
+      try {
+        fileUpload = base64ToFile(fileUpload);
+      }
+      catch (e) {
+        console.log(e);
+      }
 
       let filePath = (`${this.basePathUser}/${userId}`);
 

@@ -17,6 +17,10 @@ export class UserService {
     return this.http.post(baseUrl, data);
   }
 
+  setUserIsVerified(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/userVerified`, data);
+  }
+
   setPhotoUrl(data: any): Observable<any> {
     return this.http.put<any>(`${baseUrl}/photoUrl`, data)
   }
