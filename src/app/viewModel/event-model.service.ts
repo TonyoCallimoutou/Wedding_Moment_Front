@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, take} from 'rxjs';
+import {BehaviorSubject, Observable, take} from 'rxjs';
 import {EventService} from '../service/event.service';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserModelService} from './user-model.service';
@@ -152,6 +152,12 @@ export class EventModelService {
       this.isMaster = this.event.userId === this.userData.userId;
     }
     this.initEventData();
+  }
+
+  goToEventWithId(eventId: number): Observable<any> {
+
+    return this.eventService.getEventById(eventId);
+
   }
 
   getActualEvent(): EventModel {

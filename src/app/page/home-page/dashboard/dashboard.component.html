@@ -18,6 +18,7 @@
       [currentUser]="currentUser"
       [posts]="posts"
       [reactPostId]="reactPostId"
+      (switchTab)="tabSelector = $event"
     >
     </app-post-page>
     <app-plan-table-page

@@ -24,9 +24,6 @@ export class HomePageComponent implements OnInit, OnDestroy {
     private eventModelService: EventModelService,
     private router: Router
   ) {
-    if (eventModelService.getActualEvent() != null) {
-      this.goToEvent(eventModelService.getActualEvent());
-    }
   }
 
   ngOnInit(): void {
@@ -44,7 +41,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
    */
   public goToEvent(event: EventModel) {
     this.eventModelService.goToEvent(event);
-    this.router.navigateByUrl("/dashboard")
+    this.router.navigate(["/dashboard/",{ id: event.eventId }]);
   }
 
   /**

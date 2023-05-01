@@ -16,7 +16,9 @@
     "log_in" : "log in",
     "log_in_google" : "log in with Google",
     "forgot_password" : "forgot Password ?",
-    "create_account" : "create account"
+    "create_account" : "create account",
+    "auth" : "authentification",
+    "auth_required": "veuillez vous authentifié pour accéder aux photos"
   },
   "Presentation": {
     "Option": {

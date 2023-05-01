@@ -1,4 +1,4 @@
-import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
@@ -14,6 +14,7 @@ export class PostPageComponent {
   @Input() public currentUser!: User;
   @Input() public posts: Post[] = [];
   @Input() public reactPostId: number[] = [];
+  @Output() public switchTab: EventEmitter<number> = new EventEmitter<number>();
 
   public listViewSelected: boolean = true;
 
@@ -123,6 +124,10 @@ export class PostPageComponent {
         isDisplayBouton: false
       }
     });
+  }
+
+  public goToUserPage() {
+    this.switchTab.emit(4);
   }
 
 }

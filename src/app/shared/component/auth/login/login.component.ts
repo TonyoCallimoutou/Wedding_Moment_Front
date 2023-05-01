@@ -1,14 +1,16 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth.service";
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
+import {UserModelService} from "../../../../viewModel/user-model.service";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
+  @Output() goToForgotPassword: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   public isRegister: boolean = false;
   public viewPassword : boolean = false;
@@ -30,7 +32,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  forgotPassword() {
+    this.goToForgotPassword.emit(true)
   }
 
 }

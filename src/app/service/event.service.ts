@@ -23,6 +23,10 @@ export class EventService {
     return this.currentEventId;
   }
 
+  getEventById(eventId: number): Observable<any> {
+    return this.http.get(`${baseUrl}/${eventId}`);
+  }
+
   getAllEvent(): Observable<any> {
     return this.http.get(baseUrl);
   }

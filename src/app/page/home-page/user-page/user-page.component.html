@@ -2,7 +2,7 @@
   Change Event
 </button>
 
-<div *ngIf="canAccess">
+<div class="user_page" *ngIf="canAccess">
   <div class="header">
     <img
       alt="{{ currentUser.userId }}"
@@ -82,8 +82,8 @@
 
 </div>
 
-<div *ngIf="!canAccess">
-  <app-sign-in></app-sign-in>
+<div class="no_auth"  *ngIf="!canAccess">
+  <app-auth></app-auth>
 </div>
 
 

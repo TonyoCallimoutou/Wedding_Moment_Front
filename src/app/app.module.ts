@@ -7,8 +7,6 @@ import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 
 import {AppComponent} from './app.component';
 import {environment} from 'src/environments/environment';
-import {ForgotPasswordComponent} from './page/firebase-auth-component/forgot-password/forgot-password.component';
-import {VerifyEmailComponent} from './page/firebase-auth-component/verify-email/verify-email.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AuthService} from './service/auth.service';
 import {SocketIoService} from './service/socket-io.service';
@@ -25,8 +23,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
-    ForgotPasswordComponent,
-    VerifyEmailComponent,
     PageNotFoundComponent,
     HomePageComponent,
     GenericDialogComponent

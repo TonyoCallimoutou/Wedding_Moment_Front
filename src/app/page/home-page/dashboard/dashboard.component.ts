@@ -2,8 +2,8 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {Observable, Subject, takeUntil} from "rxjs";
-import {Router} from "@angular/router";
+import {Observable, Subject, take, takeUntil} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
 // @ts-ignore
 import {Post} from "../../../model/post.model";
@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private postModelService: PostModelService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.event = this.eventModelService.getActualEvent();
     this.canAccess = this.userModelService.canAccess();
@@ -49,17 +50,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.tabSelector = Number(localStorage.getItem(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
-    if (!this.eventModelService.getActualEvent()) {
-      this.router.navigate(['home-page'])
-    }
+    this.route.params.subscribe(params => {
 
-    this.initUser();
+      if (!params['id'] && !this.event) {
+        this.router.navigate(['home-page'])
+      }
+      else if (params['id'] && this.event.eventId != params['id']) {
+        this.eventModelService.goToEventWithId(params['id'])
+          .pipe(take(1))
+          .subscribe(event => {
+            if (event) {
+              this.eventModelService.goToEvent(event);
+              this.initUser();
 
-    this.initMenu();
+              this.initMenu();
 
-    this.initPost();
+              this.initPost();
 
-    this.initPlanTable();
+              this.initPlanTable();
+            }
+            else {
+              this.router.navigate(['home-page'])
+            }
+          })
+      }
+      else {
+        this.initUser();
+
+        this.initMenu();
+
+        this.initPost();
+
+        this.initPlanTable();
+      }
+
+
+
+    });
 
   }
 

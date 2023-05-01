@@ -41,5 +41,20 @@ mat-expansion-panel {
   }
 }
 
+.no_auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+
+  app-auth {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 85%;
+  }
+
+}
+
 
 

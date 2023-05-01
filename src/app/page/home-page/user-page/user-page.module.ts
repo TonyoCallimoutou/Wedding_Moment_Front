@@ -4,7 +4,6 @@ import {SettingButtonModule} from 'src/app/shared/component/button-component/set
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {UserPageComponent} from './user-page.component';
 import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
-import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
@@ -13,6 +12,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {AuthModule} from "../../../shared/component/auth/auth.module";
 
 
 @NgModule({
@@ -23,7 +23,6 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
         LikeButtonModule,
         SettingButtonModule,
         NgIf,
-        SignInModule,
         NgClass,
         TranslateModule,
         TitleCasePipe,
@@ -34,7 +33,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
         MatInputModule,
         MatSelectModule,
         MatAutocompleteModule,
-        NgForOf
+        NgForOf,
+        AuthModule
     ],
   exports: [UserPageComponent],
   providers: [UserModelService]

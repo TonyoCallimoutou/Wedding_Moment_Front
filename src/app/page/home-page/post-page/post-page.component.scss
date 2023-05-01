@@ -21,6 +21,33 @@
   }
 }
 
+.canNotAccess {
+  background-color: var(--black);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+
+  .card-login {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--primary-dark);
+    width: 60%;
+    margin: auto;
+    background: var(--primary-light);
+    padding: 1rem;
+    gap: 2rem;
+    border-radius: 1.5rem;
+
+    span {
+      text-align: center;
+    }
+
+    button {
+      align-self: flex-end;
+    }
+  }
+}
+
 .dialog {
   width: 80%;
   position: fixed;

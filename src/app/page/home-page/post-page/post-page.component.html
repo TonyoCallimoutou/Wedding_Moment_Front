@@ -62,6 +62,9 @@
   </div>
 </div>
 
-<div *ngIf="!canAccess">
-  <app-sign-in></app-sign-in>
+<div class="canNotAccess" *ngIf="!canAccess">
+  <div class="card-login">
+    <span class="font-primary-dark font-default-16"> {{ 'Auth.auth_required' | translate | capitalizeFirstLetter}} </span>
+    <button mat-raised-button (click)="goToUserPage()"> {{ 'Auth.auth' | translate | capitalizeFirstLetter}} </button>
+  </div>
 </div>

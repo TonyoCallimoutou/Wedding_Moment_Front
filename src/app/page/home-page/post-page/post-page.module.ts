@@ -6,28 +6,32 @@ import {CreatePostModule} from 'src/app/shared/component/button-component/create
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {PostPageComponent} from './post-page.component';
-import {SignInModule} from "../../firebase-auth-component/sign-in/sign-in.module";
 import {CardPostModule} from "../../../shared/component/card-post/card-post.module";
 import {TranslateModule} from "@ngx-translate/core";
 import {SwitchButtonModule} from "../../../shared/component/button-component/switch-button/switch-button.module";
 import {GenericImageCropperModule} from "../../../shared/component/generic-image-cropper/generic-image-cropper.module";
+import {AuthModule} from "../../../shared/component/auth/auth.module";
+import {MatButtonModule} from "@angular/material/button";
+import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 
 
 @NgModule({
   declarations: [
     PostPageComponent
   ],
-    imports: [
-        CommonModule,
-        LikeButtonModule,
-        DeleteButtonModule,
-        CreatePostModule,
-        SignInModule,
-        CardPostModule,
-        TranslateModule,
-        SwitchButtonModule,
-        GenericImageCropperModule
-    ],
+  imports: [
+    CommonModule,
+    LikeButtonModule,
+    DeleteButtonModule,
+    CreatePostModule,
+    CardPostModule,
+    TranslateModule,
+    SwitchButtonModule,
+    GenericImageCropperModule,
+    AuthModule,
+    MatButtonModule,
+    CapitalizeFirstLetterPipeModule
+  ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]
 })

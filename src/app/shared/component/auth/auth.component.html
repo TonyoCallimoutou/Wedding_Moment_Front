@@ -1,0 +1,11 @@
+<app-login
+  *ngIf="!forgotPassword && (!currentUser || currentUser.userId == '0')"
+  (goToForgotPassword)="forgotPassword = true"
+></app-login>
+
+<app-verify-email *ngIf="!forgotPassword && (!!currentUser && currentUser.userId !== '0')"></app-verify-email>
+
+<app-forgot-password
+  *ngIf="forgotPassword"
+  (goBack)="forgotPassword = false"
+></app-forgot-password>

@@ -41,7 +41,7 @@ export class UserModelService {
    * If user is identify
    */
   public canAccess(): boolean {
-    return this.userData.userId != "0";
+    return this.userData.userId != "0" && this.userData.emailVerified;
   }
 
   /**

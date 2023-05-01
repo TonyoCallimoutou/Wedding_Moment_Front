@@ -1,0 +1,10 @@
+<div class="card verify_email">
+  <h3 class="font-default-20 font-primary-light">Thank You for Registering</h3>
+  <span class="font-primary-light font-default-16">We have sent a confirmation email to {{currentUser.email}}.</span>
+  <span class="font-primary-light font-default-16" >Please check your email and click on the link to verfiy your email address.</span>
+
+  <button (click)="authService.SendVerificationMail()" class="btn btnPrimary" type="button">
+    Resend Verification Email
+  </button>
+  <span class="font-primary-light font-default-16" (click)="authService.passWithoutSignIn()">Go back to Sign in</span>
+</div>

@@ -1,4 +1,4 @@
-<div [formGroup]="form" class="card">
+<div [formGroup]="form" class="card sign-in">
   <div class="switch-button">
     <h1 class="font-default-20 font-primary-light" [ngClass]="!isRegister ? 'title-selected': ''" (click)="isRegister = false"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
     <h1 class="font-default-20 font-primary-light" [ngClass]="isRegister ? 'title-selected': ''" (click)="isRegister = true"> {{ 'Auth.register' | translate | capitalizeFirstLetter }}</h1>
@@ -60,7 +60,7 @@
     </div>
 
     <div class="forgotPassword" *ngIf="!isRegister">
-      <h2 class="font-default-16" routerLink="/forgot-password">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
+      <h2 class="font-default-16" (click)="forgotPassword()">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
     </div>
 
     <div class="formControl" *ngIf="isRegister">
@@ -93,7 +93,7 @@
     mat-raised-button
     class="font-default-20"
     *ngIf="isRegister"
-    (click)="authService.SignUp(nameControl.value, userEmail.value, userPassword.value)"
+    (click)="form.valid ? authService.SignUp(nameControl.value, userEmail.value, userPassword.value) : ''"
   >
     {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
   </button>
@@ -103,7 +103,7 @@
     mat-raised-button
     class="font-default-20"
     *ngIf="!isRegister"
-    (click)="authService.SignIn(userEmail.value, userPassword.value)"
+    (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : ''"
   >
     {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
   </button>
@@ -116,4 +116,5 @@
   >
     {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
   </button>
+
 </div>
