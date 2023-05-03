@@ -7,7 +7,9 @@
 
 <div *ngIf="canAccess">
 
-  <button (click)="choosePicture()"> TEST </button>
+  <div class="div_button">
+    <div class="button" (click)="choosePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
+  </div>
 
   <!-- LIST -->
   <div *ngIf="listViewSelected">
@@ -25,7 +27,7 @@
       <app-generic-image-cropper
         [maintainAspectRatio]="true"
         [imageChangedEvent]="pictureSrc"
-        [ratio]="1/2"
+        [multiRatio]="true"
         (croppedImage)="getCroppedImage($event)"
       >
       </app-generic-image-cropper>

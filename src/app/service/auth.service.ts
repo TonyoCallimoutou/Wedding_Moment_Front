@@ -69,8 +69,6 @@ export class AuthService {
               localStorage.setItem(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
               this.eventModelService.initUserData();
-
-              this.router.navigate(['home-page']);
             });
         }
 
@@ -87,7 +85,7 @@ export class AuthService {
       .then((result) => {
         /* Call the SendVerificationMail() function when new user sign
         up and returns promise */
-        //this.SendVerificationMail();
+        this.SendVerificationMail();
         this.createUser(result, name);
       })
       .catch((error) => {
@@ -100,7 +98,7 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['verify-email-address']);
+        window.alert('Email send');
       });
   }
 
@@ -134,7 +132,7 @@ export class AuthService {
                 localStorage.setItem(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
                 this.eventModelService.initUserData();
-                this.router.navigate(['home-page']);
+                window.location.reload();
               } else {
                 this.createUser(result);
               }
@@ -167,20 +165,23 @@ export class AuthService {
                 localStorage.setItem(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
                 this.eventModelService.initUserData();
-                this.router.navigate(['home-page']);
+
+                window.location.reload();
               });
           })
       }
       // If User do not have picture
-      this.userModelService.createUser(this.userData)
-        .pipe(take(1))
-        .subscribe((user: User) => {
-          localStorage.setItem(LocalModel.USER, JSON.stringify(user));
-          this.userModelService.initUserData();
-          this.eventModelService.initUserData();
-          this.router.navigate(['home-page']);
-        });
+      else {
+        this.userModelService.createUser(this.userData)
+          .pipe(take(1))
+          .subscribe((user: User) => {
+            localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+            this.userModelService.initUserData();
+            this.eventModelService.initUserData();
 
+            window.location.reload();
+          });
+      }
     }
   }
 
@@ -191,15 +192,14 @@ export class AuthService {
         localStorage.setItem(LocalModel.USER, JSON.stringify(user));
         this.userModelService.initUserData();
         this.eventModelService.initUserData();
-        this.router.navigate(['home-page']);
+        window.location.reload();
       });
   }
 
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem(LocalModel.USER)
-      this.router.navigate(['sign-in']);
+      this.passWithoutSignIn()
     });
   }
 
@@ -209,16 +209,8 @@ export class AuthService {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.afAuth.signOut().then(() => {
-          localStorage.removeItem(LocalModel.USER)
-          this.router.navigate(['sign-in']);
+          this.passWithoutSignIn()
         })
       })
-
-
-    return this.afAuth.signOut().then(() => {
-      this.userModelService.removeUser();
-      localStorage.removeItem(LocalModel.USER)
-      this.router.navigate(['sign-in']);
-    });
   }
 }

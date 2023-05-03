@@ -4,3 +4,17 @@
   [aspectRatio]="ratio"
   (imageCropped)="imageCropped($event)"
 ></image-cropper>
+
+
+<div
+  *ngIf="multiRatio">
+  <div
+    *ngFor="let icon of iconOptions"
+    (click)="switchRatio(icon)"
+  >
+    <span> {{ icon.optionText }} </span>
+    <mat-icon> {{ icon.icon }} </mat-icon>
+  </div>
+</div>
+
+

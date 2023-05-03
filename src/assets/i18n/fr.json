@@ -31,7 +31,8 @@
   },
   "Posts": {
     "list" : "liste",
-    "grid" : "grille"
+    "grid" : "grille",
+    "create_post" : "creer un post"
   },
   "Plan_table" : {
     "search_invite" : "Recherche un invité"

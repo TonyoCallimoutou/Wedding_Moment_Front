@@ -19,6 +19,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {GenericDialogComponent} from './shared/component/generic-dialog/generic-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -27,27 +28,28 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HomePageComponent,
     GenericDialogComponent
   ],
-  imports: [
-    // ngx-translate and the loader module
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    BrowserAnimationsModule,
-    DashboardModule,
-    MatDialogModule,
-    MatIconModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-  ],
+    imports: [
+        // ngx-translate and the loader module
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
+        BrowserAnimationsModule,
+        DashboardModule,
+        MatDialogModule,
+        MatIconModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        MatButtonModule,
+    ],
   providers: [AuthService, SocketIoService],
   bootstrap: [AppComponent]
 })

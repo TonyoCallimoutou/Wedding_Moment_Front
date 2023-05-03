@@ -31,7 +31,8 @@
   },
   "Posts": {
     "list" : "list",
-    "grid" : "grid"
+    "grid" : "grid",
+    "create_post" : "create post"
   },
   "Plan_table" : {
     "search_invite" : "Search Invite"

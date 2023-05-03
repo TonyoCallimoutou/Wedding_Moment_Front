@@ -1,0 +1,9 @@
+mat-dialog-actions {
+  display: flex;
+  justify-content: space-around;
+
+  button {
+    color: var(--primary-light);
+    background: var(--primary-dark);
+  }
+}

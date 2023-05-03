@@ -61,6 +61,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
           .subscribe(event => {
             if (event) {
               this.eventModelService.goToEvent(event);
+              this.event = this.eventModelService.getActualEvent();
+
               this.initUser();
 
               this.initMenu();
@@ -83,8 +85,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
         this.initPlanTable();
       }
-
-
 
     });
 
