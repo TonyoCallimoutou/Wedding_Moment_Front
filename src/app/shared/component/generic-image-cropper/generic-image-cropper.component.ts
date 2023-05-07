@@ -37,7 +37,6 @@ export class GenericImageCropperComponent {
 
   switchRatio(icon : OptionStringIcon) {
     let index = this.iconOptions.indexOf(icon);
-    console.log(index)
     switch (index) {
       case 0 :
         this.ratio = 1;
@@ -52,6 +51,9 @@ export class GenericImageCropperComponent {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage.emit(event.base64);
+    this.croppedImage.emit({
+      picture: event.base64,
+      ratio : this.ratio
+    });
   }
 }

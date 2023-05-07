@@ -40,12 +40,11 @@
 
     <div class="image-grid">
       <img
-        *ngFor="let post of posts; let i = index"
+        *ngFor="let post of postsGridView; let i = index"
         [src]="post.pictureUrl"
-        [ngClass]="{'big': isBigImage(i), 'small': !isBigImage(i) }"
-        (click)="openDialog(posts[i])">
+        [ngClass]="{'square': post.pictureRatio == 1, 'portrait': post.pictureRatio == 0.5, 'paysage': post.pictureRatio == 2} "
+        (click)="openDialog(postsGridView[i])">
     </div>
-
 
     <ng-template #dialogContent>
       <app-card-post

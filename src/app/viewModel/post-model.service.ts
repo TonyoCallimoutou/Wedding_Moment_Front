@@ -54,9 +54,9 @@ export class PostModelService {
   }
 
   // Create Post
-  public createPost(data: any) {
+  public createPost(picture: any, ratio: number) {
 
-    const pictureUrl = data;
+    const pictureUrl = picture;
 
     const post : Post = {
       pictureUrl: "",
@@ -64,7 +64,8 @@ export class PostModelService {
       countLike: 0,
       userId: this.userData.userId,
       userName: this.userData.userName,
-      photoUrl: this.userData.photoUrl
+      photoUrl: this.userData.photoUrl,
+      pictureRatio: ratio
     }
 
     this.postService.createPost(post)
