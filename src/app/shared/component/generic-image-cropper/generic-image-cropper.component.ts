@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
 
 @Component({
@@ -6,7 +6,7 @@ import {ImageCroppedEvent} from "ngx-image-cropper";
   templateUrl: './generic-image-cropper.component.html',
   styleUrls: ['./generic-image-cropper.component.scss']
 })
-export class GenericImageCropperComponent {
+export class GenericImageCropperComponent implements OnInit{
 
   @Input() maintainAspectRatio : boolean = false;
   @Input() imageChangedEvent : any = '';
@@ -17,9 +17,6 @@ export class GenericImageCropperComponent {
   public iconOptions : OptionStringIcon[];
 
   constructor() {
-    if (this.multiRatio) {
-      this.ratio = 1;
-    }
     this.iconOptions = [{
       optionText : "carré",
       icon: "crop_square"
@@ -33,6 +30,12 @@ export class GenericImageCropperComponent {
         icon : "crop_3_2"
       }
     ]
+  }
+
+  ngOnInit() {
+    if (this.multiRatio) {
+      this.ratio = 1;
+    }
   }
 
   switchRatio(icon : OptionStringIcon) {

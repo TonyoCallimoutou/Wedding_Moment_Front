@@ -129,7 +129,7 @@ export class PostModelService {
 
     this.socketService.socket.on('listeningAddPost', (post: Post) => {
       if (!this.listOfPost.includes(post)) {
-        this.listOfPost.push(post);
+        this.listOfPost.splice(0,0,post);
         this.listOfPostObs$.next(this.listOfPost);
       }
     });

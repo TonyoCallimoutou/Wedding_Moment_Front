@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public tabSelector: number = 0;
   public menuList: Menu[] = [];
   public posts: Post[] = [];
+  public postsGridView : Post[] = [];
   public reactPostId: number[] = [];
   public tableInviteList: TableInvite[] = [];
   public inviteList: Invite[] = [];
@@ -123,9 +124,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: Post[]) => {
-          this.posts = data;
-          let postsOfUser = this.posts.filter((post) => post.userId === this.userModelService.getCurrentUser().userId)
-          this.userModelService.setNbrOfPostUser(postsOfUser.length)
+          if (this.posts.length !== data.length) {
+            this.posts = data;
+            this.arrangeImages();
+            let postsOfUser = this.posts.filter((post) => post.userId === this.userModelService.getCurrentUser().userId)
+            this.userModelService.setNbrOfPostUser(postsOfUser.length);
+          }
         })
 
       this.postModelService.getObsListOfReactPost()
@@ -182,6 +186,107 @@ export class DashboardComponent implements OnInit, OnDestroy {
           }
         }
       })
+  }
+
+  /**
+   * Init postsGridView
+   */
+  arrangeImages() {
+    this.postsGridView = [];
+    let positionRow = 0; // Row
+    let positionColumns = 0; // Columns 0 to 2
+    let grid: number[][] = [[0,0,0]]; // Grille
+
+    this.posts.forEach((value, index) => {
+
+      while (true) {
+
+        if (positionColumns == 3) {
+          // New Row
+          positionRow++;
+          positionColumns = 0;
+        }
+        if (!grid[positionRow]) {
+          grid.push([0, 0, 0]);
+        }
+
+        // Landscape
+        if (value.pictureRatio === 2) {
+          if (grid[positionRow][positionColumns] == 0 && grid[positionRow][positionColumns + 1] == 0) {
+            this.postsGridView.push(value);
+
+            grid[positionRow][positionColumns] = index +1;
+            positionColumns++;
+            grid[positionRow][positionColumns] = index +1;
+            break;
+          }
+        }
+        // Portrait
+        else if (value.pictureRatio === 0.5) {
+          if (!grid[positionRow + 1]) {
+            grid.push([0, 0, 0]);
+          }
+
+          if (grid[positionRow][positionColumns] == 0 && grid[positionRow + 1][positionColumns] == 0) {
+            this.postsGridView.push(value);
+
+            grid[positionRow][positionColumns] = index +1;
+            grid[positionRow + 1][positionColumns] = index +1;
+            break;
+          }
+        }
+        // Square
+        else {
+
+          let indexSquare;
+          for (let indexRow = 0; indexRow < grid.length; indexRow++) {
+            for (let indexColumns = 0; indexColumns <grid[indexRow].length; indexColumns++) {
+              // Trouver une place libre
+              if (grid[indexRow][indexColumns] === 0 ) {
+                indexSquare = 0;
+                // Comparer avec la ligne au dessus
+                if (indexRow-1 >= 0) {
+                  indexSquare = Math.max(...grid[indexRow - 1])
+                }
+                if (indexColumns === 1) {
+                  indexSquare = Math.max(indexSquare, grid[indexRow][0]);
+                }
+                if (indexColumns === 2) {
+                  indexSquare = Math.max(indexSquare, grid[indexRow][0], grid[indexRow][1]);
+                }
+
+                grid[indexRow][indexColumns] = index +1;
+                this.postsGridView.splice(indexSquare, 0, value);
+
+                // Replacer le curseur pour les image suivantes
+                if( indexRow !== positionRow && indexColumns !== positionColumns) {
+                  positionColumns--;
+                }
+                break;
+              }
+            }
+
+            if (indexSquare != undefined) {
+              break;
+            }
+          }
+          break;
+        }
+
+        positionColumns++;
+      }
+
+      // Prochaine image
+      positionColumns ++ ;
+      if (positionColumns == 3) {
+        // New Row
+        positionRow++;
+        positionColumns = 0;
+      }
+      if(!grid[positionRow]) {
+        grid.push([0,0,0]);
+      }
+    })
   }
 
   /**

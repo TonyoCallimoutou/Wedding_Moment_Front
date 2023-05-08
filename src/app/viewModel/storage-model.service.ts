@@ -16,11 +16,12 @@ export class StorageModelService {
     private eventService: EventService,
     private storageService: FirebaseStorageService,
   ) {
-    this.basePathPost = "/event/" + this.eventService.getEventId();
+    this.basePathPost = "/event";
     this.basePathUser = "/users";
   }
 
   public uploadPictureAndGetUrl(userId: string, postId: number, fileUpload: any): Promise<string> {
+    let eventId = this.eventService.getEventId();
 
     return new Promise(resolve => {
 
@@ -31,7 +32,7 @@ export class StorageModelService {
         console.log(e);
       }
 
-      let filePath = (`${this.basePathPost}/${userId}/${postId}`);
+      let filePath = (`${this.basePathPost}/${eventId}/${userId}/${postId}`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
         resolve(url)
@@ -59,11 +60,13 @@ export class StorageModelService {
   }
 
   public uploadEventPictureAndGetUrl(fileUpload: any): Promise<string> {
+    let eventId = this.eventService.getEventId();
+
     return new Promise(resolve => {
 
       fileUpload = base64ToFile(fileUpload);
 
-      let filePath = (`${this.basePathPost  }/fond`);
+      let filePath = (`${this.basePathPost}/${eventId}/fond`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
         resolve(url)
