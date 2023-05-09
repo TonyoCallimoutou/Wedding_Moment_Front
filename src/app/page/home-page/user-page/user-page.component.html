@@ -45,6 +45,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="content">
+        <div *ngIf="isMaster" class="param" (click)="exportPicture()">{{ 'Users.export' | translate | capitalizeFirstLetter }}</div>
         <div class="param" (click)="signOut()">{{ 'Users.logout' | translate | capitalizeFirstLetter }}</div>
         <div class="param" (click)="removeUser()">{{ 'Users.delete_account' | translate | capitalizeFirstLetter }}</div>
       </div>

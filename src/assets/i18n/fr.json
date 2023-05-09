@@ -51,6 +51,7 @@
     },
     "privacy": "confidentialité",
     "push_notification": "notification push",
+    "export": "Exporter les images",
     "logout": "deconnexion",
     "delete_account": "supprimer le compte"
   }

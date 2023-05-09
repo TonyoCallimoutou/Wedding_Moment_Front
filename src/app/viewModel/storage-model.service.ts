@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {EventService} from '../service/event.service';
 import {FirebaseStorageService} from '../service/firebaseStorage.service';
 import {base64ToFile} from "ngx-image-cropper";
+import {Observable} from "rxjs";
 
 
 @Injectable({
@@ -72,6 +73,16 @@ export class StorageModelService {
         resolve(url)
       })
     });
+  }
+
+  public exportPicture(): Observable<number> {
+    let eventId = this.eventService.getEventId();
+
+    let filePath = (`${this.basePathPost}/${eventId}`);
+
+    this.storageService.downloadImagesAsZip(filePath);
+
+    return this.storageService.progress$;
   }
 
   public deletePictureFromStorage(downloadUrl: string) {

@@ -51,6 +51,7 @@
     },
     "privacy": "privacy",
     "push_notification": "push notification",
+    "export": "Exporter les images",
     "logout": "logout",
     "delete_account": "delete account"
   }

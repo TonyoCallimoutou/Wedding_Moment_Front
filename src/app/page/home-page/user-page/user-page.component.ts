@@ -9,6 +9,7 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
+import {take} from "rxjs";
 
 interface Language {
   code: string;
@@ -24,6 +25,7 @@ export class UserPageComponent {
 
   @Input() public canAccess!: boolean;
   @Input() public currentUser: User;
+  @Input() public isMaster: boolean = false;
 
   public pictureSrc: any;
   private newUserPicture: any;
@@ -174,6 +176,22 @@ export class UserPageComponent {
    */
   removeUser() {
     this.authService.RemoveUser();
+  }
+
+  /**
+   * L'admin peut exporter les Photos de l'evenement.
+   */
+  exportPicture() {
+    this.userModelService.exportPicture()
+      .subscribe(value => {
+        console.log(value)
+      }, (error) => {
+        console.log("error", error)
+        // Gérer les erreurs
+      }, () => {
+        // Le téléchargement est terminé
+        console.log("ok")
+      });
   }
 
 }

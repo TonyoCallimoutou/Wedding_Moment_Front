@@ -134,9 +134,15 @@ export class UserModelService {
   }
 
   /**
+   * Exporter les photos
+   */
+  public exportPicture() : Observable<number> {
+    return this.storageModelService.exportPicture();
+  }
+
+  /**
    * POST
    */
-
 
   /**
    * Init list of React Post ID
