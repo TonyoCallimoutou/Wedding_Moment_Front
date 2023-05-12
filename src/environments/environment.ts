@@ -4,16 +4,16 @@
 
 export const environment = {
   production: false,
-  Back_Host: 'http://localhost:3000',
+  Back_Host: process.env['IP_MYSQL'] as string + ':' + process.env['PORT_BACK'] as string,
 
   firebaseConfig: {
-    apiKey: "AIzaSyCId75FJIWbc66OkXF4Qk6QoJDmDXogx0c",
-    authDomain: "projet-secret-a86d6.firebaseapp.com",
-    projectId: "projet-secret-a86d6",
-    storageBucket: "projet-secret-a86d6.appspot.com",
-    messagingSenderId: "840433403363",
-    appId: "1:840433403363:web:a89670e6edf9343b630cd6",
-    measurementId: "G-C34019KJF7"
+    apiKey: process.env['FIREBASE_API_KEY'] as string,
+    authDomain: process.env['FIREBASE_AUTH_DOMAIN'] as string,
+    projectId: process.env['FIREBASE_PROJECT_ID'] as string,
+    storageBucket: process.env['FIREBASE_STORAGE_BUCKET'] as string,
+    messagingSenderId: process.env['FIREBASE_MESSAGING_SENDER_ID'] as string,
+    appId: process.env['FIREBASE_APP_ID'] as string,
+    measurementId: process.env['FIREBASE_MEASUREMENT_ID'] as string
   }
 
 };

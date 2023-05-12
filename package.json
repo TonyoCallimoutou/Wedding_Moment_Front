@@ -25,6 +25,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-resizable-element": "^7.0.2",
     "cypress": "^12.10.0",
+    "dotenv": "^16.0.3",
     "fabric": "^5.3.0",
     "firebase": "^9.15.0",
     "jszip": "^3.10.1",
@@ -36,6 +37,8 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^15.0.0",
+    "@angular-builders/dev-server": "^7.3.1",
     "@angular-devkit/build-angular": "^15.2.1",
     "@angular/cli": "~15.2.1",
     "@angular/compiler-cli": "^15.2.1",
