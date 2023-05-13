@@ -8,4 +8,4 @@ RUN npm run build
 
 # Étape de production
 FROM nginx:latest
-COPY --from=build-step /app/dist /usr/share/nginx/html
+COPY --from=build-step /app/dist/wedding-moment /usr/share/nginx/html
