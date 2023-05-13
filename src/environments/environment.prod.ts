@@ -1,5 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
   Back_Host: process.env['IP_MYSQL'] as string + ':' + process.env['PORT_BACK'] as string,
 
   firebaseConfig: {
