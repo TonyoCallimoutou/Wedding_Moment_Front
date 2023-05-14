@@ -6,7 +6,7 @@ config();
 module.exports = {
   plugins: [
     new EnvironmentPlugin([
-      'IP_MYSQL',
+      'IP_VM',
       'PORT_BACK',
       'FIREBASE_API_KEY',
       'FIREBASE_AUTH_DOMAIN',
