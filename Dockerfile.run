@@ -1,3 +1,0 @@
-# Étape de production
-FROM nginx:latest
-COPY --from=build-step /app/dist/wedding-moment /usr/share/nginx/html
