@@ -51,41 +51,54 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.tabSelector = Number(localStorage.getItem(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
-    this.route.params.subscribe(params => {
+    this.route.params
+      .pipe(take(1))
+      .subscribe(params => {
 
-      if (!params['id'] && !this.event) {
-        this.router.navigate(['home-page'])
-      }
-      else if (params['id'] && ( !this.event || this.event.eventId != params['id'])) {
-        this.eventModelService.goToEventWithId(params['id'])
-          .pipe(take(1))
-          .subscribe(event => {
-            if (event) {
-              this.eventModelService.goToEvent(event);
-              this.event = this.eventModelService.getActualEvent();
+        if (!params['id'] && !this.event) {
+          this.router.navigate(['*'])
+        }
+        else if (params['id'] && ( !this.event || this.event.eventId != params['id'])) {
+          this.eventModelService.goToEventWithId(params['id'])
+            .pipe(take(1))
+            .subscribe(event => {
+              if (event) {
+                this.eventModelService.goToEvent(event);
+                this.event = this.eventModelService.getActualEvent();
 
-              this.initUser();
+                this.initUser();
 
-              this.initMenu();
+                this.initMenu();
 
-              this.initPost();
+                this.initPost();
 
-              this.initPlanTable();
-            }
-            else {
-              this.router.navigate(['home-page'])
-            }
-          })
-      }
-      else {
-        this.initUser();
+                this.initPlanTable();
+              }
+              else {
+                this.router.navigate(['home-page'])
+              }
+            })
+        }
+        else if (!params['id'] && this.event && this.event.eventId) {
+          this.router.navigate(['.'], { relativeTo: this.route, queryParams: { id: this.event.eventId }});
 
-        this.initMenu();
+          this.initUser();
 
-        this.initPost();
+          this.initMenu();
 
-        this.initPlanTable();
-      }
+          this.initPost();
+
+          this.initPlanTable();
+        }
+        else {
+          this.initUser();
+
+          this.initMenu();
+
+          this.initPost();
+
+          this.initPlanTable();
+        }
 
     });
 

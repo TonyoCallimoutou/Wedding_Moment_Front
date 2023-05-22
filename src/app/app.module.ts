@@ -12,7 +12,6 @@ import {AuthService} from './service/auth.service';
 import {SocketIoService} from './service/socket-io.service';
 import {DashboardModule} from './page/home-page/dashboard/dashboard.module';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
-import {HomePageComponent} from './page/home-page/home-page.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatIconModule} from "@angular/material/icon";
@@ -25,8 +24,7 @@ import {MatButtonModule} from "@angular/material/button";
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    HomePageComponent,
-    GenericDialogComponent
+    GenericDialogComponent,
   ],
     imports: [
         // ngx-translate and the loader module
