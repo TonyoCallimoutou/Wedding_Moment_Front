@@ -54,5 +54,13 @@
     "export": "Exporter les images",
     "logout": "deconnexion",
     "delete_account": "supprimer le compte"
+  },
+  "Inscription": {
+    "Errors": {
+      "required": "ce champs est requis"
+    },
+    "stepper_presentation": "Presentation",
+    "stepper_menu": "Menu",
+    "stepper_plan_table": "Plan table"
   }
 }

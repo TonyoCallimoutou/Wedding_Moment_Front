@@ -1,6 +1,6 @@
 <div class="page">
   <div class="formulaire">
-    <mat-stepper (selectionChange)="actualStep = $event.selectedIndex" #stepper>
+    <mat-stepper #stepper>
       <mat-step [stepControl]="formPresentation" errorMessage="Name is required.">
         <div class="form_visual">
           <form [formGroup]="formPresentation">
@@ -11,18 +11,20 @@
                 <mat-icon>attach_file</mat-icon>
               </button>
               <input type="text" readonly matInput formControlName="picture" (click)="choosePicture()" required/>
+              <mat-error *ngIf="formPresentation.controls['picture'].invalid">{{getErrorMessage('picture') | translate | capitalizeFirstLetter }}</mat-error>
             </mat-form-field>
             <mat-form-field>
               <mat-label>Name</mat-label>
               <textarea autosize matInput placeholder="Last name, First name" formControlName="text" required> </textarea>
+              <mat-error *ngIf="formPresentation.controls['text'].invalid">{{getErrorMessage('text') | translate | capitalizeFirstLetter}}</mat-error>
             </mat-form-field>
           </form>
           <div class="visual" style="background-image: url({{ background ? background : '' }})">
-            <div class="presentation_text" *ngIf="actualStep === 0">
+            <div class="presentation_text">
               <textarea
-                autosize>
-                {{ formPresentation.controls['text'].value }}
-              </textarea>
+                readonly
+                matInput
+                >{{formPresentation.controls['text'].value}}</textarea>
             </div>
           </div>
         </div>
@@ -39,15 +41,18 @@
           <form [formGroup]="formMenu">
             <ng-template matStepLabel>{{ 'Inscription.stepper_menu' | translate | capitalizeFirstLetter }}</ng-template>
             <div *ngFor="let menu of menus.controls; let i = index">
-              <form [formGroup]="getFormGroup(menu)">
-                <mat-form-field>
-                  <input matInput placeholder="cat" formControlName="menuCategorie" required>
-                </mat-form-field>
-                <mat-form-field>
-                  <input matInput placeholder="des" formControlName="menuDescription" required>
-                </mat-form-field>
+              <div class="item_menu">
+                <form [formGroup]="getFormGroup(menu)">
+                  <mat-form-field>
+                    <input matInput placeholder="Entrée" formControlName="menuCategorie" required>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <textarea autosize matInput placeholder="profitérole, etc..." formControlName="menuDescription" required></textarea>
+                  </mat-form-field>
+                </form>
                 <mat-icon class="delete-btn" (click)="deleteMenu(i)"> delete_forever</mat-icon>
-              </form>
+              </div>
+
             </div>
 
             <button mat-mini-fab (click)="addMenu()">
@@ -56,8 +61,9 @@
           </form>
 
           <div class="visual" style="background-image: url({{ background ? background : '' }})">
-            <div class="formulaire_menu" *ngIf="actualStep === 1">
-              <div class="menu">
+            <div class="presentation_text">
+              <div class="card">
+                <span class="font-primary-light font-default-24"> MENU </span>
                 <div *ngFor="let menu of menus.controls; index as i" >
                   <!-- Categorie -->
                   <p class="categorie font-primary-light font-default-20"> ~ {{ getFormGroup(menu).controls['menuCategorie'].value }} ~</p>
@@ -65,11 +71,7 @@
                   <div class="champ-input">
                     <textarea
                       autosize
-                      [disabled]="true"
-                      aria-disabled="true"
-                      class="description font-primary-light font-default-16">
-                      {{ getFormGroup(menu).controls['menuDescription'].value }}
-                    </textarea>
+                      readonly>{{ getFormGroup(menu).controls['menuDescription'].value }}</textarea>
                   </div>
                 </div>
               </div>
@@ -95,7 +97,7 @@
             </mat-form-field>
           </form>
           <div class="visual" style="background-image: url({{ background ? background : '' }})">
-            <div class="plan_table" *ngIf="actualStep === 2">
+            <div class="plan_table">
               <p> TODO</p>
             </div>
           </div>

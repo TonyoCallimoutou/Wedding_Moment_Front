@@ -24,6 +24,12 @@
     flex-direction: column;
     justify-content: space-around;
   }
+
+  .item_menu {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 }
 
 .visual {
@@ -42,5 +48,15 @@
       background: transparent;
       border: 0;
     }
+  }
+
+  .card {
+    background: var(--black);
+    padding: 1rem;
+    border: 0.5rem solid var(--primary);
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }

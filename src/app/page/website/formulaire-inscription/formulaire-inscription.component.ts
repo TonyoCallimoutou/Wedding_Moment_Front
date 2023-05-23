@@ -1,5 +1,5 @@
 import {Component, TemplateRef, ViewChild} from '@angular/core';
-import {AbstractControl, FormArray, FormBuilder, FormGroup} from "@angular/forms";
+import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 
@@ -11,7 +11,6 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 export class FormulaireInscriptionComponent {
 
   formulaire: FormGroup;
-  actualStep: number = 0;
 
   public backgroundSrc: any = '';
 
@@ -25,8 +24,8 @@ export class FormulaireInscriptionComponent {
 
     this.formulaire = this.fb.group({
       formPresentation : this.fb.group({
-        picture: [''],
-        text: ['']
+        picture: ['',Validators.required],
+        text: ['', Validators.required]
       }),
       formMenu : this.fb.group({
         menus: this.fb.array([])
@@ -74,6 +73,24 @@ export class FormulaireInscriptionComponent {
 
   test() {
     console.log(this.formulaire);
+  }
+
+  getErrorMessage(formName: string): string {
+    const form = this.formPresentation.controls[formName];
+    switch (formName) {
+      case 'picture':
+        if (form.hasError('required')) {
+          return 'Inscription.Errors.required'
+        }
+        break;
+      case 'text':
+        if (form.hasError('required')) {
+          return 'Inscription.Errors.required'
+        }
+        break;
+    }
+
+    return '';
   }
 
   choosePicture() {
