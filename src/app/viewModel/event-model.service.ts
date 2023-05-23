@@ -24,12 +24,8 @@ export class EventModelService {
   userData: User;
   event: EventModel;
   isMaster: boolean = false;
-
-  private listOfEvent: EventModel[] = [];
   private listOfMenu: Menu[] = [];
   private listOfTableInvite: TableInvite[] = [];
-
-  private listOfEventObs$: BehaviorSubject<EventModel[]> = new BehaviorSubject<EventModel[]>([]);
   private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private listOfTableInviteObs$: BehaviorSubject<TableInvite[]> = new BehaviorSubject<TableInvite[]>([]);
 
@@ -41,11 +37,11 @@ export class EventModelService {
     private storageModelService: StorageModelService,
     public socketService: SocketIoService
   ) {
-    this.initUserData()
+    this.initListeningFromSocket();
 
     this.initList();
 
-    this.initListeningFromSocket();
+    this.initUserData()
   }
 
   initUserData() {
@@ -56,12 +52,6 @@ export class EventModelService {
   }
 
   initList() {
-    this.eventService.getAllEvent()
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        this.listOfEvent = data;
-        this.listOfEventObs$.next(data);
-      });
 
     if (this.event == null) {
       this.event = JSON.parse(localStorage.getItem(LocalModel.EVENT)!)
@@ -140,10 +130,6 @@ export class EventModelService {
     });
   }
 
-  getAllEvent(): BehaviorSubject<EventModel[]> {
-    return this.listOfEventObs$;
-  }
-
   goToEvent(event: EventModel) {
     this.event = event;
     this.eventService.goToEvent(event);
@@ -166,10 +152,6 @@ export class EventModelService {
 
   getIsMaster(): boolean {
     return this.isMaster;
-  }
-
-  resetActualEvent() {
-    this.event = null;
   }
 
   initEventData() {

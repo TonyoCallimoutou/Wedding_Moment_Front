@@ -65,6 +65,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
               if (event) {
                 this.eventModelService.goToEvent(event);
                 this.event = this.eventModelService.getActualEvent();
+                this.canAccess = this.userModelService.canAccess();
+                this.isMaster = this.eventModelService.getIsMaster();
 
                 this.initUser();
 

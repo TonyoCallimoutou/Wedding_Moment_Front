@@ -1,4 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
 @font-face {
   font-family: "GreatVibes";
   src: local("GreatVibes"), url(./assets/fonts/GreatVibes-Regular.ttf) format("truetype");
@@ -10,15 +12,85 @@
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
+@include mat.core();
+
+$primary: #C7AA81;
+$primary-light: #FBDCB1;
+$primary-dark: #644E29;
+$secondary: #C0C0C0;
+$secondary-light: #F3F3F3;
+$secondary-dark: #909090;
+$black: #000000;
+
+$my-primary-palette: (
+  50: #f1eae0,
+  100: #ddcbb1,
+  200: #C7AA81,
+  300: #b58a4e,
+  400: #ac7427,
+  500: #a16003,
+  600: #9e5802,
+  700: #984c00,
+  800: #913f00,
+  900: #862800,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
+    600: rgba(black, 0.87),
+    700: rgba(black, 0.87),
+    800: rgba(black, 0.87),
+    900: rgba(black, 0.87),
+  )
+);
+$my-secondary-palette: (
+  50: #fafafa,
+  100: #f6f6f6,
+  200: #f0f0f0,
+  300: #e3e3e3,
+  400: #c0c0c0,
+  500: #a1a1a1,
+  600: #787878,
+  700: #646464,
+  800: #454545,
+  900: #232323,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: rgba(black, 0.87),
+    500: rgba(black, 0.87),
+    600: rgba(black, 0.87),
+    700: rgba(black, 0.87),
+    800: rgba(black, 0.87),
+    900: rgba(black, 0.87),
+  )
+);
+
+$my-primary: mat.define-palette($my-primary-palette, 200);
+$my-accent: mat.define-palette($my-secondary-palette, 400);
+
+$my-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+  ),
+  density: 0,
+));
+@include mat.all-component-themes($my-theme);
 
 :root {
-  --primary: #C7AA81;
-  --primary-light: #FBDCB1;
-  --primary-dark: #644E29;
-  --secondary: #C0C0C0;
-  --secondary-light: #F3F3F3;
-  --secondary-dark: #909090;
-  --black: #000000;
+  --primary: #{$primary};
+  --primary-light: #{$primary-light};
+  --primary-dark: #{$primary-dark};
+  --secondary: #{$secondary};
+  --secondary-light: #{$secondary-light};
+  --secondary-dark: #{$secondary-dark};
+  --black: #{$black};
 
   --font-size-default: 0.75rem;
   --font-size-default-16: 1rem;

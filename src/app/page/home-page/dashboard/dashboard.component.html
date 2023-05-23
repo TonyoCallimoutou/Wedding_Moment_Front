@@ -39,19 +39,12 @@
     </app-user-page>
   </div>
 
-<!--  <app-bottom-navigation-bar-->
-<!--    [tabSelector]="tabSelector"-->
-<!--    (onclick)="tab($event)"-->
-<!--    >-->
-<!--  </app-bottom-navigation-bar>-->
-
   <mat-tab-group
     headerPosition="below"
     disablePagination
     disableRipple = true
     [selectedIndex]="tabSelector"
-    (selectedIndexChange)="tab($event)"
-    [color]="'primary'">
+    (selectedIndexChange)="tab($event)">
     <mat-tab class="tabuler">
       <ng-template mat-tab-label>
         <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">home</mat-icon>
