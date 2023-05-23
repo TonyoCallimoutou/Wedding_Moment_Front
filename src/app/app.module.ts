@@ -19,6 +19,7 @@ import {GenericDialogComponent} from './shared/component/generic-dialog/generic-
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {MatButtonModule} from "@angular/material/button";
             }
         }),
         BrowserAnimationsModule,
+        FormulaireInscriptionModule,
         DashboardModule,
         MatDialogModule,
         MatIconModule,

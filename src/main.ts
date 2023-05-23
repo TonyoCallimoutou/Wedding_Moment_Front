@@ -7,7 +7,7 @@ import {environment} from './environments/environment';
 if (environment.production) {
   enableProdMode();
   // TODO
-  // Strip
+  // Stripe
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
