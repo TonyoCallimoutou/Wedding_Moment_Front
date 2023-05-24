@@ -1,21 +1,20 @@
 describe('Presentation', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
-    // fill in the form
-    cy.get('input[type="email"]').type('test@test.com')
-    cy.get('input[type="password"]').type('test123')
+    cy.visit('http://localhost:4200/dashboard;id=1');
+    cy.get('mat-icon').contains('home').click()
+  });
 
-    // submit the form
-    cy.get('.button').contains('Log in').click()
+  it('Display Picture', () => {
+    cy.contains('error');
+  });
 
-    // Go to Test Event
-    cy.contains('Test').click();
+  it('Display Text Presentation', () => {
+    cy.contains('error');
   });
 
   it('set presentation text', () => {
     cy.contains('error');
   });
-
 
   it('set picture', () => {
     cy.contains('error');

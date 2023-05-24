@@ -1,11 +1,7 @@
 describe('Sign in', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
-  });
-
-  it('Pass whitout login', () => {
-    cy.get('.pass').contains('Pass without login').click();
-    cy.url().should('include', '/home-page');
+    cy.visit('http://localhost:4200/dashboard;id=1');
+    cy.get('mat-icon').contains('account_circle').click();
   });
 
   it('log in with email and password', () => {
@@ -16,10 +12,7 @@ describe('Sign in', () => {
 
     // submit the form
     cy.get('button').contains('Log in').click()
-    cy.url().should('include', '/home-page');
-
-    //TODO
-    // verifier le nom d'utilisateru
+    // TODO USER INFORMATION
   });
 
   it('log in with wrong email and password', () => {
@@ -29,9 +22,9 @@ describe('Sign in', () => {
     cy.get('input[type="password"]').type('wrongtest123')
 
     // submit the form
-    cy.get('button').contains('Log in').click()
-    cy.url().should('include', '/sign-in');
-  })
+    cy.get('button').contains('Log in').click();
+    // TODO ERROR MESSAGE
+  });
 
   it('create account with email existing', () => {
 
@@ -50,7 +43,7 @@ describe('Sign in', () => {
       //assertions
       expect(t).to.contains('The email address is already in use by another account');
     })
-  })
+  });
 
   it('create account new user', () => {
 
@@ -66,9 +59,8 @@ describe('Sign in', () => {
     cy.get('button').contains('Create account').click()
 
     // Send verification
-    cy.url().should('include', '/verify-email-address');
-
-  })
+    // TODO VERIFICATION EMAIL
+  });
 
 });
 

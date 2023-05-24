@@ -1,15 +1,11 @@
 describe('Post', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
-    // fill in the form
-    cy.get('input[type="email"]').type('test@test.com')
-    cy.get('input[type="password"]').type('test123')
+    cy.visit('http://localhost:4200/dashboard;id=1');
+    cy.get('mat-icon').contains('photo_camera').click()
+  });
 
-    // submit the form
-    cy.get('.button').contains('Log in').click()
-
-    // Go to Test Event
-    cy.contains('Test').click();
+  it('Display Picture', () => {
+    cy.contains('error');
   });
 
   it('add picture', () => {
@@ -29,7 +25,7 @@ describe('Post', () => {
   });
 
   it('dislike post', () => {
-    return false;
+    cy.contains('error');
   });
 
 });

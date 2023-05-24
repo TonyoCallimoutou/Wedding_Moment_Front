@@ -1,18 +1,16 @@
 describe('Plan table', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4200');
-    // fill in the form
-    cy.get('input[type="email"]').type('test@test.com')
-    cy.get('input[type="password"]').type('test123')
+    cy.visit('http://localhost:4200/dashboard;id=1');
+    cy.get('mat-icon').contains('person_search').click()
+  });
 
-    // submit the form
-    cy.get('.button').contains('Log in').click()
-
-    // Go to Test Event
-    cy.contains('Test').click();
+  it('Display Plan Table', () => {
+    // TODO PLAN TABLE
+    cy.contains('error');
   });
 
   it('set plan table', () => {
+    // TODO PLAN TABLE
     cy.contains('error');
   });
 
