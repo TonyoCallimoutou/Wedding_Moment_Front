@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {DashboardComponent} from "./page/home-page/dashboard/dashboard.component";
-import {AuthGuard} from './service/auth.guard';
+import {AuthGuard} from './service/auth/auth.guard';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
 import {FormulaireInscriptionComponent} from "./page/website/formulaire-inscription/formulaire-inscription.component";
 

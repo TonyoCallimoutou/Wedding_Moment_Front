@@ -4,7 +4,7 @@ import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {EventModelService} from "../../../viewModel/event-model.service";
 // @ts-ignore
 import {User} from 'src/app/model/user.model';
-import {AuthService} from "../../../service/auth.service";
+import {AuthService} from "../../../service/auth/auth.service";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";

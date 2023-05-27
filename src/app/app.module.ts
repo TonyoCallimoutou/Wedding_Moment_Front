@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from '@angular/fire/compat';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
@@ -8,7 +8,7 @@ import {AngularFirestoreModule} from '@angular/fire/compat/firestore';
 import {AppComponent} from './app.component';
 import {environment} from 'src/environments/environment';
 import {AppRoutingModule} from './app-routing.module';
-import {AuthService} from './service/auth.service';
+import {AuthService} from './service/auth/auth.service';
 import {SocketIoService} from './service/socket-io.service';
 import {DashboardModule} from './page/home-page/dashboard/dashboard.module';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
@@ -20,6 +20,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
+import { AuthInterceptor } from './service/auth/auth.interceptor';
+import {ResponseInterceptor} from "./service/auth/response.interceptor";
 
 @NgModule({
   declarations: [
@@ -50,7 +52,20 @@ import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription
         AngularFirestoreModule,
         MatButtonModule,
     ],
-  providers: [AuthService, SocketIoService],
+  providers: [
+    AuthService,
+    SocketIoService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 

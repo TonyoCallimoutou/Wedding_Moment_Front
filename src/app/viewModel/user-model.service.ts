@@ -148,16 +148,18 @@ export class UserModelService {
    * Init list of React Post ID
    */
   public initListOfReactPostId() {
-    this.userService.getReactPosts(this.userData.userId)
-      .pipe(take(1))
-      .subscribe(data => {
-        this.listReactPostId = [];
-        data.forEach((data: any) => {
-          this.listReactPostId.push(data.postId);
-        });
+    if (!(this.userData.userId === "0" || !this.userData.emailVerified)) {
+      this.userService.getReactPosts(this.userData.userId)
+        .pipe(take(1))
+        .subscribe(data => {
+          this.listReactPostId = [];
+          data.forEach((data: any) => {
+            this.listReactPostId.push(data.postId);
+          });
 
-        this.listReactPostIdObs$.next(this.listReactPostId);
-      });
+          this.listReactPostIdObs$.next(this.listReactPostId);
+        });
+    }
   }
 
   /**

@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {AuthService} from "../../../../service/auth.service";
+import {AuthService} from "../../../../service/auth/auth.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
