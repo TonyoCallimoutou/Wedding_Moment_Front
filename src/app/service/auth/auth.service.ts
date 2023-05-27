@@ -3,12 +3,12 @@ import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Router} from '@angular/router';
 import * as auth from 'firebase/auth';
 import {take} from 'rxjs';
-import {UserModelService} from '../viewModel/user-model.service';
-import {LocalModel} from "../model/local.model";
-import {EventModelService} from "../viewModel/event-model.service";
+import {UserModelService} from '../../viewModel/user-model.service';
+import {LocalModel} from "../../model/local.model";
+import {EventModelService} from "../../viewModel/event-model.service";
 // @ts-ignore
-import {User} from '../model/user.model';
-import {StorageModelService} from "../viewModel/storage-model.service";
+import {User} from '../../model/user.model';
+import {StorageModelService} from "../../viewModel/storage-model.service";
 
 @Injectable({
   providedIn: 'root',
@@ -83,10 +83,15 @@ export class AuthService {
     return this.afAuth
       .createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificationMail() function when new user sign
-        up and returns promise */
-        this.SendVerificationMail();
-        this.createUser(result, name);
+        if (result.user) {
+          result.user.getIdToken(true)
+            .then((idToken: string) => {
+              localStorage.setItem(LocalModel.TOKEN, idToken);
+              this.SendVerificationMail();
+
+              this.createUser(result, name);
+            });
+        }
       })
       .catch((error) => {
         window.alert(error.message);
@@ -125,16 +130,22 @@ export class AuthService {
       .signInWithPopup(provider)
       .then((result) => {
         if (result.user) {
-          this.userModelService.getUserFromDB(result.user.uid)
-            .pipe(take(1))
-            .subscribe((user: User) => {
-              if (user != null) {
-                localStorage.setItem(LocalModel.USER, JSON.stringify(user));
-                this.userModelService.initUserData();
-                this.eventModelService.initUserData();
-                window.location.reload();
-              } else {
-                this.createUser(result);
+          result.user.getIdToken(true)
+            .then((idToken: string) => {
+              localStorage.setItem(LocalModel.TOKEN, idToken);
+              if (result.user) {
+                this.userModelService.getUserFromDB(result.user.uid)
+                  .pipe(take(1))
+                  .subscribe((user: User) => {
+                    if (user != null) {
+                      localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                      this.userModelService.initUserData();
+                      this.eventModelService.initUserData();
+                      window.location.reload();
+                    } else {
+                      this.createUser(result);
+                    }
+                  });
               }
             });
         }
@@ -199,6 +210,7 @@ export class AuthService {
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
+      localStorage.setItem(LocalModel.TOKEN, '');
       this.passWithoutSignIn()
     });
   }
@@ -209,6 +221,7 @@ export class AuthService {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.afAuth.signOut().then(() => {
+          localStorage.setItem(LocalModel.TOKEN, '');
           this.passWithoutSignIn()
         })
       })

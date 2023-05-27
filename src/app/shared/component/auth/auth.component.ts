@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../service/auth.service";
-import {AbstractControl, FormControl, FormGroup, Validators} from "@angular/forms";
 import {UserModelService} from "../../../viewModel/user-model.service";
 
 @Component({

@@ -117,12 +117,14 @@ export class PostModelService {
   }
 
   private initList() {
-    this.postService.getAllPost(this.eventId)
-      .pipe(take(1))
-      .subscribe((data: any) => {
-        this.listOfPost = data;
-        this.listOfPostObs$.next(data);
-      });
+    if (!(this.userData.userId === '0' || !this.userData.emailVerified)) {
+      this.postService.getAllPost(this.eventId)
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          this.listOfPost = data;
+          this.listOfPostObs$.next(data);
+        });
+    }
   }
 
   private initListeningFromSocket() {
