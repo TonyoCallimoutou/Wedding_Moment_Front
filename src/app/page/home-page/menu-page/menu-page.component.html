@@ -1,4 +1,4 @@
-<div class="page" style="background-image: url({{ event.pictureUrl }})">
+<div class="page" [ngStyle]="(!!event && event.pictureUrl) ? {'background-image': 'url('+ event.pictureUrl + ')'} : {'background-color': 'var(--secondary-light)'}" >
   <app-card-menu
     [menuList]="menuList"
     [isMaster]="isMaster"

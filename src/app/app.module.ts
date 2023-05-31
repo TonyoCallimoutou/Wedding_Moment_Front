@@ -12,7 +12,6 @@ import {AuthService} from './service/auth/auth.service';
 import {SocketIoService} from './service/socket-io.service';
 import {DashboardModule} from './page/home-page/dashboard/dashboard.module';
 import {PageNotFoundComponent} from './page/page-not-found/page-not-found.component';
-import {HomePageComponent} from './page/home-page/home-page.component';
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatIconModule} from "@angular/material/icon";
@@ -20,6 +19,7 @@ import {GenericDialogComponent} from './shared/component/generic-dialog/generic-
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
+import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
 import { AuthInterceptor } from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
 
@@ -27,8 +27,7 @@ import {ResponseInterceptor} from "./service/auth/response.interceptor";
   declarations: [
     AppComponent,
     PageNotFoundComponent,
-    HomePageComponent,
-    GenericDialogComponent
+    GenericDialogComponent,
   ],
     imports: [
         // ngx-translate and the loader module
@@ -41,6 +40,7 @@ import {ResponseInterceptor} from "./service/auth/response.interceptor";
             }
         }),
         BrowserAnimationsModule,
+        FormulaireInscriptionModule,
         DashboardModule,
         MatDialogModule,
         MatIconModule,

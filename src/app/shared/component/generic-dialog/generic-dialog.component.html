@@ -2,6 +2,6 @@
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </mat-dialog-content>
 <mat-dialog-actions *ngIf="isDisplayBouton">
-  <button mat-raised-button (click)="onNoClick()">No Thanks</button>
-  <button mat-raised-button [mat-dialog-close]="true" >Ok</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" >Ok</button>
 </mat-dialog-actions>

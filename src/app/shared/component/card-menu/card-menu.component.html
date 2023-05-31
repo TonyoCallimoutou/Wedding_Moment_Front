@@ -35,11 +35,8 @@
           [disabled]="!isEdit"
           class="description font-primary-light font-default-16"
           [(ngModel)]="item.menuDescription">
-  </textarea>
+        </textarea>
       </div>
-
-
-
     </div>
     <div *ngIf="isEdit">
       <input  *ngIf="isEdit" [(ngModel)]="categorie" class="categorie font-default-20" placeholder="+" >

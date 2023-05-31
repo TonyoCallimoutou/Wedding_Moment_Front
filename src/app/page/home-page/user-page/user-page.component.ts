@@ -109,14 +109,6 @@ export class UserPageComponent {
   }
 
   /**
-   * Navigate to home page
-   */
-  switchEvent() {
-    this.eventModelService.resetActualEvent();
-    this.router.navigateByUrl('/home-page');
-  }
-
-  /**
    * Open dialog to change User Name
    */
   changeUserName() {
