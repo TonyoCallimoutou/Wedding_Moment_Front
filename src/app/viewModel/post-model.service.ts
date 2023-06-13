@@ -39,9 +39,12 @@ export class PostModelService {
     this.eventId = this.eventService.getEventId();
     this.userData = this.userModelService.getCurrentUser();
 
-    this.initList();
+    if (this.userData) {
 
-    this.initListeningFromSocket();
+      this.initList();
+
+      this.initListeningFromSocket();
+    }
   }
 
   public initPostModelService() {
