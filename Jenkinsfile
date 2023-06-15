@@ -18,7 +18,7 @@ pipeline {
     stage('npm build') {
       steps {
         script {
-          sh 'docker exec -w /app front-dev npm run build'
+          sh 'docker exec -w /app front-dev npm run build-prod'
         }
       }
     }
