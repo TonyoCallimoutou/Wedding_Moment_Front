@@ -38,10 +38,10 @@ export class UserModelService {
   }
 
   /**
-   * If user is identify
+   * If user is identified
    */
   public canAccess(): boolean {
-    return this.userData.userId != "0" && this.userData.emailVerified;
+    return this.userData && this.userData.userId != "0" && this.userData.emailVerified;
   }
 
   /**
