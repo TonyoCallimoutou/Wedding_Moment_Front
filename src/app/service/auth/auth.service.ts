@@ -9,6 +9,8 @@ import {EventModelService} from "../../viewModel/event-model.service";
 // @ts-ignore
 import {User} from '../../model/user.model';
 import {StorageModelService} from "../../viewModel/storage-model.service";
+import {CookieService} from "ngx-cookie-service";
+import {CookieHelper} from "../cookie.helper";
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +18,7 @@ import {StorageModelService} from "../../viewModel/storage-model.service";
 export class AuthService {
 
   userData: User;
+  private cookieService: CookieService;
 
   constructor(
     public userModelService: UserModelService,
@@ -24,7 +27,8 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     public router: Router,
   ) {
-    /* Saving user data in localstorage when
+    this.cookieService = CookieHelper.getCookieService();
+    /* Saving user data in Cookies when
     logged in and setting up null when logged out */
     this.afAuth.authState
       .pipe(take(1))
@@ -39,14 +43,14 @@ export class AuthService {
 
   // Returns true when user is connected
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem(LocalModel.USER)!);
+    const user = this.cookieService.get(LocalModel.USER);
     return user !== null;
   }
 
   // Returns true when user is connected but email isn't verified
   get isVerified(): boolean {
-    const user = JSON.parse(localStorage.getItem(LocalModel.USER)!);
-    return user !== null && user.emailVerified;
+    const user = this.cookieService.get(LocalModel.USER);
+    return user !== null && JSON.parse(user).emailVerified;
   }
 
   // Sign in with email/password
@@ -66,7 +70,7 @@ export class AuthService {
                   })
               }
               user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
-              localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+              this.cookieService.set(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
               this.eventModelService.initUserData();
             });
@@ -86,7 +90,7 @@ export class AuthService {
         if (result.user) {
           result.user.getIdToken(true)
             .then((idToken: string) => {
-              localStorage.setItem(LocalModel.TOKEN, idToken);
+              this.cookieService.set(LocalModel.TOKEN, idToken);
               this.SendVerificationMail();
 
               this.createUser(result, name);
@@ -132,13 +136,13 @@ export class AuthService {
         if (result.user) {
           result.user.getIdToken(true)
             .then((idToken: string) => {
-              localStorage.setItem(LocalModel.TOKEN, idToken);
+              this.cookieService.set(LocalModel.TOKEN, idToken);
               if (result.user) {
                 this.userModelService.getUserFromDB(result.user.uid)
                   .pipe(take(1))
                   .subscribe((user: User) => {
                     if (user != null) {
-                      localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                      this.cookieService.set(LocalModel.USER, JSON.stringify(user));
                       this.userModelService.initUserData();
                       this.eventModelService.initUserData();
                       window.location.reload();
@@ -173,7 +177,7 @@ export class AuthService {
             this.userModelService.createUser(this.userData)
               .pipe(take(1))
               .subscribe((user: User) => {
-                localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+                this.cookieService.set(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
                 this.eventModelService.initUserData();
 
@@ -186,7 +190,7 @@ export class AuthService {
         this.userModelService.createUser(this.userData)
           .pipe(take(1))
           .subscribe((user: User) => {
-            localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+            this.cookieService.set(LocalModel.USER, JSON.stringify(user));
             this.userModelService.initUserData();
             this.eventModelService.initUserData();
 
@@ -200,7 +204,7 @@ export class AuthService {
     this.userModelService.getUserFromDB("0")
       .pipe(take(1))
       .subscribe((user: User) => {
-        localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+        this.cookieService.set(LocalModel.USER, JSON.stringify(user));
         this.userModelService.initUserData();
         this.eventModelService.initUserData();
         window.location.reload();
@@ -210,7 +214,7 @@ export class AuthService {
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
-      localStorage.setItem(LocalModel.TOKEN, '');
+      this.cookieService.set(LocalModel.TOKEN, '');
       this.passWithoutSignIn()
     });
   }
@@ -221,7 +225,7 @@ export class AuthService {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.afAuth.signOut().then(() => {
-          localStorage.setItem(LocalModel.TOKEN, '');
+          this.cookieService.set(LocalModel.TOKEN, '');
           this.passWithoutSignIn()
         })
       })

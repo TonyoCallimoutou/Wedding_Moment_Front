@@ -2,11 +2,16 @@ import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import { Observable } from "rxjs";
 import {LocalModel} from "../../model/local.model";
+import {CookieHelper} from "../cookie.helper";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem(LocalModel.TOKEN); // Récupérer le token stocké
+    const cookieService = CookieHelper.getCookieService();
+
+    const token = cookieService.get(LocalModel.TOKEN); // Récupérer le token stocké
 
     if (token) {
       const authReq = req.clone({

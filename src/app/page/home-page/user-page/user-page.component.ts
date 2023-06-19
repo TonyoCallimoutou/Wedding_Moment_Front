@@ -10,6 +10,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
 import {take} from "rxjs";
+import {CookieService} from "ngx-cookie-service";
+import {CookieHelper} from "../../../service/cookie.helper";
 
 interface Language {
   code: string;
@@ -34,6 +36,8 @@ export class UserPageComponent {
 
   public selectedLanguage: Language;
 
+  private cookieService: CookieService;
+
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
   @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
@@ -48,6 +52,9 @@ export class UserPageComponent {
     private router: Router,
     private translate: TranslateService,
   ) {
+
+    this.cookieService = CookieHelper.getCookieService();
+
     this.languages = [
       {
         code: "en",
@@ -64,7 +71,7 @@ export class UserPageComponent {
     translate.get("Users.Languages.french").subscribe((res: string) => {
       this.languages[1].language = res;
     })
-    let defaultLanguageCode = localStorage.getItem(LocalModel.LANGUAGE);
+    let defaultLanguageCode = this.cookieService.get(LocalModel.LANGUAGE);
     this.selectedLanguage = this.languages.filter(language => language.code == defaultLanguageCode)[0];
   }
 
@@ -133,8 +140,8 @@ export class UserPageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.selectedLanguage.code !== localStorage.getItem(LocalModel.LANGUAGE)) {
-          localStorage.setItem(LocalModel.LANGUAGE, this.selectedLanguage.code);
+        if (this.selectedLanguage.code !== this.cookieService.get(LocalModel.LANGUAGE)) {
+          this.cookieService.set(LocalModel.LANGUAGE, this.selectedLanguage.code);
           window.location.reload();
         }
       }

@@ -8,6 +8,8 @@ import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
 import {StorageModelService} from "./storage-model.service";
+import {CookieService} from "ngx-cookie-service";
+import {CookieHelper} from "../service/cookie.helper";
 
 
 @Injectable({
@@ -16,6 +18,7 @@ import {StorageModelService} from "./storage-model.service";
 export class UserModelService {
 
   private userData!: User;
+  private cookieService: CookieService;
   private listReactPostId: number[] = [];
   private listReactPostIdObs$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
@@ -24,6 +27,7 @@ export class UserModelService {
     private socketService: SocketIoService,
     private storageModelService: StorageModelService,
   ) {
+    this.cookieService = CookieHelper.getCookieService();
     this.initUserData();
   }
 
@@ -81,14 +85,18 @@ export class UserModelService {
   }
 
   public getCurrentUser(): User {
-    return JSON.parse(localStorage.getItem(LocalModel.USER)!);
+    let user = this.cookieService.get(LocalModel.USER);
+    if (!!user) {
+      return JSON.parse(user);
+    }
+    return null;
   }
 
   // SET USER
 
   public setNbrOfPostUser(nbrOfPost: number) {
     this.userData.nbrOfPost = nbrOfPost;
-    localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
+    this.cookieService.set(LocalModel.USER, JSON.stringify(this.userData));
   }
 
   /**
@@ -107,7 +115,7 @@ export class UserModelService {
         .pipe(take(1))
         .subscribe((data: any) => {
           this.userData.photoUrl = url;
-          localStorage.setItem(LocalModel.USER, JSON.stringify(this.userData));
+          this.cookieService.set(LocalModel.USER, JSON.stringify(this.userData));
           this.socketService.setUser(data);
         });
     })
@@ -121,7 +129,7 @@ export class UserModelService {
     this.userService.setUserName(user)
       .pipe(take(1))
       .subscribe(() => {
-        localStorage.setItem(LocalModel.USER, JSON.stringify(user));
+        this.cookieService.set(LocalModel.USER, JSON.stringify(user));
         this.socketService.setUser(user);
       });
   }

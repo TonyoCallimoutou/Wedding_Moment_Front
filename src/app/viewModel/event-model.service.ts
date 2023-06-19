@@ -14,6 +14,8 @@ import {Menu} from "../model/menu.model";
 // @ts-ignore
 import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
+import {CookieService} from "ngx-cookie-service";
+import {CookieHelper} from "../service/cookie.helper";
 
 
 @Injectable({
@@ -29,6 +31,8 @@ export class EventModelService {
   private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private listOfTableInviteObs$: BehaviorSubject<TableInvite[]> = new BehaviorSubject<TableInvite[]>([]);
 
+  private cookieService: CookieService;
+
   constructor(
     private userModelService: UserModelService,
     private postModelService: PostModelService,
@@ -37,6 +41,9 @@ export class EventModelService {
     private storageModelService: StorageModelService,
     public socketService: SocketIoService
   ) {
+
+    this.cookieService = CookieHelper.getCookieService();
+
     this.initListeningFromSocket();
 
     this.initList();
@@ -54,8 +61,9 @@ export class EventModelService {
   initList() {
 
     if (this.event == null) {
-      this.event = JSON.parse(localStorage.getItem(LocalModel.EVENT)!)
-      if (this.event != null) {
+      let eventString = this.cookieService.get(LocalModel.EVENT);
+      if (!!eventString) {
+        this.event = JSON.parse(eventString);
         this.goToEvent(this.event);
       }
     }
@@ -70,7 +78,7 @@ export class EventModelService {
     this.socketService.socket.on('listeningSetEvent', (event: EventModel) => {
       if (this.event.eventId == event.eventId) {
         this.event = event;
-        localStorage.setItem(LocalModel.EVENT, JSON.stringify(this.event));
+        this.cookieService.set(LocalModel.EVENT, JSON.stringify(this.event));
       }
     })
 

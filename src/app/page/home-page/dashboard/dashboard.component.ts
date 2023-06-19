@@ -9,6 +9,8 @@ import {LocalModel} from "../../../model/local.model";
 import {Post} from "../../../model/post.model";
 // @ts-ignore
 import {User} from "../../../model/user.model";
+import {CookieService} from "ngx-cookie-service";
+import {CookieHelper} from "../../../service/cookie.helper";
 
 @Component({
   selector: 'app-dashboard',
@@ -34,13 +36,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public background: any;
 
+  private cookieService: CookieService;
+
   constructor(
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
     private postModelService: PostModelService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {
+    this.cookieService = CookieHelper.getCookieService();
     this.event = this.eventModelService.getActualEvent();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
@@ -48,7 +53,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.tabSelector = Number(localStorage.getItem(LocalModel.TAB));
+    this.tabSelector = Number(this.cookieService.get(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
     this.route.params
@@ -310,7 +315,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   tab(tabulation: number) {
     this.tabSelector = tabulation;
-    localStorage.setItem(LocalModel.TAB, String(this.tabSelector));
+    this.cookieService.set(LocalModel.TAB, String(this.tabSelector));
   }
 
   /**
