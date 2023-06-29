@@ -8,6 +8,8 @@ module.exports = {
     new EnvironmentPlugin([
       'IP_VM',
       'PORT_BACK',
+      'COOKIE_EXPIRE_DAYS',
+      'DOMAIN',
       'FIREBASE_API_KEY',
       'FIREBASE_AUTH_DOMAIN',
       'FIREBASE_PROJECT_ID',

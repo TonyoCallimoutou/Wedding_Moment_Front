@@ -9,9 +9,8 @@ export class AuthInterceptor implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const cookieService = CookieHelper.getCookieService();
 
-    const token = cookieService.get(LocalModel.TOKEN); // Récupérer le token stocké
+    const token = CookieHelper.get(LocalModel.TOKEN); // Récupérer le token stocké
 
     if (token) {
       const authReq = req.clone({

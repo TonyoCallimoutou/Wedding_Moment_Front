@@ -31,8 +31,6 @@ export class EventModelService {
   private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private listOfTableInviteObs$: BehaviorSubject<TableInvite[]> = new BehaviorSubject<TableInvite[]>([]);
 
-  private cookieService: CookieService;
-
   constructor(
     private userModelService: UserModelService,
     private postModelService: PostModelService,
@@ -41,8 +39,6 @@ export class EventModelService {
     private storageModelService: StorageModelService,
     public socketService: SocketIoService
   ) {
-
-    this.cookieService = CookieHelper.getCookieService();
 
     this.initListeningFromSocket();
 
@@ -61,7 +57,7 @@ export class EventModelService {
   initList() {
 
     if (this.event == null) {
-      let eventString = this.cookieService.get(LocalModel.EVENT);
+      let eventString = CookieHelper.get(LocalModel.EVENT);
       if (!!eventString) {
         this.event = JSON.parse(eventString);
         this.goToEvent(this.event);
@@ -78,7 +74,7 @@ export class EventModelService {
     this.socketService.socket.on('listeningSetEvent', (event: EventModel) => {
       if (this.event.eventId == event.eventId) {
         this.event = event;
-        this.cookieService.set(LocalModel.EVENT, JSON.stringify(this.event));
+        CookieHelper.set(LocalModel.EVENT, JSON.stringify(this.event));
       }
     })
 

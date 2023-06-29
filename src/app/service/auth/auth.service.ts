@@ -18,7 +18,6 @@ import {CookieHelper} from "../cookie.helper";
 export class AuthService {
 
   userData: User;
-  private cookieService: CookieService;
 
   constructor(
     public userModelService: UserModelService,
@@ -27,7 +26,6 @@ export class AuthService {
     public afAuth: AngularFireAuth,
     public router: Router,
   ) {
-    this.cookieService = CookieHelper.getCookieService();
     /* Saving user data in Cookies when
     logged in and setting up null when logged out */
     this.afAuth.authState
@@ -43,13 +41,13 @@ export class AuthService {
 
   // Returns true when user is connected
   get isLoggedIn(): boolean {
-    const user = this.cookieService.get(LocalModel.USER);
+    const user = CookieHelper.get(LocalModel.USER);
     return user !== null;
   }
 
   // Returns true when user is connected but email isn't verified
   get isVerified(): boolean {
-    const user = this.cookieService.get(LocalModel.USER);
+    const user = CookieHelper.get(LocalModel.USER);
     return user !== null && JSON.parse(user).emailVerified;
   }
 
@@ -70,7 +68,7 @@ export class AuthService {
                   })
               }
               user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
-              this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+              CookieHelper.set(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
               this.eventModelService.initUserData();
             });
@@ -90,7 +88,7 @@ export class AuthService {
         if (result.user) {
           result.user.getIdToken(true)
             .then((idToken: string) => {
-              this.cookieService.set(LocalModel.TOKEN, idToken);
+              CookieHelper.set(LocalModel.TOKEN, idToken);
               this.SendVerificationMail();
 
               this.createUser(result, name);
@@ -136,13 +134,13 @@ export class AuthService {
         if (result.user) {
           result.user.getIdToken(true)
             .then((idToken: string) => {
-              this.cookieService.set(LocalModel.TOKEN, idToken);
+              CookieHelper.set(LocalModel.TOKEN, idToken);
               if (result.user) {
                 this.userModelService.getUserFromDB(result.user.uid)
                   .pipe(take(1))
                   .subscribe((user: User) => {
                     if (user != null) {
-                      this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+                      CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                       this.userModelService.initUserData();
                       this.eventModelService.initUserData();
                       window.location.reload();
@@ -177,7 +175,7 @@ export class AuthService {
             this.userModelService.createUser(this.userData)
               .pipe(take(1))
               .subscribe((user: User) => {
-                this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+                CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
                 this.eventModelService.initUserData();
 
@@ -190,7 +188,7 @@ export class AuthService {
         this.userModelService.createUser(this.userData)
           .pipe(take(1))
           .subscribe((user: User) => {
-            this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+            CookieHelper.set(LocalModel.USER, JSON.stringify(user));
             this.userModelService.initUserData();
             this.eventModelService.initUserData();
 
@@ -204,7 +202,7 @@ export class AuthService {
     this.userModelService.getUserFromDB("0")
       .pipe(take(1))
       .subscribe((user: User) => {
-        this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+        CookieHelper.set(LocalModel.USER, JSON.stringify(user));
         this.userModelService.initUserData();
         this.eventModelService.initUserData();
         window.location.reload();
@@ -214,7 +212,7 @@ export class AuthService {
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
-      this.cookieService.set(LocalModel.TOKEN, '');
+      CookieHelper.set(LocalModel.TOKEN, '');
       this.passWithoutSignIn()
     });
   }
@@ -225,7 +223,7 @@ export class AuthService {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.afAuth.signOut().then(() => {
-          this.cookieService.set(LocalModel.TOKEN, '');
+          CookieHelper.set(LocalModel.TOKEN, '');
           this.passWithoutSignIn()
         })
       })

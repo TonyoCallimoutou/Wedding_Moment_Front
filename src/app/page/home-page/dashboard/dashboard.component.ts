@@ -36,8 +36,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public background: any;
 
-  private cookieService: CookieService;
-
   constructor(
     private userModelService: UserModelService,
     private eventModelService: EventModelService,
@@ -45,7 +43,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
   ) {
-    this.cookieService = CookieHelper.getCookieService();
     this.event = this.eventModelService.getActualEvent();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
@@ -53,7 +50,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.tabSelector = Number(this.cookieService.get(LocalModel.TAB));
+    this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
     this.route.params
@@ -315,7 +312,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   tab(tabulation: number) {
     this.tabSelector = tabulation;
-    this.cookieService.set(LocalModel.TAB, String(this.tabSelector));
+    CookieHelper.set(LocalModel.TAB, String(this.tabSelector));
   }
 
   /**

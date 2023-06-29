@@ -9,12 +9,9 @@ import {CookieHelper} from "../cookie.helper";
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
 
-  private cookieService: CookieService;
-
   constructor(
     private userModelService: UserModelService,
     ) {
-    this.cookieService = CookieHelper.getCookieService();
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -30,8 +27,8 @@ export class ResponseInterceptor implements HttpInterceptor {
               this.userModelService.getUserFromDB("0")
                 .pipe(take(1))
                 .subscribe((user: User) => {
-                  this.cookieService.set(LocalModel.TOKEN, '')
-                  this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+                  CookieHelper.set(LocalModel.TOKEN, '')
+                  CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                   window.location.reload();
                 });
             }

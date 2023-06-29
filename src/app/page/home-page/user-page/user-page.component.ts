@@ -36,8 +36,6 @@ export class UserPageComponent {
 
   public selectedLanguage: Language;
 
-  private cookieService: CookieService;
-
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
   @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
@@ -52,8 +50,6 @@ export class UserPageComponent {
     private router: Router,
     private translate: TranslateService,
   ) {
-
-    this.cookieService = CookieHelper.getCookieService();
 
     this.languages = [
       {
@@ -71,7 +67,7 @@ export class UserPageComponent {
     translate.get("Users.Languages.french").subscribe((res: string) => {
       this.languages[1].language = res;
     })
-    let defaultLanguageCode = this.cookieService.get(LocalModel.LANGUAGE);
+    let defaultLanguageCode = CookieHelper.get(LocalModel.LANGUAGE);
     this.selectedLanguage = this.languages.filter(language => language.code == defaultLanguageCode)[0];
   }
 
@@ -140,8 +136,8 @@ export class UserPageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.selectedLanguage.code !== this.cookieService.get(LocalModel.LANGUAGE)) {
-          this.cookieService.set(LocalModel.LANGUAGE, this.selectedLanguage.code);
+        if (this.selectedLanguage.code !== CookieHelper.get(LocalModel.LANGUAGE)) {
+          CookieHelper.set(LocalModel.LANGUAGE, this.selectedLanguage.code);
           window.location.reload();
         }
       }

@@ -18,7 +18,6 @@ import {CookieHelper} from "../service/cookie.helper";
 export class UserModelService {
 
   private userData!: User;
-  private cookieService: CookieService;
   private listReactPostId: number[] = [];
   private listReactPostIdObs$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
 
@@ -27,7 +26,6 @@ export class UserModelService {
     private socketService: SocketIoService,
     private storageModelService: StorageModelService,
   ) {
-    this.cookieService = CookieHelper.getCookieService();
     this.initUserData();
   }
 
@@ -85,7 +83,7 @@ export class UserModelService {
   }
 
   public getCurrentUser(): User {
-    let user = this.cookieService.get(LocalModel.USER);
+    let user = CookieHelper.get(LocalModel.USER);
     if (!!user) {
       return JSON.parse(user);
     }
@@ -96,7 +94,7 @@ export class UserModelService {
 
   public setNbrOfPostUser(nbrOfPost: number) {
     this.userData.nbrOfPost = nbrOfPost;
-    this.cookieService.set(LocalModel.USER, JSON.stringify(this.userData));
+    CookieHelper.set(LocalModel.USER, JSON.stringify(this.userData));
   }
 
   /**
@@ -115,7 +113,7 @@ export class UserModelService {
         .pipe(take(1))
         .subscribe((data: any) => {
           this.userData.photoUrl = url;
-          this.cookieService.set(LocalModel.USER, JSON.stringify(this.userData));
+          CookieHelper.set(LocalModel.USER, JSON.stringify(this.userData));
           this.socketService.setUser(data);
         });
     })
@@ -129,7 +127,7 @@ export class UserModelService {
     this.userService.setUserName(user)
       .pipe(take(1))
       .subscribe(() => {
-        this.cookieService.set(LocalModel.USER, JSON.stringify(user));
+        CookieHelper.set(LocalModel.USER, JSON.stringify(user));
         this.socketService.setUser(user);
       });
   }
