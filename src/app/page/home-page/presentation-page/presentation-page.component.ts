@@ -3,6 +3,7 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-presentation-page',
@@ -32,6 +33,7 @@ export class PresentationPageComponent {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
     private translate: TranslateService,
+    private snackBar: MatSnackBar,
   ) {
 
     this.event = this.eventModelService.getActualEvent();
@@ -82,6 +84,7 @@ export class PresentationPageComponent {
       fileInput.click();
     }
     else if (option === this.dropdownOptions[0]) {
+      this.openSnackBar();
       this.isSetPresentationText = true;
     }
   }
@@ -144,6 +147,12 @@ export class PresentationPageComponent {
       presentationTextAlign: this.textAlign,
     }
     this.eventModelService.setPresentationText(presentation);
+  }
+
+  openSnackBar() {
+    this.snackBar.open('En cours de développement', 'X', {
+      duration: 3000,
+    });
   }
 
 }

@@ -35,7 +35,11 @@
     "create_post" : "creer un post"
   },
   "Plan_table" : {
-    "search_invite" : "Recherche un invité"
+    "search_invite" : "Recherche un invité",
+    "Option": {
+      "add_table" : "Ajouter une table",
+      "set_table" : "Modifier une table"
+    }
   },
   "Users": {
     "nbr_of_post": "posts",

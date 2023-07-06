@@ -9,24 +9,28 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {MatIconModule} from "@angular/material/icon";
+import {CardPlanTableNewModule} from "../../../shared/component/card-plan-table-new/card-plan-table-new.module";
+import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdown-menu.module";
 
 
 @NgModule({
   declarations: [
     PlanTablePageComponent
   ],
-    imports: [
-        CommonModule,
-        FormsModule,
-        CardPlanTableModule,
-        SearchBarModule,
-        MatInputModule,
-        MatAutocompleteModule,
-        ReactiveFormsModule,
-        TranslateModule,
-        CapitalizeFirstLetterPipeModule,
-        MatIconModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    CardPlanTableModule,
+    SearchBarModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    CapitalizeFirstLetterPipeModule,
+    MatIconModule,
+    CardPlanTableNewModule,
+    DropdownMenuModule,
+  ],
   exports: [PlanTablePageComponent],
 })
 export class PlanTablePageModule {

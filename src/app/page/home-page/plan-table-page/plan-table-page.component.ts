@@ -4,6 +4,10 @@ import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {TranslateService} from "@ngx-translate/core";
+import {CookieHelper} from "../../../service/cookie.helper";
+import {LocalModel} from "../../../model/local.model";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-plan-table-page',
@@ -17,17 +21,25 @@ export class PlanTablePageComponent implements OnChanges {
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
 
+  public isEdit: boolean = false;
+
+  public tableEdit: TableInfos | null = null;
+
+  public dropdownOptions: OptionStringIcon[] = [];
+
   myControl = new FormControl('');
   inviteListFiltered: Observable<Invite[]>;
   public event: EventModel;
 
   tableInfos : TableInfos | null = null;
 
-  @ViewChild('dialogPlanTableDetail') dialogPlanTableDetail!: TemplateRef<any>;
+  @ViewChild('dialogEditPlanTable') dialogEditPlanTable!: TemplateRef<any>;
 
   constructor(
     private eventModelService: EventModelService,
     private dialog: MatDialog,
+    private translate: TranslateService,
+    private snackBar: MatSnackBar,
   ) {
     this.event = eventModelService.getActualEvent();
     this.inviteListFiltered = this.myControl.valueChanges.pipe(
@@ -37,6 +49,45 @@ export class PlanTablePageComponent implements OnChanges {
         return name ? this.filter(name as string) : this.inviteList.slice();
       }),
     );
+
+    this.initDropDownOption();
+  }
+
+  /**
+   * Set dropdownOptions
+   */
+  initDropDownOption() {
+    let option1 : OptionStringIcon = {
+      optionText: "",
+      icon: "add_circle",
+    }
+    let option2: OptionStringIcon = {
+      optionText: "",
+      icon: "edit",
+    }
+
+    this.dropdownOptions = [option1,option2];
+
+    this.translate.get("Plan_table.Option.add_table").subscribe((res: string) => {
+      this.dropdownOptions[0].optionText = res;
+    })
+    this.translate.get("Plan_table.Option.set_table").subscribe((res: string) => {
+      this.dropdownOptions[1].optionText = res;
+    })
+  }
+
+  /**
+   * Select Option on burgerMenu
+   * @param option
+   */
+  onOptionSelected(option: OptionStringIcon) {
+    if (option === this.dropdownOptions[0]) {
+      this.openSnackBar()
+    }
+    else if (option === this.dropdownOptions[1]) {
+      this.openSnackBar()
+      //this.isEdit = true;
+    }
   }
 
   displayFn(invite: Invite): string {
@@ -60,6 +111,21 @@ export class PlanTablePageComponent implements OnChanges {
     return this.inviteList.filter(invite => invite.inviteName.toLowerCase().includes(filterValue));
   }
 
+  editTable(table: TableInfos) {
+    this.isEdit = false;
+    this.tableEdit = table;
+
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogEditPlanTable },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(result)
+      }
+    });
+  }
+
   /**
    * Add new table
    * @param planTable
@@ -73,14 +139,8 @@ export class PlanTablePageComponent implements OnChanges {
    * @param invites
    */
   getDetail(invites: TableInfos) {
+    this.myControl.setValue('');
     this.tableInfos = invites;
-
-    const dialogRef = this.dialog.open(GenericDialogComponent, {
-      data: {
-        contentTemplate: this.dialogPlanTableDetail,
-        isDisplayBouton: false
-      },
-    });
 
   }
 
@@ -122,5 +182,11 @@ export class PlanTablePageComponent implements OnChanges {
    */
   removeInvite(invite: Invite) {
     this.eventModelService.deleteInvite(invite);
+  }
+
+  openSnackBar() {
+    this.snackBar.open('En cours de développement', 'X', {
+      duration: 3000,
+    });
   }
 }

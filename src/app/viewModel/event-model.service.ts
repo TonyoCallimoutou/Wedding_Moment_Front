@@ -146,6 +146,7 @@ export class EventModelService {
 
   goToEventWithId(eventId: number): Observable<any> {
 
+    console.log(typeof eventId);
     return this.eventService.getEventById(eventId);
 
   }

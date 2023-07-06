@@ -14,10 +14,16 @@ export class CookieHelper {
   }
 
   static set(name: string, value: string) {
-    CookieHelper.cookieService.set(name, value, Number(this.expires), '/', this.domain, false, 'Lax');
+    //CookieHelper.cookieService.set(name, value, Number(this.expires), '/', this.domain, false, 'Lax');
+    localStorage.setItem(name, value);
   }
 
-  static get(name: string) : string {
-    return CookieHelper.cookieService.get(name);
+  static get(name: string) : string |null {
+    //return CookieHelper.cookieService.get(name);
+    let item = localStorage.getItem(name);
+    if (!!item) {
+      return item;
+    }
+    return null;
   }
 }

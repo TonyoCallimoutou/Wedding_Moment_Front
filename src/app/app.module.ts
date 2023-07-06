@@ -22,6 +22,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
 import { AuthInterceptor } from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import {ResponseInterceptor} from "./service/auth/response.interceptor";
         AngularFireAuthModule,
         AngularFirestoreModule,
         MatButtonModule,
+        MatSnackBarModule,
     ],
   providers: [
     AuthService,

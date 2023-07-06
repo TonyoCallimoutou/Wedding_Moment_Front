@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           this.router.navigate(['*'])
         }
         else if (params['id'] && ( !this.event || this.event.eventId != params['id'])) {
-          this.eventModelService.goToEventWithId(params['id'])
+          this.eventModelService.goToEventWithId(parseInt(params['id']))
             .pipe(take(1))
             .subscribe(event => {
               if (event) {
