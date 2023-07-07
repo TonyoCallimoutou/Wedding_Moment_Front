@@ -4,6 +4,7 @@
       *ngIf="tabSelector == 0"
       (sendTemporaryBackground)="setTemporaryBackground($event)"
       (sendFinallyBackground)="setFinallyBackground($event)"
+      [isMaster]="isMaster"
     >
     </app-presentation-page>
     <app-menu-page

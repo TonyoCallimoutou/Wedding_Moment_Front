@@ -63,8 +63,7 @@ export class EventModelService {
         this.goToEvent(this.event);
       }
     }
-
-    if (this.event != null) {
+    else {
       this.initEventData();
     }
   }
@@ -145,10 +144,7 @@ export class EventModelService {
   }
 
   goToEventWithId(eventId: number): Observable<any> {
-
-    console.log(typeof eventId);
     return this.eventService.getEventById(eventId);
-
   }
 
   getActualEvent(): EventModel {
