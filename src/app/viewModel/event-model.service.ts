@@ -32,8 +32,8 @@ export class EventModelService {
 
   private isActivate: boolean = false;
   private isMaster: boolean = false;
-
   private isEditable: boolean = false;
+  private isEditMode: boolean = false;
 
   constructor(
     private userModelService: UserModelService,
@@ -151,12 +151,20 @@ export class EventModelService {
     return this.eventService.getEventById(eventId)
       .pipe(
         tap((event: EventModel) => {
-          if(this.userData) {
-            this.isMaster = this.event.userId === this.userData.userId;
-          }
-          this.isActivate = event.isActivate;
-          this.isEditable = this.isMaster && (this.isEditable || event.eventDate > new Date().toISOString());
+          if (!!event) {
+            if (event.isActivate || event.userId === this.userData.userId) {
+              if (this.userData) {
+                this.isMaster = event.userId === this.userData.userId;
+              }
+              this.isActivate = event.isActivate;
+              this.isEditable = this.isMaster && (this.isActivate || event.eventDate > new Date().toISOString());
 
+              this.isEditMode = this.isEditable && !this.isActivate;
+            }
+            else {
+              event.property = null;
+            }
+          }
         }
       ));
   }
@@ -175,6 +183,10 @@ export class EventModelService {
 
   getIsEditable(): boolean {
     return this.isEditable;
+  }
+
+  getIsEditMode(): boolean {
+    return this.isEditMode;
   }
 
   initEventData() {

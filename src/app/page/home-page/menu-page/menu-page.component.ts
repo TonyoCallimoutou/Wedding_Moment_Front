@@ -10,6 +10,7 @@ export class MenuPageComponent {
 
   @Input() public isEditable: boolean = false;
   @Input() public menuList: Menu[] = [];
+  @Input() public isEditMode: boolean = false;
 
   public event: EventModel
 

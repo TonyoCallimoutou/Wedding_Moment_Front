@@ -1,3 +1,9 @@
+
+<div class="banner-edit-mode" *ngIf="isEditMode">
+  <p> Voici une prévisualisation de l'application </p>
+  <p> Dans cette verision vous pouvez faire toutes les modification nécessaire. </p>
+</div>
+
 <app-switch-button
   [switchOptions]="switchOptions"
   [isFirstSelected]="listViewSelected"

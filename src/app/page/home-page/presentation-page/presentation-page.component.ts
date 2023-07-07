@@ -17,6 +17,7 @@ export class PresentationPageComponent {
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
   @Input() public isEditable: boolean = false;
+  @Input() public isEditMode: boolean = false;
 
   public dropdownOptions: OptionStringIcon[] = [];
   public isSetPresentationText : boolean = false;

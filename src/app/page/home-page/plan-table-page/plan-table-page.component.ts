@@ -20,6 +20,7 @@ export class PlanTablePageComponent implements OnChanges {
   @Input() public tableInviteList: TableInvite[] = [];
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
+  @Input() public isEditMode: boolean = false;
 
   public isEdit: boolean = false;
 

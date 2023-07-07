@@ -28,6 +28,7 @@ export class PostPageComponent {
   @Input() public postsGridView: Post[] = [];
   @Input() public reactPostId: number[] = [];
   @Output() public switchTab: EventEmitter<number> = new EventEmitter<number>();
+  @Input() public isEditMode: boolean = false;
 
   public listViewSelected: boolean = true;
 

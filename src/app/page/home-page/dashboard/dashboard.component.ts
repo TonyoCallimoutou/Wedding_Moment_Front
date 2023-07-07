@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public isMaster: boolean;
   public isActivate: boolean;
   public isEditable: boolean;
+  public isEditMode: boolean;
   public event: EventModel;
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
@@ -50,6 +51,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isMaster = this.eventModelService.getIsMaster();
     this.isActivate = this.eventModelService.getIsActivate();
     this.isEditable = this.eventModelService.getIsEditable();
+    this.isEditMode = this.eventModelService.getIsEditMode();
   }
 
   ngOnInit() {
@@ -64,7 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!params['id'] && !this.event) {
           this.router.navigate(['*'])
         }
-        else if (params['id'] && ( !this.event || this.event.eventId != params['id'])) {
+        else if (params['id']) {
           this.eventModelService.goToEventWithId(parseInt(params['id']))
             .pipe(take(1))
             .subscribe(event => {
@@ -75,6 +77,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.isMaster = this.eventModelService.getIsMaster();
                 this.isActivate = this.eventModelService.getIsActivate();
                 this.isEditable = this.eventModelService.getIsEditable();
+                this.isEditMode = this.eventModelService.getIsEditMode();
 
                 this.initUser();
 
@@ -101,6 +104,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.isMaster = this.eventModelService.getIsMaster();
                 this.isActivate = this.eventModelService.getIsActivate();
                 this.isEditable = this.eventModelService.getIsEditable();
+                this.isEditMode = this.eventModelService.getIsEditMode();
 
                 this.initUser();
 
@@ -116,13 +120,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             })
         }
         else {
-          this.initUser();
-
-          this.initMenu();
-
-          this.initPost();
-
-          this.initPlanTable();
+          this.router.navigate(['home-page'])
         }
 
     });

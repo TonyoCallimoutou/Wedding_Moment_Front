@@ -28,6 +28,7 @@ export class UserPageComponent {
   @Input() public canAccess!: boolean;
   @Input() public currentUser: User;
   @Input() public isMaster: boolean = false;
+  @Input() public isEditMode: boolean = false;
 
   public pictureSrc: any;
   private newUserPicture: any;

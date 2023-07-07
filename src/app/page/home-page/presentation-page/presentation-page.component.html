@@ -1,4 +1,10 @@
 <div class="page" style="background-image: url({{ background ? background : event.pictureUrl }})">
+
+  <div class="banner-edit-mode" *ngIf="isEditMode">
+    <p> Voici une prévisualisation de l'application </p>
+    <p> Dans cette verision vous pouvez faire toutes les modification nécessaire. </p>
+  </div>
+
   <app-dropdown-menu
     *ngIf="isEditable"
     [matIcon]="'edit'"

@@ -1,16 +1,19 @@
 <div class="home-page" *ngIf="event">
+
   <div class="onglet">
     <app-presentation-page
       *ngIf="tabSelector == 0"
       (sendTemporaryBackground)="setTemporaryBackground($event)"
       (sendFinallyBackground)="setFinallyBackground($event)"
       [isEditable]="isEditable"
+      [isEditMode]="isEditMode"
     >
     </app-presentation-page>
     <app-menu-page
       *ngIf="tabSelector == 1"
       [isEditable]="isEditable"
       [menuList]="menuList"
+      [isEditMode]="isEditMode"
     >
     </app-menu-page>
     <app-post-page
@@ -22,6 +25,7 @@
       [postsGridView]="postsGridView"
       [reactPostId]="reactPostId"
       (switchTab)="tabSelector = $event"
+      [isEditMode]="isEditMode"
     >
     </app-post-page>
     <app-plan-table-page
@@ -30,6 +34,7 @@
       [inviteList]="inviteList"
       [tableInviteList]="tableInviteList"
       [tableInviteMap]="tableInviteMap"
+      [isEditMode]="isEditMode"
     >
     </app-plan-table-page>
     <app-user-page
@@ -37,6 +42,7 @@
       [canAccess]="canAccess"
       [currentUser]="currentUser"
       [isMaster]="isMaster"
+      [isEditMode]="isEditMode"
     >
     </app-user-page>
   </div>
