@@ -7,7 +7,7 @@
 
 <div *ngIf="canAccess">
 
-  <div class="div_button">
+  <div class="div_button" *ngIf="isActivate">
     <div class="button" (click)="choosePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
   </div>
 
@@ -18,6 +18,7 @@
       [post]="post"
       [reactPostId]="reactPostId"
       [currentUser]="currentUser"
+      [isActivate]="isActivate"
       (reaction)="reactPost($event)"
       (delete)="removePost($event)"
     >
@@ -52,6 +53,7 @@
         [post]="postDetail"
         [reactPostId]="reactPostId"
         [currentUser]="currentUser"
+        [isActivate]="isActivate"
         [style]="'border-radius: 1.5rem; border: 0.5rem solid var(--secondary-dark);'"
         (reaction)="reactPost($event)"
         (delete)="removePost($event)"

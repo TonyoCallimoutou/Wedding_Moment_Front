@@ -1,7 +1,7 @@
 <div class="card">
   <div class="buttons">
     <mat-icon *ngIf="isEdit" class="button-modifier" (click)="isEdit = !isEdit"> undo </mat-icon>
-    <mat-icon *ngIf="isMaster && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
+    <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
     <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
   </div>
 

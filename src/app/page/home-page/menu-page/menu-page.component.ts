@@ -8,7 +8,7 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 })
 export class MenuPageComponent {
 
-  @Input() public isMaster: boolean = false;
+  @Input() public isEditable: boolean = false;
   @Input() public menuList: Menu[] = [];
 
   public event: EventModel
@@ -41,7 +41,7 @@ export class MenuPageComponent {
    * @param menu
    */
   removeMenu(menu: Menu) {
-    if (this.isMaster) {
+    if (this.isEditable) {
       this.eventModelService.deleteMenu(menu);
     }
   }

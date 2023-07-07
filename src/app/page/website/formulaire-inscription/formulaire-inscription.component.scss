@@ -2,14 +2,14 @@
   background-color: var(--primary);
   height: 100vh;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
 
 .formulaire {
   width: 65%;
-  height: 80%;
+  height: 50%;
 
 
   .form_visual {

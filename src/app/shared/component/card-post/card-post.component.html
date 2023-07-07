@@ -8,7 +8,7 @@
     </div>
   </div>
   <img class="post-img" alt="{{ post.postId}}" src="{{ post.pictureUrl }}">
-  <div class="footer">
+  <div class="footer" *ngIf="isActivate">
     <app-like-button
       (click)="reactPost(post)"
       [countLike]="post.countReact"
@@ -21,5 +21,8 @@
       *ngIf="post.userId == currentUser.userId"
     >
     </app-delete-button>
+  </div>
+  <div class="footer" *ngIf="!isActivate">
+    <p> AUCUN ACCCES ATTENTION etc... </p>
   </div>
 </div>

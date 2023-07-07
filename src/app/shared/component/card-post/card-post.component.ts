@@ -11,6 +11,7 @@ export class CardPostComponent {
   @Input() reactPostId : number[] = [];
   @Input() currentUser! : User;
   @Input() style : string = '';
+  @Input() isActivate : boolean = false;
 
   @Output() reaction : EventEmitter<Post> = new EventEmitter<Post>();
   @Output() delete : EventEmitter<Post> = new EventEmitter<Post>();

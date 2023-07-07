@@ -30,6 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public currentUser: User;
   public canAccess: boolean;
   public isMaster: boolean;
+  public isActivate: boolean;
+  public isEditable: boolean;
   public event: EventModel;
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
@@ -46,6 +48,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.event = this.eventModelService.getActualEvent();
     this.canAccess = this.userModelService.canAccess();
     this.isMaster = this.eventModelService.getIsMaster();
+    this.isActivate = this.eventModelService.getIsActivate();
+    this.isEditable = this.eventModelService.getIsEditable();
   }
 
   ngOnInit() {
@@ -69,6 +73,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.event = this.eventModelService.getActualEvent();
                 this.canAccess = this.userModelService.canAccess();
                 this.isMaster = this.eventModelService.getIsMaster();
+                this.isActivate = this.eventModelService.getIsActivate();
+                this.isEditable = this.eventModelService.getIsEditable();
 
                 this.initUser();
 
@@ -85,14 +91,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
         else if (!params['id'] && this.event && this.event.eventId) {
           this.router.navigate(['.'], { relativeTo: this.route, queryParams: { id: this.event.eventId }});
+          this.eventModelService.goToEventWithId(this.event.eventId)
+            .pipe(take(1))
+            .subscribe(event => {
+              if (event) {
+                this.eventModelService.goToEvent(event);
+                this.event = this.eventModelService.getActualEvent();
+                this.canAccess = this.userModelService.canAccess();
+                this.isMaster = this.eventModelService.getIsMaster();
+                this.isActivate = this.eventModelService.getIsActivate();
+                this.isEditable = this.eventModelService.getIsEditable();
 
-          this.initUser();
+                this.initUser();
 
-          this.initMenu();
+                this.initMenu();
 
-          this.initPost();
+                this.initPost();
 
-          this.initPlanTable();
+                this.initPlanTable();
+              }
+              else {
+                this.router.navigate(['home-page'])
+              }
+            })
         }
         else {
           this.initUser();

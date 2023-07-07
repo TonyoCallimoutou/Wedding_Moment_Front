@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="page">
+  <button mat-raised-button (click)="createEvent = !createEvent; participate=false"> Marié </button>
+  <button mat-raised-button (click)="participate = !participate; createEvent=false"> Invité </button>
+
+  <div class="participate" *ngIf="participate">
+    <p> Entrer le code </p>
+    <p> SCANNER LE QR CODE </p>
+  </div>
+
+  <div class="createEvent" *ngIf="createEvent">
+    <p> Veuillez vous authentifié </p>
+    <p> SI AVANT --> MOdification</p>
+    <p> SI = ou APRES --> Participation</p>
+  </div>
+</div>

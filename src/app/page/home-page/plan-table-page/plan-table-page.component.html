@@ -1,6 +1,7 @@
 <div class="page" [ngStyle]="(!!event && event.pictureUrl) ? {'background-image': 'url('+ event.pictureUrl + ')'} : {'background-color': 'var(--secondary-light)'}" >>
 
   <app-dropdown-menu
+    *ngIf="isEditable"
     [matIcon]="'edit'"
     [options]="dropdownOptions"
     (optionSelected)="onOptionSelected($event)">

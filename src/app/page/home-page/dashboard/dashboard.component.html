@@ -4,18 +4,19 @@
       *ngIf="tabSelector == 0"
       (sendTemporaryBackground)="setTemporaryBackground($event)"
       (sendFinallyBackground)="setFinallyBackground($event)"
-      [isMaster]="isMaster"
+      [isEditable]="isEditable"
     >
     </app-presentation-page>
     <app-menu-page
       *ngIf="tabSelector == 1"
-      [isMaster]="isMaster"
+      [isEditable]="isEditable"
       [menuList]="menuList"
     >
     </app-menu-page>
     <app-post-page
       *ngIf="tabSelector == 2"
       [canAccess]="canAccess"
+      [isActivate]="isActivate"
       [currentUser]="currentUser"
       [posts]="posts"
       [postsGridView]="postsGridView"
@@ -25,7 +26,7 @@
     </app-post-page>
     <app-plan-table-page
       *ngIf="tabSelector == 3"
-      [isMaster]="isMaster"
+      [isEditable]="isEditable"
       [inviteList]="inviteList"
       [tableInviteList]="tableInviteList"
       [tableInviteMap]="tableInviteMap"

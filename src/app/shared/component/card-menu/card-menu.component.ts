@@ -7,7 +7,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 })
 export class CardMenuComponent implements OnInit {
   @Input() menuList : Menu[] = [];
-  @Input() isMaster: boolean = false;
+  @Input() isEditable: boolean = false;
   @Output() addMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
   @Output() removeMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
 

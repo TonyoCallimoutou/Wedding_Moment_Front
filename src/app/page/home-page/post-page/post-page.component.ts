@@ -22,6 +22,7 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 export class PostPageComponent {
 
   @Input() public canAccess: boolean = false;
+  @Input() public isActivate: boolean = false;
   @Input() public currentUser!: User;
   @Input() public posts: Post[] = [];
   @Input() public postsGridView: Post[] = [];

@@ -16,7 +16,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class PlanTablePageComponent implements OnChanges {
 
-  @Input() public isMaster: boolean = false;
+  @Input() public isEditable: boolean = false;
   @Input() public tableInviteList: TableInvite[] = [];
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();

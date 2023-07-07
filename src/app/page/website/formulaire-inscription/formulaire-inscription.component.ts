@@ -10,7 +10,7 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 })
 export class FormulaireInscriptionComponent {
 
-  formulaire: FormGroup;
+  public formulaire: FormGroup;
 
   public backgroundSrc: any = '';
 

@@ -1,6 +1,6 @@
 <div class="page" style="background-image: url({{ background ? background : event.pictureUrl }})">
   <app-dropdown-menu
-    *ngIf="isMaster"
+    *ngIf="isEditable"
     [matIcon]="'edit'"
     [options]="dropdownOptions"
     (optionSelected)="onOptionSelected($event)">

@@ -6,6 +6,8 @@ interface EventModel {
   presentationText: string,
   presentationTextSize: number,
   presentationTextAlign: string,
+  eventDate: Date,
+  isActivate: boolean,
 }
 
 interface EventModelPresentation {

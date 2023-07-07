@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  public participate = false;
+  public createEvent = false;
+
+
+  constructor() {}
 }

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, take} from 'rxjs';
+import {BehaviorSubject, Observable, take, tap} from 'rxjs';
 import {EventService} from '../service/event.service';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserModelService} from './user-model.service';
@@ -25,11 +25,15 @@ export class EventModelService {
 
   userData: User;
   event: EventModel;
-  isMaster: boolean = false;
   private listOfMenu: Menu[] = [];
   private listOfTableInvite: TableInvite[] = [];
   private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   private listOfTableInviteObs$: BehaviorSubject<TableInvite[]> = new BehaviorSubject<TableInvite[]>([]);
+
+  private isActivate: boolean = false;
+  private isMaster: boolean = false;
+
+  private isEditable: boolean = false;
 
   constructor(
     private userModelService: UserModelService,
@@ -144,7 +148,17 @@ export class EventModelService {
   }
 
   goToEventWithId(eventId: number): Observable<any> {
-    return this.eventService.getEventById(eventId);
+    return this.eventService.getEventById(eventId)
+      .pipe(
+        tap((event: EventModel) => {
+          if(this.userData) {
+            this.isMaster = this.event.userId === this.userData.userId;
+          }
+          this.isActivate = event.isActivate;
+          this.isEditable = this.isMaster && (this.isEditable || event.eventDate > new Date().toISOString());
+
+        }
+      ));
   }
 
   getActualEvent(): EventModel {
@@ -153,6 +167,14 @@ export class EventModelService {
 
   getIsMaster(): boolean {
     return this.isMaster;
+  }
+
+  getIsActivate(): boolean {
+    return this.isActivate;
+  }
+
+  getIsEditable(): boolean {
+    return this.isEditable;
   }
 
   initEventData() {
