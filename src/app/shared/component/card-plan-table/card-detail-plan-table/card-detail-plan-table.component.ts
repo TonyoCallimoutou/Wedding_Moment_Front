@@ -39,7 +39,6 @@ export class CardDetailPlanTableComponent {
 
     for (let id of this.inviteIdChange) {
       let invite = this.tableInfos.value.filter((item: Invite) => item.inviteId === id);
-      console.log(invite[0])
       this.addInvite.emit(invite[0]);
     }
   }

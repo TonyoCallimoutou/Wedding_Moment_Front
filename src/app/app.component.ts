@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SocketIoService} from './service/socket-io.service';
 import {TranslateService} from "@ngx-translate/core";
 import {LocalModel} from "./model/local.model";
-import {CookieHelper} from "./service/cookie.helper";
+import {CookieHelper} from "./shared/service/cookie.helper";
 import {CookieService} from "ngx-cookie-service";
 
 @Component({

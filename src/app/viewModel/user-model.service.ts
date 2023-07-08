@@ -9,7 +9,7 @@ import {Post} from '../model/post.model';
 import {User} from '../model/user.model';
 import {StorageModelService} from "./storage-model.service";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../service/cookie.helper";
+import {CookieHelper} from "../shared/service/cookie.helper";
 
 
 @Injectable({

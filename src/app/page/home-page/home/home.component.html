@@ -2,12 +2,37 @@
   <mat-tab-group>
     <mat-tab label="Invité">
       <div class="participate">
-        <p> {{ 'Home.enter_code' | translate | capitalizeFirstLetter }} </p>
-        <p> {{ 'Home.scan_qr_code' | translate | capitalizeFirstLetter }} </p>
+        <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
+
+        <div class="invite_code">
+          <form [formGroup]="formInvite">
+            <mat-form-field>
+              <mat-label>{{ 'Home.enter_code' | translate | capitalizeFirstLetter }}</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="code">
+              <mat-error *ngIf="formEvent.controls['date'].invalid">{{getErrorMessage('date') | translate | capitalizeFirstLetter }}</mat-error>
+            </mat-form-field>
+          </form>
+          <button [disabled]="formInvite.invalid" mat-raised-button (click)="goToEventWithCode()">
+            {{ 'Home.enter_code' | translate | capitalizeFirstLetter }}
+          </button>
+        </div>
+
+        <div class="invite_qr_code">
+          <p>{{ 'Home.scan_qr_code' | translate | capitalizeFirstLetter }}</p>
+          <button mat-fab (click)="test()">
+            <mat-icon>qr_code_scanner</mat-icon>
+          </button>
+        </div>
+
       </div>
     </mat-tab>
     <mat-tab label="Marié">
       <div class="createEvent">
+
+        <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 
         <div class="isNotAuth" *ngIf="!currentUser">
           <p> {{ 'Home.need_auth' | translate | capitalizeFirstLetter }} </p>
@@ -19,7 +44,6 @@
             <button mat-raised-button class="button_create_event" *ngIf="!isCreateEvent" (click)="isCreateEvent = true"> {{ 'Home.create_event' | translate | capitalizeFirstLetter }} </button>
 
             <div *ngIf="isCreateEvent">
-              <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
               <p class="font-default-20">
                 {{ 'Home.Text.presentation' | translate | capitalizeFirstLetter }}
               </p>

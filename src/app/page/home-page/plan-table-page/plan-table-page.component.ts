@@ -5,9 +5,10 @@ import {FormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
-import {CookieHelper} from "../../../service/cookie.helper";
+import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {LocalModel} from "../../../model/local.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({
   selector: 'app-plan-table-page',
@@ -40,7 +41,8 @@ export class PlanTablePageComponent implements OnChanges {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private snackBar: MatSnackBar,
+    private snackbarService: SnackbarService,
+
   ) {
     this.event = eventModelService.getActualEvent();
     this.inviteListFiltered = this.myControl.valueChanges.pipe(
@@ -186,8 +188,6 @@ export class PlanTablePageComponent implements OnChanges {
   }
 
   openSnackBar() {
-    this.snackBar.open('En cours de développement', 'X', {
-      duration: 3000,
-    });
+    this.snackbarService.showSnackbar();
   }
 }

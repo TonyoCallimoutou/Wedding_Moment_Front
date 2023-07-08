@@ -47,6 +47,10 @@ export class EventService {
     return this.http.get(`${baseUrl}/user/${userId}`);
   }
 
+  getEventByCode(code: string): Observable<any> {
+    return this.http.get(`${baseUrl}/code/${code}`);
+  }
+
   deleteEvent(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
   }

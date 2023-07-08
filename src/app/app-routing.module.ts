@@ -8,7 +8,7 @@ import {HomeComponent} from "./page/home-page/home/home.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/home-page', pathMatch: 'full'},
-  {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
+  {path: 'dashboard/:id', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'home-page', component: HomeComponent},
   {path: 'inscription', component: FormulaireInscriptionComponent},
 

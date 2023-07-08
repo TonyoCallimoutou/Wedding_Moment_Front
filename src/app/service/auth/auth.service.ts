@@ -10,7 +10,7 @@ import {EventModelService} from "../../viewModel/event-model.service";
 import {User} from '../../model/user.model';
 import {StorageModelService} from "../../viewModel/storage-model.service";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../cookie.helper";
+import {CookieHelper} from "../../shared/service/cookie.helper";
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +64,7 @@ export class AuthService {
                 this.userModelService.setUserIsVerified(user.userId)
                   .pipe(take(1))
                   .subscribe(() => {
-                    console.log("ok")
+                    console.log("user : ", user.userId, ' is now verified')
                   })
               }
               user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified

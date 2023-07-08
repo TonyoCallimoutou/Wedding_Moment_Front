@@ -4,7 +4,7 @@ import {Observable, take, tap} from "rxjs";
 import {LocalModel} from "../../model/local.model";
 import {UserModelService} from "../../viewModel/user-model.service";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../cookie.helper";
+import {CookieHelper} from "../../shared/service/cookie.helper";
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {

@@ -15,7 +15,7 @@ import {Menu} from "../model/menu.model";
 import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../service/cookie.helper";
+import {CookieHelper} from "../shared/service/cookie.helper";
 import {Router} from "@angular/router";
 
 
@@ -148,8 +148,8 @@ export class EventModelService {
     this.initEventData();
   }
 
-  goToEventWithId(eventId: number): Observable<any> {
-    return this.eventService.getEventById(eventId)
+  goToEventWithCode(eventCode: string): Observable<any> {
+    return this.eventService.getEventByCode(eventCode)
       .pipe(
         tap((event: EventModel) => {
           if (!!event) {
@@ -212,13 +212,17 @@ export class EventModelService {
       .pipe(take(1))
       .subscribe(data => {
         this.socketService.setEvent(data)
-        router.navigate(['dashboard'], { queryParams: { id: this.event?.eventId }});
+        router.navigate(['dashboard', data.eventCode]);
       });
   }
 
   // Get List of Events By User
   getEventsByUser(userId: string): Observable<EventModel> {
     return this.eventService.getEventsByUser(userId);
+  }
+
+  getEventByCode(code: string): Observable<EventModel> {
+    return this.eventService.getEventByCode(code);
   }
 
   setEventPicture(pictureUrl: any) {

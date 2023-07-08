@@ -12,6 +12,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatCardModule} from "@angular/material/card";
 import {AutosizeModule} from "ngx-autosize";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {AutosizeModule} from "ngx-autosize";
         MatDatepickerModule,
         MatCardModule,
         AutosizeModule,
+        MatIconModule,
     ]
 })
 export class HomeModule {

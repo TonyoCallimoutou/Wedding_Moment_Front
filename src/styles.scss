@@ -176,3 +176,11 @@ mat-error {
   font-family: breeSerif, serif;
   font-size: var(--font-size-default-16);
 }
+
+.mat-mdc-snack-bar-container {
+  &.error {
+    --mdc-snackbar-container-color: #cc0000;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+}

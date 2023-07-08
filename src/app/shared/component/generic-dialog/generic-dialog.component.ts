@@ -19,7 +19,6 @@ export class GenericDialogComponent {
       this.isDisplayBouton = data.isDisplayBouton;
     }
     this.contentTemplate = data.contentTemplate;
-    console.log(this.isDisplayBouton)
   }
 
   onNoClick(): void {

@@ -43,7 +43,6 @@ export class CardMenuComponent implements OnInit {
 
     for (let id of this.menuIdChange) {
       let menu = this.menuList.filter(item => item.menuId === id);
-      console.log(menu[0])
       this.addMenu.emit(menu[0]);
     }
   }

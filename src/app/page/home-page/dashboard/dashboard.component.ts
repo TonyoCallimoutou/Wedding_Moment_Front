@@ -10,7 +10,7 @@ import {Post} from "../../../model/post.model";
 // @ts-ignore
 import {User} from "../../../model/user.model";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../../../service/cookie.helper";
+import {CookieHelper} from "../../../shared/service/cookie.helper";
 
 @Component({
   selector: 'app-dashboard',
@@ -66,8 +66,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         if (!params['id'] && !this.event) {
           this.router.navigate(['*'])
         }
-        else if (params['id']) {
-          this.eventModelService.goToEventWithId(parseInt(params['id']))
+        else if (!!params['id'] && !!parseInt(params['id'])) {
+          this.eventModelService.goToEventWithCode(params['id'])
             .pipe(take(1))
             .subscribe(event => {
               if (event) {
@@ -90,11 +90,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
               else {
                 this.router.navigate(['home-page'])
               }
-            })
+            });
         }
         else if (!params['id'] && this.event && this.event.eventId) {
-          this.router.navigate(['.'], { relativeTo: this.route, queryParams: { id: this.event.eventId }});
-          this.eventModelService.goToEventWithId(this.event.eventId)
+          this.router.navigate(['.', this.event.eventCode]);
+          this.eventModelService.goToEventWithCode(this.event.eventCode)
             .pipe(take(1))
             .subscribe(event => {
               if (event) {

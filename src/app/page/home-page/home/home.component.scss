@@ -12,14 +12,42 @@
       background-color: var(--secondary-light) !important;
     }
 
+    .participate {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      min-height: 90vh;
+
+      .invite_code {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 3rem;
+
+        mat-form-field {
+          margin-bottom: 2rem;
+        }
+      }
+
+      .invite_qr_code{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
 
     .createEvent{
       padding: 1rem;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
 
       .isAuth {
         display: flex;
         flex-direction: column;
-        min-height: 90vh;
+        flex: 1;
         justify-content: space-between;
 
         .button_create_event {

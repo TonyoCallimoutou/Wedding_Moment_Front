@@ -4,6 +4,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({
   selector: 'app-presentation-page',
@@ -35,7 +36,8 @@ export class PresentationPageComponent {
     private eventModelService: EventModelService,
     private dialog: MatDialog,
     private translate: TranslateService,
-    private snackBar: MatSnackBar,
+
+    private snackbarService: SnackbarService,
   ) {
 
     this.event = this.eventModelService.getActualEvent();
@@ -152,9 +154,8 @@ export class PresentationPageComponent {
   }
 
   openSnackBar() {
-    this.snackBar.open('En cours de développement', 'X', {
-      duration: 3000,
-    });
+
+    this.snackbarService.showSnackbar();
   }
 
 }

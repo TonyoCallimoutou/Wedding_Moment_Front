@@ -11,6 +11,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {MatCalendar, MatCalendarCellClassFunction} from "@angular/material/datepicker";
 import {ValidatorDateBeforeToday, ValidatorDatePattern} from "../../../shared/validator/DateValidor";
 import {DatePipe} from "@angular/common";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ export class HomeComponent{
   public event: EventModel | null  = null ;
   public isEditable: boolean = false;
   public isCreateEvent: boolean = false;
+  public formInvite: FormGroup;
   public formEvent: FormGroup;
   public selectedDate: Date = new Date();
 
@@ -31,11 +33,15 @@ export class HomeComponent{
   constructor(
     private authService: AuthService,
     private eventModelService: EventModelService,
-    private snackBar: MatSnackBar,
     private router: Router,
     private fb: FormBuilder,
     private datepipe: DatePipe,
+    private snackbarService: SnackbarService,
   ) {
+
+    this.formInvite = this.fb.group({
+      code: ['', Validators.required],
+    });
 
     this.formEvent = this.fb.group({
       presentationText: ['', Validators.required],
@@ -55,9 +61,6 @@ export class HomeComponent{
           if (!!data) {
             data.eventDate = new Date(data.eventDate);
             this.event = data;
-            console.log(data.eventDate.toLocaleDateString());
-            console.log(new Date().toLocaleDateString());
-            console.log(data.eventDate.toLocaleDateString() >= new Date().toLocaleDateString());
             this.isEditable =( data.isActivate || data.eventDate.toLocaleDateString() >= new Date().toLocaleDateString());
           }
         });
@@ -70,14 +73,14 @@ export class HomeComponent{
       const currentView = this.calendar.currentView;
       this.calendar._goToDateInView(inputDate.value, currentView);
     }
-    console.log(this.selectedDate);
   }
+
   onDateChangeCalendar(event: any) {
     this.formEvent.controls['date'].markAsTouched();
   }
 
   goToEvent() {
-    this.router.navigate(['dashboard'], { queryParams: { id: this.event?.eventId }});
+    this.router.navigate(['dashboard', this.event?.eventCode]);
 
   }
 
@@ -118,9 +121,21 @@ export class HomeComponent{
     this.eventModelService.createEvents(event, this.router);
   }
 
+  goToEventWithCode() {
+    this.eventModelService.getEventByCode(this.formInvite.controls['code'].value)
+      .pipe(take(1))
+      .subscribe((data: EventModel) => {
+        if (!!data) {
+
+          this.router.navigate(['dashboard', data.eventCode ]);
+        }
+        else {
+          this.snackbarService.showSnackbar('error','Aucun événement trouvé');
+        }
+      });
+  }
+
   test() {
-    this.snackBar.open('En cours de développement', 'X', {
-      duration: 3000,
-    });
+    this.snackbarService.showSnackbar();
   }
 }

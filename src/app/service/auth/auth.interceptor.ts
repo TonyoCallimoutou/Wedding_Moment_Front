@@ -2,7 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import { Observable } from "rxjs";
 import {LocalModel} from "../../model/local.model";
-import {CookieHelper} from "../cookie.helper";
+import {CookieHelper} from "../../shared/service/cookie.helper";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {

@@ -11,7 +11,7 @@ import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
 import {take} from "rxjs";
 import {CookieService} from "ngx-cookie-service";
-import {CookieHelper} from "../../../service/cookie.helper";
+import {CookieHelper} from "../../../shared/service/cookie.helper";
 
 interface Language {
   code: string;
@@ -182,11 +182,11 @@ export class UserPageComponent {
       .subscribe(value => {
         console.log(value)
       }, (error) => {
-        console.log("error", error)
+        console.log("error export picture :", error)
         // Gérer les erreurs
       }, () => {
         // Le téléchargement est terminé
-        console.log("ok")
+        console.log("export success")
       });
   }
 
