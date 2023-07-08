@@ -1,14 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {UserModelService} from "../../../viewModel/user-model.service";
+import {Component, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {take} from "rxjs";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import firebase from "firebase/compat";
-import auth = firebase.auth;
 import {AuthService} from "../../../service/auth/auth.service";
 import {Router} from "@angular/router";
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {MatCalendar, MatCalendarCellClassFunction} from "@angular/material/datepicker";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {MatCalendar} from "@angular/material/datepicker";
 import {ValidatorDateBeforeToday, ValidatorDatePattern} from "../../../shared/validator/DateValidor";
 import {DatePipe} from "@angular/common";
 import {SnackbarService} from "../../../shared/service/snackbar.service";

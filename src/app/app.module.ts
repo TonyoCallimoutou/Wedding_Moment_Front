@@ -20,7 +20,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
 import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
-import { AuthInterceptor } from './service/auth/auth.interceptor';
+import {AuthInterceptor} from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HomeModule} from "./page/home-page/home/home.module";

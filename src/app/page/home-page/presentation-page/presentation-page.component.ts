@@ -3,7 +3,6 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({

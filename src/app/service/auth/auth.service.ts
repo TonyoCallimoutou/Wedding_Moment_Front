@@ -9,7 +9,6 @@ import {EventModelService} from "../../viewModel/event-model.service";
 // @ts-ignore
 import {User} from '../../model/user.model';
 import {StorageModelService} from "../../viewModel/storage-model.service";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../../shared/service/cookie.helper";
 
 @Injectable({

@@ -1,5 +1,5 @@
-import { EnvironmentPlugin } from 'webpack';
-import { config } from 'dotenv';
+import {EnvironmentPlugin} from 'webpack';
+import {config} from 'dotenv';
 
 config();
 

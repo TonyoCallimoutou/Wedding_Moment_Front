@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Component} from '@angular/core';
 import {AuthService} from "../../../../service/auth/auth.service";
 import {UserModelService} from "../../../../viewModel/user-model.service";
 

@@ -3,7 +3,6 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Observable, take, tap} from "rxjs";
 import {LocalModel} from "../../model/local.model";
 import {UserModelService} from "../../viewModel/user-model.service";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../../shared/service/cookie.helper";
 
 @Injectable()

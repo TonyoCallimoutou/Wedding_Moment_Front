@@ -8,7 +8,6 @@ import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
 import {StorageModelService} from "./storage-model.service";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 
 

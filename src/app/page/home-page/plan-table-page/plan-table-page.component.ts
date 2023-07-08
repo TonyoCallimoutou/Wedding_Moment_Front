@@ -5,9 +5,6 @@ import {FormControl} from "@angular/forms";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
-import {CookieHelper} from "../../../shared/service/cookie.helper";
-import {LocalModel} from "../../../model/local.model";
-import {MatSnackBar} from "@angular/material/snack-bar";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({

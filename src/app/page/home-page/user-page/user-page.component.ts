@@ -9,8 +9,6 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
-import {take} from "rxjs";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 
 interface Language {

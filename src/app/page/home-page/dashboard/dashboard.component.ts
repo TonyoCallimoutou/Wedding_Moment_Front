@@ -2,14 +2,13 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {Observable, Subject, take, takeUntil} from "rxjs";
+import {Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
 // @ts-ignore
 import {Post} from "../../../model/post.model";
 // @ts-ignore
 import {User} from "../../../model/user.model";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 
 @Component({

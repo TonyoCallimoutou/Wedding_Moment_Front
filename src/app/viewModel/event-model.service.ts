@@ -14,7 +14,6 @@ import {Menu} from "../model/menu.model";
 // @ts-ignore
 import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
-import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 import {Router} from "@angular/router";
 
