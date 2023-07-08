@@ -99,6 +99,8 @@ $my-theme: mat.define-light-theme((
 
   --font-size-title: 0.75rem;
   --font-size-title-20: 1.25rem;
+  --font-size-title-24: 2.5rem;
+  --font-size-title-48: 3rem;
 
 }
 
@@ -141,6 +143,11 @@ body {
   font-size: var(--font-size-title-20);
   margin: 0;
   font-weight: normal;
+}
+
+.font-title-48 {
+  font-family: GreatVibes, serif;
+  font-size: var(--font-size-title-48);
 }
 
 .font-primary {

@@ -28,7 +28,7 @@ import {LoginComponent} from "./login/login.component";
     MatInputModule,
     MatButtonModule
   ],
-  exports: [AuthComponent]
+    exports: [AuthComponent, LoginComponent]
 })
 export class AuthModule {
 }

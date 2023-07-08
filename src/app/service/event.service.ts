@@ -43,6 +43,10 @@ export class EventService {
     return this.http.post(baseUrl, data);
   }
 
+  getEventsByUser(userId: string): Observable<any> {
+    return this.http.get(`${baseUrl}/user/${userId}`);
+  }
+
   deleteEvent(id: number): Observable<any> {
     return this.http.delete(`${baseUrl}/${id}`);
   }

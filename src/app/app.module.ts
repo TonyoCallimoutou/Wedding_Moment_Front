@@ -24,6 +24,21 @@ import { AuthInterceptor } from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HomeModule} from "./page/home-page/home/home.module";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {MomentDateAdapter} from "@angular/material-moment-adapter";
+import {DatePipe} from "@angular/common";
+
+const MY_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -59,6 +74,7 @@ import {HomeModule} from "./page/home-page/home/home.module";
   providers: [
     AuthService,
     SocketIoService,
+    DatePipe,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -68,7 +84,9 @@ import {HomeModule} from "./page/home-page/home/home.module";
       provide: HTTP_INTERCEPTORS,
       useClass: ResponseInterceptor,
       multi: true
-    }
+    },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
   ],
   bootstrap: [AppComponent]
 })

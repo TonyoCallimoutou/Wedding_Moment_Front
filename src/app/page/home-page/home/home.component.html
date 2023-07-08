@@ -1,15 +1,85 @@
 <div class="page">
-  <button mat-raised-button (click)="createEvent = !createEvent; participate=false"> Marié </button>
-  <button mat-raised-button (click)="participate = !participate; createEvent=false"> Invité </button>
+  <mat-tab-group>
+    <mat-tab label="Invité">
+      <div class="participate">
+        <p> {{ 'Home.enter_code' | translate | capitalizeFirstLetter }} </p>
+        <p> {{ 'Home.scan_qr_code' | translate | capitalizeFirstLetter }} </p>
+      </div>
+    </mat-tab>
+    <mat-tab label="Marié">
+      <div class="createEvent">
 
-  <div class="participate" *ngIf="participate">
-    <p> Entrer le code </p>
-    <p> SCANNER LE QR CODE </p>
-  </div>
+        <div class="isNotAuth" *ngIf="!currentUser">
+          <p> {{ 'Home.need_auth' | translate | capitalizeFirstLetter }} </p>
+          <app-login></app-login>
+        </div>
 
-  <div class="createEvent" *ngIf="createEvent">
-    <p> Veuillez vous authentifié </p>
-    <p> SI AVANT --> MOdification</p>
-    <p> SI = ou APRES --> Participation</p>
-  </div>
+        <div class="isAuth" *ngIf="currentUser">
+          <div *ngIf="!event">
+            <button mat-raised-button class="button_create_event" *ngIf="!isCreateEvent" (click)="isCreateEvent = true"> {{ 'Home.create_event' | translate | capitalizeFirstLetter }} </button>
+
+            <div *ngIf="isCreateEvent">
+              <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
+              <p class="font-default-20">
+                {{ 'Home.Text.presentation' | translate | capitalizeFirstLetter }}
+              </p>
+              <form [formGroup]="formEvent">
+                <p>
+                  {{ 'Home.Text.explain_text_presentation' | translate | capitalizeFirstLetter }}
+                </p>
+                <mat-form-field>
+                  <mat-label>{{ 'Home.event_presentation' | translate | capitalizeFirstLetter }}</mat-label>
+                  <textarea
+                    matInput
+                    autosize
+                    placeholder="Mariage de X et Y "
+                    formControlName="presentationText">
+                  </textarea>
+                  <mat-error *ngIf="formEvent.controls['presentationText'].invalid">{{getErrorMessage('presentationText') | translate | capitalizeFirstLetter }}</mat-error>
+                </mat-form-field>
+
+                <p>
+                  {{ 'Home.Text.explain_date' | translate | capitalizeFirstLetter }}
+                </p>
+
+                <mat-form-field>
+                  <mat-label>{{ 'Home.event_date' | translate | capitalizeFirstLetter }}</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker"
+                    formControlName="date"
+                    [(ngModel)]="selectedDate"
+                    name="date"
+                    (dateChange)="onDateChange($event)">
+                  <mat-datepicker #picker touchUi ></mat-datepicker>
+                  <mat-error *ngIf="formEvent.controls['date'].invalid">{{getErrorMessage('date') | translate | capitalizeFirstLetter }}</mat-error>
+                </mat-form-field>
+
+                <mat-card class="demo-inline-calendar-card">
+                  <mat-calendar (selectedChange)="onDateChangeCalendar($event)" [(selected)]="selectedDate" #calendar></mat-calendar>
+                </mat-card>
+
+              </form>
+
+              <button mat-raised-button class="button_create_event" [disabled]="formEvent.invalid" (click)="createEvent()"> {{ 'Home.create_event_button' | translate | capitalizeFirstLetter }}</button>
+            </div>
+
+          </div>
+          <div *ngIf="event">
+            <p *ngIf="isEditable"> {{ 'Home.set_event' | translate | capitalizeFirstLetter }}  </p>
+            <p *ngIf="!isEditable"> {{ 'Home.event_not_editable' | translate | capitalizeFirstLetter }}  </p>
+            <button (click)="goToEvent()"> {{ 'Home.enter' | translate | capitalizeFirstLetter }}  </button>
+            <p> {{event.eventDate.toLocaleDateString() }}</p>
+            <div class="button" *ngIf="isEditable" >
+              <button (click)="test()"> {{ 'Home.generate_link' | translate | capitalizeFirstLetter }}  </button>
+              <button  (click)="test()"> {{ 'Home.generate_qr_code' | translate | capitalizeFirstLetter }}  </button>
+              <button  (click)="test()"> {{ 'Home.generate_code' | translate | capitalizeFirstLetter }}  </button>
+            </div>
+          </div>
+          <button class="button_deco" mat-raised-button (click)="deconnexion()"> {{ 'Home.logout' | translate | capitalizeFirstLetter }} </button>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
 </div>

@@ -57,7 +57,8 @@
   },
   "Inscription": {
     "Errors": {
-      "required": "ce champs est requis"
+      "required": "ce champs est requis",
+      "patternDate": "doit etre au format JJ/MM/AAAA"
     },
     "stepper_presentation": "Presentation",
     "stepper_menu": "Menu",

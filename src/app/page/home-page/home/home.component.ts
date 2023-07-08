@@ -1,15 +1,126 @@
-import { Component } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {UserModelService} from "../../../viewModel/user-model.service";
+import {EventModelService} from "../../../viewModel/event-model.service";
+import {take} from "rxjs";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import firebase from "firebase/compat";
+import auth = firebase.auth;
+import {AuthService} from "../../../service/auth/auth.service";
+import {Router} from "@angular/router";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {MatCalendar, MatCalendarCellClassFunction} from "@angular/material/datepicker";
+import {ValidatorDateBeforeToday, ValidatorDatePattern} from "../../../shared/validator/DateValidor";
+import {DatePipe} from "@angular/common";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent{
+  public currentUser: User | null = null;
+  public event: EventModel | null  = null ;
+  public isEditable: boolean = false;
+  public isCreateEvent: boolean = false;
+  public formEvent: FormGroup;
+  public selectedDate: Date = new Date();
 
-  public participate = false;
-  public createEvent = false;
 
+  @ViewChild('calendar') calendar!: MatCalendar<any>;
 
-  constructor() {}
+  constructor(
+    private authService: AuthService,
+    private eventModelService: EventModelService,
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private fb: FormBuilder,
+    private datepipe: DatePipe,
+  ) {
+
+    this.formEvent = this.fb.group({
+      presentationText: ['', Validators.required],
+      date: ['', [Validators.required, ValidatorDatePattern, ValidatorDateBeforeToday]],
+    });
+
+    this.eventModelService.initUserData();
+    this.currentUser = this.eventModelService.userData;
+
+    this.currentUser = this.currentUser?.userId === "0" ? null : this.currentUser;
+
+    if (!!this.currentUser && this.currentUser.userId !== "0") {
+      this.eventModelService.getEventsByUser(this.currentUser.userId)
+        .pipe(take(1))
+        .subscribe((data: EventModel) => {
+
+          if (!!data) {
+            data.eventDate = new Date(data.eventDate);
+            this.event = data;
+            console.log(data.eventDate.toLocaleDateString());
+            console.log(new Date().toLocaleDateString());
+            console.log(data.eventDate.toLocaleDateString() >= new Date().toLocaleDateString());
+            this.isEditable =( data.isActivate || data.eventDate.toLocaleDateString() >= new Date().toLocaleDateString());
+          }
+        });
+
+    }
+  }
+
+  onDateChange(inputDate: any) {
+    if (this.formEvent.controls['date'].valid) {
+      const currentView = this.calendar.currentView;
+      this.calendar._goToDateInView(inputDate.value, currentView);
+    }
+    console.log(this.selectedDate);
+  }
+  onDateChangeCalendar(event: any) {
+    this.formEvent.controls['date'].markAsTouched();
+  }
+
+  goToEvent() {
+    this.router.navigate(['dashboard'], { queryParams: { id: this.event?.eventId }});
+
+  }
+
+  deconnexion() {
+    this.authService.SignOut();
+  }
+
+  getErrorMessage(formName: string): string {
+    const form = this.formEvent.controls[formName];
+    switch (formName) {
+      case 'presentationText':
+        if (form.hasError('required')) {
+          return 'Inscription.Errors.required'
+        }
+        break;
+      case 'date':
+        if (form.hasError('required')) {
+          return 'Inscription.Errors.required'
+        }
+        else if (form.hasError('pattern')) {
+          return 'Inscription.Errors.patternDate'
+        }
+        else if (form.hasError('inferieur_date_jour')) {
+          return 'Inscription.Errors.superieur_date_jour'
+        }
+        break;
+    }
+
+    return '';
+  }
+
+  createEvent() {
+    const event = {
+      presentationText: this.formEvent.controls['presentationText'].value,
+      eventDate: this.datepipe.transform(this.formEvent.controls['date'].value, 'yyyy-MM-dd'),
+    }
+
+    this.eventModelService.createEvents(event, this.router);
+  }
+
+  test() {
+    this.snackBar.open('En cours de développement', 'X', {
+      duration: 3000,
+    });
+  }
 }

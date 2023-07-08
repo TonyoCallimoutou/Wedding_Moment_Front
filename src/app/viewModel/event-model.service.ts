@@ -16,6 +16,7 @@ import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
 import {CookieService} from "ngx-cookie-service";
 import {CookieHelper} from "../service/cookie.helper";
+import {Router} from "@angular/router";
 
 
 @Injectable({
@@ -156,13 +157,11 @@ export class EventModelService {
               if (this.userData) {
                 this.isMaster = event.userId === this.userData.userId;
               }
+              event.eventDate = new Date(event.eventDate);
               this.isActivate = event.isActivate;
-              this.isEditable = this.isMaster && (this.isActivate || event.eventDate > new Date().toISOString());
+              this.isEditable = this.isMaster && (this.isActivate || event.eventDate.toLocaleDateString() > new Date().toLocaleDateString());
 
               this.isEditMode = this.isEditable && !this.isActivate;
-            }
-            else {
-              event.property = null;
             }
           }
         }
@@ -208,16 +207,18 @@ export class EventModelService {
   }
 
   // Create Event
-  createEvents(name: string) {
-    const data: EventModel = {
-      userId: this.userData.userId,
-      name: name
-    }
-    this.eventService.createEvent(data)
+  createEvents(event: any, router: Router) {
+    this.eventService.createEvent(event)
       .pipe(take(1))
       .subscribe(data => {
         this.socketService.setEvent(data)
-      })
+        router.navigate(['dashboard'], { queryParams: { id: this.event?.eventId }});
+      });
+  }
+
+  // Get List of Events By User
+  getEventsByUser(userId: string): Observable<EventModel> {
+    return this.eventService.getEventsByUser(userId);
   }
 
   setEventPicture(pictureUrl: any) {

@@ -6,6 +6,29 @@
       "different_password": "Les mots de passe sont différents"
     }
   },
+  "Home": {
+    "enter_code": "entrer le code",
+    "scan_qr_code": "scanner le qr code",
+    "need_auth": "vous devez vous authentifier ou creer un compte",
+    "set_event": "entrer dans cette evenement pour le modifier",
+    "event_not_editable": "merci de nous avoir fait confiance pour cette soirée. Vous pouvez retrouver de bonne souvienir ou télécharger les photos.",
+    "enter": "entrer",
+    "generate_link": "generer un lien",
+    "generate_qr_code": "generer un qr code",
+    "generate_code": "generer un code",
+    "logout": "deconnexion",
+    "event_presentation": "presentation",
+    "event_date": "date de l'evenement",
+    "create_event": "voulez vous creer un evenenent ",
+    "create_event_button": "CREATE EVENT",
+    "Text": {
+      "bienvenue": "bienvenue sur WeddingMoment",
+      "presentation": "afin d'être prêt le jour J, j'ai besoin de quelque information.\nSachez qu'après avoir fourni ces informations, vous aurez accès à l'application uniquement afin de la compléter (entrer le plan de table, ainsi que le menu).\nL'application sera disponible pour vos invités le jour J, en attendant, vous pourrez modifier cette application, comme bon, vous semble.",
+      "explain_text_presentation": "ce message sera affiché sur la page d'accueil de l'application.\nDe plus lors de la prévisualisation de l'application, vous pourrez remodifié ce texte ainsi que sa taille.",
+      "explain_date": "j'ai besoin de la date exacte de votre mariage.\nCar l'application sera disponible pour vos convives uniquement à cette date.\nVous ne pourrez plus la modifier par la suite, donc ne faites pas d'erreur."
+
+    }
+  },
   "Auth": {
     "sign_in" : "sign In",
     "register" : "register",
@@ -61,7 +84,9 @@
   },
   "Inscription": {
     "Errors": {
-      "required": "ce champs est requis"
+      "required": "ce champs est requis",
+      "patternDate": "doit etre au format JJ/MM/AAAA",
+      "superieur_date_jour": "doit etre superieur a la date du jour"
     },
     "stepper_presentation": "Presentation",
     "stepper_menu": "Menu",
