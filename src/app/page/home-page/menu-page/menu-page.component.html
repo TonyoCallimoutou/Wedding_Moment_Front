@@ -1,8 +1,4 @@
-<div class="page" [ngStyle]="(!!event && event.pictureUrl) ? {'background-image': 'url('+ event.pictureUrl + ')'} : {'background-color': 'var(--secondary-light)'}" >
-  <div class="banner-edit-mode" *ngIf="isEditMode">
-    <p> Voici une prévisualisation de l'application </p>
-    <p> Dans cette verision vous pouvez faire toutes les modification nécessaire. </p>
-  </div>
+<div class="page" *ngIf="event" [ngStyle]="(!!event && event.pictureUrl) ? {'background-image': 'url('+ event.pictureUrl + ')'} : {'background-color': 'var(--secondary-light)'}" >
 
   <app-card-menu
     [menuList]="menuList"

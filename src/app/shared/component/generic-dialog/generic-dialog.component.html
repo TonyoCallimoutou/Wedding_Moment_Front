@@ -1,7 +1,13 @@
+<div *ngIf="isDisplayCloseButton" mat-dialog-title class="header">
+  <button class="close_button" mat-mini-fab color="primary" (click)="onNoClick()">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
 <mat-dialog-content>
+
   <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
 </mat-dialog-content>
-<mat-dialog-actions *ngIf="isDisplayBouton">
-  <button mat-raised-button color="primary" (click)="onNoClick()">No Thanks</button>
+<mat-dialog-actions *ngIf="isDisplayButton">
   <button mat-raised-button color="primary" [mat-dialog-close]="true" >Ok</button>
 </mat-dialog-actions>

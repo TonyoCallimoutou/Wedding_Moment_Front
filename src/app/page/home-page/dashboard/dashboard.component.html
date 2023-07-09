@@ -1,5 +1,9 @@
 <div class="home-page" *ngIf="event">
 
+  <mat-toolbar color="warn" *ngIf="isEditMode">
+    <p> prévisualisation : {{decompteDateString}} </p>
+  </mat-toolbar>
+
   <div class="onglet">
     <app-presentation-page
       *ngIf="tabSelector == 0"
@@ -7,6 +11,7 @@
       (sendFinallyBackground)="setFinallyBackground($event)"
       [isEditable]="isEditable"
       [isEditMode]="isEditMode"
+      [event]="event"
     >
     </app-presentation-page>
     <app-menu-page
@@ -14,6 +19,7 @@
       [isEditable]="isEditable"
       [menuList]="menuList"
       [isEditMode]="isEditMode"
+      [event]="event"
     >
     </app-menu-page>
     <app-post-page
@@ -35,6 +41,7 @@
       [tableInviteList]="tableInviteList"
       [tableInviteMap]="tableInviteMap"
       [isEditMode]="isEditMode"
+      [event]="event"
     >
     </app-plan-table-page>
     <app-user-page
@@ -81,4 +88,42 @@
   </mat-tab-group>
 
 </div>
+
+<ng-template #dialogEditMode>
+  <div class="dialog_edit_mode">
+    <h1 class="font-title-48" style="margin-top: 2rem"> {{ 'Home.Edit_mode_dialog.title' | translate | capitalizeFirstLetter }}</h1>
+    <p>
+      {{ 'Home.Edit_mode_dialog.presentation' | translate | capitalizeFirstLetter }}
+      {{event.eventDate | date: 'dd/MM/yyyy'}}
+    </p>
+
+    <span class="font-default-16 partie"> <mat-icon>home</mat-icon> {{ 'Home.Edit_mode_dialog.accueil' | translate | capitalizeFirstLetter }}</span>
+    <ul>
+      <li>{{ 'Home.Edit_mode_dialog.accueil_presentation_text' | translate | capitalizeFirstLetter }}</li>
+      <li>{{ 'Home.Edit_mode_dialog.accueil_import_picture' | translate | capitalizeFirstLetter }}</li>
+    </ul>
+
+    <span class="font-default-16 partie"> <mat-icon>restaurant_menu</mat-icon>{{ 'Home.Edit_mode_dialog.menu' | translate | capitalizeFirstLetter }}</span>
+    <ul>
+      <li>{{ 'Home.Edit_mode_dialog.menu_modification' | translate | capitalizeFirstLetter }}</li>
+    </ul>
+
+    <span class="font-default-16 partie"> <mat-icon>photo_camera</mat-icon>{{ 'Home.Edit_mode_dialog.photo' | translate | capitalizeFirstLetter }}</span>
+    <ul>
+      <li>{{ 'Home.Edit_mode_dialog.photo_explain' | translate | capitalizeFirstLetter }}</li>
+    </ul>
+
+    <span class="font-default-16 partie"> <mat-icon>person_search</mat-icon> {{ 'Home.Edit_mode_dialog.plan_table' | translate | capitalizeFirstLetter }}</span>
+    <ul>
+      <li>{{ 'Home.Edit_mode_dialog.plan_table_modification' | translate | capitalizeFirstLetter }}</li>
+      <li>{{ 'Home.Edit_mode_dialog.plan_table_invite' | translate | capitalizeFirstLetter }}</li>
+    </ul>
+
+    <span class="font-default-16 partie"> <mat-icon>account_circle</mat-icon> {{ 'Home.Edit_mode_dialog.parametre' | translate | capitalizeFirstLetter }}</span>
+    <ul>
+      <li>{{ 'Home.Edit_mode_dialog.parametre_explain' | translate | capitalizeFirstLetter }}</li>
+      <li>{{ 'Home.Edit_mode_dialog.parametre_export' | translate | capitalizeFirstLetter }}</li>
+    </ul>
+  </div>
+</ng-template>
 

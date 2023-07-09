@@ -119,7 +119,7 @@ export class PostPageComponent {
     this.dialog.open(GenericDialogComponent, {
       data: {
         contentTemplate: this.dialogContent,
-        isDisplayBouton: false
+        isDisplayButton: false
       }
     });
   }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
@@ -12,8 +12,7 @@ import {SnackbarService} from "../../../shared/service/snackbar.service";
 })
 export class PresentationPageComponent {
 
-  public event: EventModel;
-
+  @Input() public event?: EventModel;
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
   @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
   @Input() public isEditable: boolean = false;
@@ -39,13 +38,11 @@ export class PresentationPageComponent {
     private snackbarService: SnackbarService,
   ) {
 
-    this.event = this.eventModelService.getActualEvent();
-
     this.initDropDownOption();
 
-    this.fontSize = this.event.presentationTextSize ? this.event.presentationTextSize : 96;
+    this.fontSize = this.event?.presentationTextSize ? this.event?.presentationTextSize : 96;
     this.fontSizeString = this.fontSize + 'px'
-    this.textAlign = this.event.presentationTextAlign ? this.event.presentationTextAlign : 'center';
+    this.textAlign = this.event?.presentationTextAlign ? this.event?.presentationTextAlign : 'center';
 
   }
 
@@ -145,7 +142,7 @@ export class PresentationPageComponent {
   save() {
     this.isSetPresentationText = false;
     var presentation : EventModelPresentation = {
-      presentationText: this.event.presentationText,
+      presentationText: this.event?.presentationText ? this.event?.presentationText : '',
       presentationTextSize: this.fontSize,
       presentationTextAlign: this.textAlign,
     }

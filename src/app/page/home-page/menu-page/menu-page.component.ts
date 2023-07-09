@@ -11,13 +11,11 @@ export class MenuPageComponent {
   @Input() public isEditable: boolean = false;
   @Input() public menuList: Menu[] = [];
   @Input() public isEditMode: boolean = false;
-
-  public event: EventModel
+  @Input() public event?: EventModel;
 
   constructor(
     private eventModelService: EventModelService
   ) {
-    this.event = eventModelService.getActualEvent();
   }
 
   /**
@@ -26,7 +24,7 @@ export class MenuPageComponent {
    */
   addMenu(menu : Menu) {
 
-    menu.eventId = this.eventModelService.getActualEvent().eventId
+    menu.eventId = this.event?.eventId
 
     if (menu.menuId) {
       this.eventModelService.updateMenu(menu);

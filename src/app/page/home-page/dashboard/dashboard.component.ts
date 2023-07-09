@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
@@ -10,6 +10,9 @@ import {Post} from "../../../model/post.model";
 // @ts-ignore
 import {User} from "../../../model/user.model";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
+import {MatDialog} from "@angular/material/dialog";
+import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -33,10 +36,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public isEditable: boolean;
   public isEditMode: boolean;
   public event: EventModel;
+  public decompteDateString: string= "";
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public background: any;
+
+  @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
 
   constructor(
     private userModelService: UserModelService,
@@ -44,6 +50,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private postModelService: PostModelService,
     private router: Router,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService,
+
   ) {
     this.event = this.eventModelService.getActualEvent();
     this.canAccess = this.userModelService.canAccess();
@@ -51,6 +60,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.isActivate = this.eventModelService.getIsActivate();
     this.isEditable = this.eventModelService.getIsEditable();
     this.isEditMode = this.eventModelService.getIsEditMode();
+  }
+
+  initData() {
+    this.event = this.eventModelService.getActualEvent();
+    this.canAccess = this.userModelService.canAccess();
+    this.isMaster = this.eventModelService.getIsMaster();
+    this.isActivate = this.eventModelService.getIsActivate();
+    this.isEditable = this.eventModelService.getIsEditable();
+    this.isEditMode = this.eventModelService.getIsEditMode();
+
+
+    if(this.isEditMode) {
+      this.calculDecompte();
+
+      this.dialog.open(GenericDialogComponent, {
+        data: {
+          contentTemplate: this.dialogEditMode,
+          isDisplayButton: false,
+          isDisplayCloseButton: false,
+        },
+      });
+    }
   }
 
   ngOnInit() {
@@ -71,12 +102,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .subscribe(event => {
               if (event) {
                 this.eventModelService.goToEvent(event);
-                this.event = this.eventModelService.getActualEvent();
-                this.canAccess = this.userModelService.canAccess();
-                this.isMaster = this.eventModelService.getIsMaster();
-                this.isActivate = this.eventModelService.getIsActivate();
-                this.isEditable = this.eventModelService.getIsEditable();
-                this.isEditMode = this.eventModelService.getIsEditMode();
+                this.initData();
 
                 this.initUser();
 
@@ -98,12 +124,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .subscribe(event => {
               if (event) {
                 this.eventModelService.goToEvent(event);
-                this.event = this.eventModelService.getActualEvent();
-                this.canAccess = this.userModelService.canAccess();
-                this.isMaster = this.eventModelService.getIsMaster();
-                this.isActivate = this.eventModelService.getIsActivate();
-                this.isEditable = this.eventModelService.getIsEditable();
-                this.isEditMode = this.eventModelService.getIsEditMode();
+                this.initData();
 
                 this.initUser();
 
@@ -130,6 +151,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.onDestroy$.next(true);
     this.onDestroy$.unsubscribe();
+  }
+
+  calculDecompte() {
+    let today: Date = new Date();
+    let eventDate: Date = new Date(this.event.eventDate);
+
+    let day = (eventDate.getDate() - today.getDate());
+
+    if (day < 0) {
+      this.snackbarService.showSnackbar("error", "Un eerreur est survenu");
+      this.router.navigate(['home-page']);
+    }
+
+    this.decompteDateString = "J-" + day;
   }
 
   /**

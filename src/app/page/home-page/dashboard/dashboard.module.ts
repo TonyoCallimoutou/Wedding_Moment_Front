@@ -8,6 +8,9 @@ import {PlanTablePageModule} from "../plan-table-page/plan-table-page.module";
 import {MenuPageModule} from "../menu-page/menu-page.module";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatIconModule} from "@angular/material/icon";
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {TranslateModule} from "@ngx-translate/core";
+import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 
 
 @NgModule({
@@ -22,7 +25,10 @@ import {MatIconModule} from "@angular/material/icon";
     PlanTablePageModule,
     MenuPageModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule,
+    TranslateModule,
+    CapitalizeFirstLetterPipeModule
   ]
 })
 export class DashboardModule {

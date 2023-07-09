@@ -4,23 +4,14 @@
   display: flex;
   flex-direction: column;
 
-  .banner-edit-mode {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    background-color: var(--primary);
-    color: var(--on-primary);
-    opacity: 0.5;
-    padding: 1rem;
+  mat-toolbar {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   }
 }
+
+
 
 .onglet {
   display: flex;
@@ -59,5 +50,15 @@ mat-tab-group {
         color: var(--primary-dark) !important;
       }
     }
+  }
+}
+
+.dialog_edit_mode {
+  display: flex;
+  flex-direction: column;
+
+  .partie {
+    display: flex;
+    gap: 0.5rem;
   }
 }

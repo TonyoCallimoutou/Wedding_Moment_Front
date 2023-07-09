@@ -1,5 +1,19 @@
+.header {
+  display: flex;
+  padding: 0;
+  flex-direction: row-reverse;
+
+  .close_button {
+    margin: 0.25rem 0.25rem 2rem 0.25rem;
+  }
+}
+
+
+mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
 mat-dialog-actions {
   display: flex;
   justify-content: space-around;
-
 }

@@ -7,16 +7,19 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   styleUrls: ['./generic-dialog.component.scss']
 })
 export class GenericDialogComponent {
-  contentTemplate: TemplateRef<any>;
-
-  public isDisplayBouton: boolean = true;
+  public contentTemplate: TemplateRef<any>;
+  public isDisplayButton: boolean = true;
+  public isDisplayCloseButton: boolean = true;
 
   constructor(
     public dialogRef: MatDialogRef<GenericDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any
   ) {
-    if (data.isDisplayBouton != undefined) {
-      this.isDisplayBouton = data.isDisplayBouton;
+    if (data.isDisplayButton != undefined) {
+      this.isDisplayButton = data.isDisplayButton;
+    }
+    if (data.isDisplayCloseButton != undefined) {
+      this.isDisplayCloseButton = data.isDisplayCloseButton;
     }
     this.contentTemplate = data.contentTemplate;
   }

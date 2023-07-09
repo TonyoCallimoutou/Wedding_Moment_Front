@@ -26,7 +26,23 @@
       "presentation": "afin d'être prêt le jour J, j'ai besoin de quelque information.\nSachez qu'après avoir fourni ces informations, vous aurez accès à l'application uniquement afin de la compléter (entrer le plan de table, ainsi que le menu).\nL'application sera disponible pour vos invités le jour J, en attendant, vous pourrez modifier cette application, comme bon, vous semble.",
       "explain_text_presentation": "ce message sera affiché sur la page d'accueil de l'application.\nDe plus lors de la prévisualisation de l'application, vous pourrez remodifié ce texte ainsi que sa taille.",
       "explain_date": "j'ai besoin de la date exacte de votre mariage.\nCar l'application sera disponible pour vos convives uniquement à cette date.\nVous ne pourrez plus la modifier par la suite, donc ne faites pas d'erreur."
-
+    },
+    "Edit_mode_dialog": {
+      "title": "Bienvenue dans la prévisualisation",
+      "presentation": "Vous êtes dans la prévisualisation de l'application.\nVous pouvez faire toutes les modifications nécessaires.\n\nVotre Application sera disponible à vos invités uniquement le jour de votre mariage :",
+      "accueil": "Page d'accueil",
+      "accueil_presentation_text": "Modifier le texte de présentation",
+      "accueil_import_picture": "Ajouter une photo de fond pour votre application",
+      "menu": "Menu de la soirée",
+      "menu_modification": "Ajouter / Modifier le menu de la soirée menu",
+      "plan_table": "Plan de table de la soirée",
+      "plan_table_modification": "Ajouter / Modifier le plan de table de la soirée",
+      "plan_table_invite": "Ajouter / Modifier les invités de la soirée",
+      "photo": "Photo de la soirée",
+      "photo_explain": "C'est ici que vos invité (et vous) pourront poster des photos de la soirée",
+      "parametre": "Paramètre du compte",
+      "parametre_explain": "Vous pouvez avoir les information essentiel de votre soirée.",
+      "parametre_export": "C'est ici que vous pourrez récuperer les photos que vos invité auront poster."
     }
   },
   "Auth": {

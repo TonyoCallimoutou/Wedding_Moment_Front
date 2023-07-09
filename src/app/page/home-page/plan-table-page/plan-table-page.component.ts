@@ -19,6 +19,7 @@ export class PlanTablePageComponent implements OnChanges {
   @Input() public inviteList: Invite[] = [];
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
   @Input() public isEditMode: boolean = false;
+  @Input() public event?: EventModel;
 
   public isEdit: boolean = false;
 
@@ -28,7 +29,6 @@ export class PlanTablePageComponent implements OnChanges {
 
   myControl = new FormControl('');
   inviteListFiltered: Observable<Invite[]>;
-  public event: EventModel;
 
   tableInfos : TableInfos | null = null;
 
@@ -41,7 +41,6 @@ export class PlanTablePageComponent implements OnChanges {
     private snackbarService: SnackbarService,
 
   ) {
-    this.event = eventModelService.getActualEvent();
     this.inviteListFiltered = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value: any) => {
