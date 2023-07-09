@@ -14,6 +14,8 @@ import {MatCardModule} from "@angular/material/card";
 import {AutosizeModule} from "ngx-autosize";
 import {MatIconModule} from "@angular/material/icon";
 import {ClipboardModule} from "@angular/cdk/clipboard";
+import {ShareButtonModule} from "../../../shared/component/share-button/share-button.module";
+import {QRCodeModule} from "angularx-qrcode";
 
 
 @NgModule({
@@ -36,6 +38,8 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
     AutosizeModule,
     MatIconModule,
     ClipboardModule,
+    ShareButtonModule,
+    QRCodeModule,
   ]
 })
 export class HomeModule {

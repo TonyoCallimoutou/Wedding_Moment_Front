@@ -1,7 +1,6 @@
-import {Component, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {take} from "rxjs";
-import firebase from "firebase/compat";
 import {AuthService} from "../../../service/auth/auth.service";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,7 +9,10 @@ import {ValidatorDateBeforeToday, ValidatorDatePattern} from "../../../shared/va
 import {DatePipe} from "@angular/common";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {MatDialog} from "@angular/material/dialog";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {Share} from "../../../shared/component/share-button/share-button.component";
+import {TranslateService} from "@ngx-translate/core";
+import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
+import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
 
 @Component({
   selector: 'app-home',
@@ -26,11 +28,14 @@ export class HomeComponent{
   public formEvent: FormGroup;
   public selectedDate: Date = new Date();
   public eventLink: string = '';
+  public shareLink: Share | undefined;
+  public metaDataShareLink: any;
+  public dialogGenerate: any;
+  public qrCode: string = '';
+
 
 
   @ViewChild('calendar') calendar!: MatCalendar<any>;
-  @ViewChild('dialogGenerateLink') dialogGenerateLink!: TemplateRef<any>;
-  @ViewChild('dialogGenerateCode') dialogGenerateCode!: TemplateRef<any>;
 
 
   constructor(
@@ -41,6 +46,7 @@ export class HomeComponent{
     private datepipe: DatePipe,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private translate: TranslateService,
   ) {
 
     this.formInvite = this.fb.group({
@@ -142,27 +148,43 @@ export class HomeComponent{
   generateLink() {
     this.eventLink = window.location.href.replace(this.router.url, '/dashboard/' + this.event?.eventCode);
 
-    this.dialog.open(GenericDialogComponent, {
-      data: {
-        contentTemplate: this.dialogGenerateLink,
-        isDisplayButton: false,
-        isDisplayCloseButton: false,
-      },
-    })
-  }
+    this.translate.get("Home.title_share_link")
+      .pipe(take(1))
+      .subscribe((title: string) => {
+      this.translate.get("Home.message_share_link")
+        .pipe(take(1))
+        .subscribe((message: string) => {
+          this.shareLink = {
+            title: title,
+            text: message,
+            url: this.eventLink,
+          }
 
-  generateCode() {
-    this.dialog.open(GenericDialogComponent, {
-      data: {
-        contentTemplate: this.dialogGenerateCode,
-        isDisplayButton: false,
-        isDisplayCloseButton: false,
-      },
-    })
-  }
+          this.metaDataShareLink = {
+            code: this.event?.eventCode,
+            date: this.event?.eventDate.toLocaleDateString(),
+          }
 
-  copyCheck(message: string) {
-    this.snackbarService.showSnackbar('infos',message);
+          this.dialogGenerate = this.dialog.open(DialogLinkComponent, {
+            data: {
+              shareLink: this.shareLink,
+              metaDataShareLink: this.metaDataShareLink,
+              eventLink: this.eventLink,
+            },
+          })
+      })
+    });
+  }
+  generateQRCode() {
+    this.eventLink = window.location.href.replace(this.router.url, '/dashboard/' + this.event?.eventCode);
+    this.qrCode = this.eventLink;
+
+    this.dialogGenerate = this.dialog.open(DialogQrCodeComponent, {
+      data: {
+        qrCode: this.qrCode,
+        eventCode: this.event?.eventCode,
+      },
+    });
   }
 
   test() {

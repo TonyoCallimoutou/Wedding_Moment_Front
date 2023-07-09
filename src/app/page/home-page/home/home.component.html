@@ -92,48 +92,22 @@
           <div class="acces_event" *ngIf="event">
             <p *ngIf="isEditable"> {{ 'Home.set_event' | translate:{ eventDate: event.eventDate.toLocaleDateString()} | capitalizeFirstLetter }}  </p>
             <p *ngIf="!isEditable"> {{ 'Home.event_not_editable' | translate | capitalizeFirstLetter }}  </p>
+            <button mat-raised-button (click)="goToEvent()"> {{ 'Home.enter' | translate | capitalizeFirstLetter }}  </button>
             <div class="button_event_edit" *ngIf="isEditable" >
-              <button mat-fab extended (click)="generateLink()">
+              <button mat-raised-button (click)="generateLink()">
                 <mat-icon>link</mat-icon>
-                {{ 'Home.generate_link' | translate | capitalizeFirstLetter }}
+                {{ 'Home.generate_link_code' | translate | capitalizeFirstLetter }}
               </button>
-              <button mat-fab extended (click)="test()">
+              <button mat-raised-button (click)="generateQRCode()">
                 <mat-icon>qr_code_2</mat-icon>
                 {{ 'Home.generate_qr_code' | translate | capitalizeFirstLetter }}
               </button>
-              <button mat-fab extended (click)="generateCode()">
-                <mat-icon>vpn_key</mat-icon>
-                {{ 'Home.generate_code' | translate | capitalizeFirstLetter }}
-              </button>
             </div>
-            <button mat-raised-button (click)="goToEvent()"> {{ 'Home.enter' | translate | capitalizeFirstLetter }}  </button>
           </div>
-          <button class="button_deco" mat-raised-button (click)="deconnexion()"> {{ 'Home.logout' | translate | capitalizeFirstLetter }} </button>
+          <button class="button_deco" mat-fab extended (click)="deconnexion()"> {{ 'Home.logout' | translate | capitalizeFirstLetter }} </button>
         </div>
       </div>
     </mat-tab>
   </mat-tab-group>
 
 </div>
-
-<ng-template #dialogGenerateLink>
-  <div class="dialog_link">
-    <div class="link-container">
-      <p class="link-text">{{eventLink}}</p>
-    </div>
-    <button mat-mini-fab [cdkCopyToClipboard]="eventLink" (click)="copyCheck('Lien copié')">
-      <mat-icon>content_copy</mat-icon>
-    </button>
-  </div>
-</ng-template>
-
-<ng-template #dialogGenerateCode>
-  <div class="dialog_link" *ngIf="event">
-    <div class="link-container">
-      <p class="link-text">{{event.eventCode}}</p>
-    </div>
-    <button mat-mini-fab [cdkCopyToClipboard]="event.eventCode" (click)="copyCheck('Code copié')">
-      <mat-icon>content_copy</mat-icon>
-    </button>
-  </div>
-</ng-template>

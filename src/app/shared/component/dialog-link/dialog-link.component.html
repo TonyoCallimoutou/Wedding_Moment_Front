@@ -1,0 +1,16 @@
+<mat-dialog-content>
+  <div class="dialog_link">
+    <div class="link-container">
+      <p class="link-text">{{eventLink}}</p>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-mini-fab [cdkCopyToClipboard]="eventLink" (click)="copyCheck('Lien copié')">
+    <mat-icon>content_copy</mat-icon>
+  </button>
+  <app-share-button
+    [share]="shareLink"
+    [metaData]="metaDataShareLink"
+  ></app-share-button>
+</mat-dialog-actions>

@@ -28,6 +28,13 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {DatePipe} from "@angular/common";
 import { CguDialogComponent } from './shared/component/cgu-dialog/cgu-dialog.component';
+import {DialogQrCodeComponent} from "./shared/component/dialog-qr-code/dialog-qr-code.component";
+import {QRCodeModule} from "angularx-qrcode";
+import {DialogLinkComponent} from "./shared/component/dialog-link/dialog-link.component";
+import {ShareButtonModule} from "./shared/component/share-button/share-button.module";
+import {ClipboardModule} from "@angular/cdk/clipboard";
+import {MatCardModule} from "@angular/material/card";
+import {CapitalizeFirstLetterPipeModule} from "./shared/pipes/capitalize-first-lettre.module";
 
 const MY_DATE_FORMAT = {
   parse: {
@@ -47,32 +54,39 @@ const MY_DATE_FORMAT = {
     PageNotFoundComponent,
     GenericDialogComponent,
     CguDialogComponent,
+    DialogQrCodeComponent,
+    DialogLinkComponent,
   ],
-    imports: [
-        // ngx-translate and the loader module
-        HttpClientModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: (createTranslateLoader),
-                deps: [HttpClient]
-            }
-        }),
-        BrowserAnimationsModule,
-        FormulaireInscriptionModule,
-        DashboardModule,
-        MatDialogModule,
-        MatIconModule,
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule,
-        AngularFireModule.initializeApp(environment.firebaseConfig),
-        AngularFireAuthModule,
-        AngularFirestoreModule,
-        MatButtonModule,
-        MatSnackBarModule,
-        HomeModule,
-    ],
+  imports: [
+    // ngx-translate and the loader module
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      }
+    }),
+    BrowserAnimationsModule,
+    FormulaireInscriptionModule,
+    DashboardModule,
+    MatDialogModule,
+    MatIconModule,
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    HomeModule,
+    QRCodeModule,
+    ShareButtonModule,
+    ClipboardModule,
+    MatCardModule,
+    CapitalizeFirstLetterPipeModule,
+  ],
   providers: [
     AuthService,
     SocketIoService,

@@ -1,0 +1,24 @@
+<mat-dialog-content>
+  <div class="dialog_qr_code">
+    <div class="qr_code-container">
+      <p class="font-default-16 qr_code-text">{{"Home.qr_code" | translate | capitalizeFirstLetter}}</p>
+      <qrcode #parent [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+    <mat-card id="qr_code_download" style="display: none;" >
+      <qrcode #parent [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      <mat-card-content>
+        <p class="font-default-16">{{qrCode}}</p>
+        <p class="font-default-16">Code : {{eventCode}}</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button *ngIf="false" mat-mini-fab color="primary" (click)="saveAsImage(parent)">
+    <mat-icon>download</mat-icon>
+  </button>
+  <button mat-mini-fab color="primary" (click)="downloadQRCode()">
+    <mat-icon>download</mat-icon>
+  </button>
+</mat-dialog-actions>
