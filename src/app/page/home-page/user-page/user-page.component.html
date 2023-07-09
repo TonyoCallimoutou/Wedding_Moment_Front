@@ -1,10 +1,18 @@
 <div class="user_page" *ngIf="canAccess">
 
   <div class="header">
-    <img
-      alt="{{ currentUser.userId }}"
-      src="{{ currentUser.photoUrl }}"
-      (click)="changePicture()">
+    <div class="header_link_picture">
+      <button mat-fab *ngIf="isMaster" (click)="openDialogLink()">
+        <mat-icon>link</mat-icon>
+      </button>
+      <img
+        alt="{{ currentUser.userId }}"
+        src="{{ currentUser.photoUrl }}"
+        (click)="changePicture()">
+      <button mat-fab *ngIf="isMaster" (click)="openDialogQrCode()">
+        <mat-icon>qr_code_2</mat-icon>
+      </button>
+    </div>
     <p class="font-primary-dark font-default-20" > {{ currentUser.userName }} </p>
     <div class="nbr-post">
       <p class="font-primary-dark font-default-20"> {{ currentUser.nbrOfPost }} </p>
@@ -31,8 +39,8 @@
       </mat-expansion-panel-header>
       <div class="content">
         <div class="param" (click)="changeLanguage()">{{ 'Users.Languages.language' | translate | capitalizeFirstLetter }}</div>
-        <div class="param" (click)="goToConfidentiality()">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
-        <div class="param">{{ 'Users.push_notification' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="goToCGUAndConfidentialite(true)">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="goToCGUAndConfidentialite()">{{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter }}</div>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel [expanded]="true">
@@ -72,10 +80,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </ng-template>
-
-  <ng-template #dialogConfidentialite>
-    <p> Confidentialité</p>
   </ng-template>
 
 </div>

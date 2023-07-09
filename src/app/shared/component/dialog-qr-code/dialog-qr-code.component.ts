@@ -4,12 +4,8 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
 import { MatSnackBar } from "@angular/material/snack-bar"
-import { SafeUrl } from "@angular/platform-browser"
-import { QRCodeErrorCorrectionLevel } from "qrcode"
 import {QRCodeElementType} from "angularx-qrcode";
 import html2canvas from "html2canvas";
-
-type ListType = { title: string; val: number }[]
 
 
 @Component({
@@ -23,6 +19,7 @@ export class DialogQrCodeComponent {
   public qrCode: string = '';
   public eventCode: string = '';
   public qrCodeColorDark: string = '';
+  public isMenuAfficher: boolean = false;
 
 
   constructor(
@@ -46,8 +43,8 @@ export class DialogQrCodeComponent {
    * Tres bonne qualité
    * @param parent
    */
-
   saveAsImage(parent: any) {
+    this.isMenuAfficher = false;
     let parentElement = null
 
     if (this.elementType === "canvas") {
@@ -70,11 +67,9 @@ export class DialogQrCodeComponent {
       // saves as image
       const blob = new Blob([blobData], { type: "image/png" })
       const url = window.URL.createObjectURL(blob)
-      const link = document.createElement("a")
-      link.href = url
-      // name of the file
-      link.download = "angularx-qrcode"
-      link.click()
+
+      this.downloadImage(url);
+
     }
   }
 
@@ -97,6 +92,7 @@ export class DialogQrCodeComponent {
 
 
   downloadQRCode() {
+    console.log(this.isMenuAfficher)
     const qrCodeElement = document.getElementById('qr_code_download');
 
     if (qrCodeElement) {
@@ -115,6 +111,7 @@ export class DialogQrCodeComponent {
     link.href = imageDataUrl;
     link.download = 'qr_code.png';
     link.click();
+    this.onNoClick();
   }
 
 

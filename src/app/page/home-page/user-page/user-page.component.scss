@@ -7,6 +7,14 @@
   padding-top: 1rem;
   gap: 1.5rem;
 
+  .header_link_picture {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+  }
+
   .nbr-post {
     display: flex;
     flex-direction: column;

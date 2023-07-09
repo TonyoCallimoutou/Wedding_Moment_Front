@@ -35,6 +35,7 @@ import {ShareButtonModule} from "./shared/component/share-button/share-button.mo
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {MatCardModule} from "@angular/material/card";
 import {CapitalizeFirstLetterPipeModule} from "./shared/pipes/capitalize-first-lettre.module";
+import {MatMenuModule} from "@angular/material/menu";
 
 const MY_DATE_FORMAT = {
   parse: {
@@ -86,6 +87,7 @@ const MY_DATE_FORMAT = {
     ClipboardModule,
     MatCardModule,
     CapitalizeFirstLetterPipeModule,
+    MatMenuModule,
   ],
   providers: [
     AuthService,

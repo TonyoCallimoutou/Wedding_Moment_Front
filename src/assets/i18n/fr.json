@@ -17,6 +17,7 @@
     "title_share_link": "Mon Mariage avec WeddingMoment",
     "message_share_link": "Bonjour, je te partage le lien vers l'application de mon mariage, cette application sera uniquement disponible le jour de mon mariage, alors je compte sur toi.\nSuit ce lien ou entre le code suivant : {{code}}",
     "generate_qr_code": "generer un qr code",
+    "download_qr_code": "Telecharger le QR Code",
     "qr_code": "Une fois scanner ce QR Code dirige vos invité vers votre application.\nNous vous conseillons de l'imprimer et le placer a la vue de tous durant votre mariage.",
     "logout": "deconnexion",
     "event_presentation": "presentation",

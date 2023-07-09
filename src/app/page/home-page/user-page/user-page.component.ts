@@ -10,6 +10,11 @@ import {MatDialog} from "@angular/material/dialog";
 import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
+import {CguDialogComponent} from "../../../shared/component/cgu-dialog/cgu-dialog.component";
+import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
+import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
+import {take} from "rxjs";
+import {Share} from "../../../shared/component/share-button/share-button.component";
 
 interface Language {
   code: string;
@@ -25,6 +30,7 @@ export class UserPageComponent {
 
   @Input() public canAccess!: boolean;
   @Input() public currentUser: User;
+  @Input() public event?: EventModel;
   @Input() public isMaster: boolean = false;
   @Input() public isEditMode: boolean = false;
 
@@ -38,7 +44,6 @@ export class UserPageComponent {
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
   @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
-  @ViewChild('dialogConfidentialite') dialogConfidentialite!: TemplateRef<any>;
 
 
   constructor(
@@ -144,17 +149,14 @@ export class UserPageComponent {
   }
 
   /**
-   * Open dialog for confidentiality
+   * Open dialog for confidentiality and CGU
    */
-  goToConfidentiality() {
-    const dialogRef = this.dialog.open(GenericDialogComponent, {
-      data: {contentTemplate: this.dialogConfidentialite },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result)
-      }
+  goToCGUAndConfidentialite(isConfidentiality: boolean = false) {
+    this.dialog.open(CguDialogComponent, {
+      data: {
+        isConfidentiality: isConfidentiality,
+        switchAutorize: false,
+      },
     });
   }
 
@@ -186,6 +188,46 @@ export class UserPageComponent {
         // Le téléchargement est terminé
         console.log("export success")
       });
+  }
+
+  openDialogLink() {
+
+    this.translate.get("Home.title_share_link")
+      .pipe(take(1))
+      .subscribe((title: string) => {
+        this.translate.get("Home.message_share_link")
+          .pipe(take(1))
+          .subscribe((message: string) => {
+            let shareLink : Share = {
+              title: title,
+              text: message,
+              url: window.location.href,
+            }
+
+            let metaDataShareLink = {
+              code: this.event?.eventCode,
+              date: this.event?.eventDate.toLocaleDateString(),
+            }
+
+            this.dialog.open(DialogLinkComponent, {
+              data: {
+                shareLink: shareLink,
+                metaDataShareLink: metaDataShareLink,
+                eventLink: window.location.href,
+              },
+            })
+          })
+      });
+
+  }
+
+  openDialogQrCode() {
+    this.dialog.open(DialogQrCodeComponent, {
+      data: {
+        qrCode: window.location.href,
+        eventCode: this.event?.eventCode,
+      }
+    });
   }
 
 }

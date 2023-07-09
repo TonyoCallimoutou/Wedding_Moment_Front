@@ -10,6 +10,7 @@
     <mat-icon>content_copy</mat-icon>
   </button>
   <app-share-button
+    (click)="onNoClick()"
     [share]="shareLink"
     [metaData]="metaDataShareLink"
   ></app-share-button>

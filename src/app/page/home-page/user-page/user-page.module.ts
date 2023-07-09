@@ -13,29 +13,33 @@ import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {AuthModule} from "../../../shared/component/auth/auth.module";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
   declarations: [
     UserPageComponent
   ],
-    imports: [
-        LikeButtonModule,
-        SettingButtonModule,
-        NgIf,
-        NgClass,
-        TranslateModule,
-        TitleCasePipe,
-        CapitalizeFirstLetterPipeModule,
-        GenericImageCropperModule,
-        FormsModule,
-        MatExpansionModule,
-        MatInputModule,
-        MatSelectModule,
-        MatAutocompleteModule,
-        NgForOf,
-        AuthModule
-    ],
+  imports: [
+    LikeButtonModule,
+    SettingButtonModule,
+    NgIf,
+    NgClass,
+    TranslateModule,
+    TitleCasePipe,
+    CapitalizeFirstLetterPipeModule,
+    GenericImageCropperModule,
+    FormsModule,
+    MatExpansionModule,
+    MatInputModule,
+    MatSelectModule,
+    MatAutocompleteModule,
+    NgForOf,
+    AuthModule,
+    MatIconModule,
+    MatButtonModule
+  ],
   exports: [UserPageComponent],
   providers: [UserModelService]
 })
