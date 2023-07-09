@@ -17,6 +17,10 @@
     .title-selected {
       font-size: var(--font-size-default-24);
     }
+
+    .title-unselected {
+      text-decoration: underline;
+    }
   }
 
   .input {
@@ -73,6 +77,26 @@
       }
     }
   }
+
+  .condition_utilisation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    .checkbox {
+      background-color: white;
+      border-radius: 0.25rem;
+      padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+      align-self: center;
+    }
+
+    .error-checkbox {
+      position: initial;
+      align-self: center;
+    }
+  }
+
 
   .forgotPassword {
     width: 100%;

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {take} from "rxjs";
 import firebase from "firebase/compat";
@@ -9,6 +9,8 @@ import {MatCalendar} from "@angular/material/datepicker";
 import {ValidatorDateBeforeToday, ValidatorDatePattern} from "../../../shared/validator/DateValidor";
 import {DatePipe} from "@angular/common";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
+import {MatDialog} from "@angular/material/dialog";
+import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 
 @Component({
   selector: 'app-home',
@@ -23,9 +25,13 @@ export class HomeComponent{
   public formInvite: FormGroup;
   public formEvent: FormGroup;
   public selectedDate: Date = new Date();
+  public eventLink: string = '';
 
 
   @ViewChild('calendar') calendar!: MatCalendar<any>;
+  @ViewChild('dialogGenerateLink') dialogGenerateLink!: TemplateRef<any>;
+  @ViewChild('dialogGenerateCode') dialogGenerateCode!: TemplateRef<any>;
+
 
   constructor(
     private authService: AuthService,
@@ -34,6 +40,7 @@ export class HomeComponent{
     private fb: FormBuilder,
     private datepipe: DatePipe,
     private snackbarService: SnackbarService,
+    private dialog: MatDialog,
   ) {
 
     this.formInvite = this.fb.group({
@@ -130,6 +137,32 @@ export class HomeComponent{
           this.snackbarService.showSnackbar('error','Aucun événement trouvé');
         }
       });
+  }
+
+  generateLink() {
+    this.eventLink = window.location.href.replace(this.router.url, '/dashboard/' + this.event?.eventCode);
+
+    this.dialog.open(GenericDialogComponent, {
+      data: {
+        contentTemplate: this.dialogGenerateLink,
+        isDisplayButton: false,
+        isDisplayCloseButton: false,
+      },
+    })
+  }
+
+  generateCode() {
+    this.dialog.open(GenericDialogComponent, {
+      data: {
+        contentTemplate: this.dialogGenerateCode,
+        isDisplayButton: false,
+        isDisplayCloseButton: false,
+      },
+    })
+  }
+
+  copyCheck(message: string) {
+    this.snackbarService.showSnackbar('infos',message);
   }
 
   test() {

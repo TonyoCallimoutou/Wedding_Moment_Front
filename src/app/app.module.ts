@@ -27,6 +27,7 @@ import {HomeModule} from "./page/home-page/home/home.module";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import {DatePipe} from "@angular/common";
+import { CguDialogComponent } from './shared/component/cgu-dialog/cgu-dialog.component';
 
 const MY_DATE_FORMAT = {
   parse: {
@@ -45,6 +46,7 @@ const MY_DATE_FORMAT = {
     AppComponent,
     PageNotFoundComponent,
     GenericDialogComponent,
+    CguDialogComponent,
   ],
     imports: [
         // ngx-translate and the loader module

@@ -10,6 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {ForgotPasswordComponent} from './forgot-password/forgot-password.component';
 import {VerifyEmailComponent} from './verify-email/verify-email.component';
 import {LoginComponent} from "./login/login.component";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 
 @NgModule({
@@ -19,15 +20,16 @@ import {LoginComponent} from "./login/login.component";
     ForgotPasswordComponent,
     VerifyEmailComponent
   ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-    CapitalizeFirstLetterPipeModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatInputModule,
-    MatButtonModule
-  ],
+    imports: [
+        CommonModule,
+        TranslateModule,
+        CapitalizeFirstLetterPipeModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatInputModule,
+        MatButtonModule,
+        MatCheckboxModule
+    ],
     exports: [AuthComponent, LoginComponent]
 })
 export class AuthModule {

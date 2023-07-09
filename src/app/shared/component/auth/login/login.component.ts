@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth/auth.service";
+import {CguService} from "../../../service/cgu";
 
 @Component({
   selector: 'app-login',
@@ -19,16 +20,49 @@ export class LoginComponent {
   public nameControl: any;
 
   constructor(
-    public authService: AuthService)
-  {
-    this.form = new FormGroup({
-      name: new FormControl(''),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      password: new FormControl(''),
-      verifyPassword: new FormControl('')
-    });
-    this.nameControl = this.form.get('name');
+    public authService: AuthService,
+    private cguService: CguService,
+    private formBuilder: FormBuilder,
 
+    )
+  {
+
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      verifyPassword: ['', Validators.required],
+      cgu: [false, Validators.requiredTrue],
+    });
+
+    this.setValidator();
+
+  }
+
+  switchRegister() {
+    this.isRegister = !this.isRegister;
+    this.form.markAsUntouched();
+    this.setValidator();
+  }
+
+  setValidator() {
+    switch (this.isRegister) {
+      case true:
+        this.form.controls['name'].setValidators([Validators.required]);
+        this.form.controls['email'].setValidators([Validators.required, Validators.email]);
+        this.form.controls['password'].setValidators([Validators.required]);
+        this.form.controls['verifyPassword'].setValidators([Validators.required]);
+        this.form.controls['cgu'].setValidators([Validators.requiredTrue]);
+        break;
+      case false:
+        this.form.controls['name'].clearValidators();
+        this.form.controls['verifyPassword'].clearValidators();
+        break;
+    }
+  }
+
+  displayCGU() {
+    this.cguService.displayCGU();
   }
 
   forgotPassword() {

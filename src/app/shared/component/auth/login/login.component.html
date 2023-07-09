@@ -1,7 +1,7 @@
-<div [formGroup]="form" class="card sign-in">
+<form [formGroup]="form" class="card sign-in">
   <div class="switch-button">
-    <h1 class="font-default-20 font-primary-light" [ngClass]="!isRegister ? 'title-selected': ''" (click)="isRegister = false"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
-    <h1 class="font-default-20 font-primary-light" [ngClass]="isRegister ? 'title-selected': ''" (click)="isRegister = true"> {{ 'Auth.register' | translate | capitalizeFirstLetter }}</h1>
+    <h1 class="font-default-20 font-primary-light" [ngClass]="!isRegister ? 'title-selected': 'title-unselected'" (click)="switchRegister()"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
+    <h1 class="font-default-20 font-primary-light" [ngClass]="isRegister ? 'title-selected': 'title-unselected'" (click)="switchRegister()"> {{ 'Auth.register' | translate | capitalizeFirstLetter }}</h1>
   </div>
 
   <div class="input">
@@ -13,7 +13,7 @@
         #userName
         type="text"
         required="required">
-      <span class="font-default-20"> {{ 'Auth.user_name' | translate | capitalizeFirstLetter  }} </span>
+      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.user_name' | translate | capitalizeFirstLetter  }} </span>
 
       <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
         {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
@@ -28,7 +28,7 @@
         #userEmail
         type="email"
         required="required">
-      <span class="font-default-20"> {{ 'Auth.email' | translate | capitalizeFirstLetter  }} </span>
+      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.email' | translate | capitalizeFirstLetter  }} </span>
 
       <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email') && !form.get('email')?.hasError('required')">
         {{ 'Utils.Errors.email' | translate | capitalizeFirstLetter  }}
@@ -45,8 +45,9 @@
         [formControlName]="'password'"
         #userPassword
         type="{{ viewPassword ? 'text' : 'password'}}"
+        autocomplete="on"
         required="required">
-      <span class="font-default-20"> {{ 'Auth.password' | translate | capitalizeFirstLetter  }} </span>
+      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.password' | translate | capitalizeFirstLetter  }} </span>
 
       <mat-icon
         class="see-password"
@@ -70,8 +71,9 @@
         [formControlName]="'verifyPassword'"
         #userVerifyPassword
         type="{{ viewVerifyPassword ? 'text' : 'password'}}"
+        autocomplete="on"
         required="required">
-      <span class="font-default-20"> {{ 'Auth.verify_password' | translate | capitalizeFirstLetter  }} </span>
+      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.verify_password' | translate | capitalizeFirstLetter  }} </span>
 
       <mat-icon
         class="see-password"
@@ -88,12 +90,24 @@
     </div>
   </div>
 
+  <div class="condition_utilisation">
+    <span class="font-default-16 font-primary-light" style="text-align: justify"> {{ 'Users.Condition_utilisation.explain' | translate | capitalizeFirstLetter  }} </span>
+    <div class="checkbox">
+      <mat-checkbox [color]="'primary'" [formControlName]="'cgu'" >
+      </mat-checkbox>
+      <span (click)="displayCGU()" class="font-default-16" style="text-decoration: underline"> {{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter  }} </span>
+    </div>
+    <mat-error class="error-checkbox" *ngIf="form.get('cgu')?.touched && form.get('cgu')?.hasError('required')">
+      {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+    </mat-error>
+  </div>
+
   <!-- Calling Create Account -->
   <button
     mat-raised-button
     class="font-default-20"
     *ngIf="isRegister"
-    (click)="form.valid ? authService.SignUp(nameControl.value, userEmail.value, userPassword.value) : ''"
+    (click)="form.valid ? authService.SignUp(form.controls['name'].value, userEmail.value, userPassword.value) : form.markAllAsTouched();"
   >
     {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
   </button>
@@ -103,7 +117,7 @@
     mat-raised-button
     class="font-default-20"
     *ngIf="!isRegister"
-    (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : ''"
+    (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : form.markAllAsTouched();"
   >
     {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
   </button>
@@ -117,4 +131,4 @@
     {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
   </button>
 
-</div>
+</form>

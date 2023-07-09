@@ -1,0 +1,77 @@
+<div *ngIf="!isConfidentiality">
+  <h1 mat-dialog-title *ngIf="!isConfidentiality">Conditions d'utilisation</h1>
+  <h1 mat-dialog-title *ngIf="isConfidentiality">Politique de confidentialité</h1>
+
+  <mat-dialog-content class="mat-typography">
+    <p>Merci d'utiliser l'application WeddingMoment. Les présentes conditions d'utilisation régissent votre utilisation de l'Application. En utilisant cette Application, vous acceptez d'être lié par les présentes conditions. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser l'Application.</p>
+    <h2>1. Description de l'Application</h2>
+    <p>WeddingMoment est une application destinée aux jeunes mariés, permettant à leurs invités d'accéder au menu de la soirée ainsi qu'au plan de table. De plus, les utilisateurs peuvent partager des photos de l'événement.</p>
+    <h2>2. Règles d'utilisation</h2>
+    <ul>
+      <li>Les utilisateurs doivent se conformer aux règles d'utilisation de base d'un réseau social, notamment en s'abstenant de publier des contenus obscènes ou sans consentement.</li>
+      <li>À ce stade, la fonctionnalité de messagerie ou de commentaires n'est pas disponible dans l'Application, donc aucune restriction n'est imposée sur les messages de haine ou similaires.</li>
+      <li>Les organisateurs de l'événement (les mariés) peuvent fournir des informations relatives au menu du mariage et au plan de table. Toutefois, il est interdit d'inclure du contenu inapproprié ou offensant dans ces informations.</li>
+    </ul>
+    <h2>3. Droits</h2>
+    <ul>
+      <li>Les utilisateurs disposent d'un droit d'accès et d'utilisation personnelle de l'Application.</li>
+      <li>Les utilisateurs ne sont pas autorisés à reproduire, copier ou distribuer le contenu de l'Application sans autorisation préalable.</li>
+    </ul>
+    <h2>4. Résiliation</h2>
+    <ul>
+      <li>Les utilisateurs peuvent résilier leur compte à tout moment.</li>
+      <li>En cas de suppression du compte, toutes les photos publiées par l'utilisateur resteront accessibles aux organisateurs de l'événement (les mariés).</li>
+      <li>Les utilisateurs ne peuvent ni publier ni modifier leurs photos que pendant la soirée de mariage et jusqu'à un jour après. Après cette période, les photos ne seront plus accessibles, sauf pour les mariés.</li>
+    </ul>
+    <h2>5. Responsabilité</h2>
+    <ul>
+      <li>L'Application WeddingMoment fournit une plateforme pour les utilisateurs et ne peut être tenue responsable du contenu partagé par les utilisateurs.</li>
+      <li>L'Application ne peut garantir l'exactitude, la qualité ou la légalité des informations partagées par les utilisateurs.</li>
+      <li>Les utilisateurs sont responsables de tout contenu inapproprié ou illégal qu'ils publient dans l'Application.</li>
+    </ul>
+
+    <div *ngIf="switchAutorize" class="change_doc" (click)="switch_doc()">
+      <span> Vers les politique de confidentialité </span>
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+  </mat-dialog-content>
+</div>
+
+<div *ngIf="isConfidentiality">
+  <h1 mat-dialog-title>Politique de confidentialité</h1>
+  <mat-dialog-content class="mat-typography">
+    <p>La présente politique de confidentialité décrit comment WeddingMoment collecte, utilise et protège vos informations personnelles lorsque vous utilisez notre Application. En utilisant cette Application, vous acceptez la collecte et l'utilisation de vos informations personnelles conformément à cette politique.</p>
+    <h2>1. Informations collectées</h2>
+    <p>Nous collectons les informations suivantes lors de votre inscription :</p>
+    <ul>
+      <li>Nom</li>
+      <li>Adresse e-mail</li>
+    </ul>
+    <h2>2. Utilisation des informations collectées</h2>
+    <p>Nous utilisons les informations personnelles collectées pour les finalités suivantes :</p>
+    <ul>
+      <li>Permettre aux utilisateurs de publier des photos et d'identifier les auteurs de ces photos.</li>
+      <li>Appliquer les règles d'utilisation de l'Application.</li>
+      <li>Communiquer avec les utilisateurs concernant les mises à jour de l'Application ou les événements liés au mariage.</li>
+    </ul>
+    <h2>3. Stockage et protection des données</h2>
+    <p>Les informations personnelles collectées sont stockées dans notre base de données MySQL. Nous utilisons des mesures de sécurité raisonnables pour protéger ces informations contre tout accès non autorisé ou toute divulgation.</p>
+    <h2>4. Cookies et technologies similaires</h2>
+    <p>Nous n'utilisons pas de cookies ou de technologies similaires à des fins publicitaires. Certaines informations mineures, telles que le nom, l'e-mail et la photo de profil des utilisateurs, peuvent être stockées dans le LocalStorage de l'Application.</p>
+    <h2>5. Droits des utilisateurs</h2>
+    <p>Les utilisateurs ont le droit de :</p>
+    <ul>
+      <li>Accéder et modifier leurs informations personnelles, à l'exception de l'adresse e-mail.</li>
+      <li>Supprimer leur compte à tout moment.</li>
+    </ul>
+    <h2>6. Responsabilité</h2>
+    <p>Nous ne pouvons être tenus responsables de tout contenu inapproprié ou illégal publié par les utilisateurs de l'Application WeddingMoment.</p>
+
+    <div *ngIf="switchAutorize" class="change_doc" (click)="switch_doc()">
+      <mat-icon>arrow_back</mat-icon>
+      <span> Vers les conditions d'utilisation </span>
+    </div>
+
+  </mat-dialog-content>
+</div>
+

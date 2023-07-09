@@ -13,28 +13,30 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatCardModule} from "@angular/material/card";
 import {AutosizeModule} from "ngx-autosize";
 import {MatIconModule} from "@angular/material/icon";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
-    imports: [
-        CommonModule,
-        MatButtonModule,
-        AuthModule,
-        MatTabsModule,
-        TranslateModule,
-        CapitalizeFirstLetterPipeModule,
-        MatInputModule,
-        FormsModule,
-        MatNativeDateModule,
-        ReactiveFormsModule,
-        MatDatepickerModule,
-        MatCardModule,
-        AutosizeModule,
-        MatIconModule,
-    ]
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    AuthModule,
+    MatTabsModule,
+    TranslateModule,
+    CapitalizeFirstLetterPipeModule,
+    MatInputModule,
+    FormsModule,
+    MatNativeDateModule,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatCardModule,
+    AutosizeModule,
+    MatIconModule,
+    ClipboardModule,
+  ]
 })
 export class HomeModule {
 }

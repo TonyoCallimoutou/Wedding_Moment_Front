@@ -2,14 +2,14 @@ import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable, take, tap} from "rxjs";
 import {LocalModel} from "../../model/local.model";
-import {UserModelService} from "../../viewModel/user-model.service";
 import {CookieHelper} from "../../shared/service/cookie.helper";
+import {UserService} from "../user.service";
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
 
   constructor(
-    private userModelService: UserModelService,
+    private userService: UserService,
     ) {
   }
 
@@ -23,7 +23,7 @@ export class ResponseInterceptor implements HttpInterceptor {
               console.log(error.error);
               console.log("error on : " + req.url);
 
-              this.userModelService.getUserFromDB("0")
+              this.userService.getUserById("0")
                 .pipe(take(1))
                 .subscribe((user: User) => {
                   CookieHelper.set(LocalModel.TOKEN, '')
