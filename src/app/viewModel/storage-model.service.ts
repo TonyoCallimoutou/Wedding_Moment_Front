@@ -65,7 +65,7 @@ export class StorageModelService {
 
     return new Promise(resolve => {
 
-      fileUpload = base64ToFile(fileUpload);
+      fileUpload = base64ToFile(fileUpload.picture);
 
       let filePath = (`${this.basePathPost}/${eventId}/fond`);
 

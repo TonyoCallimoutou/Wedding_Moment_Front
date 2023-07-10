@@ -2,31 +2,30 @@
 
 
   <app-dropdown-menu
-    *ngIf="isEditable"
+    *ngIf="isEditable && !isSetPresentationText"
     [matIcon]="'edit'"
     [options]="dropdownOptions"
     (optionSelected)="onOptionSelected($event)">
   </app-dropdown-menu>
 
   <div class="text-zone">
-    <div *ngIf="isSetPresentationText" class="buttons">
-      <button (click)="save()"> SAVE </button>
-      <div>
-        <button (click)="onFontSizeChange(true)">+</button>
-        <button (click)="onFontSizeChange(false)">-</button>
-        <button (click)="onAlignChange('left')">Gauche</button>
-        <button (click)="onAlignChange('center')">Centre</button>
-        <button (click)="onAlignChange('right')">Droite</button>
-      </div>
-    </div>
+    <button mat-raised-button class="save_button" *ngIf="isSetPresentationText" (click)="save()"> SAVE </button>
 
+    <div class="edit_buttons" *ngIf="isSetPresentationText">
+      <button mat-raised-button (click)="onFontSizeChange(true)"><mat-icon>text_increase</mat-icon></button>
+      <button mat-raised-button (click)="onFontSizeChange(false)"><mat-icon>text_decrease</mat-icon></button>
+      <button mat-raised-button  (click)="onAlignChange('left')"><mat-icon>format_align_left</mat-icon></button>
+      <button mat-raised-button  (click)="onAlignChange('center')"><mat-icon>format_align_justify</mat-icon></button>
+      <button mat-raised-button  (click)="onAlignChange('right')"><mat-icon>format_align_right</mat-icon></button>
+    </div>
     <div class="text">
       <textarea
         autosize
+        [style]="isSetPresentationText ? 'outline: auto' : 'outline: none'"
         [disabled]="!isSetPresentationText"
         class="text-presentation"
         [ngStyle]="{'font-size': fontSizeString, 'text-align': textAlign }"
-        [(ngModel)]="event.presentationText">
+        [(ngModel)]="presentationText">
       </textarea>
     </div>
   </div>

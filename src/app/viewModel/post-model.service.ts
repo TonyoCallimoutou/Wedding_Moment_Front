@@ -80,6 +80,7 @@ export class PostModelService {
         const postId = data.postId;
         this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, postId, pictureUrl).then(url => {
           this.postService.setPictureOfPost({
+            userId: data.userId,
             postId: postId,
             pictureUrl: url,
           })

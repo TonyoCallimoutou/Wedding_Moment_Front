@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
@@ -10,7 +10,7 @@ import {SnackbarService} from "../../../shared/service/snackbar.service";
   templateUrl: './presentation-page.component.html',
   styleUrls: ['./presentation-page.component.scss']
 })
-export class PresentationPageComponent {
+export class PresentationPageComponent implements OnInit{
 
   @Input() public event?: EventModel;
   @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
@@ -20,9 +20,10 @@ export class PresentationPageComponent {
 
   public dropdownOptions: OptionStringIcon[] = [];
   public isSetPresentationText : boolean = false;
-  public fontSize : number;
-  public fontSizeString : string
-  public textAlign: string;
+  public presentationText : string = '';
+  public fontSize : number = 96
+  public fontSizeString : string = '96px'
+  public textAlign: string = 'center';
 
   public backgroundSrc: any = '';
 
@@ -40,10 +41,13 @@ export class PresentationPageComponent {
 
     this.initDropDownOption();
 
+  }
+
+  ngOnInit(): void {
     this.fontSize = this.event?.presentationTextSize ? this.event?.presentationTextSize : 96;
     this.fontSizeString = this.fontSize + 'px'
     this.textAlign = this.event?.presentationTextAlign ? this.event?.presentationTextAlign : 'center';
-
+    this.presentationText = this.event?.presentationText ? this.event?.presentationText : '';
   }
 
   /**
@@ -84,7 +88,6 @@ export class PresentationPageComponent {
       fileInput.click();
     }
     else if (option === this.dropdownOptions[0]) {
-      this.openSnackBar();
       this.isSetPresentationText = true;
     }
   }
@@ -142,16 +145,11 @@ export class PresentationPageComponent {
   save() {
     this.isSetPresentationText = false;
     var presentation : EventModelPresentation = {
-      presentationText: this.event?.presentationText ? this.event?.presentationText : '',
+      presentationText: this.presentationText,
       presentationTextSize: this.fontSize,
       presentationTextAlign: this.textAlign,
     }
     this.eventModelService.setPresentationText(presentation);
-  }
-
-  openSnackBar() {
-
-    this.snackbarService.showSnackbar();
   }
 
 }

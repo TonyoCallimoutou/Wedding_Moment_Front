@@ -30,12 +30,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public inviteList: Invite[] = [];
   public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
   public currentUser: User;
-  public canAccess: boolean;
-  public isMaster: boolean;
-  public isActivate: boolean;
-  public isEditable: boolean;
-  public isEditMode: boolean;
-  public event: EventModel;
+  public canAccess: boolean = false;
+  public isMaster: boolean = false;
+  public isActivate: boolean = false;
+  public isEditable: boolean = false;
+  public isEditMode: boolean = false;
+  public event!: EventModel;
   public decompteDateString: string= "";
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
@@ -54,12 +54,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
 
   ) {
-    this.event = this.eventModelService.getActualEvent();
-    this.canAccess = this.userModelService.canAccess();
-    this.isMaster = this.eventModelService.getIsMaster();
-    this.isActivate = this.eventModelService.getIsActivate();
-    this.isEditable = this.eventModelService.getIsEditable();
-    this.isEditMode = this.eventModelService.getIsEditMode();
   }
 
   initData() {
@@ -160,7 +154,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     let day = (eventDate.getDate() - today.getDate());
 
     if (day < 0) {
-      this.snackbarService.showSnackbar("error", "Un eerreur est survenu");
+      this.snackbarService.showSnackbar("error", "Un erreur est survenu");
       this.router.navigate(['home-page']);
     }
 

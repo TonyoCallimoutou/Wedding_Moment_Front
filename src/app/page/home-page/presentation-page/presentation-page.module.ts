@@ -10,22 +10,24 @@ import {MatIconModule} from "@angular/material/icon";
 import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdown-menu.module";
 import {FormsModule} from "@angular/forms";
 import {AutosizeModule} from "ngx-autosize";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
   declarations: [
     PresentationPageComponent
   ],
-  imports: [
-    CommonModule,
-    LikeButtonModule,
-    DeleteButtonModule,
-    GenericImageCropperModule,
-    MatIconModule,
-    DropdownMenuModule,
-    FormsModule,
-    AutosizeModule
-  ],
+    imports: [
+        CommonModule,
+        LikeButtonModule,
+        DeleteButtonModule,
+        GenericImageCropperModule,
+        MatIconModule,
+        DropdownMenuModule,
+        FormsModule,
+        AutosizeModule,
+        MatButtonModule
+    ],
   exports: [PresentationPageComponent],
   providers: [EventModelService, UserModelService]
 })
