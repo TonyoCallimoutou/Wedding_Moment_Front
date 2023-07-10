@@ -1,10 +1,13 @@
-<form [formGroup]="form" class="card sign-in">
+<form [formGroup]="form" class="card sign-in" id="form">
+
   <div class="switch-button">
     <h1 class="font-default-20 font-primary-light" [ngClass]="!isRegister ? 'title-selected': 'title-unselected'" (click)="switchRegister()"> {{ 'Auth.sign_in' | translate | capitalizeFirstLetter }}</h1>
     <h1 class="font-default-20 font-primary-light" [ngClass]="isRegister ? 'title-selected': 'title-unselected'" (click)="switchRegister()"> {{ 'Auth.register' | translate | capitalizeFirstLetter }}</h1>
   </div>
 
-  <div class="input">
+  <mat-divider></mat-divider>
+
+  <div id="input" class="input">
     <div class="formControl" *ngIf="isRegister">
       <input
         class="font-default-20"
@@ -90,45 +93,49 @@
     </div>
   </div>
 
-  <div class="condition_utilisation">
-    <span class="font-default-16 font-primary-light" style="text-align: justify"> {{ 'Users.Condition_utilisation.explain' | translate | capitalizeFirstLetter  }} </span>
-    <div class="checkbox">
-      <mat-checkbox [color]="'primary'" [formControlName]="'cgu'" >
-      </mat-checkbox>
-      <span (click)="displayCGU()" class="font-default-16" style="text-decoration: underline"> {{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter  }} </span>
+  <mat-divider id="divider"></mat-divider>
+
+  <div id="buttons" class="buttons">
+    <div class="condition_utilisation">
+      <span class="font-default-16 font-primary-light" style="text-align: justify"> {{ 'Users.Condition_utilisation.explain' | translate | capitalizeFirstLetter  }} </span>
+      <div class="checkbox">
+        <mat-checkbox [color]="'primary'" [formControlName]="'cgu'" >
+        </mat-checkbox>
+        <span (click)="displayCGU()" class="font-default-16" style="text-decoration: underline"> {{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter  }} </span>
+      </div>
+      <mat-error class="error-checkbox" *ngIf="form.get('cgu')?.touched && form.get('cgu')?.hasError('required')">
+        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+      </mat-error>
     </div>
-    <mat-error class="error-checkbox" *ngIf="form.get('cgu')?.touched && form.get('cgu')?.hasError('required')">
-      {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-    </mat-error>
+
+    <!-- Calling Create Account -->
+    <button
+      mat-raised-button
+      class="font-default-20"
+      *ngIf="isRegister"
+      (click)="form.valid ? authService.SignUp(form.controls['name'].value, userEmail.value, userPassword.value) : form.markAllAsTouched();"
+    >
+      {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
+    </button>
+
+    <!-- Calling SignIn Api from AuthService -->
+    <button
+      mat-raised-button
+      class="font-default-20"
+      *ngIf="!isRegister"
+      (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : form.markAllAsTouched();"
+    >
+      {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
+    </button>
+    <!-- Calling GoogleAuth Api from AuthService -->
+    <button
+      mat-raised-button
+      class="font-default-20"
+      *ngIf="!isRegister"
+      (click)="authService.GoogleAuth()"
+    >
+      {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
+    </button>
   </div>
-
-  <!-- Calling Create Account -->
-  <button
-    mat-raised-button
-    class="font-default-20"
-    *ngIf="isRegister"
-    (click)="form.valid ? authService.SignUp(form.controls['name'].value, userEmail.value, userPassword.value) : form.markAllAsTouched();"
-  >
-    {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
-  </button>
-
-  <!-- Calling SignIn Api from AuthService -->
-  <button
-    mat-raised-button
-    class="font-default-20"
-    *ngIf="!isRegister"
-    (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : form.markAllAsTouched();"
-  >
-    {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
-  </button>
-  <!-- Calling GoogleAuth Api from AuthService -->
-  <button
-    mat-raised-button
-    class="font-default-20"
-    *ngIf="!isRegister"
-    (click)="authService.GoogleAuth()"
-  >
-    {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
-  </button>
 
 </form>

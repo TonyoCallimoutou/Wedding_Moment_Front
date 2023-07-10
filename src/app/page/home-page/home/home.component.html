@@ -1,7 +1,9 @@
 <div class="page">
-  <mat-tab-group>
+  <mat-tab-group
+    [selectedIndex]="selected"
+    (selectedIndexChange)="selected = $event">
     <mat-tab label="Invité">
-      <div class="participate">
+      <div class="participate" *ngIf="selected === 0">
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 
         <div class="invite_code">
@@ -30,7 +32,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Marié">
-      <div class="createEvent">
+      <div class="createEvent" *ngIf="selected === 1">
 
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 

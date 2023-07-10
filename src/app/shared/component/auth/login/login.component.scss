@@ -4,9 +4,23 @@
   border: 0.5rem solid var(--primary);
   border-radius: 1.5rem;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3.5rem;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 2rem;
+
+  mat-divider {
+    width: 100%;
+    border-top-color: var(--primary);
+    border-right-color: var(--primary);
+  }
+
+  mat-divider.vertical {
+    width: 0;
+    border-top: 0;
+    border-right-width: 1px;
+    border-right-style: solid;
+  }
 
   .switch-button {
     display: flex;
@@ -28,8 +42,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    width: 100%;
-    gap: 3.5rem;
+    gap: 2rem;
 
     .formControl {
       position: relative;
@@ -78,25 +91,31 @@
     }
   }
 
-  .condition_utilisation {
+  .buttons {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 1rem;
+    align-items: center;
+    gap: 2rem;
 
-    .checkbox {
-      background-color: white;
-      border-radius: 0.25rem;
-      padding: 0.25rem 0.5rem 0.25rem 0.25rem;
-      align-self: center;
-    }
+    .condition_utilisation {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1rem;
 
-    .error-checkbox {
-      position: initial;
-      align-self: center;
+      .checkbox {
+        background-color: white;
+        border-radius: 0.25rem;
+        padding: 0.25rem 0.5rem 0.25rem 0.25rem;
+        align-self: center;
+      }
+
+      .error-checkbox {
+        position: initial;
+        align-self: center;
+      }
     }
   }
-
 
   .forgotPassword {
     width: 100%;

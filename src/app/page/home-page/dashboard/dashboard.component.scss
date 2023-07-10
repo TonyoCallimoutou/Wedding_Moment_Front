@@ -39,6 +39,7 @@ mat-tab-group {
   bottom: 0;
   width: 100%;
   background-color: var(--primary);
+  z-index: 100;
 
 
   ::ng-deep {

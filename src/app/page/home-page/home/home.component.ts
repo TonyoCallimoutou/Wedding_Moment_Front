@@ -32,6 +32,7 @@ export class HomeComponent{
   public metaDataShareLink: any;
   public dialogGenerate: any;
   public qrCode: string = '';
+  public selected : number = 0;
 
 
 

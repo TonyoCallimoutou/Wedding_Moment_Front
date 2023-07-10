@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output, Renderer2} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {CguService} from "../../../service/cgu";
 
@@ -8,21 +8,21 @@ import {CguService} from "../../../service/cgu";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements AfterViewInit, OnChanges, OnInit {
 
   @Output() goToForgotPassword: EventEmitter<boolean> = new EventEmitter<boolean>()
 
   public isRegister: boolean = false;
   public viewPassword : boolean = false;
   public viewVerifyPassword: boolean = false;
-
   public form : FormGroup;
-  public nameControl: any;
+  public isDividerVertical: boolean = false;
 
   constructor(
     public authService: AuthService,
     private cguService: CguService,
     private formBuilder: FormBuilder,
+    private renderer: Renderer2,
 
     )
   {
@@ -36,6 +36,41 @@ export class LoginComponent {
     });
 
     this.setValidator();
+
+  }
+
+  ngOnChanges() {
+    this.ngAfterViewInit();
+  }
+
+
+  ngOnInit(): void {
+    console.log("euh...")
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      let formWidth = document.getElementById('form')?.offsetWidth;
+      let inputWidth = document.getElementById('input')?.offsetWidth;
+      let buttonsWidth = document.getElementById('buttons')?.offsetWidth;
+      formWidth = formWidth !== undefined ? formWidth : 0;
+      inputWidth = inputWidth !== undefined ? inputWidth : 0;
+      buttonsWidth = buttonsWidth !== undefined ? buttonsWidth : 0;
+
+      let gap = 2*2*16 +1; // Gap 2rem + divider 1px + gap 2rem
+      let paddingForm = 16*2;
+
+      const totalWidth = ((inputWidth + buttonsWidth + gap) / (formWidth - paddingForm)) * 100;
+
+      const divider = document.getElementById('divider');
+      if (totalWidth > 100) {
+        this.isDividerVertical = false;
+        this.renderer.addClass(divider, 'horizontal');
+      } else {
+        this.isDividerVertical = true;
+        this.renderer.addClass(divider, 'vertical');
+      }
+    }, 0);
 
   }
 
