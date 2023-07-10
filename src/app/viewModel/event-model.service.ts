@@ -284,8 +284,9 @@ export class EventModelService {
 
   // Remove Menu
   deleteMenu(menu: Menu) {
+    console.log(menu);
     if (menu.eventId == this.event.eventId && this.isMaster) {
-      this.eventService.deleteMenu(menu.menuId)
+      this.eventService.deleteMenu(menu)
         .pipe(take(1))
         .subscribe(data => {
           this.socketService.removeMenu(menu)
@@ -312,7 +313,7 @@ export class EventModelService {
   // Remove Plan Table
   deletePlanTable(tableInvite: PlanTable) {
     if (tableInvite.planTableId && tableInvite.eventId == this.event.eventId && this.isMaster) {
-      this.eventService.deletePlanTable(tableInvite.planTableId)
+      this.eventService.deletePlanTable(tableInvite)
         .pipe(take(1))
         .subscribe(data => {
           this.socketService.removePlanTable(tableInvite)
@@ -334,7 +335,7 @@ export class EventModelService {
   // Remove invite
   deleteInvite(invite: Invite) {
     if (!!invite.inviteId && invite.eventId == this.event.eventId && this.isMaster) {
-      this.eventService.deleteInvite(invite.inviteId)
+      this.eventService.deleteInvite(invite)
         .pipe(take(1))
         .subscribe(data => {
           this.socketService.removeInvite(invite)

@@ -1,6 +1,6 @@
 <div class="card">
   <div class="buttons">
-    <mat-icon *ngIf="isEdit" class="button-modifier" (click)="isEdit = !isEdit"> undo </mat-icon>
+    <mat-icon *ngIf="isEdit" class="button-modifier" (click)="retour()"> undo </mat-icon>
     <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
     <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
   </div>
@@ -11,7 +11,7 @@
 
 
   <div class="menu">
-    <div *ngFor="let item of menuList; index as i" >
+    <div *ngFor="let item of editMenuList; index as i" >
 
       <div class="remove">
         <mat-icon class="button-remove" *ngIf="isEdit" (click)="delete(item)"> delete </mat-icon>
@@ -25,6 +25,7 @@
           class="categorie font-primary-light font-default-20"
           (ngModelChange)="onInputChange(item.menuId)"
           type="text"
+          placeholder="{{ 'Menu.placeholder_categorie' | translate | capitalizeFirstLetter }}"
           [(ngModel)]="item.menuCategorie">
       </div>
 
@@ -34,13 +35,17 @@
           autosize
           [disabled]="!isEdit"
           class="description font-primary-light font-default-16"
+          (ngModelChange)="onInputChange(item.menuId)"
+          placeholder="{{ 'Menu.placeholder_description' | translate | capitalizeFirstLetter }}"
           [(ngModel)]="item.menuDescription">
         </textarea>
       </div>
     </div>
-    <div *ngIf="isEdit">
-      <input  *ngIf="isEdit" [(ngModel)]="categorie" class="categorie font-default-20" placeholder="+" >
-      <input *ngIf="isEdit" [(ngModel)]="description" class="description font-default-16" type="text" placeholder="+">
+    <div *ngIf="isEdit" class="button_add">
+      <button mat-fab extended (click)="newCategories()">
+        <mat-icon>add</mat-icon>
+        {{ 'Menu.add_menu' | translate | capitalizeFirstLetter }}
+      </button>
     </div>
   </div>
 </div>

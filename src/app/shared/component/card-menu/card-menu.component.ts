@@ -12,15 +12,29 @@ export class CardMenuComponent implements OnInit {
   @Output() removeMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
 
   menuIdChange : number[] = [];
+  menuRemove : Menu[] = [];
 
-  categorie: string = "";
-  description: string = "";
+  editMenuList : Menu[] = [];
 
   isEdit : boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.editMenuList = this.menuList.slice();
+  }
+
+  retour() {
+    this.isEdit = false;
+    this.editMenuList = this.menuList;
+  }
+
+  newCategories() {
+    let menu : Menu = {
+      menuCategorie : "",
+      menuDescription : ""
+    }
+    this.editMenuList.push(menu);
   }
 
   onInputChange(menuId : number|undefined) {
@@ -30,25 +44,28 @@ export class CardMenuComponent implements OnInit {
   }
 
   save() {
-
     this.isEdit = !this.isEdit;
 
-    if (!!this.categorie && !!this.description) {
-      let menu : Menu = {
-        menuCategorie : this.categorie,
-        menuDescription : this.description
-      }
-      this.addMenu.emit(menu);
+    for (let menu of this.menuRemove) {
+      this.removeMenu.emit(menu);
     }
 
-    for (let id of this.menuIdChange) {
-      let menu = this.menuList.filter(item => item.menuId === id);
-      this.addMenu.emit(menu[0]);
+    for (let menu of this.editMenuList) {
+      if (!menu.menuId) {
+        this.addMenu.emit(menu);
+      }
+      else if (this.menuIdChange.includes(menu.menuId)) {
+        this.addMenu.emit(menu);
+      }
     }
   }
 
   delete(menu: Menu) {
-    this.removeMenu.emit(menu);
+    if (!!menu.menuId) {
+      this.menuRemove.push(menu);
+    }
+
+    this.editMenuList = this.editMenuList.filter(m => m !== menu);
   }
 
 }

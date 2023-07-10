@@ -32,11 +32,11 @@ export class EventService {
   }
 
   setEventPicture(data: EventModel): Observable<any> {
-    return this.http.put(`${baseUrl}/setEventPicture`, data)
+    return this.http.put(`${baseUrl}/setEventPicture/${this.currentEventId}`, data)
   }
 
   setPresentationText(data: EventModel): Observable<any> {
-    return this.http.put(`${baseUrl}/setEventPresentation`, data)
+    return this.http.put(`${baseUrl}/setEventPresentation/${this.currentEventId}`, data)
   }
 
   createEvent(data: EventModel): Observable<any> {
@@ -56,42 +56,42 @@ export class EventService {
   }
 
   createMenu(data: any): Observable<any> {
-    return this.http.post(`${baseUrl}/Menu`, data);
+    return this.http.post(`${baseUrl}/Menu/${this.currentEventId}`, data);
   }
 
   updateMenu(data: any): Observable<any> {
-    return this.http.put(`${baseUrl}/Menu`, data);
+    return this.http.put(`${baseUrl}/Menu/${this.currentEventId}`, data);
   }
 
   getMenu(id: number): Observable<any> {
     return this.http.get(`${baseUrl}/Menu/${id}`);
   }
 
-  deleteMenu(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/Menu/${id}`);
+  deleteMenu(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/Delete-Menu/${this.currentEventId}`, data);
   }
 
   createPlanTable(data: any): Observable<any> {
-    return this.http.post(`${baseUrl}/PlanTable`, data);
+    return this.http.post(`${baseUrl}/PlanTable/${this.currentEventId}`, data);
   }
 
   getPlanTable(id: number): Observable<any> {
     return this.http.get(`${baseUrl}/PlanTable/${id}`);
   }
 
-  deletePlanTable(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/PlanTable/${id}`);
+  deletePlanTable(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/Delete-PlanTable/${this.currentEventId}`, data);
   }
 
   createInvite(data: any): Observable<any> {
-    return this.http.post(`${baseUrl}/Invite`, data);
+    return this.http.post(`${baseUrl}/Invite/${this.currentEventId}`, data);
   }
 
   setInvite(data: any): Observable<any> {
-    return this.http.post(`${baseUrl}/setInvite`, data);
+    return this.http.put(`${baseUrl}/setInvite/${this.currentEventId}`, data);
   }
 
-  deleteInvite(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/Invite/${id}`);
+  deleteInvite(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/Delete-Invite/${this.currentEventId}`, data);
   }
 }

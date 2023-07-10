@@ -92,7 +92,6 @@ export class DialogQrCodeComponent {
 
 
   downloadQRCode() {
-    console.log(this.isMenuAfficher)
     const qrCodeElement = document.getElementById('qr_code_download');
 
     if (qrCodeElement) {

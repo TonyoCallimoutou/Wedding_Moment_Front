@@ -69,7 +69,10 @@
     }
   },
   "Menu": {
-    "title" : "menu"
+    "title" : "menu",
+    "add_menu" : "ajouter un menu",
+    "placeholder_categorie" : "Entrée, Plat, Dessert, ...",
+    "placeholder_description" : "description du menu"
   },
   "Posts": {
     "list" : "liste",

@@ -5,6 +5,8 @@ import {TranslateModule} from "@ngx-translate/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {AutosizeModule} from "ngx-autosize";
+import {MatButtonModule} from "@angular/material/button";
+import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lettre.module";
 
 
 @NgModule({
@@ -17,7 +19,9 @@ import {AutosizeModule} from "ngx-autosize";
     FormsModule,
     ReactiveFormsModule,
     MatIconModule,
-    AutosizeModule
+    AutosizeModule,
+    MatButtonModule,
+    CapitalizeFirstLetterPipeModule
   ],
   exports: [CardMenuComponent]
 })
