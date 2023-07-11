@@ -1,2 +1,6 @@
 <meta meta name="viewport" content="width=device-width, user-scalable=no" />
 <router-outlet></router-outlet>
+<app-loader
+  *ngIf="loader.isStart"
+  [loader]="loader"
+></app-loader>

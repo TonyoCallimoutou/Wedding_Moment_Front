@@ -56,28 +56,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  initData() {
-    this.event = this.eventModelService.getActualEvent();
-    this.canAccess = this.userModelService.canAccess();
-    this.isMaster = this.eventModelService.getIsMaster();
-    this.isActivate = this.eventModelService.getIsActivate();
-    this.isEditable = this.eventModelService.getIsEditable();
-    this.isEditMode = this.eventModelService.getIsEditMode();
-
-
-    if(this.isEditMode) {
-      this.calculDecompte();
-
-      this.dialog.open(GenericDialogComponent, {
-        data: {
-          contentTemplate: this.dialogEditMode,
-          isDisplayButton: false,
-          isDisplayCloseButton: false,
-        },
-      });
-    }
-  }
-
   ngOnInit() {
 
     this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
@@ -96,7 +74,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .subscribe(event => {
               if (event) {
                 this.eventModelService.goToEvent(event);
-                this.initData();
 
                 this.initUser();
 
@@ -105,6 +82,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.initPost();
 
                 this.initPlanTable();
+
+                this.initData();
               }
               else {
                 this.router.navigate(['home-page'])
@@ -118,7 +97,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
             .subscribe(event => {
               if (event) {
                 this.eventModelService.goToEvent(event);
-                this.initData();
 
                 this.initUser();
 
@@ -127,6 +105,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.initPost();
 
                 this.initPlanTable();
+
+                this.initData();
               }
               else {
                 this.router.navigate(['home-page'])
@@ -138,13 +118,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
 
     });
-
   }
-
 
   ngOnDestroy() {
     this.onDestroy$.next(true);
     this.onDestroy$.unsubscribe();
+  }
+
+  initData() {
+    this.event = this.eventModelService.getActualEvent();
+    this.canAccess = this.userModelService.canAccess();
+    this.isMaster = this.eventModelService.getIsMaster();
+    this.isActivate = this.eventModelService.getIsActivate();
+    this.isEditable = this.eventModelService.getIsEditable();
+    this.isEditMode = this.eventModelService.getIsEditMode();
+
+    if (this.isEditMode) {
+      this.calculDecompte();
+
+      this.dialog.open(GenericDialogComponent, {
+        data: {
+          contentTemplate: this.dialogEditMode,
+          isDisplayButton: false,
+          isDisplayCloseButton: false,
+        },
+      });
+    }
   }
 
   calculDecompte() {

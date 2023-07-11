@@ -36,6 +36,7 @@ import {ClipboardModule} from "@angular/cdk/clipboard";
 import {MatCardModule} from "@angular/material/card";
 import {CapitalizeFirstLetterPipeModule} from "./shared/pipes/capitalize-first-lettre.module";
 import {MatMenuModule} from "@angular/material/menu";
+import {LoaderModule} from "./shared/component/loader/loader.module";
 
 const MY_DATE_FORMAT = {
   parse: {
@@ -58,37 +59,38 @@ const MY_DATE_FORMAT = {
     DialogQrCodeComponent,
     DialogLinkComponent,
   ],
-  imports: [
-    // ngx-translate and the loader module
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    }),
-    BrowserAnimationsModule,
-    FormulaireInscriptionModule,
-    DashboardModule,
-    MatDialogModule,
-    MatIconModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireAuthModule,
-    AngularFirestoreModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    HomeModule,
-    QRCodeModule,
-    ShareButtonModule,
-    ClipboardModule,
-    MatCardModule,
-    CapitalizeFirstLetterPipeModule,
-    MatMenuModule,
-  ],
+    imports: [
+        // ngx-translate and the loader module
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (createTranslateLoader),
+                deps: [HttpClient]
+            }
+        }),
+        BrowserAnimationsModule,
+        FormulaireInscriptionModule,
+        DashboardModule,
+        MatDialogModule,
+        MatIconModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        AngularFireModule.initializeApp(environment.firebaseConfig),
+        AngularFireAuthModule,
+        AngularFirestoreModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        HomeModule,
+        QRCodeModule,
+        ShareButtonModule,
+        ClipboardModule,
+        MatCardModule,
+        CapitalizeFirstLetterPipeModule,
+        MatMenuModule,
+        LoaderModule,
+    ],
   providers: [
     AuthService,
     SocketIoService,

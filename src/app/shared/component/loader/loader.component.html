@@ -1,0 +1,11 @@
+<div *ngIf="loader.isStart" class="overlay" [ngClass]="loader.isMainLoader ? 'main_overlay' :'' ">
+
+  <div *ngIf="!loader.isMainLoader" class="custom-loader"></div>
+
+  <svg *ngIf="loader.isMainLoader">
+    <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+      <tspan x="50%" dy="0">Wedding</tspan>
+      <tspan x="50%" dy="1.2em">Moment</tspan>
+    </text>
+  </svg>
+</div>

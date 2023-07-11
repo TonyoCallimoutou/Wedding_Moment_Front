@@ -33,9 +33,6 @@ export class PostModelService {
     private storageModelService: StorageModelService,
   ) {
 
-    /**
-     * this.initPostModelService
-     */
     this.eventId = this.eventService.getEventId();
     this.userData = this.userModelService.getCurrentUser();
 

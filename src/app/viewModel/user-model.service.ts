@@ -9,6 +9,7 @@ import {Post} from '../model/post.model';
 import {User} from '../model/user.model';
 import {StorageModelService} from "./storage-model.service";
 import {CookieHelper} from "../shared/service/cookie.helper";
+import {LoaderService} from "../shared/service/loader.service";
 
 
 @Injectable({
@@ -24,6 +25,7 @@ export class UserModelService {
     private userService: UserService,
     private socketService: SocketIoService,
     private storageModelService: StorageModelService,
+    private loaderService: LoaderService,
   ) {
     this.initUserData();
   }
@@ -123,9 +125,12 @@ export class UserModelService {
    * @param user
    */
   public setUserName(user: User) {
+    this.loaderService.setLoader(true);
+
     this.userService.setUserName(user)
       .pipe(take(1))
       .subscribe(() => {
+        this.loaderService.setLoader(false);
         CookieHelper.set(LocalModel.USER, JSON.stringify(user));
         this.socketService.setUser(user);
       });

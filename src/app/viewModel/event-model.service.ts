@@ -16,6 +16,7 @@ import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 import {Router} from "@angular/router";
+import {LoaderService} from "../shared/service/loader.service";
 
 
 @Injectable({
@@ -41,7 +42,8 @@ export class EventModelService {
     public eventService: EventService,
 
     private storageModelService: StorageModelService,
-    public socketService: SocketIoService
+    private socketService: SocketIoService,
+    private loaderService: LoaderService,
   ) {
 
     this.initListeningFromSocket();
@@ -207,10 +209,13 @@ export class EventModelService {
 
   // Create Event
   createEvents(event: any, router: Router) {
+    this.loaderService.setLoader(true, 10000, '', true);
+
     this.eventService.createEvent(event)
       .pipe(take(1))
       .subscribe(data => {
         this.socketService.setEvent(data)
+        this.loaderService.setLoader(false);
         router.navigate(['dashboard', data.eventCode]);
       });
   }
@@ -225,11 +230,14 @@ export class EventModelService {
   }
 
   setEventPicture(pictureUrl: any) {
+    this.loaderService.setLoader(true);
+
     this.storageModelService.uploadEventPictureAndGetUrl(pictureUrl).then(url => {
       this.event.pictureUrl = url;
       this.eventService.setEventPicture(this.event)
         .pipe(take(1))
         .subscribe(() => {
+          this.loaderService.setLoader(false);
           this.socketService.setEvent(this.event);
         });
     });
