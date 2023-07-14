@@ -37,6 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public isEditMode: boolean = false;
   public event!: EventModel;
   public decompteDateString: string= "";
+  public afficherTabGroup : boolean = true;
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -75,6 +76,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
               if (event) {
                 this.eventModelService.goToEvent(event);
 
+                this.initData();
+
                 this.initUser();
 
                 this.initMenu();
@@ -82,8 +85,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.initPost();
 
                 this.initPlanTable();
-
-                this.initData();
               }
               else {
                 this.router.navigate(['home-page'])
@@ -98,6 +99,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
               if (event) {
                 this.eventModelService.goToEvent(event);
 
+                this.initData();
+
                 this.initUser();
 
                 this.initMenu();
@@ -105,8 +108,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 this.initPost();
 
                 this.initPlanTable();
-
-                this.initData();
               }
               else {
                 this.router.navigate(['home-page'])

@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ImageCropperModule} from "ngx-image-cropper";
 import {GenericImageCropperComponent} from "./generic-image-cropper.component";
 import {MatIconModule} from "@angular/material/icon";
+import {MatButtonModule} from "@angular/material/button";
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import {MatIconModule} from "@angular/material/icon";
     imports: [
         CommonModule,
         ImageCropperModule,
-        MatIconModule
+        MatIconModule,
+        MatButtonModule
     ],
   exports: [
     GenericImageCropperComponent

@@ -33,6 +33,7 @@ export class HomeComponent{
   public dialogGenerate: any;
   public qrCode: string = '';
   public selected : number = 0;
+  public activeScanner: boolean = false;
 
 
 
@@ -189,6 +190,7 @@ export class HomeComponent{
   }
 
   test() {
+    this.activeScanner = true
     this.snackbarService.showSnackbar();
   }
 }

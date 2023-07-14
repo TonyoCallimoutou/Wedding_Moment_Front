@@ -4,7 +4,13 @@
       "required": "ce champ est obligatoire",
       "email": "veuillez entrer une adresse email valide",
       "different_password": "Les mots de passe sont différents"
-    }
+    },
+    "save": "enregistrer",
+    "no_filter": "no filter",
+    "choose_galerie": "Choisir une image dans la galerie"
+  },
+  "General": {
+    "app_name": "WeddingMoment"
   },
   "Home": {
     "enter_code": "entrer le code",

@@ -9,7 +9,8 @@ import {ImageCroppedEvent} from "ngx-image-cropper";
 export class GenericImageCropperComponent implements OnInit{
 
   @Input() maintainAspectRatio : boolean = false;
-  @Input() imageChangedEvent : any = '';
+  @Input() imageChangedEvent : any;
+  @Input() imageBase64 : any;
   @Input() ratio : number = 4/3;
   @Input() multiRatio: boolean = false;
   @Output() croppedImage: EventEmitter<any> = new EventEmitter<any>();

@@ -15,6 +15,7 @@ import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-
 import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
 import {take} from "rxjs";
 import {Share} from "../../../shared/component/share-button/share-button.component";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
 
 interface Language {
   code: string;
@@ -53,6 +54,7 @@ export class UserPageComponent {
     private authService: AuthService,
     private router: Router,
     private translate: TranslateService,
+    private snackbarService: SnackbarService,
   ) {
 
     this.languages = [
@@ -79,6 +81,7 @@ export class UserPageComponent {
    * Clique to change user picture
    */
   changePicture() {
+    this.test();
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = '.png,.jpg';
@@ -119,6 +122,7 @@ export class UserPageComponent {
    * Open dialog to change User Name
    */
   changeUserName() {
+    this.test();
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeUserName },
     });
@@ -134,6 +138,7 @@ export class UserPageComponent {
    * Open dialog to change language
    */
   changeLanguage() {
+    this.test();
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeLanguage },
     });
@@ -164,6 +169,7 @@ export class UserPageComponent {
    * Sign out
    */
   signOut() {
+    this.test();
     this.authService.SignOut();
   }
 
@@ -171,6 +177,7 @@ export class UserPageComponent {
    * Delete user
    */
   removeUser() {
+    this.test();
     this.authService.RemoveUser();
   }
 
@@ -178,6 +185,7 @@ export class UserPageComponent {
    * L'admin peut exporter les Photos de l'evenement.
    */
   exportPicture() {
+    this.test();
     this.userModelService.exportPicture()
       .subscribe(value => {
         console.log(value)
@@ -228,6 +236,10 @@ export class UserPageComponent {
         eventCode: this.event?.eventCode,
       }
     });
+  }
+
+  test() {
+    this.snackbarService.showSnackbar();
   }
 
 }

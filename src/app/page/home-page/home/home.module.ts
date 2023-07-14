@@ -16,31 +16,33 @@ import {MatIconModule} from "@angular/material/icon";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ShareButtonModule} from "../../../shared/component/share-button/share-button.module";
 import {QRCodeModule} from "angularx-qrcode";
+import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 
 @NgModule({
   declarations: [
     HomeComponent
   ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    AuthModule,
-    MatTabsModule,
-    TranslateModule,
-    CapitalizeFirstLetterPipeModule,
-    MatInputModule,
-    FormsModule,
-    MatNativeDateModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatCardModule,
-    AutosizeModule,
-    MatIconModule,
-    ClipboardModule,
-    ShareButtonModule,
-    QRCodeModule,
-  ]
+    imports: [
+        CommonModule,
+        MatButtonModule,
+        AuthModule,
+        MatTabsModule,
+        TranslateModule,
+        CapitalizeFirstLetterPipeModule,
+        MatInputModule,
+        FormsModule,
+        MatNativeDateModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatCardModule,
+        AutosizeModule,
+        MatIconModule,
+        ClipboardModule,
+        ShareButtonModule,
+        QRCodeModule,
+        ZXingScannerModule,
+    ]
 })
 export class HomeModule {
 }

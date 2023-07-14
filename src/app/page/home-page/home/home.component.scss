@@ -15,7 +15,7 @@
     .participate {
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-around;
       align-items: center;
       padding: 1rem;
       min-height: 90vh;
@@ -23,7 +23,6 @@
       .invite_code {
         display: flex;
         flex-direction: column;
-        margin-bottom: 3rem;
 
         mat-form-field {
           margin-bottom: 2rem;

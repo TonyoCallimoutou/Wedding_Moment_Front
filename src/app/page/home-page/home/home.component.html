@@ -24,9 +24,12 @@
 
         <div class="invite_qr_code">
           <p>{{ 'Home.scan_qr_code' | translate | capitalizeFirstLetter }}</p>
-          <button mat-fab (click)="test()">
+          <button mat-fab (click)="test()" *ngIf="!activeScanner">
             <mat-icon>qr_code_scanner</mat-icon>
           </button>
+          <div class="scanner" *ngIf="activeScanner">
+            <zxing-scanner></zxing-scanner>
+          </div>
         </div>
 
       </div>

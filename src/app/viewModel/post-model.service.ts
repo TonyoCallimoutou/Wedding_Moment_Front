@@ -10,6 +10,7 @@ import {UserModelService} from './user-model.service';
 import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
+import {LoaderService} from "../shared/service/loader.service";
 
 
 @Injectable({
@@ -31,6 +32,7 @@ export class PostModelService {
     public postService: PostService,
     private socketService: SocketIoService,
     private storageModelService: StorageModelService,
+    private loaderService: LoaderService,
   ) {
 
     this.eventId = this.eventService.getEventId();
@@ -71,6 +73,8 @@ export class PostModelService {
       pictureRatio: ratio
     }
 
+    this.loaderService.setLoader(true);
+
     this.postService.createPost(post)
       .pipe(take(1))
       .subscribe(data => {
@@ -83,6 +87,7 @@ export class PostModelService {
           })
             .pipe(take(1))
             .subscribe(() => {
+              this.loaderService.setLoader(false);
               data.pictureUrl = url;
               this.socketService.addPost(data);
             })

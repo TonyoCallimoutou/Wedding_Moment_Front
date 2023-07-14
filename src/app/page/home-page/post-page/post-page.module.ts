@@ -13,11 +13,18 @@ import {GenericImageCropperModule} from "../../../shared/component/generic-image
 import {AuthModule} from "../../../shared/component/auth/auth.module";
 import {MatButtonModule} from "@angular/material/button";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
+import { GeneratePictureComponent } from './generate-picture/generate-picture.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import {MatIconModule} from "@angular/material/icon";
+import {MatTabsModule} from "@angular/material/tabs";
+import {WebcamModule} from "ngx-webcam";
+import {ImageCropperModule} from "ngx-image-cropper";
 
 
 @NgModule({
   declarations: [
-    PostPageComponent
+    PostPageComponent,
+    GeneratePictureComponent,
   ],
   imports: [
     CommonModule,
@@ -30,7 +37,12 @@ import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-
     GenericImageCropperModule,
     AuthModule,
     MatButtonModule,
-    CapitalizeFirstLetterPipeModule
+    CapitalizeFirstLetterPipeModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatTabsModule,
+    WebcamModule,
+    ImageCropperModule
   ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]

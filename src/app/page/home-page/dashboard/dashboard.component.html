@@ -32,6 +32,7 @@
       [reactPostId]="reactPostId"
       (switchTab)="tabSelector = $event"
       [isEditMode]="isEditMode"
+      (afficherTabGroup)="afficherTabGroup = $event"
     >
     </app-post-page>
     <app-plan-table-page
@@ -56,12 +57,13 @@
   </div>
 
   <mat-tab-group
+    *ngIf="afficherTabGroup"
     headerPosition="below"
     disablePagination
     disableRipple = true
     [selectedIndex]="tabSelector"
     (selectedIndexChange)="tab($event)">
-    <mat-tab class="tabuler">
+    <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">home</mat-icon>
       </ng-template>
