@@ -28,7 +28,7 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="content">
-        <div class="param" (click)="changeUserName()">{{ 'Users.username' | translate | capitalizeFirstLetter }}</div>
+        <div class="param" (click)="changeUserName()">{{ 'Users.Username.title' | translate | capitalizeFirstLetter }}</div>
       </div>
     </mat-expansion-panel>
     <mat-expansion-panel [expanded]="true">
@@ -68,10 +68,13 @@
   </ng-template>
 
   <ng-template #dialogChangeUserName>
-    <input matInput type="text" [(ngModel)]="currentUser.userName" class="font-default-20">
+    <h2 mat-dialog-title>{{ 'Users.Username.title' | translate | capitalizeFirstLetter }}</h2>
+    <p>{{ 'Users.Username.label' | translate | capitalizeFirstLetter }}</p>
+    <input matInput type="text" [(ngModel)]="userName" class="font-default-20">
   </ng-template>
 
   <ng-template #dialogChangeLanguage>
+    <h2 mat-dialog-title>{{ 'Users.Languages.language' | translate | capitalizeFirstLetter }}</h2>
     <mat-form-field appearance="fill">
       <mat-label>{{ 'Users.Languages.title' | translate | capitalizeFirstLetter }}</mat-label>
       <mat-select [(value)]="selectedLanguage">
@@ -80,6 +83,21 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+  </ng-template>
+
+  <ng-template #dialogAreYouSureExport>
+    <h2 mat-dialog-title>{{ 'Utils.Are_you_sure.Export.title' | translate | capitalizeFirstLetter }}</h2>
+    <p>{{ 'Utils.Are_you_sure.Export.text' | translate | capitalizeFirstLetter }}</p>
+    <mat-checkbox class="example-margin" [(ngModel)]="checked">{{ 'Utils.Are_you_sure.Export.checkbox' | translate | capitalizeFirstLetter }}</mat-checkbox>
+  </ng-template>
+
+  <ng-template #dialogAreYouSureLogout>
+    <h2 mat-dialog-title >{{ 'Utils.Are_you_sure.Logout.title' | translate | capitalizeFirstLetter }}</h2>
+  </ng-template>
+
+  <ng-template #dialogAreYouSureDelete>
+    <h2 mat-dialog-title>{{ 'Utils.Are_you_sure.Delete.title' | translate | capitalizeFirstLetter }}</h2>
+    <p>{{ 'Utils.Are_you_sure.Delete.text' | translate | capitalizeFirstLetter }}</p>
   </ng-template>
 
 </div>

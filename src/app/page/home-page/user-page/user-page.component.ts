@@ -35,8 +35,12 @@ export class UserPageComponent {
   @Input() public isMaster: boolean = false;
   @Input() public isEditMode: boolean = false;
 
+  @Input() public checked: boolean = false;
+
   public pictureSrc: any;
   private newUserPicture: any;
+
+  public userName: string = '';
 
   public languages: Language[];
 
@@ -45,6 +49,9 @@ export class UserPageComponent {
   @ViewChild('dialogChangePicture') dialogChangePicture!: TemplateRef<any>;
   @ViewChild('dialogChangeUserName') dialogChangeUserName!: TemplateRef<any>;
   @ViewChild('dialogChangeLanguage') dialogChangeLanguage!: TemplateRef<any>;
+  @ViewChild('dialogAreYouSureExport') dialogAreYouSureExport!: TemplateRef<any>;
+  @ViewChild('dialogAreYouSureLogout') dialogAreYouSureLogout!: TemplateRef<any>;
+  @ViewChild('dialogAreYouSureDelete') dialogAreYouSureDelete!: TemplateRef<any>;
 
 
   constructor(
@@ -75,13 +82,13 @@ export class UserPageComponent {
     })
     let defaultLanguageCode = CookieHelper.get(LocalModel.LANGUAGE);
     this.selectedLanguage = this.languages.filter(language => language.code == defaultLanguageCode)[0];
+    console.log(this.selectedLanguage);
   }
 
   /**
    * Clique to change user picture
    */
   changePicture() {
-    this.test();
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept = '.png,.jpg';
@@ -115,22 +122,24 @@ export class UserPageComponent {
    * @param picture
    */
   getNewPicture(picture: any) {
-    this.newUserPicture = picture;
+    this.newUserPicture = picture.picture;
   }
 
   /**
    * Open dialog to change User Name
    */
   changeUserName() {
-    this.test();
+    this.userName = this.currentUser.userName.split();
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeUserName },
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.currentUser.userName = this.userName;
         this.userModelService.setUserName(this.currentUser);
       }
+      this.userName = '';
     });
   }
 
@@ -138,7 +147,6 @@ export class UserPageComponent {
    * Open dialog to change language
    */
   changeLanguage() {
-    this.test();
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeLanguage },
     });
@@ -169,16 +177,31 @@ export class UserPageComponent {
    * Sign out
    */
   signOut() {
-    this.test();
-    this.authService.SignOut();
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogAreYouSureLogout },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.SignOut();
+      }
+    });
   }
 
   /**
    * Delete user
    */
   removeUser() {
-    this.test();
-    this.authService.RemoveUser();
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogAreYouSureDelete },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.authService.RemoveUser();
+      }
+    });
+
   }
 
   /**
@@ -186,16 +209,17 @@ export class UserPageComponent {
    */
   exportPicture() {
     this.test();
-    this.userModelService.exportPicture()
-      .subscribe(value => {
-        console.log(value)
-      }, (error) => {
-        console.log("error export picture :", error)
-        // Gérer les erreurs
-      }, () => {
-        // Le téléchargement est terminé
-        console.log("export success")
-      });
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogAreYouSureExport },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log("export avec originaux:", this.checked);
+        this.userModelService.exportPicture();
+      }
+    });
+
   }
 
   openDialogLink() {

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {fabric} from "fabric";
 import html2canvas from "html2canvas";
 import {PostModelService} from "../../../../viewModel/post-model.service";
@@ -9,7 +9,7 @@ import {ImageCroppedEvent} from "ngx-image-cropper";
   templateUrl: './generate-picture.component.html',
   styleUrls: ['./generate-picture.component.scss']
 })
-export class GeneratePictureComponent implements AfterViewInit {
+export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestroy {
 
   @Output() public goBack: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -78,7 +78,20 @@ export class GeneratePictureComponent implements AfterViewInit {
     this.initializeCamera();
   }
 
-  return() {
+  ngOnInit(): void {
+    history.pushState({ action: 'customAction' }, '', window.location.href);
+    window.addEventListener('popstate', this.handlePopState.bind(this));
+  }
+
+  handlePopState(event: PopStateEvent) {
+    this.returnPostPage();
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('popstate', this.handlePopState);
+  }
+
+  returnPostPage() : void {
     this.reinit();
     this.goBack.emit(true)
   }
@@ -177,9 +190,11 @@ export class GeneratePictureComponent implements AfterViewInit {
         scaleY: ratio
       });
 
-      this.imageBase64 = canvasElement.toDataURL();
+      //this.imageBase64 = canvasElement.toDataURL();
 
       this.canvas.add(this.image);
+
+      this.imageBase64 = this.canvas.toDataURL();
     }
 
     video.srcObject = null; // Arrête la capture vidéo
@@ -350,6 +365,8 @@ export class GeneratePictureComponent implements AfterViewInit {
               scaleY: ratio
             });
 
+            //this.imageBase64 = canvasElement.toDataURL();
+
             this.canvas.add(this.image);
 
             this.imageBase64 = this.canvas.toDataURL();
@@ -368,7 +385,7 @@ export class GeneratePictureComponent implements AfterViewInit {
 
   public saveImage(): void {
     this.postModelService.createPost(this.finaleImage,this.ratio);
-    this.return();
+    this.returnPostPage();
     this.reinit();
   }
 }

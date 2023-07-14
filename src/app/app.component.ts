@@ -38,6 +38,8 @@ export class AppComponent implements OnInit, OnDestroy {
     translate.setDefaultLang(language);
     translate.use(language);
 
+    this.cookieService.set(LocalModel.LANGUAGE, language);
+
     this.listenLoader();
   }
 

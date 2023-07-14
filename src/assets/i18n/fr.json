@@ -7,7 +7,21 @@
     },
     "save": "enregistrer",
     "no_filter": "no filter",
-    "choose_galerie": "Choisir une image dans la galerie"
+    "choose_galerie": "Choisir une image dans la galerie",
+    "Are_you_sure": {
+      "Export": {
+        "title": "Etes vous sur de vouloir exporter les photos ?",
+        "text": "Les photos seront télécharger au format zip, afin de prendre le moins de place possible.",
+        "checkbox": "ajouter les originaux (sans filtre)"
+      },
+      "Delete": {
+        "title": "Etes vous sur de vouloir supprimer votre compte ?",
+        "text": "Vous ne pourrez pas revenir en arrière !"
+      },
+      "Logout": {
+        "title": "Etes vous sur de vouloir vous déconnecter ?"
+      }
+    }
   },
   "General": {
     "app_name": "WeddingMoment"
@@ -97,6 +111,10 @@
     "tab_title_1": "information personnel",
     "tab_title_2": "général",
     "tab_title_3": "compte",
+    "Username": {
+      "title": "nom d'utilisateur",
+      "label": "Veuillez entrer votre nom d'utilisateur"
+    },
     "username": "nom d'utilisateur",
     "Languages": {
       "language": "Langue",

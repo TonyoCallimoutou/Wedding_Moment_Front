@@ -146,8 +146,19 @@ export class UserModelService {
   /**
    * Exporter les photos
    */
-  public exportPicture() : Observable<number> {
-    return this.storageModelService.exportPicture();
+  public exportPicture() {
+    this.loaderService.setLoader(true,2000, "Exportation des photos en cours");
+    this.storageModelService.exportPicture()
+      .pipe(take(1))
+      .subscribe(value => {
+        console.log("value export picture :", value)
+      }, (error) => {
+        this.loaderService.setLoader(false);
+        console.log("error export picture :", error)
+      }, () => {
+        this.loaderService.setLoader(false);
+        console.log("export success")
+      });
   }
 
   /**

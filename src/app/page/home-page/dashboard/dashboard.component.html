@@ -94,7 +94,7 @@
 
 <ng-template #dialogEditMode>
   <div class="dialog_edit_mode">
-    <h1 class="font-title-48" style="margin-top: 2rem"> {{ 'Home.Edit_mode_dialog.title' | translate | capitalizeFirstLetter }}</h1>
+    <h1 mat-dialog-title class="font-title-48" style="margin-top: 2rem"> {{ 'Home.Edit_mode_dialog.title' | translate | capitalizeFirstLetter }}</h1>
     <p>
       {{ 'Home.Edit_mode_dialog.presentation' | translate | capitalizeFirstLetter }}
       {{event.eventDate | date: 'dd/MM/yyyy'}}

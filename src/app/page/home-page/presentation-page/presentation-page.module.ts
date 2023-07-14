@@ -11,6 +11,7 @@ import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdo
 import {FormsModule} from "@angular/forms";
 import {AutosizeModule} from "ngx-autosize";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MatButtonModule} from "@angular/material/button";
         DropdownMenuModule,
         FormsModule,
         AutosizeModule,
-        MatButtonModule
+        MatButtonModule,
+        MatDialogModule
     ],
   exports: [PresentationPageComponent],
   providers: [EventModelService, UserModelService]

@@ -15,6 +15,8 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {AuthModule} from "../../../shared/component/auth/auth.module";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
@@ -38,7 +40,9 @@ import {MatButtonModule} from "@angular/material/button";
     NgForOf,
     AuthModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule,
+    MatDialogModule
   ],
   exports: [UserPageComponent],
   providers: [UserModelService]

@@ -11,25 +11,27 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
+import {MatDialogModule} from "@angular/material/dialog";
 
 
 @NgModule({
   declarations: [
     DashboardComponent
   ],
-  imports: [
-    CommonModule,
-    PostPageModule,
-    UserPageModule,
-    PresentationPageModule,
-    PlanTablePageModule,
-    MenuPageModule,
-    MatTabsModule,
-    MatIconModule,
-    MatToolbarModule,
-    TranslateModule,
-    CapitalizeFirstLetterPipeModule
-  ]
+    imports: [
+        CommonModule,
+        PostPageModule,
+        UserPageModule,
+        PresentationPageModule,
+        PlanTablePageModule,
+        MenuPageModule,
+        MatTabsModule,
+        MatIconModule,
+        MatToolbarModule,
+        TranslateModule,
+        CapitalizeFirstLetterPipeModule,
+        MatDialogModule
+    ]
 })
 export class DashboardModule {
 }

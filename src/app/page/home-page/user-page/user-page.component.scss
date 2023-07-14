@@ -55,13 +55,13 @@ mat-expansion-panel {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   height: 100%;
 
   app-auth {
     display: flex;
     flex-direction: column;
     width: 85%;
-    margin: 2rem;
   }
 
 }

@@ -10,6 +10,7 @@ import {EventModelService} from "../../viewModel/event-model.service";
 import {User} from '../../model/user.model';
 import {StorageModelService} from "../../viewModel/storage-model.service";
 import {CookieHelper} from "../../shared/service/cookie.helper";
+import {LoaderService} from "../../shared/service/loader.service";
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +25,7 @@ export class AuthService {
     public storageModelService: StorageModelService,
     public afAuth: AngularFireAuth,
     public router: Router,
+    public loaderService: LoaderService,
   ) {
     /* Saving user data in Cookies when
     logged in and setting up null when logged out */
@@ -198,18 +200,21 @@ export class AuthService {
   }
 
   passWithoutSignIn() {
+    this.loaderService.setLoader(true,2000);
     this.userModelService.getUserFromDB("0")
       .pipe(take(1))
       .subscribe((user: User) => {
         CookieHelper.set(LocalModel.USER, JSON.stringify(user));
         this.userModelService.initUserData();
         this.eventModelService.initUserData();
+        this.loaderService.setLoader(false);
         window.location.reload();
       });
   }
 
   // Sign out
   SignOut() {
+    this.loaderService.setLoader(true,2000, "Déconnexion");
     return this.afAuth.signOut().then(() => {
       CookieHelper.set(LocalModel.TOKEN, '');
       this.passWithoutSignIn()
@@ -218,6 +223,7 @@ export class AuthService {
 
   // Remove user
   RemoveUser() {
+    this.loaderService.setLoader(true,2000, "Suppression du compte");
     this.userModelService.removeUser()
       .pipe(take(1))
       .subscribe((data: any) => {

@@ -132,7 +132,7 @@
       mat-raised-button
       class="font-default-20"
       *ngIf="!isRegister"
-      (click)="authService.GoogleAuth()"
+      (click)="form.get('cgu')?.valid ? authService.GoogleAuth() : form.get('cgu')?.markAsTouched();"
     >
       {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
     </button>
