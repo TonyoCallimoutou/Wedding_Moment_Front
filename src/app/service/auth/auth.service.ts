@@ -72,6 +72,7 @@ export class AuthService {
               CookieHelper.set(LocalModel.USER, JSON.stringify(user));
               this.userModelService.initUserData();
               this.eventModelService.initUserData();
+              window.location.reload();
             });
         }
 
