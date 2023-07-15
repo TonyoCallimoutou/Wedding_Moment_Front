@@ -2,9 +2,8 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 
-
-import { MatSnackBar } from "@angular/material/snack-bar"
-import {QRCodeElementType} from "angularx-qrcode";
+import {MatSnackBar} from "@angular/material/snack-bar"
+import {NgxQrcodeElementTypes} from "@techiediaries/ngx-qrcode";
 import html2canvas from "html2canvas";
 
 
@@ -15,7 +14,7 @@ import html2canvas from "html2canvas";
 })
 export class DialogQrCodeComponent {
 
-  public elementType: QRCodeElementType = "canvas" as QRCodeElementType
+  public elementType: NgxQrcodeElementTypes = "canvas" as NgxQrcodeElementTypes
   public qrCode: string = '';
   public eventCode: string = '';
   public qrCodeColorDark: string = '';

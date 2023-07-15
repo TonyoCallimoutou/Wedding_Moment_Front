@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
+import {OptionStringIcon} from "../../../model/option-string-icon.model";
 
 @Component({
   selector: 'app-generic-image-cropper',

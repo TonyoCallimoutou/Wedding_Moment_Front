@@ -1,4 +1,4 @@
-interface OptionStringIcon {
+export interface OptionStringIcon {
   optionText: string;
   icon: string;
 }

@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {OptionStringIcon} from "../../../model/option-string-icon.model";
 
 @Component({
   selector: 'app-dropdown-menu',

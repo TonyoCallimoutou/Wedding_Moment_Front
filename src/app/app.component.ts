@@ -8,7 +8,6 @@ import {LoaderModel, LoaderService} from "./shared/service/loader.service";
 import {SnackbarService} from "./shared/service/snackbar.service";
 
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

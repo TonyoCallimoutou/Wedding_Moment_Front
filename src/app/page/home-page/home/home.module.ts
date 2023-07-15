@@ -15,7 +15,6 @@ import {AutosizeModule} from "ngx-autosize";
 import {MatIconModule} from "@angular/material/icon";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {ShareButtonModule} from "../../../shared/component/share-button/share-button.module";
-import {QRCodeModule} from "angularx-qrcode";
 import {ZXingScannerModule} from "@zxing/ngx-scanner";
 
 
@@ -40,7 +39,6 @@ import {ZXingScannerModule} from "@zxing/ngx-scanner";
         MatIconModule,
         ClipboardModule,
         ShareButtonModule,
-        QRCodeModule,
         ZXingScannerModule,
     ]
 })

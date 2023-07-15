@@ -42,6 +42,14 @@
             "customWebpackConfig": {
               "path": "./custom-webpack.config.ts"
             },
+            "aot": true,
+            "allowedCommonJsDependencies": [
+              "moment",
+              "qrcode",
+              "fabric",
+              "jszip",
+              "html2canvas"
+            ],
             "outputPath": "dist/wedding-moment",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -62,8 +70,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "1mb",
-                  "maximumError": "2mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "3mb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -2,7 +2,13 @@
   <div class="dialog_qr_code">
     <div class="qr_code-container">
       <p class="font-default-16 qr_code-text">{{"Home.qr_code" | translate | capitalizeFirstLetter}}</p>
-      <qrcode #parent [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'" (dblclick)="isMenuAfficher = true"></qrcode>
+      <ngx-qrcode
+        #parent
+        [elementType]="elementType"
+        [value]="qrCode"
+        [width]="256"
+        (dblclick)="isMenuAfficher = true">
+      </ngx-qrcode>
       <button mat-raised-button *ngIf="isMenuAfficher" (click)="saveAsImage(parent)">
         <mat-icon>download</mat-icon>
         {{"Home.download_qr_code" | translate | capitalizeFirstLetter}}
@@ -10,7 +16,12 @@
 
     </div>
     <mat-card id="qr_code_download" style="display: none;" >
-      <qrcode #parent [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      <ngx-qrcode
+        #parent
+        [elementType]="elementType"
+        [value]="qrCode"
+        [width]="256">
+      </ngx-qrcode>
       <mat-card-content>
         <p class="font-default-16">{{qrCode}}</p>
         <p class="font-default-16">Code : {{eventCode}}</p>

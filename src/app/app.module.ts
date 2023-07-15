@@ -19,17 +19,20 @@ import {GenericDialogComponent} from './shared/component/generic-dialog/generic-
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
-import {FormulaireInscriptionModule} from "./page/website/formulaire-inscription/formulaire-inscription.module";
 import {AuthInterceptor} from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HomeModule} from "./page/home-page/home/home.module";
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
-import {MomentDateAdapter} from "@angular/material-moment-adapter";
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MatNativeDateModule,
+  NativeDateAdapter
+} from "@angular/material/core";
 import {DatePipe} from "@angular/common";
-import { CguDialogComponent } from './shared/component/cgu-dialog/cgu-dialog.component';
+import {CguDialogComponent} from './shared/component/cgu-dialog/cgu-dialog.component';
 import {DialogQrCodeComponent} from "./shared/component/dialog-qr-code/dialog-qr-code.component";
-import {QRCodeModule} from "angularx-qrcode";
 import {DialogLinkComponent} from "./shared/component/dialog-link/dialog-link.component";
 import {ShareButtonModule} from "./shared/component/share-button/share-button.module";
 import {ClipboardModule} from "@angular/cdk/clipboard";
@@ -37,19 +40,19 @@ import {MatCardModule} from "@angular/material/card";
 import {CapitalizeFirstLetterPipeModule} from "./shared/pipes/capitalize-first-lettre.module";
 import {MatMenuModule} from "@angular/material/menu";
 import {LoaderModule} from "./shared/component/loader/loader.module";
+import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
 const MY_DATE_FORMAT = {
   parse: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+    dateInput: 'dd/MM/yyyy',
   },
   display: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY'
+    dateInput: 'dd/MM/yyyy',
+    monthYearLabel: 'MMMM yyyy',
+    dateA11yLabel: 'dd',
+    monthYearA11yLabel: 'MMMM yyyy'
   }
 };
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,8 +72,9 @@ const MY_DATE_FORMAT = {
                 deps: [HttpClient]
             }
         }),
+        MatNativeDateModule,
+        NgxQRCodeModule,
         BrowserAnimationsModule,
-        FormulaireInscriptionModule,
         DashboardModule,
         MatDialogModule,
         MatIconModule,
@@ -83,7 +87,6 @@ const MY_DATE_FORMAT = {
         MatButtonModule,
         MatSnackBarModule,
         HomeModule,
-        QRCodeModule,
         ShareButtonModule,
         ClipboardModule,
         MatCardModule,
@@ -105,7 +108,7 @@ const MY_DATE_FORMAT = {
       useClass: ResponseInterceptor,
       multi: true
     },
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
   ],
   bootstrap: [AppComponent]

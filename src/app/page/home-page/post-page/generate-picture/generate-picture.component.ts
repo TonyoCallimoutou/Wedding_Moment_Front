@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {fabric} from "fabric";
-import html2canvas from "html2canvas";
 import {PostModelService} from "../../../../viewModel/post-model.service";
-import {ImageCroppedEvent} from "ngx-image-cropper";
 
 @Component({
   selector: 'app-generate-picture',

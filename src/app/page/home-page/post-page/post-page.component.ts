@@ -3,6 +3,7 @@ import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
+import {OptionStringIcon} from 'src/app/model/option-string-icon.model';
 
 
 @Component({
