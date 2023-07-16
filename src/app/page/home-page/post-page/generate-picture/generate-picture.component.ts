@@ -33,6 +33,8 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   public canvas!: fabric.Canvas;
   public image!: fabric.Image;
 
+
+  private videoStream: MediaStream | null = null;
   public maxHeight: number = 500;
   public maxWidth: number = 500;
 
@@ -94,7 +96,16 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     this.goBack.emit(true)
   }
 
+  disableCamera() {
+    if (this.videoStream) {
+      this.videoStream.getTracks().forEach(track => track.stop());
+      this.videoStream = null;
+    }
+
+  }
+
   reinit() {
+    this.disableCamera();
     this.isPictureChoose = false;
     this.tabSelector = 0;
     this.canvas.clear();
@@ -105,6 +116,9 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   setTabSelector(index: number) {
     this.reinit();
     this.tabSelector = index;
+    if (index === 0) {
+      this.initializeCamera();
+    }
   }
 
   initializeCamera() {
@@ -113,6 +127,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     // Demande à l'utilisateur d'accorder la permission d'accès à la caméra
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(stream => {
+        this.videoStream = stream;
         video.srcObject = stream;
         video.play();
       })
@@ -160,7 +175,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   }
 
   resetCamera() {
-    this.isPictureChoose = false;
+    this.reinit();
     this.initializeCamera();
   }
 
@@ -195,7 +210,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       this.imageBase64 = this.canvas.toDataURL();
     }
 
-    video.srcObject = null; // Arrête la capture vidéo
+    this.disableCamera();
   }
 
   applyFilter(filter: string) {

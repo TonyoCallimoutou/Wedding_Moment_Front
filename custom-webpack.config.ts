@@ -6,8 +6,7 @@ config();
 module.exports = {
   plugins: [
     new EnvironmentPlugin([
-      'IP_VM',
-      'PORT_BACK',
+      'BACK_HOST',
       'COOKIE_EXPIRE_DAYS',
       'DOMAIN',
       'FIREBASE_API_KEY',

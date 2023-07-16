@@ -31,7 +31,6 @@
     "adm-zip": "^0.5.10",
     "cypress": "^12.10.0",
     "date-fns": "^2.30.0",
-    "dom-to-image": "^2.6.0",
     "dotenv": "^16.0.3",
     "fabric": "^5.3.0",
     "firebase": "^9.15.0",

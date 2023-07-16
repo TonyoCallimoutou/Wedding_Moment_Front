@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  Back_Host: 'http://' + process.env['IP_VM'] as string + ':' + process.env['PORT_BACK'] as string,
+  Back_Host: process.env['BACK_HOST'] as string,
 
   firebaseConfig: {
     apiKey: process.env['FIREBASE_API_KEY'] as string,

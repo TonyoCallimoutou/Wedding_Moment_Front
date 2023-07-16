@@ -1,145 +1,142 @@
 {
-  "Utils": {
-    "Errors": {
-      "required": "ce champ est obligatoire",
-      "email": "veuillez entrer une adresse email valide",
-      "different_password": "Les mots de passe sont différents"
-    },
-    "save": "enregistrer",
-    "no_filter": "no filter",
-    "choose_galerie": "Choisir une image dans la galerie",
-    "Are_you_sure": {
-      "Export": {
-        "title": "Etes vous sur de vouloir exporter les photos ?",
-        "text": "Les photos seront télécharger au format zip, afin de prendre le moins de place possible.",
-        "checkbox": "ajouter les originaux (sans filtre)"
-      },
-      "Delete": {
-        "title": "Etes vous sur de vouloir supprimer votre compte ?",
-        "text": "Vous ne pourrez pas revenir en arrière !"
-      },
-      "Logout": {
-        "title": "Etes vous sur de vouloir vous déconnecter ?"
-      }
-    }
-  },
   "General": {
     "app_name": "WeddingMoment"
   },
+  "Utils": {
+    "Errors": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "different_password": "Passwords do not match"
+    },
+    "save": "Save",
+    "no_filter": "No filter",
+    "choose_galerie": "Choose an image from the gallery",
+    "Are_you_sure": {
+      "Export": {
+        "title": "Are you sure you want to export the photos?",
+        "text": "The photos will be downloaded in a zip format to minimize space usage.",
+        "checkbox": "Add originals (without filters)"
+      },
+      "Delete": {
+        "title": "Are you sure you want to delete your account?",
+        "text": "This action is irreversible!"
+      },
+      "Logout": {
+        "title": "Are you sure you want to log out?"
+      }
+    }
+  },
   "Home": {
-    "enter_code": "entrer le code",
-    "scan_qr_code": "scanner le qr code",
-    "need_auth": "vous devez vous authentifier ou creer un compte",
-    "set_event": "Ravie de vous revoir, vous avez un grand événement prévu pour le {{eventDate}}.\nPour le moment vous pouvez acceder a l'applicaiton en mode prévisualisation pour le moment",
-    "event_not_editable": "Ravie de vous revoir, j'espere que tout c'est bien dérouler, vous ne pouvez plus modifier l'application, mais vous pouvez revoir les photos, et même les téléchargé si vous le souhaitez !",
-    "enter": "entrer",
-    "generate_link_code": "generer un lien",
-    "title_share_link": "Mon Mariage avec WeddingMoment",
-    "message_share_link": "Bonjour, je te partage le lien vers l'application de mon mariage, cette application sera uniquement disponible le jour de mon mariage, alors je compte sur toi.\nSuit ce lien ou entre le code suivant : {{code}}",
-    "generate_qr_code": "generer un qr code",
-    "download_qr_code": "Telecharger le QR Code",
-    "qr_code": "Une fois scanner ce QR Code dirige vos invité vers votre application.\nNous vous conseillons de l'imprimer et le placer a la vue de tous durant votre mariage.",
-    "logout": "deconnexion",
-    "event_presentation": "presentation",
-    "event_date": "date de l'evenement",
-    "create_event": "voulez vous creer un evenenent ",
-    "create_event_button": "CREATE EVENT",
+    "enter_code": "Enter the code",
+    "scan_qr_code": "Scan the QR code",
+    "need_auth": "You need to authenticate or create an account",
+    "set_event": "Welcome back! You have a major event planned for {{eventDate}}.\nFor now, you can access the application in preview mode.",
+    "event_not_editable": "Welcome back! I hope everything went well. You can no longer edit the application, but you can view and even download the photos if you wish!",
+    "enter": "Enter",
+    "generate_link_code": "Generate a link",
+    "title_share_link": "My Wedding with WeddingMoment",
+    "message_share_link": "Hello, I'm sharing the link to my wedding application with you. This application will only be available on the day of my wedding, so I'm counting on you. Follow this link or enter the following code: {{code}}",
+    "generate_qr_code": "Generate a QR code",
+    "download_qr_code": "Download the QR Code",
+    "qr_code": "Once scanned, this QR code will direct your guests to your application. We recommend printing it and placing it where everyone can see it during your wedding.",
+    "logout": "Log out",
+    "event_presentation": "Presentation",
+    "event_date": "Event Date",
+    "create_event": "Do you want to create an event?",
+    "create_event_button": "Create Event",
     "Text": {
-      "bienvenue": "bienvenue sur WeddingMoment",
-      "presentation": "afin d'être prêt le jour J, j'ai besoin de quelque information.\nSachez qu'après avoir fourni ces informations, vous aurez accès à l'application uniquement afin de la compléter (entrer le plan de table, ainsi que le menu).\nL'application sera disponible pour vos invités le jour J, en attendant, vous pourrez modifier cette application, comme bon, vous semble.",
-      "explain_text_presentation": "ce message sera affiché sur la page d'accueil de l'application.\nDe plus lors de la prévisualisation de l'application, vous pourrez remodifié ce texte ainsi que sa taille.",
-      "explain_date": "j'ai besoin de la date exacte de votre mariage.\nCar l'application sera disponible pour vos convives uniquement à cette date.\nVous ne pourrez plus la modifier par la suite, donc ne faites pas d'erreur."
+      "bienvenue": "Welcome to WeddingMoment",
+      "presentation": "To be ready on the big day, I need some information. After providing this information, you will only have access to the application to complete it (enter seating arrangements and menu). The application will be available to your guests on the big day. In the meantime, you can modify this application as you see fit.",
+      "explain_text_presentation": "This message will be displayed on the application's home page. Additionally, during the application preview, you can modify this text and its size.",
+      "explain_date": "I need the exact date of your wedding, as the application will be available to your guests only on that date. You won't be able to modify it afterwards, so please be careful."
     },
     "Edit_mode_dialog": {
-      "title": "Bienvenue dans la prévisualisation",
-      "presentation": "Vous êtes dans la prévisualisation de l'application.\nVous pouvez faire toutes les modifications nécessaires.\n\nVotre Application sera disponible à vos invités uniquement le jour de votre mariage :",
-      "accueil": "Page d'accueil",
-      "accueil_presentation_text": "Modifier le texte de présentation",
-      "accueil_import_picture": "Ajouter une photo de fond pour votre application",
-      "menu": "Menu de la soirée",
-      "menu_modification": "Ajouter / Modifier le menu de la soirée menu",
-      "plan_table": "Plan de table de la soirée",
-      "plan_table_modification": "Ajouter / Modifier le plan de table de la soirée",
-      "plan_table_invite": "Ajouter / Modifier les invités de la soirée",
-      "photo": "Photo de la soirée",
-      "photo_explain": "C'est ici que vos invité (et vous) pourront poster des photos de la soirée",
-      "parametre": "Paramètre du compte",
-      "parametre_explain": "Vous pouvez avoir les information essentiel de votre soirée.",
-      "parametre_export": "C'est ici que vous pourrez récuperer les photos que vos invité auront poster."
+      "title": "Welcome to the preview",
+      "presentation": "You are in the application preview. You can make any necessary modifications.\n\nYour application will only be available to your guests on your wedding day:",
+      "accueil": "Home page",
+      "accueil_presentation_text": "Modify the presentation text",
+      "accueil_import_picture": "Add a background photo to your application",
+      "menu": "Evening menu",
+      "menu_modification": "Add/Modify the evening menu",
+      "plan_table": "Seating arrangement",
+      "plan_table_modification": "Add/Modify the seating arrangement",
+      "plan_table_invite": "Add/Modify the evening's guests",
+      "photo": "Event photos",
+      "photo_explain": "This is where your guests (and you) can post photos from the event",
+      "parametre": "Account settings",
+      "parametre_explain": "You can find essential information about your event here.",
+      "parametre_export": "This is where you can retrieve the photos your guests have posted."
     }
   },
   "Auth": {
-    "sign_in" : "sign In",
-    "register" : "register",
-    "user_name" : "nom",
-    "email" : "email",
-    "password" : "password",
-    "verify_password" : "password",
-    "log_in" : "log in",
-    "log_in_google" : "log in with Google",
-    "forgot_password" : "forgot Password ?",
-    "create_account" : "create account",
-    "auth" : "authentification",
-    "auth_required": "Veuillez vous authentifié pour accéder aux photos"
+    "sign_in" : "Sign In",
+    "register" : "Register",
+    "user_name" : "Name",
+    "email" : "Email",
+    "password" : "Password",
+    "verify_password" : "Verify Password",
+    "log_in" : "Log In",
+    "log_in_google" : "Log in with Google",
+    "forgot_password" : "Forgot Password?",
+    "create_account" : "Create Account",
+    "auth" : "Authentication",
+    "auth_required": "Please authenticate to access the photos"
   },
   "Presentation": {
     "Option": {
-      "modify_presentation_text": "Modifier le texte de présentation",
-      "import_picture": "Importer une image"
+      "modify_presentation_text": "Modify the presentation text",
+      "import_picture": "Import an image"
     }
   },
   "Menu": {
-    "title" : "menu",
-    "add_menu" : "ajouter un menu",
-    "placeholder_categorie" : "Entrée, Plat, Dessert, ...",
-    "placeholder_description" : "description du menu"
+    "title" : "Menu",
+    "add_menu" : "Add a menu",
+    "placeholder_categorie" : "Starter, Main Course, Dessert, ...",
+    "placeholder_description" : "Menu description"
   },
   "Posts": {
-    "list" : "liste",
-    "grid" : "grille",
-    "create_post" : "creer un post"
+    "list" : "List",
+    "grid" : "Grid",
+    "create_post" : "Create a post"
   },
   "Plan_table" : {
-    "search_invite" : "Recherche un invité",
+    "search_invite" : "Search for a guest",
     "Option": {
-      "add_table" : "Ajouter une table",
-      "set_table" : "Modifier une table"
+      "add_table" : "Add a table",
+      "set_table" : "Modify a table"
     }
   },
   "Users": {
-    "nbr_of_post": "posts",
-    "tab_title_1": "information personnel",
-    "tab_title_2": "général",
-    "tab_title_3": "compte",
+    "nbr_of_post": "Posts",
+    "tab_title_1": "Personal Information",
+    "tab_title_2": "General",
+    "tab_title_3": "Account",
     "Username": {
-      "title": "nom d'utilisateur",
-      "label": "Veuillez entrer votre nom d'utilisateur"
+      "title": "Username",
+      "label": "Please enter your username"
     },
-    "username": "nom d'utilisateur",
+    "username": "Username",
     "Languages": {
-      "language": "Langue",
-      "title" : "Choisir la langue",
-      "french" : "Français",
-      "english" : "Englais"
+      "language": "Language",
+      "title" : "Choose a language",
+      "french" : "French",
+      "english" : "English"
     },
-    "privacy": "confidentialité",
-    "push_notification": "notification push",
+    "privacy": "Privacy",
+    "push_notification": "Push Notifications",
     "Condition_utilisation": {
-      "title": "condition d'utilisation",
-      "explain": "En cochant cette case vous acceptez les conditions d'utilisation de l'application"
+      "title": "Terms of Use",
+      "explain": "By checking this box, you accept the application's terms of use"
     },
-    "export": "Exporter les images",
-    "logout": "deconnexion",
-    "delete_account": "supprimer le compte"
+    "export": "Export Images",
+    "logout": "Log out",
+    "delete_account": "Delete Account"
   },
   "Inscription": {
     "Errors": {
-      "required": "ce champs est requis",
-      "patternDate": "doit etre au format JJ/MM/AAAA",
-      "superieur_date_jour": "doit etre superieur a la date du jour"
-    },
-    "stepper_presentation": "Presentation",
-    "stepper_menu": "Menu",
-    "stepper_plan_table": "Plan table"
+      "required": "This field is required",
+      "patternDate": "Must be in the format DD/MM/YYYY",
+      "superieur_date_jour": "Must be greater than the current date"
+    }
   }
 }
