@@ -13,6 +13,7 @@ import {Share} from "../../../shared/component/share-button/share-button.compone
 import {TranslateService} from "@ngx-translate/core";
 import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
 import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
+import {LoaderService} from "../../../shared/service/loader.service";
 
 @Component({
   selector: 'app-home',
@@ -49,6 +50,7 @@ export class HomeComponent{
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
     private translate: TranslateService,
+    private loaderService: LoaderService,
   ) {
 
     this.formInvite = this.fb.group({
@@ -138,8 +140,9 @@ export class HomeComponent{
       .pipe(take(1))
       .subscribe((data: EventModel) => {
         if (!!data) {
-
+          this.loaderService.setLoader(true, 1000);
           this.router.navigate(['dashboard', data.eventCode ]);
+          this.loaderService.setLoader(false);
         }
         else {
           this.snackbarService.showSnackbar('error','Aucun événement trouvé');
