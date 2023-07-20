@@ -32,12 +32,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     ) {
     CookieHelper.initialize(cookieService);
-    let language = this.cookieService.get(LocalModel.LANGUAGE) ? this.cookieService.get(LocalModel.LANGUAGE) : translate.getBrowserLang();
+    let language = CookieHelper.get(LocalModel.LANGUAGE) ? CookieHelper.get(LocalModel.LANGUAGE) : translate.getBrowserLang();
     language = language ? language : 'fr';
     translate.setDefaultLang(language);
     translate.use(language);
 
-    this.cookieService.set(LocalModel.LANGUAGE, language);
+    CookieHelper.set(LocalModel.LANGUAGE, language);
 
     this.listenLoader();
   }

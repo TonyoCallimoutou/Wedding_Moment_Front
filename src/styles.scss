@@ -14,6 +14,13 @@
 
 @include mat.core();
 
+/* CSS pour masquer la barre de navigation sur les iPhones */
+@supports (padding: env(safe-area-inset-top)) {
+  body {
+    padding-top: env(safe-area-inset-top); /* iOS 11.2+ */
+  }
+}
+
 $primary: #C7AA81;
 $primary-light: #FBDCB1;
 $primary-dark: #644E29;

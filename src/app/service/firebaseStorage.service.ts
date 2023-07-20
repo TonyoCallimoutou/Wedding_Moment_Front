@@ -115,8 +115,8 @@ export class FirebaseStorageService {
     });
   }
 
-  public deletePictureFromStorage(downloadUrl: string) {
-    this.afStorage.storage.refFromURL(downloadUrl).delete();
+  public deletePictureFromStorage(downloadUrl: string) : Promise<any> {
+    return this.afStorage.storage.refFromURL(downloadUrl).delete();
   }
 
 

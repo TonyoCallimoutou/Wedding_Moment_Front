@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
 
   ) {
+    this.event = this.eventModelService.getActualEvent();
   }
 
   ngOnInit() {
@@ -66,56 +67,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe(params => {
 
-        if (!params['id'] && !this.event) {
-          this.router.navigate(['*'])
+        // params null && event null
+        if (!params['id']) {
+          this.router.navigate(['home-page'])
         }
-        else if (!!params['id'] && !!parseInt(params['id'])) {
+        else {
           this.eventModelService.goToEventWithCode(params['id'])
             .pipe(take(1))
             .subscribe(event => {
               if (event) {
                 this.eventModelService.goToEvent(event);
-
-                this.initData();
-
-                this.initUser();
-
-                this.initMenu();
-
-                this.initPost();
-
-                this.initPlanTable();
-              }
-              else {
+                this.initAll();
+              } else {
                 this.router.navigate(['home-page'])
               }
             });
-        }
-        else if (!params['id'] && this.event && this.event.eventId) {
-          this.router.navigate(['.', this.event.eventCode]);
-          this.eventModelService.goToEventWithCode(this.event.eventCode)
-            .pipe(take(1))
-            .subscribe(event => {
-              if (event) {
-                this.eventModelService.goToEvent(event);
-
-                this.initData();
-
-                this.initUser();
-
-                this.initMenu();
-
-                this.initPost();
-
-                this.initPlanTable();
-              }
-              else {
-                this.router.navigate(['home-page'])
-              }
-            })
-        }
-        else {
-          this.router.navigate(['home-page'])
         }
 
     });
@@ -123,7 +89,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.onDestroy$.next(true);
+    this.eventModelService.reinitAllObservable();
+    this.userModelService.reinitAllObservable();
+    this.postModelService.reinitAllObservable();
     this.onDestroy$.unsubscribe();
+  }
+
+  initAll() {
+
+    this.initData();
+
+    this.initUser();
+
+    this.initMenu();
+
+    this.initPost();
+
+    this.initPlanTable();
   }
 
   initData() {
@@ -188,7 +170,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: Post[]) => {
-          if (this.posts.length !== data.length) {
+          if (this.posts !== data) {
             this.posts = data;
             this.arrangeImages();
             let postsOfUser = this.posts.filter((post) => post.userId === this.userModelService.getCurrentUser().userId)

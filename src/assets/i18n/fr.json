@@ -21,6 +21,9 @@
         "title": "Êtes-vous sûr de vouloir supprimer votre compte ?",
         "text": "Cette action est irréversible !"
       },
+      "Delete-Post": {
+        "title": "Êtes-vous sûr de vouloir supprimer votre post ?"
+      },
       "Logout": {
         "title": "Êtes-vous sûr de vouloir vous déconnecter ?"
       }

@@ -27,7 +27,7 @@ export class PostService {
     return this.http.post(`${baseUrl}/setter`, data);
   }
 
-  deletePost(id: number): Observable<any> {
-    return this.http.delete(`${baseUrl}/${id}`);
+  deletePost(post: Post): Observable<any> {
+    return this.http.put(`${baseUrl}/Delete-Post/${post.postId}`,post);
   }
 }

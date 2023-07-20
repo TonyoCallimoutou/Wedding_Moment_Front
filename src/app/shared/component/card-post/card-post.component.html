@@ -11,7 +11,7 @@
   <div class="footer" *ngIf="isActivate">
     <app-like-button
       (click)="reactPost(post)"
-      [countLike]="post.countReact"
+      [countReact]="post.countReact"
       [isLike]="reactPostId.includes(post.postId)"
     >
     </app-like-button>

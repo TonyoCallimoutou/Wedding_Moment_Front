@@ -82,7 +82,6 @@ export class UserPageComponent {
     })
     let defaultLanguageCode = CookieHelper.get(LocalModel.LANGUAGE);
     this.selectedLanguage = this.languages.filter(language => language.code == defaultLanguageCode)[0];
-    console.log(this.selectedLanguage);
   }
 
   /**

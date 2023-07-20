@@ -141,6 +141,7 @@ export class EventModelService {
 
   goToEvent(event: EventModel) {
     this.event = event;
+    CookieHelper.set(LocalModel.EVENT, JSON.stringify(this.event));
     this.eventService.goToEvent(event);
 
     if(this.userData) {
@@ -154,16 +155,13 @@ export class EventModelService {
       .pipe(
         tap((event: EventModel) => {
           if (!!event) {
-            if (event.isActivate || event.userId === this.userData.userId) {
-              if (this.userData) {
-                this.isMaster = event.userId === this.userData.userId;
-              }
-              event.eventDate = new Date(event.eventDate);
-              this.isActivate = event.isActivate;
-              this.isEditable = this.isMaster && (this.isActivate || event.eventDate.toLocaleDateString() > new Date().toLocaleDateString());
-
-              this.isEditMode = this.isEditable && !this.isActivate;
+            this.isActivate = event.isActivate;
+            if (this.userData) {
+              this.isMaster = event.userId === this.userData.userId;
             }
+            event.eventDate = new Date(event.eventDate);
+            this.isEditable = this.isMaster && (this.isActivate || event.eventDate.toLocaleDateString() > new Date().toLocaleDateString());
+            this.isEditMode = this.isEditable && !this.isActivate;
           }
         }
       ));
@@ -292,7 +290,6 @@ export class EventModelService {
 
   // Remove Menu
   deleteMenu(menu: Menu) {
-    console.log(menu);
     if (menu.eventId == this.event.eventId && this.isMaster) {
       this.eventService.deleteMenu(menu)
         .pipe(take(1))
@@ -349,5 +346,11 @@ export class EventModelService {
           this.socketService.removeInvite(invite)
         })
     }
+  }
+
+  reinitAllObservable() {
+  this.listOfMenuObs$ = new BehaviorSubject<Menu[]>([]);
+  this.listOfTableInviteObs$ = new BehaviorSubject<TableInvite[]>([]);
+  this.event = null;
   }
 }

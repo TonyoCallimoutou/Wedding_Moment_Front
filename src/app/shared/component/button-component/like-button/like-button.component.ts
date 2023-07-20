@@ -8,6 +8,6 @@ import {Component, Input} from '@angular/core';
 export class LikeButtonComponent {
 
   @Input() isLike: boolean = false;
-  @Input() countLike: number = 0;
+  @Input() countReact: number = 0;
 
 }

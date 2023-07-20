@@ -222,4 +222,7 @@ export class UserModelService {
     }
   }
 
+  reinitAllObservable() {
+    this.listReactPostIdObs$ = new BehaviorSubject<number[]>([]);
+  }
 }

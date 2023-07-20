@@ -23,13 +23,7 @@ import {AuthInterceptor} from './service/auth/auth.interceptor';
 import {ResponseInterceptor} from "./service/auth/response.interceptor";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HomeModule} from "./page/home-page/home/home.module";
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-  MatNativeDateModule,
-  NativeDateAdapter
-} from "@angular/material/core";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {DatePipe} from "@angular/common";
 import {CguDialogComponent} from './shared/component/cgu-dialog/cgu-dialog.component';
 import {DialogQrCodeComponent} from "./shared/component/dialog-qr-code/dialog-qr-code.component";
@@ -42,17 +36,6 @@ import {MatMenuModule} from "@angular/material/menu";
 import {LoaderModule} from "./shared/component/loader/loader.module";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 
-const MY_DATE_FORMAT = {
-  parse: {
-    dateInput: 'dd/MM/yyyy',
-  },
-  display: {
-    dateInput: 'dd/MM/yyyy',
-    monthYearLabel: 'MMMM yyyy',
-    dateA11yLabel: 'dd',
-    monthYearA11yLabel: 'MMMM yyyy'
-  }
-};
 @NgModule({
   declarations: [
     AppComponent,
@@ -72,7 +55,6 @@ const MY_DATE_FORMAT = {
                 deps: [HttpClient]
             }
         }),
-        MatNativeDateModule,
         NgxQRCodeModule,
         BrowserAnimationsModule,
         DashboardModule,
@@ -108,8 +90,7 @@ const MY_DATE_FORMAT = {
       useClass: ResponseInterceptor,
       multi: true
     },
-    { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT }
+    { provide: MAT_DATE_LOCALE, useValue: 'fr-FR' }
   ],
   bootstrap: [AppComponent]
 })

@@ -58,21 +58,28 @@ export class AuthService {
       .signInWithEmailAndPassword(email, password)
       .then((result) => {
         if (result.user) {
-          this.userModelService.getUserFromDB(result.user.uid)
-            .pipe(take(1))
-            .subscribe((user: User) => {
-              if (!user.emailVerified && result.user?.emailVerified) {
-                this.userModelService.setUserIsVerified(user.userId)
-                  .pipe(take(1))
-                  .subscribe(() => {
-                    console.log("user : ", user.userId, ' is now verified')
-                  })
-              }
-              user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
-              CookieHelper.set(LocalModel.USER, JSON.stringify(user));
-              this.userModelService.initUserData();
-              this.eventModelService.initUserData();
-              window.location.reload();
+          let id = result.user.uid;
+          result.user.getIdToken(true)
+            .then((idToken: string) => {
+              CookieHelper.set(LocalModel.TOKEN, idToken);
+
+              this.userModelService.getUserFromDB(id)
+                .pipe(take(1))
+                .subscribe((user: User) => {
+                  if (!user.emailVerified && result.user?.emailVerified) {
+                    this.userModelService.setUserIsVerified(user.userId)
+                      .pipe(take(1))
+                      .subscribe(() => {
+                        console.log("user : ", user.userId, ' is now verified')
+                      })
+                  }
+
+                  user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
+                  CookieHelper.set(LocalModel.USER, JSON.stringify(user));
+                  this.userModelService.initUserData();
+                  this.eventModelService.initUserData();
+                  window.location.reload();
+                });
             });
         }
 

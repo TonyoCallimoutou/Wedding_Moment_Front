@@ -40,8 +40,6 @@ export class PostModelService {
 
     if (this.userData) {
 
-      this.initList();
-
       this.initListeningFromSocket();
     }
   }
@@ -66,7 +64,7 @@ export class PostModelService {
     const post : Post = {
       pictureUrl: "",
       eventId: this.eventId,
-      countLike: 0,
+      countReact: 0,
       userId: this.userData.userId,
       userName: this.userData.userName,
       photoUrl: this.userData.photoUrl,
@@ -103,12 +101,15 @@ export class PostModelService {
   // Remove Post
   public removePost(post: Post) {
     if (post.userId == this.userData.userId) {
-      this.storageModelService.deletePictureFromStorage(post.pictureUrl);
-      this.postService.deletePost(post.postId!)
-        .pipe(take(1))
-        .subscribe(data => {
-          this.socketService.removePost(post);
-        })
+      this.storageModelService.deletePictureFromStorage(post.pictureUrl).then(() => {
+        this.postService.deletePost(post)
+          .pipe(take(1))
+          .subscribe(data => {
+            this.socketService.removePost(post);
+          })
+      }).catch((error) => {
+        console.log(error);
+      });
     }
   }
 
@@ -167,5 +168,9 @@ export class PostModelService {
       });
       this.listOfPostObs$.next(this.listOfPost);
     });
+  }
+
+  reinitAllObservable() {
+   this.listOfPostObs$ = new BehaviorSubject<Post[]>([]);
   }
 }

@@ -36,6 +36,8 @@ export class PostPageComponent {
   public isTakePicture: boolean = false;
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
+  @ViewChild('dialogAreYouSureDeletePost') dialogAreYouSureDeletePost!: TemplateRef<any>;
+
 
   constructor(
     private postModelService: PostModelService,
@@ -71,7 +73,15 @@ export class PostPageComponent {
    * @param post
    */
   public removePost(post: Post) {
-    this.postModelService.removePost(post);
+    const dialogRef = this.dialog.open(GenericDialogComponent, {
+      data: {contentTemplate: this.dialogAreYouSureDeletePost},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.postModelService.removePost(post);
+      }
+    });
   }
 
   /**

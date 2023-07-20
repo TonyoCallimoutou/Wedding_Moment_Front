@@ -85,7 +85,7 @@ export class StorageModelService {
     return this.storageService.progress$;
   }
 
-  public deletePictureFromStorage(downloadUrl: string) {
-    this.storageService.deletePictureFromStorage(downloadUrl);
+  public deletePictureFromStorage(downloadUrl: string): Promise<any> {
+    return this.storageService.deletePictureFromStorage(downloadUrl);
   }
 }

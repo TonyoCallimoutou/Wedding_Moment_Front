@@ -65,6 +65,10 @@
 >
 </app-generate-picture>
 
+<ng-template #dialogAreYouSureDeletePost>
+  <h2 mat-dialog-title>{{ 'Utils.Are_you_sure.Delete-Post.title' | translate | capitalizeFirstLetter }}</h2>
+</ng-template>
+
 
 <div class="canNotAccess" *ngIf="!canAccess">
   <div class="card-login">

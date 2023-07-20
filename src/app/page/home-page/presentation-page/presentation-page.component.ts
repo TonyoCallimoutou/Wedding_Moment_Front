@@ -145,7 +145,7 @@ export class PresentationPageComponent implements OnInit{
    */
   save() {
     this.isSetPresentationText = false;
-    var presentation : EventModelPresentation = {
+    let presentation : EventModelPresentation = {
       presentationText: this.presentationText,
       presentationTextSize: this.fontSize,
       presentationTextAlign: this.textAlign,

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, EventEmitter, OnChanges, OnInit, Output, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, OnChanges, Output, Renderer2} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {CguService} from "../../../service/cgu";
@@ -8,7 +8,7 @@ import {CguService} from "../../../service/cgu";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements AfterViewInit, OnChanges, OnInit {
+export class LoginComponent implements AfterViewInit, OnChanges {
 
   @Output() goToForgotPassword: EventEmitter<boolean> = new EventEmitter<boolean>()
 
@@ -41,11 +41,6 @@ export class LoginComponent implements AfterViewInit, OnChanges, OnInit {
 
   ngOnChanges() {
     this.ngAfterViewInit();
-  }
-
-
-  ngOnInit(): void {
-    console.log("euh...")
   }
 
   ngAfterViewInit() {

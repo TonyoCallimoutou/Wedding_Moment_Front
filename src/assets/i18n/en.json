@@ -21,6 +21,9 @@
         "title": "Are you sure you want to delete your account?",
         "text": "This action is irreversible!"
       },
+      "Delete-Post": {
+        "title": "Are you sure you want to delete your Post?"
+      },
       "Logout": {
         "title": "Are you sure you want to log out?"
       }
