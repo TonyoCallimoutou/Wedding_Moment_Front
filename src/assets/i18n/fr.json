@@ -114,6 +114,7 @@
     "title" : "Plan de table",
     "add_plan_table" : "Ajouter une table",
     "search_invite" : "Rechercher un invité",
+    "add_invite" : "Ajouter un invité",
     "Option": {
       "add_table" : "Ajouter une table",
       "set_table" : "Modifier une table"

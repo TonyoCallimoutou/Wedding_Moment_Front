@@ -8,14 +8,29 @@
   align-items: center;
   gap: 3.5rem;
 
+  mat-icon {
+    color: var(--primary);
+  }
+
+  .buttons {
+    margin-bottom: -3.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .table-name {
     color: var(--primary-light);
   }
+
 
   .invite {
     display: block;
     color: var(--primary-light);
     text-align: center;
+  }
+  .champ-input {
+    display: flex;
   }
 
   input.invite {

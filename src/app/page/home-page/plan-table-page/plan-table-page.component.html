@@ -37,6 +37,7 @@
     <app-card-detail-plan-table
       class="dialog"
       *ngIf="tableInfos"
+      [isEditable]="isEditable"
       [tableInfos]="tableInfos"
       (addInvite)="addInvite($event)"
       (removeInvite)="removeInvite($event)"

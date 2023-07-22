@@ -1,30 +1,38 @@
 <div class="card">
+
+  <div class="buttons">
+    <mat-icon *ngIf="isEdit" class="button-modifier" (click)="retour()"> undo </mat-icon>
+    <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
+    <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
+  </div>
+
   <div>
     <p class="font-default-20 table-name"> {{ tableInfos.key.tableName }}</p>
-
-    <div>
-      <button *ngIf="isMaster" class="button-modifier" (click)="isEdit = !isEdit"> modifier </button>
-      <button *ngIf="isEdit" class="button-save" (click)="save()"> save </button>
-    </div>
   </div>
 
 
-  <div class="menu">
-    <div *ngFor="let item of tableInfos.value; index as i" >
-      <p *ngIf="!isEdit" class="invite font-default-20"> ~ {{ item.inviteName }} ~</p>
+  <div class="invites">
+    <div *ngFor="let item of editInviteList; index as i" >
+      <p *ngIf="!isEdit" class="invite font-default-20">{{ item.inviteName }}</p>
       <div class="champ-input"
            *ngIf="isEdit">
         <input
           class="invite font-default-20"
+          [style]="isEdit ? 'outline: auto' : 'outline: none'"
           (ngModelChange)="onInputChange(item.inviteId)"
           type="text"
           [(ngModel)]="item.inviteName">
-        <button class="button-remove" (click)="delete(item)"> remove </button>
+
+        <mat-icon class="button-remove" *ngIf="isEdit" (click)="delete(item)"> delete </mat-icon>
       </div>
 
     </div>
-    <div *ngIf="isEdit">
-      <input  *ngIf="isEdit" [(ngModel)]="invite" class="invite font-default-20" placeholder="+" >
-    </div>
+
+  </div>
+  <div *ngIf="isEdit" class="button_add">
+    <button mat-fab extended (click)="newInvite()">
+      <mat-icon>add</mat-icon>
+      {{ 'Plan_table.add_invite' | translate | capitalizeFirstLetter }}
+    </button>
   </div>
 </div>

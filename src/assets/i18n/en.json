@@ -114,6 +114,7 @@
     "title" : "seating plan",
     "add_plan_table" : "add a table",
     "search_invite" : "Search for a guest",
+    "add_invite" : "add a guest",
     "Option": {
       "add_table" : "Add a table",
       "set_table" : "Modify a table"
