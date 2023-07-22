@@ -6,7 +6,6 @@
   z-index: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
 
 
   app-dropdown-menu {
@@ -17,6 +16,7 @@
     position: sticky;
     top: 0;
     margin-top: 2rem;
+    align-self: center;
 
     ::ng-deep {
       mat-form-field div:first-child {
@@ -24,6 +24,12 @@
         opacity: 0.8;
       }
     }
+  }
+
+  app-card-plan-table-new {
+    display: flex;
+    justify-content: center;
+    opacity: 0.8;
   }
 
   .tableau {

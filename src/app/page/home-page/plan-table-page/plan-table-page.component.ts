@@ -24,8 +24,6 @@ export class PlanTablePageComponent implements OnChanges {
 
   public isEdit: boolean = false;
 
-  public tableEdit: TableInfos | null = null;
-
   public dropdownOptions: OptionStringIcon[] = [];
 
   myControl = new FormControl('');
@@ -33,7 +31,7 @@ export class PlanTablePageComponent implements OnChanges {
 
   tableInfos : TableInfos | null = null;
 
-  @ViewChild('dialogEditPlanTable') dialogEditPlanTable!: TemplateRef<any>;
+  @ViewChild('dialogPlanTableDetail') dialogPlanTableDetail!: TemplateRef<any>;
 
   constructor(
     private eventModelService: EventModelService,
@@ -86,7 +84,7 @@ export class PlanTablePageComponent implements OnChanges {
     }
     else if (option === this.dropdownOptions[1]) {
       this.openSnackBar()
-      //this.isEdit = true;
+      this.isEdit = true;
     }
   }
 
@@ -111,27 +109,19 @@ export class PlanTablePageComponent implements OnChanges {
     return this.inviteList.filter(invite => invite.inviteName.toLowerCase().includes(filterValue));
   }
 
-  editTable(table: TableInfos) {
-    this.isEdit = false;
-    this.tableEdit = table;
-
-    const dialogRef = this.dialog.open(GenericDialogComponent, {
-      data: {contentTemplate: this.dialogEditPlanTable },
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result)
-      }
-    });
-  }
-
   /**
    * Add new table
    * @param planTable
    */
   addPlanTable(planTable: PlanTable) {
-    this.eventModelService.createPlanTable(planTable);
+
+    if (!!planTable.planTableId) {
+      this.eventModelService.updatePlanTable(planTable);
+    }
+    else {
+      this.eventModelService.createPlanTable(planTable);
+    }
+
   }
 
   /**
@@ -142,6 +132,12 @@ export class PlanTablePageComponent implements OnChanges {
     this.myControl.setValue('');
     this.tableInfos = invites;
 
+    this.dialog.open(GenericDialogComponent, {
+      data: {
+        contentTemplate: this.dialogPlanTableDetail,
+        isDisplayButton: false
+      },
+    });
   }
 
   /**

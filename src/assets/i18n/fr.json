@@ -111,6 +111,8 @@
     "create_post" : "Créer un post"
   },
   "Plan_table" : {
+    "title" : "Plan de table",
+    "add_plan_table" : "Ajouter une table",
     "search_invite" : "Rechercher un invité",
     "Option": {
       "add_table" : "Ajouter une table",

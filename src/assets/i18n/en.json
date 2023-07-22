@@ -111,6 +111,8 @@
     "create_post" : "Create a post"
   },
   "Plan_table" : {
+    "title" : "seating plan",
+    "add_plan_table" : "add a table",
     "search_invite" : "Search for a guest",
     "Option": {
       "add_table" : "Add a table",

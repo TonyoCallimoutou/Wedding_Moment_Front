@@ -75,6 +75,10 @@ export class EventService {
     return this.http.post(`${baseUrl}/PlanTable/${this.currentEventId}`, data);
   }
 
+  updatePlanTable(data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/PlanTable/${this.currentEventId}`, data);
+  }
+
   getPlanTable(id: number): Observable<any> {
     return this.http.get(`${baseUrl}/PlanTable/${id}`);
   }

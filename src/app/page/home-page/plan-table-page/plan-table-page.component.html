@@ -1,12 +1,5 @@
 <div class="page" *ngIf="event" [ngStyle]="(!!event && event.pictureUrl) ? {'background-image': 'url('+ event.pictureUrl + ')'} : {'background-color': 'var(--secondary-light)'}" >>
 
-  <app-dropdown-menu
-    *ngIf="isEditable"
-    [matIcon]="'edit'"
-    [options]="dropdownOptions"
-    (optionSelected)="onOptionSelected($event)">
-  </app-dropdown-menu>
-
   <div class="searchBar">
     <form>
       <mat-form-field
@@ -32,27 +25,22 @@
     </form>
   </div>
 
-  <div class="tableau">
-    <app-card-plan-table-new
-      *ngFor="let infos of tableInviteMap | keyvalue"
-      [tableName]="infos.key.tableName"
-      [invites]="infos.value"
-      [selected]="tableInfos !== null && tableInfos.key === infos.key"
-      [isEdit]="isEdit"
-      (click)="isEdit ? editTable(infos) : null"
-    >
-    </app-card-plan-table-new>
-  </div>
+  <app-card-plan-table-new
+    [tableInviteMap]="tableInviteMap"
+    [isEditable]="isEditable"
+    (getDetail)="getDetail($event)"
+    (addPlanTable)="addPlanTable($event)"
+    (removePlanTable)="removePlanTable($event)"
+  ></app-card-plan-table-new>
 
-  <ng-template #dialogEditPlanTable>
-    <app-card-plan-table-new
-      *ngIf="tableEdit !== null"
-      [tableName]="tableEdit.key.tableName"
-      [invites]="tableEdit.value"
-      [editMode]="true"
-      [selected]="tableInfos !== null && tableInfos.key === tableEdit.key"
-    >
-    </app-card-plan-table-new>
+  <ng-template #dialogPlanTableDetail>
+    <app-card-detail-plan-table
+      class="dialog"
+      *ngIf="tableInfos"
+      [tableInfos]="tableInfos"
+      (addInvite)="addInvite($event)"
+      (removeInvite)="removeInvite($event)"
+    ></app-card-detail-plan-table>
   </ng-template>
 </div>
 

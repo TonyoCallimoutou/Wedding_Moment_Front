@@ -1,11 +1,12 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {DeepCopy} from "../../../utils/deepCopy";
 
 @Component({
   selector: 'app-card-menu',
   templateUrl: './card-menu.component.html',
   styleUrls: ['./card-menu.component.scss']
 })
-export class CardMenuComponent implements OnInit {
+export class CardMenuComponent implements OnInit, OnChanges {
   @Input() menuList : Menu[] = [];
   @Input() isEditable: boolean = false;
   @Output() addMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
@@ -21,12 +22,18 @@ export class CardMenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.editMenuList = this.menuList.slice();
+    this.editMenuList = DeepCopy.ofList(this.menuList);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['menuList']) {
+      this.editMenuList = DeepCopy.ofList(this.menuList);
+    }
   }
 
   retour() {
     this.isEdit = false;
-    this.editMenuList = this.menuList;
+    this.editMenuList = DeepCopy.ofList(this.menuList);
   }
 
   newCategories() {

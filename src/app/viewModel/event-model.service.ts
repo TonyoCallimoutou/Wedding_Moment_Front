@@ -314,6 +314,16 @@ export class EventModelService {
     }
   }
 
+  updatePlanTable(planTable: PlanTable) {
+    if (this.isMaster) {
+      this.eventService.updatePlanTable(planTable)
+        .pipe(take(1))
+        .subscribe(data => {
+          this.socketService.setPlanTable(data)
+        })
+    }
+  }
+
 
   // Remove Plan Table
   deletePlanTable(tableInvite: PlanTable) {
