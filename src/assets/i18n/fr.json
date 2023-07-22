@@ -6,7 +6,11 @@
     "Errors": {
       "required": "Ce champ est obligatoire",
       "email": "Veuillez entrer une adresse email valide",
-      "different_password": "Les mots de passe ne correspondent pas"
+      "wrong-email": "adresse email incorrect",
+      "email-exist": "cette adresse email est déjà utilisée",
+      "different_password": "les mots de passe ne correspondent pas",
+      "wrong-password": "mot de passe incorrect",
+      "length-password": "doit contenir au moins 6 caractères"
     },
     "save": "Enregistrer",
     "no_filter": "Aucun filtre",
@@ -75,9 +79,13 @@
     "sign_in" : "Connexion",
     "register" : "Inscription",
     "user_name" : "Nom",
+    "user_name-placeholder" : "Nom",
     "email" : "Email",
+    "email-placeholder" : "Email",
     "password" : "Mot de passe",
+    "password-placeholder" : "Mot de passe",
     "verify_password" : "Vérifier le mot de passe",
+    "verify_password-placeholder" : "Vérifier le mot de passe",
     "log_in" : "Connexion",
     "log_in_google" : "Se connecter avec Google",
     "forgot_password" : "Mot de passe oublié ?",

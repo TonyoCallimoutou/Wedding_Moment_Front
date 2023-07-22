@@ -39,12 +39,12 @@
 
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 
-        <div class="isNotAuth" *ngIf="!currentUser">
+        <div class="isNotAuth" *ngIf="!canAccess">
           <p> {{ 'Home.need_auth' | translate | capitalizeFirstLetter }} </p>
           <app-auth></app-auth>
         </div>
 
-        <div class="isAuth" *ngIf="currentUser">
+        <div class="isAuth" *ngIf="canAccess">
           <div *ngIf="!event">
             <button mat-raised-button class="button_create_event" *ngIf="!isCreateEvent" (click)="isCreateEvent = true"> {{ 'Home.create_event' | translate | capitalizeFirstLetter }} </button>
 

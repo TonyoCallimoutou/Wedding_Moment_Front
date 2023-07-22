@@ -24,15 +24,8 @@ export class PostPageComponent {
   @Output() public afficherTabGroup: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public listViewSelected: boolean = true;
-
   public switchOptions: OptionStringIcon[];
-
   public postDetail: any = null;
-
-  public pictureSrc : any;
-
-  private pictureCropped: any;
-  private pictureRatio: number = 1;
   public isTakePicture: boolean = false;
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;

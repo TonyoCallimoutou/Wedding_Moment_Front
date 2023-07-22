@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Router} from '@angular/router';
 import * as auth from 'firebase/auth';
-import {take} from 'rxjs';
+import {finalize, take} from 'rxjs';
 import {UserModelService} from '../../viewModel/user-model.service';
 import {LocalModel} from "../../model/local.model";
 import {EventModelService} from "../../viewModel/event-model.service";
@@ -53,60 +53,69 @@ export class AuthService {
   }
 
   // Sign in with email/password
-  SignIn(email: string, password: string) {
-    return this.afAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        if (result.user) {
-          let id = result.user.uid;
-          result.user.getIdToken(true)
-            .then((idToken: string) => {
-              CookieHelper.set(LocalModel.TOKEN, idToken);
+  SignIn(email: string, password: string): Promise<boolean> {
+    return new Promise(resolve => {
+      this.afAuth
+        .signInWithEmailAndPassword(email, password)
+        .then((result) => {
+          if (result.user) {
+            let id = result.user.uid;
+            result.user.getIdToken(true)
+              .then((idToken: string) => {
+                CookieHelper.set(LocalModel.TOKEN, idToken);
+                this.userModelService.getUserFromDB(id)
+                  .pipe(take(1))
+                  .subscribe((user: User) => {
+                    if (!user.emailVerified && result.user?.emailVerified) {
+                      this.userModelService.setUserIsVerified(user.userId)
+                        .pipe(take(1))
+                        .subscribe(() => {
+                          console.log("user : ", user.userId, ' is now verified')
+                        })
+                    }
 
-              this.userModelService.getUserFromDB(id)
-                .pipe(take(1))
-                .subscribe((user: User) => {
-                  if (!user.emailVerified && result.user?.emailVerified) {
-                    this.userModelService.setUserIsVerified(user.userId)
-                      .pipe(take(1))
-                      .subscribe(() => {
-                        console.log("user : ", user.userId, ' is now verified')
-                      })
-                  }
+                    resolve(true);
 
-                  user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
-                  CookieHelper.set(LocalModel.USER, JSON.stringify(user));
-                  this.userModelService.initUserData();
-                  this.eventModelService.initUserData();
-                  window.location.reload();
-                });
-            });
-        }
+                    user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
+                    CookieHelper.set(LocalModel.USER, JSON.stringify(user));
+                    this.userModelService.initUserData();
+                    this.eventModelService.initUserData();
+                  });
+              });
+          }
 
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+        })
+        .catch((error) => {
+          resolve(false);
+          console.log(error);
+        });
+
+    });
+
   }
 
   // Sign up with email/password
-  SignUp(name: string, email: string, password: string) {
-    return this.afAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        if (result.user) {
-          result.user.getIdToken(true)
-            .then((idToken: string) => {
-              CookieHelper.set(LocalModel.TOKEN, idToken);
-              this.SendVerificationMail();
+  SignUp(name: string, email: string, password: string): Promise<any> {
+    return new Promise(resolve => {
+      this.afAuth
+        .createUserWithEmailAndPassword(email, password)
+        .then((result) => {
+          if (result.user) {
+            result.user.getIdToken(true)
+              .then((idToken: string) => {
+                CookieHelper.set(LocalModel.TOKEN, idToken);
+                this.SendVerificationMail();
 
-              this.createUser(result, name);
-            });
-        }
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
+                resolve(true);
+                this.createUser(result, name);
+              });
+          }
+        })
+        .catch((error) => {
+          resolve(error);
+        });
+    });
+
   }
 
   // Send email verfificaiton when new user sign up

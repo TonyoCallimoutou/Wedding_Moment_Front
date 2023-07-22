@@ -38,56 +38,10 @@
   }
 
   .input {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 2rem;
+    width: 100%;
 
-    .formControl {
-      position: relative;
+    mat-form-field {
       width: 100%;
-
-      input {
-        display: block;
-        width: -webkit-fill-available;
-        border: none;
-        padding: 1rem;
-      }
-
-      span {
-        position: absolute;
-        text-align: left;
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-        width: 8rem;
-        top: 50%;
-        right: 100%;
-        transform: translate(100% , -50%);
-        pointer-events: none;
-        transition: transform 0.3s ease-in-out, top 0.3s ease-in-out, right 0.3s ease-in-out;
-      }
-
-      .see-password {
-        position: absolute;
-        padding-right: 0.5rem;
-        padding-left: 0.5rem;
-        top: 50%;
-        left: 100%;
-        transform: translate(-100%, -50%);
-      }
-
-      .input-not-null~span,
-      input:focus~span {
-        transform: translateY(-50%);
-        text-align: center;
-        margin-right: 1rem;
-        top: 0;
-        right: 0;
-        background: black;
-        border: 1px solid var(--primary-dark);
-        color: var(--primary-light);
-      }
     }
   }
 
@@ -107,7 +61,6 @@
         background-color: white;
         border-radius: 0.25rem;
         padding: 0.25rem 0.5rem 0.25rem 0.25rem;
-        align-self: center;
       }
 
       .error-checkbox {
@@ -115,12 +68,31 @@
         align-self: center;
       }
     }
+
+    ::ng-deep .mdc-button__label {
+      display: flex;
+      align-items: center;
+
+      svg {
+        height: 10%;
+        width: 10%;
+      }
+    }
+  }
+
+  .formControl {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .input-error {
+    padding-bottom: 1rem;
   }
 
   .forgotPassword {
-    width: 100%;
-    text-align: end;
-    margin-bottom: -2rem;
+    margin-top: -1rem;
     color: var(--primary-light);
   }
 }

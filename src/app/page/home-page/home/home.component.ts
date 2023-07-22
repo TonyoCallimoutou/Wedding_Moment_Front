@@ -14,6 +14,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
 import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
 import {LoaderService} from "../../../shared/service/loader.service";
+import {UserModelService} from "../../../viewModel/user-model.service";
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ import {LoaderService} from "../../../shared/service/loader.service";
 })
 export class HomeComponent{
   public currentUser: User | null = null;
+  public canAccess: boolean = false;
   public event: EventModel | null  = null ;
   public isEditable: boolean = false;
   public isCreateEvent: boolean = false;
@@ -44,6 +46,7 @@ export class HomeComponent{
   constructor(
     private authService: AuthService,
     private eventModelService: EventModelService,
+    private userModelService: UserModelService,
     private router: Router,
     private fb: FormBuilder,
     private datepipe: DatePipe,
@@ -64,6 +67,8 @@ export class HomeComponent{
 
     this.eventModelService.initUserData();
     this.currentUser = this.eventModelService.userData;
+
+    this.canAccess = this.userModelService.canAccess();
 
     this.currentUser = this.currentUser?.userId === "0" ? null : this.currentUser;
 

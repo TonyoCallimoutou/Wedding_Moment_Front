@@ -7,89 +7,123 @@
 
   <mat-divider></mat-divider>
 
+
   <div id="input" class="input">
     <div class="formControl" *ngIf="isRegister">
-      <input
-        class="font-default-20"
-        [ngClass]="form.get('name')?.value !== '' ? 'input-not-null' : '' "
-        [formControlName]="'name'"
-        #userName
-        type="text"
-        required="required">
-      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.user_name' | translate | capitalizeFirstLetter  }} </span>
 
-      <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
-        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-      </mat-error>
+      <mat-form-field
+        class="example-full-width"
+        [ngClass]="form.get('name')?.touched && form.get('name')?.invalid ? 'input-error' : ''">
+        <mat-label>{{ 'Auth.user_name' | translate | capitalizeFirstLetter}}</mat-label>
+        <input
+          class="font-default-20"
+          [formControlName]="'name'"
+          matInput
+          #userName
+          type="text"
+          placeholder="{{ 'Auth.user_name-placeholder' | translate | capitalizeFirstLetter}}">
+        <mat-error *ngIf="form.get('name')?.touched && form.get('name')?.hasError('required')">
+          {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+      </mat-form-field>
+
     </div>
 
     <div class="formControl">
-      <input
-        class="font-default-20"
-        [ngClass]="form.get('email')?.value !== '' ? 'input-not-null' : '' "
-        [formControlName]="'email'"
-        #userEmail
-        type="email"
-        required="required">
-      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.email' | translate | capitalizeFirstLetter  }} </span>
 
-      <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email') && !form.get('email')?.hasError('required')">
-        {{ 'Utils.Errors.email' | translate | capitalizeFirstLetter  }}
-      </mat-error>
-      <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
-        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-      </mat-error>
+      <mat-form-field
+        class="example-full-width"
+        [ngClass]="form.get('email')?.touched && form.get('email')?.invalid ? 'input-error' : ''">
+        <mat-label>{{ 'Auth.email' | translate | capitalizeFirstLetter}}</mat-label>
+        <input
+          class="font-default-20"
+          type="email"
+          #userEmail
+          matInput
+          [formControlName]="'email'"
+          placeholder="{{ 'Auth.email-placeholder' | translate | capitalizeFirstLetter}}">
+        <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('email') && !form.get('email')?.hasError('required')">
+          {{ 'Utils.Errors.email' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('required')">
+          {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('incorrect')">
+          {{ 'Utils.Errors.wrong-email' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('email')?.touched && form.get('email')?.hasError('alreadyInUse')">
+          {{ 'Utils.Errors.email-exist' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+      </mat-form-field>
+
     </div>
 
     <div class="formControl">
-      <input
-        class="font-default-20"
-        [ngClass]="form.get('password')?.value !== '' ? 'input-not-null' : '' "
-        [formControlName]="'password'"
-        #userPassword
-        type="{{ viewPassword ? 'text' : 'password'}}"
-        autocomplete="on"
-        required="required">
-      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.password' | translate | capitalizeFirstLetter  }} </span>
 
-      <mat-icon
-        class="see-password"
-        *ngIf="form.get('password')?.value !== ''"
-        (click)="viewPassword = !viewPassword"
-      > {{ viewPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+      <mat-form-field
+        class="example-full-width"
+        [ngClass]="form.get('password')?.touched && form.get('password')?.invalid ? 'input-error' : ''">
+        <mat-label>{{ 'Auth.password' | translate | capitalizeFirstLetter}}</mat-label>
+        <input
+          class="font-default-20"
+          [formControlName]="'password'"
+          matInput
+          #userPassword
+          type="{{ viewPassword ? 'text' : 'password'}}"
+          autocomplete="on"
+          placeholder="{{ 'Auth.password-placeholder' | translate | capitalizeFirstLetter}}">
 
-      <mat-error *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
-        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-      </mat-error>
-    </div>
+        <button *ngIf="form.get('password')?.value !== ''" matSuffix mat-icon-button aria-label="Clear" (click)="viewPassword = !viewPassword">
+          <mat-icon> {{ viewPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+        </button>
 
-    <div class="forgotPassword" *ngIf="!isRegister">
-      <h2 class="font-default-16" (click)="forgotPassword()">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
+        <mat-error *ngIf="form.get('password')?.touched && form.get('password')?.hasError('required')">
+          {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('password')?.touched && form.get('password')?.hasError('incorrect')">
+          {{ 'Utils.Errors.wrong-password' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('password')?.touched && form.get('password')?.hasError('minLength')">
+          {{ 'Utils.Errors.length-password' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="forgotPassword" *ngIf="!isRegister">
+        <h2 class="font-default-16" (click)="forgotPassword()">{{ 'Auth.forgot_password' | translate | capitalizeFirstLetter  }}</h2>
+      </div>
+
     </div>
 
     <div class="formControl" *ngIf="isRegister">
-      <input
-        class="font-default-20"
-        [ngClass]="form.get('verifyPassword')?.value !== '' ? 'input-not-null' : '' "
-        [formControlName]="'verifyPassword'"
-        #userVerifyPassword
-        type="{{ viewVerifyPassword ? 'text' : 'password'}}"
-        autocomplete="on"
-        required="required">
-      <span class="font-default-20 font-secondary-dark"> {{ 'Auth.verify_password' | translate | capitalizeFirstLetter  }} </span>
 
-      <mat-icon
-        class="see-password"
-        *ngIf="form.get('verifyPassword')?.value !== ''"
-        (click)="viewVerifyPassword = !viewVerifyPassword"
-      > {{ viewVerifyPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+      <mat-form-field
+        class="example-full-width"
+        [ngClass]="form.get('verifyPassword')?.touched && form.get('verifyPassword')?.invalid ? 'input-error' : ''">
+        <mat-label>{{ 'Auth.verify_password' | translate | capitalizeFirstLetter}}</mat-label>
+        <input
+          class="font-default-20"
+          [formControlName]="'verifyPassword'"
+          matInput
+          #userVerifyPassword
+          type="{{ viewVerifyPassword ? 'text' : 'password'}}"
+          autocomplete="on"
+          placeholder="{{ 'Auth.verify_password-placeholder' | translate | capitalizeFirstLetter}}">
 
-      <mat-error *ngIf="form.get('verifyPassword')?.value !== '' && form.get('verifyPassword')?.value !== form.get('password')?.value && !form.get('verifyPassword')?.hasError('required')">
-        {{ 'Utils.Errors.different_password' | translate | capitalizeFirstLetter  }}
-      </mat-error>
-      <mat-error *ngIf="form.get('verifyPassword')?.touched && form.get('verifyPassword')?.hasError('required')">
-        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-      </mat-error>
+        <mat-icon
+          class="see-password"
+          matSuffix mat-icon-button aria-label="Clear"
+          *ngIf="form.get('verifyPassword')?.value !== ''"
+          (click)="viewVerifyPassword = !viewVerifyPassword"
+        > {{ viewVerifyPassword ? 'visibility' : 'visibility_off' }} </mat-icon>
+
+        <mat-error *ngIf="form.get('verifyPassword')?.hasError('notSame')">
+          {{ 'Utils.Errors.different_password' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+        <mat-error *ngIf="form.get('verifyPassword')?.touched && form.get('verifyPassword')?.hasError('required')">
+          {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+        </mat-error>
+
+      </mat-form-field>
     </div>
   </div>
 
@@ -98,14 +132,16 @@
   <div id="buttons" class="buttons">
     <div class="condition_utilisation">
       <span class="font-default-16 font-primary-light" style="text-align: justify"> {{ 'Users.Condition_utilisation.explain' | translate | capitalizeFirstLetter  }} </span>
-      <div class="checkbox">
-        <mat-checkbox [color]="'primary'" [formControlName]="'cgu'" >
-        </mat-checkbox>
-        <span (click)="displayCGU()" class="font-default-16" style="text-decoration: underline"> {{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter  }} </span>
+      <div style="align-self: center;">
+        <div class="checkbox">
+          <mat-checkbox [color]="'primary'" [formControlName]="'cgu'" >
+          </mat-checkbox>
+          <span (click)="displayCGU()" class="font-default-16" style="text-decoration: underline"> {{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter  }} </span>
+        </div>
+        <mat-error class="error-checkbox" *ngIf="form.get('cgu')?.touched && form.get('cgu')?.hasError('required')">
+          {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
+        </mat-error>
       </div>
-      <mat-error class="error-checkbox" *ngIf="form.get('cgu')?.touched && form.get('cgu')?.hasError('required')">
-        {{ 'Utils.Errors.required' | translate | capitalizeFirstLetter  }}
-      </mat-error>
     </div>
 
     <!-- Calling Create Account -->
@@ -113,7 +149,7 @@
       mat-raised-button
       class="font-default-20"
       *ngIf="isRegister"
-      (click)="form.valid ? authService.SignUp(form.controls['name'].value, userEmail.value, userPassword.value) : form.markAllAsTouched();"
+      (click)="createAccount(form.controls['name'].value, userEmail.value, userPassword.value)"
     >
       {{ 'Auth.create_account' | translate | capitalizeFirstLetter  }}
     </button>
@@ -123,17 +159,19 @@
       mat-raised-button
       class="font-default-20"
       *ngIf="!isRegister"
-      (click)="form.valid ? authService.SignIn(userEmail.value, userPassword.value) : form.markAllAsTouched();"
+      (click)="signIn(userEmail.value, userPassword.value)"
     >
       {{ 'Auth.log_in' | translate | capitalizeFirstLetter  }}
     </button>
     <!-- Calling GoogleAuth Api from AuthService -->
     <button
+      style="height: fit-content;"
       mat-raised-button
       class="font-default-20"
       *ngIf="!isRegister"
-      (click)="form.get('cgu')?.valid ? authService.GoogleAuth() : form.get('cgu')?.markAsTouched();"
+      (click)="signInWithGoogle()"
     >
+      <svg xmlns="http://www.w3.org/2000/svg" width="705.6" height="720" viewBox="0 0 186.69 190.5" xmlns:v="https://vecta.io/nano"><g transform="translate(1184.583 765.171)"><path clip-path="none" mask="none" d="M-1089.333-687.239v36.888h51.262c-2.251 11.863-9.006 21.908-19.137 28.662l30.913 23.986c18.011-16.625 28.402-41.044 28.402-70.052 0-6.754-.606-13.249-1.732-19.483z" fill="#4285f4"/><path clip-path="none" mask="none" d="M-1142.714-651.791l-6.972 5.337-24.679 19.223h0c15.673 31.086 47.796 52.561 85.03 52.561 25.717 0 47.278-8.486 63.038-23.033l-30.913-23.986c-8.486 5.715-19.31 9.179-32.125 9.179-24.765 0-45.806-16.712-53.34-39.226z" fill="#34a853"/><path clip-path="none" mask="none" d="M-1174.365-712.61c-6.494 12.815-10.217 27.276-10.217 42.689s3.723 29.874 10.217 42.689c0 .086 31.693-24.592 31.693-24.592-1.905-5.715-3.031-11.776-3.031-18.098s1.126-12.383 3.031-18.098z" fill="#fbbc05"/><path d="M-1089.333-727.244c14.028 0 26.497 4.849 36.455 14.201l27.276-27.276c-16.539-15.413-38.013-24.852-63.731-24.852-37.234 0-69.359 21.388-85.032 52.561l31.692 24.592c7.533-22.514 28.575-39.226 53.34-39.226z" fill="#ea4335" clip-path="none" mask="none"/></g></svg>
       {{ 'Auth.log_in_google' | translate | capitalizeFirstLetter  }}
     </button>
   </div>

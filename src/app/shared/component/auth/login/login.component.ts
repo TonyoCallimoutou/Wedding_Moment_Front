@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, OnChanges, Output, Renderer2} fr
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {CguService} from "../../../service/cgu";
+import {ValidatorPassword} from "../../../validator/PasswordValidator";
 
 @Component({
   selector: 'app-login',
@@ -33,6 +34,8 @@ export class LoginComponent implements AfterViewInit, OnChanges {
       password: ['', Validators.required],
       verifyPassword: ['', Validators.required],
       cgu: [false, Validators.requiredTrue],
+    }, {
+      validator: ValidatorPassword
     });
 
     this.setValidator();
@@ -71,7 +74,10 @@ export class LoginComponent implements AfterViewInit, OnChanges {
 
   switchRegister() {
     this.isRegister = !this.isRegister;
-    this.form.markAsUntouched();
+    Object.values(this.form.controls).forEach(control => {
+      control.updateValueAndValidity();
+      control.markAsUntouched();
+    });
     this.setValidator();
   }
 
@@ -88,6 +94,68 @@ export class LoginComponent implements AfterViewInit, OnChanges {
         this.form.controls['name'].clearValidators();
         this.form.controls['verifyPassword'].clearValidators();
         break;
+    }
+  }
+
+  signIn(email: string, password: string) {
+    Object.values(this.form.controls).forEach(control => {
+      control.updateValueAndValidity();
+    });
+
+    if (this.form.valid) {
+      this.authService.SignIn(email, password).then((result) => {
+        if (result) {
+          window.location.reload();
+        } else {
+          Object.values(this.form.controls).forEach(control => {
+            control.markAsTouched();
+          });
+          this.form.controls['password'].setErrors({'incorrect': true});
+          this.form.controls['email'].setErrors({'incorrect': true});
+        }
+      });
+    }
+    else {
+      Object.values(this.form.controls).forEach(control => {
+        control.markAsTouched();
+      });
+    }
+  }
+
+  signInWithGoogle() {
+    this.form.updateValueAndValidity();
+    if (this.form.get('cgu')?.valid) {
+      this.authService.GoogleAuth();
+    }
+    else {
+      Object.values(this.form.controls).forEach(control => {
+        control.markAsPending();
+      });
+
+      this.form.get('cgu')?.markAsTouched()
+    }
+  }
+
+  createAccount(name: string, email: string, password: string) {
+    Object.values(this.form.controls).forEach(control => {
+      control.updateValueAndValidity();
+    });
+
+    if (this.form.valid) {
+      this.authService.SignUp(name, email, password).then((error) => {
+        if (error.message.toString().includes('auth/email-already-in-use')) {
+          this.form.controls['email'].markAsTouched();
+          this.form.controls['email'].setErrors({'alreadyInUse': true});
+        }
+        else {
+          window.alert(error.message);
+        }
+      });
+    }
+    else {
+      Object.values(this.form.controls).forEach(control => {
+        control.markAsTouched();
+      });
     }
   }
 
