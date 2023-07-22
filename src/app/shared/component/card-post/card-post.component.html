@@ -5,6 +5,12 @@
         <img alt="{{ post.userId}}" src="{{ post.photoUrl }}">
       </div>
       <p class="user-name font-default-16"> {{ post.userName}}</p>
+
+      <app-dropdown-menu
+        [matIcon]="'more_vert'"
+        [options]="dropdownOptions"
+        (optionSelected)="onOptionSelected($event)">
+      </app-dropdown-menu>
     </div>
   </div>
   <img class="post-img" alt="{{ post.postId}}" src="{{ post.pictureUrl }}">
@@ -15,12 +21,6 @@
       [isLike]="reactPostId.includes(post.postId)"
     >
     </app-like-button>
-
-    <app-delete-button
-      (click)="removePost(post)"
-      *ngIf="post.userId == currentUser.userId"
-    >
-    </app-delete-button>
   </div>
   <div class="footer" *ngIf="!isActivate">
     <p> AUCUN ACCCES ATTENTION etc... </p>

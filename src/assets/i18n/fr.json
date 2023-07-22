@@ -108,7 +108,11 @@
   "Posts": {
     "list" : "Liste",
     "grid" : "Grille",
-    "create_post" : "Créer un post"
+    "create_post" : "Créer un post",
+    "Option": {
+      "report" : "Signaler ce post",
+      "delete" : "Supprimer ce post"
+    }
   },
   "Plan_table" : {
     "title" : "Plan de table",

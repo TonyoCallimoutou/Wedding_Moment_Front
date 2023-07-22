@@ -24,6 +24,18 @@
   .user-name {
     margin : 0.75rem;
   }
+
+  app-dropdown-menu {
+    display: flex;
+    flex: 1;
+    align-self: center;
+    justify-content: flex-end;
+    margin-right: 1rem;
+
+    ::ng-deep .menu {
+      background-color: var(--primary-light);
+    }
+  }
 }
 
 

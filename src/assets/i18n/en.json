@@ -108,7 +108,11 @@
   "Posts": {
     "list" : "List",
     "grid" : "Grid",
-    "create_post" : "Create a post"
+    "create_post" : "Create a post",
+    "Option": {
+      "report" : "Report this post",
+      "delete" : "Remove this post"
+    }
   },
   "Plan_table" : {
     "title" : "seating plan",
