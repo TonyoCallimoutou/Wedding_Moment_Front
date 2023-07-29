@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {fabric} from "fabric";
 import {PostModelService} from "../../../../viewModel/post-model.service";
+import {Data} from "../../../../utils/Data";
 
 @Component({
   selector: 'app-generate-picture',
@@ -15,20 +16,8 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   public tabSelector: number = 0;
 
-  public filters: string[] = [
-    'grayscale',
-    'sepia',
-    'invert',
-    'brightness',
-    'contrast',
-    'saturation',
-    'emboss',
-    'sharpen',
-    'vintage',
-    'cool',
-    'warm',
-    'black-and-white',
-  ];
+  public filters: string[] = Data.getFilterList();
+  public filterSelected: string = 'none';
 
   public canvas!: fabric.Canvas;
   public image!: fabric.Image;
@@ -43,6 +32,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   public imageBase64 : any;
   public filterButtonHeight: number = 0;
+  public filterHeight: number = 0;
 
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef;
   @ViewChild('filterButton', { static: false }) filterButton!: ElementRef;
@@ -183,16 +173,28 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     this.isPictureChoose = true;
 
     const video = document.getElementById('video') as HTMLVideoElement;
+
+    this.createPicture(video, video.videoWidth, video.videoHeight);
+
+    this.disableCamera();
+  }
+
+  createPicture(video: any, width : number, height: number) {
     const canvasElement = document.createElement('canvas');
 
-    canvasElement.width = video.videoWidth;
-    canvasElement.height = video.videoHeight;
+    canvasElement.width = width;
+    canvasElement.height = height;
 
     const context = canvasElement.getContext('2d');
     if (!!context && !!this.canvas.width && !!this.canvas.height) {
-      context.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+      context.drawImage(video, 0, 0, width, height);
 
       let ratio = Math.min(this.canvas.width / canvasElement.width, this.canvas.height / canvasElement.height);
+      this.canvas.setWidth(canvasElement.width * ratio);
+      this.canvas.setHeight(canvasElement.height * ratio);
+
+      this.filterHeight = this.maxHeight - this.canvas.height;
+
       let imageLeft = (this.canvas.width - (canvasElement.width * ratio)) / 2;
       let imageTop = (this.canvas.height - (canvasElement.height * ratio)) / 2;
 
@@ -205,138 +207,21 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
       //this.imageBase64 = canvasElement.toDataURL();
 
+
       this.canvas.add(this.image);
 
       this.imageBase64 = this.canvas.toDataURL();
     }
-
-    this.disableCamera();
   }
 
   applyFilter(filter: string) {
     if (this.image) {
-      let fabricFilter;
 
-      switch (filter) {
-        case 'grayscale':
-          fabricFilter = new fabric.Image.filters.Grayscale();
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'sepia':
-          fabricFilter = new fabric.Image.filters.Sepia();
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'invert':
-          fabricFilter = new fabric.Image.filters.Invert();
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'brightness':
-          fabricFilter = new fabric.Image.filters.Brightness({
-            brightness: 0.2 // Ajustez la valeur de luminosité si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'contrast':
-          fabricFilter = new fabric.Image.filters.Contrast({
-            contrast: 0.5 // Ajustez la valeur de contraste si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'saturation':
-          fabricFilter = new fabric.Image.filters.Saturation({
-            saturation: 0.2 // Ajustez la valeur de saturation si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'blur':
-          fabricFilter = new fabric.Image.filters.Blur({
-            blur: 0.5 // Ajustez la valeur de flou si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'emboss':
-          fabricFilter = new fabric.Image.filters.Convolute({
-            matrix: [ 1,   1,  1,
-              1, 0.7, -1,
-              -1,  -1, -1 ] // Ajustez la matrice du relief si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'sharpen':
-          fabricFilter = new fabric.Image.filters.Convolute({
-            matrix: [  0, -1,  0,
-              -1,  5, -1,
-              0, -1,  0 ] // Ajustez la matrice de netteté si nécessaire
-          });
-          this.image.filters = [fabricFilter];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'vintage':
-          fabricFilter = new fabric.Image.filters.Sepia(); // Sépia
-          const brightnessFilterVintage = new fabric.Image.filters.Brightness({
-            brightness: 0.1 // Luminosité légèrement augmentée
-          });
-          const contrastFilterVintage = new fabric.Image.filters.Contrast({
-            contrast: 0.9 // Contraste augmenté
-          });
-          this.image.filters = [fabricFilter, brightnessFilterVintage, contrastFilterVintage];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'cool':
-          const hueRotationFilterCool = new fabric.Image.filters.HueRotation({
-            rotation: -0.5 // Rotation de teinte vers le bleu
-          });
-          const saturationFilterCool = new fabric.Image.filters.Saturation({
-            saturation: 0.8 // Saturation augmentée
-          });
-          this.image.filters = [hueRotationFilterCool, saturationFilterCool];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'warm':
-          const hueRotationFilterWarm = new fabric.Image.filters.HueRotation({
-            rotation: 0.3 // Rotation de teinte vers le rouge/orange
-          });
-          const contrastFilterWarm = new fabric.Image.filters.Contrast({
-            contrast: 0.8 // Contraste réduit
-          });
-          this.image.filters = [hueRotationFilterWarm, contrastFilterWarm];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        case 'black-and-white':
-          fabricFilter = new fabric.Image.filters.Grayscale(); // Niveaux de gris
-          const contrastFilterBW = new fabric.Image.filters.Contrast({
-            contrast: 2.0 // Contraste fortement augmenté
-          });
-          this.image.filters = [fabricFilter, contrastFilterBW];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-        default:
-          this.image.filters = [];
-          this.image.applyFilters();
-          this.canvas.renderAll();
-          break;
-      }
+      this.filterSelected = filter;
+
+      this.image.filters = Data.filter(filter);
+      this.image.applyFilters();
+      this.canvas.renderAll();
 
       this.imageBase64 = this.canvas.toDataURL();
     }
@@ -359,31 +244,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
         image.src = e.target.result;
 
         image.onload = () => {
-          const canvasElement = document.createElement('canvas');
-          canvasElement.width = image.width;
-          canvasElement.height = image.height;
-          const context = canvasElement.getContext('2d');
-
-          if (context && this.canvas.width && this.canvas.height) {
-            context.drawImage(image, 0, 0, image.width, image.height);
-
-            let ratio = Math.min(this.canvas.width / canvasElement.width, this.canvas.height / canvasElement.height);
-            let imageLeft = (this.canvas.width - (canvasElement.width * ratio)) / 2;
-            let imageTop = (this.canvas.height - (canvasElement.height * ratio)) / 2;
-
-            this.image = new fabric.Image(canvasElement, {
-              left: imageLeft,
-              top: imageTop,
-              scaleX: ratio,
-              scaleY: ratio
-            });
-
-            //this.imageBase64 = canvasElement.toDataURL();
-
-            this.canvas.add(this.image);
-
-            this.imageBase64 = this.canvas.toDataURL();
-          }
+          this.createPicture(image, image.width, image.height);
         };
       }
 

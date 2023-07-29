@@ -13,6 +13,7 @@ import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
+import {Utils} from "../../../utils/Utils";
 
 @Component({
   selector: 'app-dashboard',
@@ -170,7 +171,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: Post[]) => {
-          if (this.posts !== data) {
+          if (!Utils.equals(this.posts, data)) {
             this.posts = data;
             this.arrangeImages();
             let postsOfUser = this.posts.filter((post) => post.userId === this.userModelService.getCurrentUser().userId)

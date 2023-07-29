@@ -83,31 +83,57 @@
   .filter_button {
     display: flex;
     flex-direction: column;
+    background: var(--secondary);
+
+    .switch_ratio_button {
+      display: flex;
+      justify-content: space-around;
+      background: var(--secondary-dark);
+      padding: 0.5rem;
+    }
 
     .filter {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       overflow: auto;
-      width: 100%;
-      flex: 1;
-      gap: 0.5rem;
-      align-items: center;
+      grid-gap: 10px;
+      justify-content: center;
+      padding: 0.5rem;
+      box-shadow: inset 0 0.5rem 1rem 0 var(--secondary-dark),inset 0 -0.5rem 1rem 0 var(--secondary-dark);
 
-      button {
-        flex: 1;
-        min-width: fit-content;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+      .square {
+        position: relative;
+        border-radius: 1rem;
+        width: 100%;
+        padding-bottom: 100%;
+        background-color: #f2f2f2;
+        box-shadow: 0 0 0 1px black;
+        text-align: center;
+      }
+
+      .square.selected {
+        background-color: var(--primary);
+      }
+
+      .square-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     }
 
     .save {
-      flex: 1;
+      background: var(--secondary-dark);
       align-self: center;
       display: flex;
-      align-items: center;
+      padding: 1rem;
+      width: 100%;
+      justify-content: center;
     }
   }
 

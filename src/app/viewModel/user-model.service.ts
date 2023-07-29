@@ -31,7 +31,7 @@ export class UserModelService {
   }
 
   /**
-   * Init user Data
+   * Init user Data.ts
    */
   initUserData() {
     this.setUserData();

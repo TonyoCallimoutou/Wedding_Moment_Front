@@ -22,15 +22,19 @@
       </app-generic-image-cropper>
     </div>
 
-    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'" [style.height]="filterButtonHeight + 'px'">
+    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'" [style.height]="filterHeight + 'px'">
       <div  class="switch_ratio_button">
-        <button mat-fab color="accent" (click)="ratio = 1"><mat-icon>crop_square</mat-icon></button>
-        <button mat-fab color="accent" (click)="ratio = 2"><mat-icon>crop_portrait</mat-icon></button>
-        <button mat-fab color="accent" (click)="ratio = 1/2"><mat-icon>crop_3_2</mat-icon></button>
+        <button mat-fab color="{{ratio ==1 ? 'primary': 'accent'}}" (click)="ratio = 1"><mat-icon>crop_square</mat-icon></button>
+        <button mat-fab color="{{ratio ==1/2 ? 'primary': 'accent'}}" (click)="ratio = 1/2"><mat-icon>crop_portrait</mat-icon></button>
+        <button mat-fab color="{{ratio ==2 ? 'primary': 'accent'}}" (click)="ratio = 2"><mat-icon>crop_3_2</mat-icon></button>
       </div>
       <div class="filter">
-        <button mat-raised-button (click)="applyFilter('none')">{{'Utils.no_filter' | translate | capitalizeFirstLetter}}</button>
-        <button mat-raised-button *ngFor="let filter of filters" (click)="applyFilter(filter)">{{filter}}</button>
+        <div class="square"  [ngClass]="filterSelected === 'none' ? 'selected' : '' " >
+          <div class="square-content" (click)="applyFilter('none')">{{'Utils.no_filter' | translate | capitalizeFirstLetter}}</div>
+        </div>
+        <div class="square" *ngFor="let filter of filters" [ngClass]="filterSelected === filter ? 'selected' : '' ">
+          <div class="square-content" (click)="applyFilter(filter)">{{filter}}</div>
+        </div>
       </div>
       <div class="save">
         <button mat-raised-button (click)="saveImage()">{{'Utils.save' | translate | capitalizeFirstLetter}}</button>
@@ -40,7 +44,7 @@
 
   </div>
 
-  <div *ngIf="tabSelector === 0" class="page">
+  <div [hidden]="tabSelector !== 0" class="page">
 
     <div [hidden]="isPictureChoose" class="video_container">
       <video id="video" [width]="maxWidth" [height]="maxHeight"></video>
