@@ -28,12 +28,20 @@
         <button mat-fab color="{{ratio ==1/2 ? 'primary': 'accent'}}" (click)="ratio = 1/2"><mat-icon>crop_portrait</mat-icon></button>
         <button mat-fab color="{{ratio ==2 ? 'primary': 'accent'}}" (click)="ratio = 2"><mat-icon>crop_3_2</mat-icon></button>
       </div>
-      <div class="filter">
+      <div class="filter_list" *ngIf="tabSelector===0">
         <div class="square"  [ngClass]="filterSelected === 'none' ? 'selected' : '' " >
           <div class="square-content" (click)="applyFilter('none')">{{'Utils.no_filter' | translate | capitalizeFirstLetter}}</div>
         </div>
         <div class="square" *ngFor="let filter of filters" [ngClass]="filterSelected === filter ? 'selected' : '' ">
           <div class="square-content" (click)="applyFilter(filter)">{{filter}}</div>
+        </div>
+      </div>
+      <div class="filter" *ngIf="tabSelector===1">
+        <div class="slider" *ngFor="let prop of filterType">
+          <span>{{prop.name}}</span>
+          <mat-slider [min]="prop.minValue" [max]="prop.maxValue" [step]="prop.step" discrete>
+            <input matSliderThumb [(ngModel)]="prop.defautValue" (dragEnd)="applyFilter()">
+          </mat-slider>
         </div>
       </div>
       <div class="save">
@@ -44,26 +52,20 @@
 
   </div>
 
-  <div [hidden]="tabSelector !== 0" class="page">
+  <div class="page">
 
     <div [hidden]="isPictureChoose" class="video_container">
       <video id="video" [width]="maxWidth" [height]="maxHeight"></video>
 
+      <button mat-fab color="accent" class="file_picture_button" (click)="choosePicture()"><mat-icon>folder_open</mat-icon></button>
       <button mat-fab color="accent" class="take_picture_button" (click)="capturePhoto()"><mat-icon>center_focus_strong</mat-icon></button>
       <button mat-fab color="accent" class="switch_camera_button" (click)="switchCamera()"><mat-icon>flip_camera_ios</mat-icon></button>
     </div>
 
   </div>
 
-  <div *ngIf="tabSelector === 1" class="page">
-    <div *ngIf="!isPictureChoose">
-      <button mat-raised-button (click)="choosePicture()">{{'Utils.choose_galerie' | translate | capitalizeFirstLetter}}</button>
-    </div>
-  </div>
 
-
-
-  <div #tabs class="tabs">
+  <div #tabs class="tabs" *ngIf="isPictureChoose">
     <mat-tab-group
       headerPosition="below"
       disableRipple = true
@@ -71,12 +73,12 @@
       (selectedIndexChange)="setTabSelector($event)">
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">photo_camera</mat-icon>
+          <p>FILTRE</p>
         </ng-template>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon [ngStyle]="{'color': tabSelector == 1 ? 'var(--primary-light)' : 'var(--primary-dark)'}">folder_open</mat-icon>
+          <p> MODIFIER </p>
         </ng-template>
       </mat-tab>
 

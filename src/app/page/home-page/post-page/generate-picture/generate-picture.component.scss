@@ -29,6 +29,14 @@
         object-fit: cover;
       }
 
+      .file_picture_button {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        transform: translate(50%, -50%);
+        z-index: 1;
+      }
+
       .take_picture_button {
         position: absolute;
         bottom: 0;
@@ -92,7 +100,7 @@
       padding: 0.5rem;
     }
 
-    .filter {
+    .filter_list {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       overflow: auto;
@@ -127,11 +135,31 @@
       }
     }
 
+    .filter {
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      padding: 0.5rem;
+      box-shadow: inset 0 0.5rem 1rem 0 var(--secondary-dark),inset 0 -0.5rem 1rem 0 var(--secondary-dark);
+
+      .slider {
+        display: flex;
+        flex-direction: column;
+
+        mat-slider {
+          width: 80%;
+          align-self: center;
+        }
+
+      }
+
+    }
+
     .save {
       background: var(--secondary-dark);
       align-self: center;
       display: flex;
-      padding: 1rem;
+      padding: 1rem 0;
       width: 100%;
       justify-content: center;
     }

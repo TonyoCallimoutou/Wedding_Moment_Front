@@ -19,6 +19,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ImageCropperModule} from "ngx-image-cropper";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSliderModule} from "@angular/material/slider";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -26,24 +28,26 @@ import {MatDialogModule} from "@angular/material/dialog";
     PostPageComponent,
     GeneratePictureComponent,
   ],
-    imports: [
-        CommonModule,
-        LikeButtonModule,
-        DeleteButtonModule,
-        CreatePostModule,
-        CardPostModule,
-        TranslateModule,
-        SwitchButtonModule,
-        GenericImageCropperModule,
-        AuthModule,
-        MatButtonModule,
-        CapitalizeFirstLetterPipeModule,
-        MatToolbarModule,
-        MatIconModule,
-        MatTabsModule,
-        ImageCropperModule,
-        MatDialogModule
-    ],
+  imports: [
+    CommonModule,
+    LikeButtonModule,
+    DeleteButtonModule,
+    CreatePostModule,
+    CardPostModule,
+    TranslateModule,
+    SwitchButtonModule,
+    GenericImageCropperModule,
+    AuthModule,
+    MatButtonModule,
+    CapitalizeFirstLetterPipeModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatTabsModule,
+    ImageCropperModule,
+    MatDialogModule,
+    MatSliderModule,
+    FormsModule
+  ],
   exports: [PostPageComponent],
   providers: [PostModelService, UserModelService]
 })

@@ -1,7 +1,9 @@
 import {AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {fabric} from "fabric";
 import {PostModelService} from "../../../../viewModel/post-model.service";
-import {Data} from "../../../../utils/Data";
+import {Data, FilterType} from "../../../../utils/Data";
+import {SnackbarService} from "../../../../shared/service/snackbar.service";
+import {max} from "rxjs";
 
 @Component({
   selector: 'app-generate-picture',
@@ -17,6 +19,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   public tabSelector: number = 0;
 
   public filters: string[] = Data.getFilterList();
+  public filterType: FilterType[] = Data.getFilterTypeList();
   public filterSelected: string = 'none';
 
   public canvas!: fabric.Canvas;
@@ -31,24 +34,21 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   private finaleImage: any;
 
   public imageBase64 : any;
-  public filterButtonHeight: number = 0;
   public filterHeight: number = 0;
 
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef;
   @ViewChild('filterButton', { static: false }) filterButton!: ElementRef;
   @ViewChild('toolbar', { static: false }) toolbar!: ElementRef;
-  @ViewChild('tabs', { static: false }) tabs!: ElementRef;
   constructor(
     private postModelService: PostModelService,
+    private snackBarService: SnackbarService,
   ) {
   }
 
   ngAfterViewInit() {
 
-    this.maxHeight = window.innerHeight - this.tabs.nativeElement.offsetHeight - this.toolbar.nativeElement.offsetHeight;
-    this.maxWidth = this.tabs.nativeElement.offsetWidth;
-
-    this.filterButtonHeight = this.tabs.nativeElement.offsetHeight *3;
+    this.maxHeight = window.innerHeight - this.toolbar.nativeElement.offsetHeight;
+    this.maxWidth = window.innerWidth
 
     this.canvas = new fabric.Canvas('canvas', {
       selection: false,
@@ -57,7 +57,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       defaultCursor: 'default',
       hoverCursor: 'default',
       moveCursor: 'default',
-      height: this.maxHeight - this.filterButtonHeight,
+      height: this.maxHeight - this.toolbar.nativeElement.offsetHeight *3,
       width: this.maxWidth,
       perPixelTargetFind: false,
       fireRightClick: false,
@@ -104,10 +104,9 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   }
 
   setTabSelector(index: number) {
-    this.reinit();
     this.tabSelector = index;
-    if (index === 0) {
-      this.initializeCamera();
+    if (index === 1) {
+      this.snackBarService.showSnackbar();
     }
   }
 
@@ -189,11 +188,11 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     if (!!context && !!this.canvas.width && !!this.canvas.height) {
       context.drawImage(video, 0, 0, width, height);
 
-      let ratio = Math.min(this.canvas.width / canvasElement.width, this.canvas.height / canvasElement.height);
+      let ratio = Math.min(this.canvas.width / canvasElement.width, this.canvas.height / canvasElement.height, this.maxHeight*0.5 / (canvasElement.height));
       this.canvas.setWidth(canvasElement.width * ratio);
       this.canvas.setHeight(canvasElement.height * ratio);
 
-      this.filterHeight = this.maxHeight - this.canvas.height;
+      this.filterHeight = this.maxHeight - this.canvas.height - this.toolbar.nativeElement.offsetHeight;
 
       let imageLeft = (this.canvas.width - (canvasElement.width * ratio)) / 2;
       let imageTop = (this.canvas.height - (canvasElement.height * ratio)) / 2;
@@ -205,8 +204,6 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
         scaleY: ratio
       });
 
-      //this.imageBase64 = canvasElement.toDataURL();
-
 
       this.canvas.add(this.image);
 
@@ -214,12 +211,13 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     }
   }
 
-  applyFilter(filter: string) {
+  applyFilter(filter: string = '') {
+    console.log(this.filterType);
     if (this.image) {
 
       this.filterSelected = filter;
 
-      this.image.filters = Data.filter(filter);
+      this.image.filters = Data.filter(filter, this.filterType);
       this.image.applyFilters();
       this.canvas.renderAll();
 
@@ -240,6 +238,8 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       const reader = new FileReader();
 
       reader.onload = (e: any) => {
+        this.disableCamera();
+
         const image = new Image();
         image.src = e.target.result;
 

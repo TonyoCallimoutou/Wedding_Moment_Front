@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@a
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
-import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {OptionStringIcon} from 'src/app/model/option-string-icon.model';
 
 
@@ -35,7 +34,6 @@ export class PostPageComponent {
   constructor(
     private postModelService: PostModelService,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService,
   ) {
 
     const optionOne : OptionStringIcon = {
@@ -53,7 +51,6 @@ export class PostPageComponent {
   goToTakePicture() {
     this.isTakePicture = true;
     this.afficherTabGroup.emit(false);
-    this.snackbarService.showSnackbar();
   }
 
   returnOfGeneratePicture(event: boolean) {
