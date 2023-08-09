@@ -114,13 +114,16 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     const video = document.getElementById('video') as HTMLVideoElement;
 
     // Demande à l'utilisateur d'accorder la permission d'accès à la caméra
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ audio: false, video: true })
       .then(stream => {
         this.videoStream = stream;
         video.srcObject = stream;
         video.play();
       })
-      .catch(error => console.error('Erreur lors de l\'accès à la caméra :', error));
+      .catch(error => {
+        console.error(error);
+        this.snackBarService.showSnackbar("error", "Erreur lors de l'accès à la caméra");
+      });
   }
 
   switchCamera() {
