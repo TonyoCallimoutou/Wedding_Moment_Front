@@ -29,12 +29,13 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   private videoStream: MediaStream | null = null;
   public maxHeight: number = 500;
   public maxWidth: number = 500;
+  public filterHeight: number = 0;
+  public navBarHeight: number = 0;
 
   public ratio : number = 1;
   private finaleImage: any;
 
   public imageBase64 : any;
-  public filterHeight: number = 0;
 
   @ViewChild('canvasContainer', { static: false }) canvasContainer!: ElementRef;
   @ViewChild('filterButton', { static: false }) filterButton!: ElementRef;
@@ -47,7 +48,8 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   ngAfterViewInit() {
 
-    this.maxHeight = window.innerHeight - this.toolbar.nativeElement.offsetHeight;
+    this.navBarHeight = this.toolbar.nativeElement.offsetHeight;
+    this.maxHeight = window.innerHeight - this.navBarHeight;
     this.maxWidth = window.innerWidth
 
     this.canvas = new fabric.Canvas('canvas', {
@@ -57,7 +59,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       defaultCursor: 'default',
       hoverCursor: 'default',
       moveCursor: 'default',
-      height: this.maxHeight - this.toolbar.nativeElement.offsetHeight *3,
+      height: this.maxHeight - this.navBarHeight *3,
       width: this.maxWidth,
       perPixelTargetFind: false,
       fireRightClick: false,
@@ -195,7 +197,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       this.canvas.setWidth(canvasElement.width * ratio);
       this.canvas.setHeight(canvasElement.height * ratio);
 
-      this.filterHeight = this.maxHeight - this.canvas.height - this.toolbar.nativeElement.offsetHeight;
+      this.filterHeight = this.maxHeight - this.canvas.height - this.navBarHeight;
 
       let imageLeft = (this.canvas.width - (canvasElement.width * ratio)) / 2;
       let imageTop = (this.canvas.height - (canvasElement.height * ratio)) / 2;

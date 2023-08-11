@@ -38,6 +38,9 @@ export class HomeComponent{
   public selected : number = 0;
   public activeScanner: boolean = false;
 
+  private touchStartXY: number[] = [0, 0];
+  private touchEndXY: number[] = [0, 0];
+
 
 
   @ViewChild('calendar') calendar!: MatCalendar<any>;
@@ -195,6 +198,26 @@ export class HomeComponent{
         eventCode: this.event?.eventCode,
       },
     });
+  }
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartXY = [event.touches[0].clientX, event.touches[0].clientY];
+    this.touchEndXY = [event.touches[0].clientX, event.touches[0].clientY];
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    this.touchEndXY = [event.touches[0].clientX, event.touches[0].clientY];
+  }
+
+  onTouchEnd(): void {
+    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])) {
+      const swipeDistance = this.touchEndXY[0] - this.touchStartXY[0];
+
+      if (swipeDistance > 0 && this.selected > 0) {
+        this.selected--;
+      } else if (swipeDistance < 0 && this.selected < 1) {
+        this.selected++
+      }
+    }
   }
 
   test() {

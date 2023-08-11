@@ -4,7 +4,12 @@
     <p> prévisualisation : {{decompteDateString}} </p>
   </mat-toolbar>
 
-  <div class="onglet">
+  <div
+    *ngIf="!isTakePicture"
+    class="onglet"
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event)"
+    (touchend)="onTouchEnd()">
     <app-presentation-page
       *ngIf="tabSelector == 0"
       (sendTemporaryBackground)="setTemporaryBackground($event)"
@@ -32,7 +37,7 @@
       [reactPostId]="reactPostId"
       (switchTab)="tabSelector = $event"
       [isEditMode]="isEditMode"
-      (afficherTabGroup)="afficherTabGroup = $event"
+      (takePicture)="isTakePicture = $event"
     >
     </app-post-page>
     <app-plan-table-page
@@ -56,8 +61,14 @@
     </app-user-page>
   </div>
 
+  <app-generate-picture
+    *ngIf="isTakePicture"
+    (goBack)="isTakePicture = false"
+  >
+  </app-generate-picture>
+
   <mat-tab-group
-    *ngIf="afficherTabGroup"
+    *ngIf="!isTakePicture"
     headerPosition="below"
     disablePagination
     disableRipple = true

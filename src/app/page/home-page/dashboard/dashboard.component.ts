@@ -38,7 +38,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public isEditMode: boolean = false;
   public event!: EventModel;
   public decompteDateString: string= "";
-  public afficherTabGroup : boolean = true;
+
+  public isTakePicture: boolean = false;
+
+  private touchStartXY: number[] = [0, 0];
+  private touchEndXY: number[] = [0, 0];
 
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
@@ -359,6 +363,27 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   setFinallyBackground(image: any) {
     this.eventModelService.setEventPicture(image);
+  }
+
+  onTouchStart(event: TouchEvent): void {
+    this.touchStartXY = [event.touches[0].clientX, event.touches[0].clientY];
+    this.touchEndXY = [event.touches[0].clientX, event.touches[0].clientY];
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    this.touchEndXY = [event.touches[0].clientX, event.touches[0].clientY];
+  }
+
+  onTouchEnd(): void {
+    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])) {
+      const swipeDistance = this.touchEndXY[0] - this.touchStartXY[0];
+
+      if (swipeDistance > 0 && this.tabSelector > 0) {
+        this.tabSelector--;
+      } else if (swipeDistance < 0 && this.tabSelector < 4) {
+        this.tabSelector++
+      }
+    }
   }
 
 }

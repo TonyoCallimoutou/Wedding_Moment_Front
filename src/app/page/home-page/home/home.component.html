@@ -3,7 +3,7 @@
     [selectedIndex]="selected"
     (selectedIndexChange)="selected = $event">
     <mat-tab label="Invité">
-      <div class="participate" *ngIf="selected === 0">
+      <div class="participate" *ngIf="selected === 0" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 
         <div class="invite_code">
@@ -35,7 +35,7 @@
       </div>
     </mat-tab>
     <mat-tab label="Marié">
-      <div class="createEvent" *ngIf="selected === 1">
+      <div class="createEvent" *ngIf="selected === 1" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
 
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 

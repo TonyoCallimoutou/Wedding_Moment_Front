@@ -40,6 +40,8 @@ export class AppComponent implements OnInit, OnDestroy {
     CookieHelper.set(LocalModel.LANGUAGE, language);
 
     this.listenLoader();
+
+    window.scrollTo(0,1); // hide address bar on mobile
   }
 
   ngOnInit() {

@@ -48,7 +48,7 @@ import {FormsModule} from "@angular/forms";
     MatSliderModule,
     FormsModule
   ],
-  exports: [PostPageComponent],
+  exports: [PostPageComponent, GeneratePictureComponent],
   providers: [PostModelService, UserModelService]
 })
 export class PostPageModule {

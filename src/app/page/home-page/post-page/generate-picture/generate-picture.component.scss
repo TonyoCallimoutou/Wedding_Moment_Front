@@ -1,3 +1,7 @@
+.hide-element {
+  display: none !important;
+}
+
 .home {
   height: 100%;
   width: 100%;
@@ -78,6 +82,13 @@
     }
   }
 
+  .container {
+    display: flex;
+    flex-direction: column;
+    height: 100lvh;
+    margin-bottom: calc(2* var(--navBarHeight));
+  }
+
   .canvas_container {
     background-color: black;
   }
@@ -91,6 +102,7 @@
 
   .filter_button {
     display: flex;
+    overflow: auto;
     flex-direction: column;
     background: var(--secondary);
 

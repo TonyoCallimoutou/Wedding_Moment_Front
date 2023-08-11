@@ -9,7 +9,7 @@
   </div>
 
 
-  <div [hidden]="!isPictureChoose">
+  <div [class.hide-element]="!isPictureChoose" class="container" [style.height]=" 'calc(100vh - ' + navBarHeight + 'px)' ">
 
     <div #canvasContainer class="canvas_container" >
       <button mat-mini-fab class="close_picture"  *ngIf="isPictureChoose" (click)="resetCamera()"><mat-icon>close</mat-icon></button>
@@ -22,7 +22,7 @@
       </app-generic-image-cropper>
     </div>
 
-    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'" [style.height]="filterHeight + 'px'">
+    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'" [style.margin-bottom]="navBarHeight + 'px' ">
       <div  class="switch_ratio_button">
         <button mat-fab color="{{ratio ==1 ? 'primary': 'accent'}}" (click)="ratio = 1"><mat-icon>crop_square</mat-icon></button>
         <button mat-fab color="{{ratio ==1/2 ? 'primary': 'accent'}}" (click)="ratio = 1/2"><mat-icon>crop_portrait</mat-icon></button>

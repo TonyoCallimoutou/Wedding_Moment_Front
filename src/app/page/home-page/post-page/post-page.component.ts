@@ -20,12 +20,11 @@ export class PostPageComponent {
   @Input() public reactPostId: number[] = [];
   @Output() public switchTab: EventEmitter<number> = new EventEmitter<number>();
   @Input() public isEditMode: boolean = false;
-  @Output() public afficherTabGroup: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() public takePicture: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public listViewSelected: boolean = true;
   public switchOptions: OptionStringIcon[];
   public postDetail: any = null;
-  public isTakePicture: boolean = false;
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
   @ViewChild('dialogAreYouSureDeletePost') dialogAreYouSureDeletePost!: TemplateRef<any>;
@@ -49,13 +48,7 @@ export class PostPageComponent {
   }
 
   goToTakePicture() {
-    this.isTakePicture = true;
-    this.afficherTabGroup.emit(false);
-  }
-
-  returnOfGeneratePicture(event: boolean) {
-    this.isTakePicture = !event
-    this.afficherTabGroup.emit(true);
+    this.takePicture.emit(true);
   }
 
   /**
