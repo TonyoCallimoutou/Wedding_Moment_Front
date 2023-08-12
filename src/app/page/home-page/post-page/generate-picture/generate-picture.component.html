@@ -15,6 +15,7 @@
       <button mat-mini-fab class="close_picture"  *ngIf="isPictureChoose" (click)="resetCamera()"><mat-icon>close</mat-icon></button>
       <app-generic-image-cropper
         [maintainAspectRatio]="true"
+        [imageChangedEvent]="imageBase64"
         [imageBase64]="imageBase64"
         [ratio]="ratio"
         (croppedImage)="imageCropped($event)"

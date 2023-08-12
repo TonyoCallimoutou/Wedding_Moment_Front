@@ -239,21 +239,26 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     fileInput.accept = '.png,.jpg';
     fileInput.addEventListener('change', (event: any) => {
       this.isPictureChoose = true;
-      const file = event.target.files[0];
-      const reader = new FileReader();
 
-      reader.onload = (e: any) => {
-        this.disableCamera();
+      // A enlever si createPicture();
+      this.imageBase64 = event;
+      this.disableCamera();
 
-        const image = new Image();
-        image.src = e.target.result;
-
-        image.onload = () => {
-          this.createPicture(image, image.width, image.height);
-        };
-      }
-
-      reader.readAsDataURL(file);
+      // const file = event.target.files[0];
+      // const reader = new FileReader();
+      //
+      // reader.onload = (e: any) => {
+      //   this.disableCamera();
+      //
+      //   const image = new Image();
+      //   image.src = e.target.result;
+      //
+      //   image.onload = () => {
+      //     this.createPicture(image, image.width, image.height);
+      //   };
+      // }
+      //
+      // reader.readAsDataURL(file);
     });
     fileInput.click();
   }
