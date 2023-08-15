@@ -100,6 +100,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     this.disableCamera();
     this.isPictureChoose = false;
     this.tabSelector = 0;
+    this.filterSelected = 'none';
     this.canvas.clear();
     this.canvas.renderAll();
     this.imageBase64 = null;
@@ -185,35 +186,31 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   createPicture(video: any, width : number, height: number) {
     const canvasElement = document.createElement('canvas');
+    if (width > 2048 || height > 2048) {
+      const ratio = Math.max(width / 2048, height / 2048);
+      width = width / ratio;
+      height = height / ratio;
+    }
 
     canvasElement.width = width;
     canvasElement.height = height;
 
-    const context = canvasElement.getContext('2d');
-    if (!!context && !!this.canvas.width && !!this.canvas.height) {
-      context.drawImage(video, 0, 0, width, height);
+    const ctx = canvasElement.getContext('2d');
+    ctx?.drawImage(video, 0, 0, width, height);
 
-      let ratio = Math.min(this.canvas.width / canvasElement.width, this.canvas.height / canvasElement.height, this.maxHeight*0.5 / (canvasElement.height));
-      this.canvas.setWidth(canvasElement.width * ratio);
-      this.canvas.setHeight(canvasElement.height * ratio);
+    this.canvas.setWidth(canvasElement.width);
+    this.canvas.setHeight(canvasElement.height);
 
-      this.filterHeight = this.maxHeight - this.canvas.height - this.navBarHeight;
+    this.image = new fabric.Image(canvasElement, {
+      left: 0,
+      top: 0,
+      scaleX: 1,
+      scaleY: 1
+    });
 
-      let imageLeft = (this.canvas.width - (canvasElement.width * ratio)) / 2;
-      let imageTop = (this.canvas.height - (canvasElement.height * ratio)) / 2;
+    this.canvas.add(this.image);
 
-      this.image = new fabric.Image(canvasElement, {
-        left: imageLeft,
-        top: imageTop,
-        scaleX: ratio,
-        scaleY: ratio
-      });
-
-
-      this.canvas.add(this.image);
-
-      this.imageBase64 = this.canvas.toDataURL();
-    }
+    this.imageBase64 = this.canvas.toDataURL();
   }
 
   applyFilter(filter: string = '') {
@@ -240,25 +237,21 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     fileInput.addEventListener('change', (event: any) => {
       this.isPictureChoose = true;
 
-      // A enlever si createPicture();
-      this.imageBase64 = event;
-      this.disableCamera();
+      const file = event.target.files[0];
+      const reader = new FileReader();
 
-      // const file = event.target.files[0];
-      // const reader = new FileReader();
-      //
-      // reader.onload = (e: any) => {
-      //   this.disableCamera();
-      //
-      //   const image = new Image();
-      //   image.src = e.target.result;
-      //
-      //   image.onload = () => {
-      //     this.createPicture(image, image.width, image.height);
-      //   };
-      // }
-      //
-      // reader.readAsDataURL(file);
+      reader.onload = (e: any) => {
+        this.disableCamera();
+
+        const image = new Image();
+        image.src = e.target.result;
+
+        image.onload = () => {
+          this.createPicture(image, image.width, image.height);
+        };
+      }
+
+      reader.readAsDataURL(file);
     });
     fileInput.click();
   }
