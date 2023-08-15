@@ -1,15 +1,16 @@
-<app-switch-button
-  [switchOptions]="switchOptions"
-  [isFirstSelected]="listViewSelected"
-  (selected)="listViewSelected = $event"
->
-</app-switch-button>
-
 <div *ngIf="canAccess">
 
-  <div class="div_button" *ngIf="isActivate">
-    <div class="button" (click)="goToTakePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
+  <div class="top-button">
+    <app-switch-button
+      [switchOptions]="switchOptions"
+      [isFirstSelected]="listViewSelected"
+      (selected)="listViewSelected = $event"
+    >
+    </app-switch-button>
 
+    <div class="div_button" *ngIf="isActivate">
+      <div class="button" (click)="goToTakePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
+    </div>
   </div>
 
   <!-- LIST -->

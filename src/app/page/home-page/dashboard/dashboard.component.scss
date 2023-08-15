@@ -17,7 +17,6 @@
 .onglet {
   display: flex;
   flex: 1;
-  margin-bottom: 3.5rem;
   background-color: var(--secondary);
 
   * {
@@ -34,7 +33,7 @@ app-bottom-navigation-bar {
 }
 
 mat-tab-group {
-  position: fixed;
+  position: sticky;
   left: 0;
   right: 0;
   bottom: 0;
