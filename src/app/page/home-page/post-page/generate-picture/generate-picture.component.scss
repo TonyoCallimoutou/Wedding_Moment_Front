@@ -35,7 +35,7 @@
       }
 
       .file_picture_button {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         left: 0;
         transform: translate(50%, -50%);
@@ -43,7 +43,7 @@
       }
 
       .take_picture_button {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         right: 50%;
         left: 50%;
@@ -52,7 +52,7 @@
       }
 
       .switch_camera_button {
-        position: absolute;
+        position: fixed;
         bottom: 0;
         right: 0;
         transform: translate(-50%, -50%);
@@ -91,7 +91,7 @@
 
   .canvas_container {
     background-color: black;
-    max-height: 50lvh;
+    max-height: 40lvh;
   }
 
   .close_picture {
@@ -170,6 +170,8 @@
     }
 
     .save {
+      position: fixed;
+      bottom: 0;
       background: var(--secondary-dark);
       align-self: center;
       display: flex;

@@ -23,13 +23,13 @@
       </app-generic-image-cropper>
     </div>
 
-    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'" [style.margin-bottom]="navBarHeight + 'px' ">
+    <div #filterButton class="filter_button" [style.width]="maxWidth + 'px'">
       <div  class="switch_ratio_button">
         <button mat-fab color="{{ratio ==1 ? 'primary': 'accent'}}" (click)="ratio = 1"><mat-icon>crop_square</mat-icon></button>
         <button mat-fab color="{{ratio ==1/2 ? 'primary': 'accent'}}" (click)="ratio = 1/2"><mat-icon>crop_portrait</mat-icon></button>
         <button mat-fab color="{{ratio ==2 ? 'primary': 'accent'}}" (click)="ratio = 2"><mat-icon>crop_3_2</mat-icon></button>
       </div>
-      <div class="filter_list" *ngIf="tabSelector===0">
+      <div class="filter_list" *ngIf="tabSelector===0" [style.margin-bottom]="navBarHeight*2 + 'px' ">
         <div class="square"  [ngClass]="filterSelected === 'none' ? 'selected' : '' " >
           <div class="square-content" (click)="applyFilter('none')">{{'Utils.no_filter' | translate | capitalizeFirstLetter}}</div>
         </div>
@@ -37,7 +37,7 @@
           <div class="square-content" (click)="applyFilter(filter)">{{filter}}</div>
         </div>
       </div>
-      <div class="filter" *ngIf="tabSelector===1">
+      <div class="filter" *ngIf="tabSelector===1" [style.margin-bottom]="navBarHeight*2 + 'px' ">
         <div class="slider" *ngFor="let prop of filterType">
           <span>{{prop.name}}</span>
           <mat-slider [min]="prop.minValue" [max]="prop.maxValue" [step]="prop.step" discrete>
@@ -45,7 +45,7 @@
           </mat-slider>
         </div>
       </div>
-      <div class="save">
+      <div class="save" [style.margin-bottom]="navBarHeight + 'px' ">
         <button mat-raised-button (click)="saveImage()">{{'Utils.save' | translate | capitalizeFirstLetter}}</button>
       </div>
 
