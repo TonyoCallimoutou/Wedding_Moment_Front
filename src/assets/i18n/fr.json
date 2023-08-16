@@ -31,6 +31,10 @@
       "Logout": {
         "title": "Êtes-vous sûr de vouloir vous déconnecter ?"
       }
+    },
+    "FullScreen": {
+      "message": "Améliorez votre expérience \uD83D\uDE80 \nEn cliquant ici, vous pouvez activer le mode plein écran.",
+      "params": "Mode plein écran"
     }
   },
   "Home": {

@@ -42,11 +42,15 @@ mat-expansion-panel {
 
   .content {
     margin: 0 -24px -16px;
+
     .param {
       font-size: var(--font-size-default-16);
       color: var(--primary-dark);
       padding: 1rem;
       transition: max-height, 1s;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 }

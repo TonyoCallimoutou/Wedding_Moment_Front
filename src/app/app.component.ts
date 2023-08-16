@@ -14,7 +14,6 @@ import {SnackbarService} from "./shared/service/snackbar.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'WeddingMoment';
 
   public loader : LoaderModel = {
     isStart: false,

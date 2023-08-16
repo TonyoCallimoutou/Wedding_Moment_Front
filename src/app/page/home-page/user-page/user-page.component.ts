@@ -1,4 +1,4 @@
-import {Component, Input, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {EventModelService} from "../../../viewModel/event-model.service";
@@ -34,8 +34,9 @@ export class UserPageComponent {
   @Input() public event?: EventModel;
   @Input() public isMaster: boolean = false;
   @Input() public isEditMode: boolean = false;
-
   @Input() public checked: boolean = false;
+  @Input() public isFullScreen: boolean = false;
+  @Output() public isFullScreenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public pictureSrc: any;
   private newUserPicture: any;
@@ -259,6 +260,10 @@ export class UserPageComponent {
         eventCode: this.event?.eventCode,
       }
     });
+  }
+
+  fullScreen(value: boolean) {
+    this.isFullScreenChange.emit(value);
   }
 
   test() {

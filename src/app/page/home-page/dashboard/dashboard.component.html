@@ -1,5 +1,12 @@
 <div class="home-page" *ngIf="event">
 
+  <div
+    *ngIf="isAlertFullScreen"
+    class="fullScreen">
+    <span (click)="fullScreen(true)"> {{ "Utils.FullScreen.message" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon (click)="fullScreen(false)">close</mat-icon>
+  </div>
+
   <mat-toolbar color="warn" *ngIf="isEditMode">
     <p> prévisualisation : {{decompteDateString}} </p>
   </mat-toolbar>
@@ -57,6 +64,8 @@
       [isMaster]="isMaster"
       [isEditMode]="isEditMode"
       [event]="event"
+      [isFullScreen]="isFullScreen"
+      (isFullScreenChange)="fullScreen($event)"
     >
     </app-user-page>
   </div>

@@ -17,33 +17,35 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 
 @NgModule({
   declarations: [
     UserPageComponent
   ],
-  imports: [
-    LikeButtonModule,
-    SettingButtonModule,
-    NgIf,
-    NgClass,
-    TranslateModule,
-    TitleCasePipe,
-    CapitalizeFirstLetterPipeModule,
-    GenericImageCropperModule,
-    FormsModule,
-    MatExpansionModule,
-    MatInputModule,
-    MatSelectModule,
-    MatAutocompleteModule,
-    NgForOf,
-    AuthModule,
-    MatIconModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatDialogModule
-  ],
+    imports: [
+        LikeButtonModule,
+        SettingButtonModule,
+        NgIf,
+        NgClass,
+        TranslateModule,
+        TitleCasePipe,
+        CapitalizeFirstLetterPipeModule,
+        GenericImageCropperModule,
+        FormsModule,
+        MatExpansionModule,
+        MatInputModule,
+        MatSelectModule,
+        MatAutocompleteModule,
+        NgForOf,
+        AuthModule,
+        MatIconModule,
+        MatButtonModule,
+        MatCheckboxModule,
+        MatDialogModule,
+        MatSlideToggleModule
+    ],
   exports: [UserPageComponent],
   providers: [UserModelService]
 })

@@ -209,7 +209,9 @@ export class HomeComponent{
   }
 
   onTouchEnd(): void {
-    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])) {
+    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])
+      && Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > window.innerWidth / 4
+    ) {
       const swipeDistance = this.touchEndXY[0] - this.touchStartXY[0];
 
       if (swipeDistance > 0 && this.selected > 0) {

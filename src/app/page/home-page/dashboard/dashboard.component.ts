@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
@@ -47,6 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
 
   public background: any;
+
+  isAlertFullScreen: boolean = true;
+  isFullScreen: boolean = false;
 
   @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
 
@@ -375,7 +378,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   onTouchEnd(): void {
-    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])) {
+    if (Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > Math.abs(this.touchEndXY[1] - this.touchStartXY[1])
+      && Math.abs(this.touchEndXY[0] - this.touchStartXY[0]) > window.innerWidth / 4
+    ) {
       const swipeDistance = this.touchEndXY[0] - this.touchStartXY[0];
 
       if (swipeDistance > 0 && this.tabSelector > 0) {
@@ -384,6 +389,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.tabSelector++
       }
     }
+  }
+
+  @HostListener('document:fullscreenchange', ['$event'])
+  onFullscreenChange(event: any): void {
+    if (document.fullscreenElement) {
+      this.isAlertFullScreen = false;
+      this.isFullScreen = true;
+    } else {
+      this.isAlertFullScreen = true;
+      this.isFullScreen = false;
+    }
+  }
+
+  fullScreen(value: boolean) {
+    if (value) {
+      document.documentElement.requestFullscreen();
+    }
+    else {
+      document.exitFullscreen();
+    }
+    this.isAlertFullScreen = value;
+    this.isFullScreen = value;
   }
 
 }
