@@ -31,6 +31,10 @@
       "Logout": {
         "title": "Are you sure you want to log out?"
       }
+    },
+    "FullScreen": {
+      "message": "Improve your experience \uD83D\uDE80 \nBy clicking here, you can activate full screen mode.",
+      "params": "FullScreen Mode"
     }
   },
   "Home": {
