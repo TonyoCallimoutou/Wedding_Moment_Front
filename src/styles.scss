@@ -202,4 +202,14 @@ mat-error {
     --mat-mdc-snack-bar-button-color: #fff;
     --mdc-snackbar-supporting-text-color: #fff;
   }
+  &.infos {
+    --mdc-snackbar-container-color: grey;
+    --mat-mdc-snack-bar-button-color: #fff;
+    --mdc-snackbar-supporting-text-color: #fff;
+  }
+  &.tips {
+     --mdc-snackbar-container-color: #2274A5;
+     --mat-mdc-snack-bar-button-color: #fff;
+     --mdc-snackbar-supporting-text-color: #fff;
+   }
 }

@@ -22,10 +22,6 @@ export class PlanTablePageComponent implements OnChanges {
   @Input() public isEditMode: boolean = false;
   @Input() public event?: EventModel;
 
-  public isEdit: boolean = false;
-
-  public dropdownOptions: OptionStringIcon[] = [];
-
   myControl = new FormControl('');
   inviteListFiltered: Observable<Invite[]>;
 
@@ -47,46 +43,8 @@ export class PlanTablePageComponent implements OnChanges {
         return name ? this.filter(name as string) : this.inviteList.slice();
       }),
     );
-
-    this.initDropDownOption();
   }
 
-  /**
-   * Set dropdownOptions
-   */
-  initDropDownOption() {
-    let option1 : OptionStringIcon = {
-      optionText: "",
-      icon: "add_circle",
-    }
-    let option2: OptionStringIcon = {
-      optionText: "",
-      icon: "edit",
-    }
-
-    this.dropdownOptions = [option1,option2];
-
-    this.translate.get("Plan_table.Option.add_table").subscribe((res: string) => {
-      this.dropdownOptions[0].optionText = res;
-    })
-    this.translate.get("Plan_table.Option.set_table").subscribe((res: string) => {
-      this.dropdownOptions[1].optionText = res;
-    })
-  }
-
-  /**
-   * Select Option on burgerMenu
-   * @param option
-   */
-  onOptionSelected(option: OptionStringIcon) {
-    if (option === this.dropdownOptions[0]) {
-      this.openSnackBar()
-    }
-    else if (option === this.dropdownOptions[1]) {
-      this.openSnackBar()
-      this.isEdit = true;
-    }
-  }
 
   displayFn(invite: Invite): string {
     return invite && invite.inviteName ? invite.inviteName : '';
@@ -178,9 +136,5 @@ export class PlanTablePageComponent implements OnChanges {
    */
   removeInvite(invite: Invite) {
     this.eventModelService.deleteInvite(invite);
-  }
-
-  openSnackBar() {
-    this.snackbarService.showSnackbar();
   }
 }

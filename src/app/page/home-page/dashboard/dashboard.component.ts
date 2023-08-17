@@ -235,7 +235,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             // @ts-ignore
             this.tableInviteMap.set(planTableFilter[0], list)
           } else {
-            this.tableInviteMap.set(planTable, [invite]);
+            this.tableInviteMap.set(planTable, invite.inviteId ? [invite] : []);
             this.tableInviteList.push(<TableInvite>planTable);
           }
         }

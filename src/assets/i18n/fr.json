@@ -126,7 +126,8 @@
     "Option": {
       "add_table" : "Ajouter une table",
       "set_table" : "Modifier une table"
-    }
+    },
+    "tips": "Conseil \uD83D\uDCBE : Enregistrez à chaque étape de votre progression, afin de ne pas perdre vos modifications."
   },
   "Users": {
     "nbr_of_post": "Posts",

@@ -2,7 +2,7 @@
 
   <div class="buttons">
     <mat-icon *ngIf="isEdit" class="button-modifier" (click)="retour()"> undo </mat-icon>
-    <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="isEdit = !isEdit"> edit </mat-icon>
+    <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="edit()"> edit </mat-icon>
     <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
   </div>
 
@@ -26,12 +26,13 @@
         <mat-icon class="button-remove" *ngIf="isEdit" (click)="delete(item.key)"> delete </mat-icon>
 
     </div>
-    <div *ngIf="isEdit" class="button_add">
-      <button mat-fab extended (click)="addTable()">
-        <mat-icon>add</mat-icon>
-        {{ 'Plan_table.add_plan_table' | translate | capitalizeFirstLetter }}
-      </button>
-    </div>
+  </div>
+
+  <div *ngIf="isEdit" class="button_add">
+    <button mat-fab extended (click)="addTable()">
+      <mat-icon>add</mat-icon>
+      {{ 'Plan_table.add_plan_table' | translate | capitalizeFirstLetter }}
+    </button>
   </div>
 
 </div>

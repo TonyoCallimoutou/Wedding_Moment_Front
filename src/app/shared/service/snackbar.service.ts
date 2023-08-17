@@ -12,7 +12,7 @@ export class SnackbarService {
     }
 
     showSnackbar(
-      type: 'error' | 'infos' = 'infos',
+      type: 'error' | 'infos' | 'tips' = 'infos',
       message: string = 'En cours de développement',
       duration: number = 3000,
       action: string ='X',

@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {DeepCopy} from "../../../utils/deepCopy";
+import {SnackbarService} from "../../service/snackbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-card-plan-table-new',
@@ -24,6 +26,8 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
 
   constructor(
     private eventModelService: EventModelService,
+    private snackbarService: SnackbarService,
+    private translateService: TranslateService,
   ) {
   }
 
@@ -35,6 +39,18 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
     if (changes['tableInviteMap']) {
       this.editPlanTableMap = DeepCopy.ofMap(this.tableInviteMap);
     }
+  }
+
+  edit() {
+    this.translateService.get('Plan_table.tips').subscribe((res: string) => {
+      this.snackbarService.showSnackbar(
+        "tips",
+        res,
+        5000,
+      );
+    });
+
+    this.isEdit = true;
   }
 
   addTable() {

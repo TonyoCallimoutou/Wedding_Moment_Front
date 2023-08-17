@@ -126,7 +126,8 @@
     "Option": {
       "add_table" : "Add a table",
       "set_table" : "Modify a table"
-    }
+    },
+    "tips": "Tip \uD83D\uDCBE : Save each step of your progress, so you don't lose your changes."
   },
   "Users": {
     "nbr_of_post": "Posts",
