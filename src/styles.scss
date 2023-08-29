@@ -213,3 +213,10 @@ mat-error {
      --mdc-snackbar-supporting-text-color: #fff;
    }
 }
+
+input:disabled {
+  opacity: 1;
+}
+textarea:disabled {
+  opacity: 1;
+}

@@ -18,19 +18,17 @@ export class ResponseInterceptor implements HttpInterceptor {
       tap(
         (event: HttpEvent<any>) => {},
         (error) => {
-          if (error.status === 403) {
-            if (error.error.code === "auth/id-token-expired") {
-              console.log(error.error);
-              console.log("error on : " + req.url);
+          if (error.status === 403 && error.error.code === "auth/id-token-expired") {
+            console.log(error.error);
+            console.log("error on : " + req.url);
 
-              this.userService.getUserById("0")
-                .pipe(take(1))
-                .subscribe((user: User) => {
-                  CookieHelper.set(LocalModel.TOKEN, '')
-                  CookieHelper.set(LocalModel.USER, JSON.stringify(user));
-                  window.location.reload();
-                });
-            }
+            this.userService.getUserById("0")
+              .pipe(take(1))
+              .subscribe((user: User) => {
+                CookieHelper.set(LocalModel.TOKEN, '')
+                CookieHelper.set(LocalModel.USER, JSON.stringify(user));
+                window.location.reload();
+              });
           }
         }
       )

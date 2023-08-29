@@ -93,6 +93,12 @@
     "log_in" : "Connexion",
     "log_in_google" : "Se connecter avec Google",
     "forgot_password" : "Mot de passe oublié ?",
+    "reset_password" : "Réinitialiser le mot de passe",
+    "reset_password_text" : "Veuillez entrer votre adresse email pour réinitialiser votre mot de passe",
+    "verify_email_title" : "Merci de vous être inscrit !",
+    "verify_email_text" : "Un email de vérification a été envoyé à l'adresse suivante : ",
+    "verify_email_text_2" : "Veuillez vérifier votre boîte de réception et cliquer sur le lien de vérification pour activer votre compte.",
+    "go_back_to_login" : "Retour à la page de connexion",
     "create_account" : "Créer un compte",
     "auth" : "Authentification",
     "auth_required": "Veuillez vous authentifier pour accéder aux photos"

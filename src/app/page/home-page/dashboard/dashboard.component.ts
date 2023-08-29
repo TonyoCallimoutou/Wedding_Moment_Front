@@ -1,8 +1,8 @@
-import {Component, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, HostListener, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {Subject, take, takeUntil} from "rxjs";
+import {fromEvent, Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
 // @ts-ignore
@@ -14,6 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {Utils} from "../../../utils/Utils";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-dashboard',
@@ -51,6 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   isAlertFullScreen: boolean = true;
   isFullScreen: boolean = false;
 
+  elem: any;
+
   @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
 
   constructor(
@@ -62,11 +65,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
 
+    @Inject(DOCUMENT) private document: any,
+
   ) {
     this.event = this.eventModelService.getActualEvent();
   }
 
   ngOnInit() {
+    this.elem = document.documentElement;
 
     this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
@@ -392,6 +398,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   @HostListener('document:fullscreenchange', ['$event'])
+  @HostListener('document:webkitfullscreenchange', ['$event'])
+  @HostListener('document:mozfullscreenchange', ['$event'])
+  @HostListener('document:MSFullscreenChange', ['$event'])
   onFullscreenChange(event: any): void {
     if (document.fullscreenElement) {
       this.isAlertFullScreen = false;
@@ -404,10 +413,32 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   fullScreen(value: boolean) {
     if (value) {
-      document.documentElement.requestFullscreen();
+      if (this.elem.requestFullscreen) {
+        this.elem.requestFullscreen();
+      } else if (this.elem.mozRequestFullScreen) {
+        this.elem.mozRequestFullScreen();
+      } else if (this.elem.webkitRequestFullscreen) {
+        this.elem.webkitRequestFullscreen();
+      } else if (this.elem.msRequestFullscreen) {
+        this.elem.msRequestFullscreen();
+      }
+      else {
+        console.log("Désolé certain navigateur comme safari n'autorise pas le fait de passer en plein ecran, donc si l'application parrait moche c'est uniqueemnt a cause de votre iphone de merde")
+      }
     }
-    else {
-      document.exitFullscreen();
+    else if (this.isFullScreen) {
+      if (this.document.exitFullscreen) {
+        this.document.exitFullscreen();
+      } else if (this.document.mozCancelFullScreen) {
+        this.document.mozCancelFullScreen();
+      } else if (this.document.webkitExitFullscreen) {
+        this.document.webkitExitFullscreen();
+      } else if (this.document.msExitFullscreen) {
+        this.document.msExitFullscreen();
+      }
+      else {
+        console.log("Désolé certain navigateur comme safari n'autorise pas le fait de passer en plein ecran, donc si l'application parrait moche c'est uniqueemnt a cause de votre iphone de merde")
+      }
     }
     this.isAlertFullScreen = value;
     this.isFullScreen = value;

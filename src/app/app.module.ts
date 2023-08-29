@@ -47,7 +47,6 @@ import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
   ],
     imports: [
         // ngx-translate and the loader module
-        HttpClientModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
