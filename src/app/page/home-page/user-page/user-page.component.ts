@@ -35,8 +35,6 @@ export class UserPageComponent {
   @Input() public isMaster: boolean = false;
   @Input() public isEditMode: boolean = false;
   @Input() public checked: boolean = false;
-  @Input() public isFullScreen: boolean = false;
-  @Output() public isFullScreenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public pictureSrc: any;
   private newUserPicture: any;
@@ -260,10 +258,6 @@ export class UserPageComponent {
         eventCode: this.event?.eventCode,
       }
     });
-  }
-
-  fullScreen(value: boolean) {
-    this.isFullScreenChange.emit(value);
   }
 
   test() {

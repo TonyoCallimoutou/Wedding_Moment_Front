@@ -32,9 +32,12 @@
         "title": "Êtes-vous sûr de vouloir vous déconnecter ?"
       }
     },
-    "FullScreen": {
-      "message": "Améliorez votre expérience \uD83D\uDE80 \nEn cliquant ici, vous pouvez activer le mode plein écran.",
-      "params": "Mode plein écran"
+    "PWA": {
+      "chrome": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Ajouter à l'écran d'accueil\"",
+      "safari": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur \"Partager\" puis \"Ajouter a l'ecran d'acceuil\"",
+      "firefox": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Ajouter à l'écran d'accueil\"",
+      "opera": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Ajouter...\" et enfin \"Ecran d'accueil\"",
+      "default-browser": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Installer l'application\" ou \"Ajouter à l'écran d'accueil\""
     }
   },
   "Home": {

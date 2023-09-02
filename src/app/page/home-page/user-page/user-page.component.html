@@ -39,10 +39,6 @@
       </mat-expansion-panel-header>
       <div class="content">
         <div class="param" (click)="changeLanguage()">{{ 'Users.Languages.language' | translate | capitalizeFirstLetter }}</div>
-        <div class="param">
-          {{ 'Utils.FullScreen.params' | translate | capitalizeFirstLetter }}
-          <mat-slide-toggle [color]="'primary'" [(ngModel)]="isFullScreen" (ngModelChange)="fullScreen($event)"></mat-slide-toggle>
-        </div>
         <div class="param" (click)="goToCGUAndConfidentialite(true)">{{ 'Users.privacy' | translate | capitalizeFirstLetter }}</div>
         <div class="param" (click)="goToCGUAndConfidentialite()">{{ 'Users.Condition_utilisation.title' | translate | capitalizeFirstLetter }}</div>
       </div>

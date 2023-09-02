@@ -49,10 +49,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public background: any;
 
-  isAlertFullScreen: boolean = true;
-  isFullScreen: boolean = false;
-
   elem: any;
+
+  public needInstallPWAChrome: boolean = false;
+  public needInstallPWASafari: boolean = false;
+  public needInstallPWAOpera: boolean = false;
+  public needInstallPWAFirefox: boolean = false;
+  public needInstallPWADefault: boolean = false;
 
   @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
 
@@ -111,6 +114,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   initAll() {
 
+    if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+      this.initPWA();
+    }
+
     this.initData();
 
     this.initUser();
@@ -120,6 +127,40 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.initPost();
 
     this.initPlanTable();
+  }
+
+
+  initPWA() {
+    // Récupérez les informations sur le navigateur
+    const userAgent = navigator.userAgent;
+
+    let browserName;
+
+    switch (true) {
+      case /firefox|fxios/i.test(userAgent):
+        browserName = 'Firefox';
+        this.needInstallPWAFirefox = true;
+        break;
+      case /opr\//i.test(userAgent):
+        browserName = 'Opera';
+        this.needInstallPWAOpera = true;
+        break;
+      case /chrome|crios/i.test(userAgent):
+        browserName = 'Google Chrome';
+        this.needInstallPWAChrome = true;
+        break;
+      case /safari/i.test(userAgent):
+        browserName = 'Safari';
+        this.needInstallPWASafari = true;
+        break;
+      default:
+        browserName = 'Autre';
+        this.needInstallPWADefault = true;
+        break;
+    }
+
+    // Affichez le nom du navigateur dans la console
+    console.log(`Vous utilisez ${browserName}.`);
   }
 
   initData() {
@@ -395,53 +436,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.tabSelector++
       }
     }
-  }
-
-  @HostListener('document:fullscreenchange', ['$event'])
-  @HostListener('document:webkitfullscreenchange', ['$event'])
-  @HostListener('document:mozfullscreenchange', ['$event'])
-  @HostListener('document:MSFullscreenChange', ['$event'])
-  onFullscreenChange(event: any): void {
-    if (document.fullscreenElement) {
-      this.isAlertFullScreen = false;
-      this.isFullScreen = true;
-    } else {
-      this.isAlertFullScreen = true;
-      this.isFullScreen = false;
-    }
-  }
-
-  fullScreen(value: boolean) {
-    if (value) {
-      if (this.elem.requestFullscreen) {
-        this.elem.requestFullscreen();
-      } else if (this.elem.mozRequestFullScreen) {
-        this.elem.mozRequestFullScreen();
-      } else if (this.elem.webkitRequestFullscreen) {
-        this.elem.webkitRequestFullscreen();
-      } else if (this.elem.msRequestFullscreen) {
-        this.elem.msRequestFullscreen();
-      }
-      else {
-        console.log("Désolé certain navigateur comme safari n'autorise pas le fait de passer en plein ecran, donc si l'application parrait moche c'est uniqueemnt a cause de votre iphone de merde")
-      }
-    }
-    else if (this.isFullScreen) {
-      if (this.document.exitFullscreen) {
-        this.document.exitFullscreen();
-      } else if (this.document.mozCancelFullScreen) {
-        this.document.mozCancelFullScreen();
-      } else if (this.document.webkitExitFullscreen) {
-        this.document.webkitExitFullscreen();
-      } else if (this.document.msExitFullscreen) {
-        this.document.msExitFullscreen();
-      }
-      else {
-        console.log("Désolé certain navigateur comme safari n'autorise pas le fait de passer en plein ecran, donc si l'application parrait moche c'est uniqueemnt a cause de votre iphone de merde")
-      }
-    }
-    this.isAlertFullScreen = value;
-    this.isFullScreen = value;
   }
 
 }

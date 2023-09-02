@@ -32,9 +32,12 @@
         "title": "Are you sure you want to log out?"
       }
     },
-    "FullScreen": {
-      "message": "Improve your experience \uD83D\uDE80 \nBy clicking here, you can activate full screen mode.",
-      "params": "FullScreen Mode"
+    "PWA": {
+      "chrome": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Add to Home Screen\"",
+      "safari": "Improve your experience \uD83D\uDE80 \nClick on \"Share\" then on \"Add to Home Screen\"",
+      "firefox": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Add to Home Screen\"",
+      "opera": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Ajouter...\" and finally on \"Ecran d'accueil\"",
+      "default-browser": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Add to Home Screen\""
     }
   },
   "Home": {
@@ -101,7 +104,7 @@
     "go_back_to_login" : "Go back to login",
     "create_account" : "Create Account",
     "auth" : "Authentication",
-    "auth_required": "Please authenticate to access the photos",
+    "auth_required": "Please authenticate to access the photos"
   },
   "Presentation": {
     "Option": {

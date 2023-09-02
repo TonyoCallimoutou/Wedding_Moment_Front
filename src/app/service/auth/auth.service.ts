@@ -54,6 +54,7 @@ export class AuthService {
 
   // Sign in with email/password
   SignIn(email: string, password: string): Promise<boolean> {
+    this.loaderService.setLoader(true,2000);
     return new Promise(resolve => {
       this.afAuth
         .signInWithEmailAndPassword(email, password)
@@ -74,6 +75,7 @@ export class AuthService {
                         })
                     }
 
+                    this.loaderService.setLoader(false);
                     resolve(true);
 
                     user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
@@ -86,6 +88,7 @@ export class AuthService {
 
         })
         .catch((error) => {
+          this.loaderService.setLoader(false);
           resolve(false);
           console.log(error);
         });
@@ -96,6 +99,7 @@ export class AuthService {
 
   // Sign up with email/password
   SignUp(name: string, email: string, password: string): Promise<any> {
+    this.loaderService.setLoader(true,2000);
     return new Promise(resolve => {
       this.afAuth
         .createUserWithEmailAndPassword(email, password)
@@ -106,12 +110,14 @@ export class AuthService {
                 CookieHelper.set(LocalModel.TOKEN, idToken);
                 this.SendVerificationMail();
 
+                this.loaderService.setLoader(false);
                 resolve(true);
                 this.createUser(result, name);
               });
           }
         })
         .catch((error) => {
+          this.loaderService.setLoader(false);
           resolve(error);
         });
     });
@@ -146,6 +152,7 @@ export class AuthService {
 
   // Auth logic to run auth providers
   AuthLogin(provider: any) {
+    this.loaderService.setLoader(true,2000);
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
@@ -161,8 +168,10 @@ export class AuthService {
                       CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                       this.userModelService.initUserData();
                       this.eventModelService.initUserData();
+                      this.loaderService.setLoader(false);
                       window.location.reload();
                     } else {
+                      this.loaderService.setLoader(false);
                       this.createUser(result);
                     }
                   });
@@ -177,6 +186,8 @@ export class AuthService {
 
   private createUser(result: any,  name : string = result.user.name) {
     if (!!result.user) {
+
+      this.loaderService.setLoader(true,2000);
       this.userData = {
         userId : result.user.uid,
         userName: result.user.displayName,
@@ -196,6 +207,7 @@ export class AuthService {
                 CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                 this.userModelService.initUserData();
                 this.eventModelService.initUserData();
+                this.loaderService.setLoader(false);
 
                 window.location.reload();
               });
@@ -209,6 +221,7 @@ export class AuthService {
             CookieHelper.set(LocalModel.USER, JSON.stringify(user));
             this.userModelService.initUserData();
             this.eventModelService.initUserData();
+            this.loaderService.setLoader(false);
 
             window.location.reload();
           });
@@ -234,6 +247,7 @@ export class AuthService {
     this.loaderService.setLoader(true,2000, "Déconnexion");
     return this.afAuth.signOut().then(() => {
       CookieHelper.set(LocalModel.TOKEN, '');
+      this.loaderService.setLoader(false);
       this.passWithoutSignIn()
     });
   }
@@ -245,6 +259,7 @@ export class AuthService {
       .pipe(take(1))
       .subscribe((data: any) => {
         this.afAuth.signOut().then(() => {
+          this.loaderService.setLoader(false);
           CookieHelper.set(LocalModel.TOKEN, '');
           this.passWithoutSignIn()
         })

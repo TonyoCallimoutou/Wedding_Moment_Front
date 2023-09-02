@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {AngularFireModule} from '@angular/fire/compat';
@@ -35,6 +35,7 @@ import {CapitalizeFirstLetterPipeModule} from "./shared/pipes/capitalize-first-l
 import {MatMenuModule} from "@angular/material/menu";
 import {LoaderModule} from "./shared/component/loader/loader.module";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,12 @@ import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
         CapitalizeFirstLetterPipeModule,
         MatMenuModule,
         LoaderModule,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+          enabled: !isDevMode(),
+          // Register the ServiceWorker as soon as the application is stable
+          // or after 30 seconds (whichever comes first).
+          registrationStrategy: 'registerWhenStable:30000'
+        }),
     ],
   providers: [
     AuthService,

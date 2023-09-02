@@ -1,10 +1,44 @@
 <div class="home-page" *ngIf="event">
 
+
   <div
-    *ngIf="isAlertFullScreen"
-    class="fullScreen">
-    <span (click)="fullScreen(true)"> {{ "Utils.FullScreen.message" | translate | capitalizeFirstLetter }}</span>
-    <mat-icon (click)="fullScreen(false)">close</mat-icon>
+    *ngIf="needInstallPWAChrome"
+    class="alertPWA"
+    (click)="needInstallPWAChrome = false">
+    <span> {{ "Utils.PWA.chrome" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon>north_east</mat-icon>
+  </div>
+
+  <div
+    *ngIf="needInstallPWAFirefox"
+    class="alertPWA"
+    (click)="needInstallPWAFirefox = false">
+    <span> {{ "Utils.PWA.firefox" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon>north_east</mat-icon>
+  </div>
+
+  <div
+    *ngIf="needInstallPWAOpera"
+    class="alertPWA"
+    (click)="needInstallPWAOpera = false">
+    <span> {{ "Utils.PWA.opera" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon>north_east</mat-icon>
+  </div>
+
+  <div
+    *ngIf="needInstallPWASafari"
+    class="alertPWA pwa-safari"
+    (click)="needInstallPWASafari = false">
+    <span > {{ "Utils.PWA.safari" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon>arrow_downward</mat-icon>
+  </div>
+
+  <div
+    *ngIf="needInstallPWADefault"
+    class="alertPWA"
+    (click)="needInstallPWADefault = false">
+    <span > {{ "Utils.PWA.default-browser" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon>north_east</mat-icon>
   </div>
 
   <mat-toolbar color="warn" *ngIf="isEditMode">
@@ -64,8 +98,6 @@
       [isMaster]="isMaster"
       [isEditMode]="isEditMode"
       [event]="event"
-      [isFullScreen]="isFullScreen"
-      (isFullScreenChange)="fullScreen($event)"
     >
     </app-user-page>
   </div>
