@@ -13,7 +13,23 @@
       </app-dropdown-menu>
     </div>
   </div>
-  <img class="post-img" alt="{{ post.postId}}" src="{{ post.pictureUrl }}">
+
+  <div
+    class="content"
+    (click)="isOffline ? updatePicture(post) : null">
+    <img
+      class="post-img"
+      [ngClass]="isOffline ? 'offline' : 'online'"
+      alt="{{ post.postId}}"
+      src="{{ post.pictureUrl }}">
+
+    <div class="custom-loader" *ngIf="post.isDownloading"></div>
+    <div class="no-internet" *ngIf="isOffline && !post.isDownloading">
+      <mat-icon>download_for_offline</mat-icon>
+    </div>
+
+  </div>
+
   <div class="footer" *ngIf="isActivate">
     <app-like-button
       (click)="reactPost(post)"

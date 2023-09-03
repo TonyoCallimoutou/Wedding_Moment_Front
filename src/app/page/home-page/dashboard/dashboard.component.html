@@ -74,6 +74,7 @@
       [isActivate]="isActivate"
       [currentUser]="currentUser"
       [posts]="posts"
+      [postsOffline]="postsOffline"
       [postsGridView]="postsGridView"
       [reactPostId]="reactPostId"
       (switchTab)="tabSelector = $event"
@@ -117,27 +118,27 @@
     (selectedIndexChange)="tab($event)">
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 0 ? 'var(--primary-light)' : 'var(--primary-dark)'}">home</mat-icon>
+        <mat-icon>home</mat-icon>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 1 ? 'var(--primary-light)' : 'var(--primary-dark)'}">restaurant_menu</mat-icon>
+        <mat-icon>restaurant_menu</mat-icon>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 2 ? 'var(--primary-light)' : 'var(--primary-dark)'}">photo_camera</mat-icon>
+        <mat-icon>photo_camera</mat-icon>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 3 ? 'var(--primary-light)' : 'var(--primary-dark)'}">person_search</mat-icon>
+        <mat-icon>person_search</mat-icon>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <mat-icon [ngStyle]="{'color': tabSelector == 4 ? 'var(--primary-light)' : 'var(--primary-dark)'}">account_circle</mat-icon>
+        <mat-icon>account_circle</mat-icon>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

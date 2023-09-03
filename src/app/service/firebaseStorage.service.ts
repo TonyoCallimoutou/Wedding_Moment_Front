@@ -18,22 +18,35 @@ export class FirebaseStorageService {
 
   public uploadPictureAndGetUrl(fileUpload: any, filePath: string): Promise<string> {
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
 
       const storageRef = this.afStorage.ref(filePath);
 
       const uploadTask = this.afStorage.upload(filePath, fileUpload);
+      let resolved = false;
+      let isTimeout = false;
 
       uploadTask
         .snapshotChanges()
         .pipe(
           finalize(() => {
-            storageRef.getDownloadURL()
-              .subscribe(url => {
-                resolve(url);
-              })
+            if (!isTimeout) {
+              resolved = true;
+              storageRef.getDownloadURL()
+                .subscribe(url => {
+                  resolve(url);
+                })
+            }
           })
         ).subscribe();
+
+      // Gérer les erreurs potentielles après un certain délai
+      setTimeout(() => {
+        if (!resolved) {
+          reject(new Error("Impossible de télécharger l'image. Vérifiez votre connexion Internet."));
+          isTimeout = true;
+        }
+      }, 10000);
 
     });
 

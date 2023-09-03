@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public tabSelector: number = 0;
   public menuList: Menu[] = [];
   public posts: Post[] = [];
+  public postsOffline: Post[] = [];
   public postsGridView : Post[] = [];
   public reactPostId: number[] = [];
   public tableInviteList: TableInvite[] = [];
@@ -222,6 +223,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   initPost() {
     if (this.canAccess) {
+
+      //this.postModelService.updatePostWithFirebase();
+
+      this.postModelService.getAllOffline()
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe((data: Post[]) => {
+          this.postsOffline.push(...data);
+        });
+
       this.postModelService.getAll()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: Post[]) => {

@@ -3,10 +3,41 @@
   background: var(--primary-light);
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.25);
 
-  .post-img {
-    width: 100%;
-    box-shadow: 0 0 1px 1px rgba(0,0,0,0.25);
-    background: black;
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .post-img {
+      width: 100%;
+      box-shadow: 0 0 1px 1px rgba(0,0,0,0.25);
+      background: black;
+    }
+
+    .offline {
+      opacity: 50%;
+    }
+
+    .custom-loader {
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      border-radius: 50%;
+      background:
+        radial-gradient(farthest-side,#000000 94%,#0000) top/8px 8px no-repeat,
+        conic-gradient(#0000 30%,#000000);
+      -webkit-mask: radial-gradient(farthest-side,#0000 calc(100% - 8px),#000 0);
+      animation:s3 1s infinite linear;
+    }
+    @keyframes s3{
+      100%{transform: rotate(1turn)}
+    }
+
+    .no-internet {
+      position: absolute;
+      transform: scale(2);
+    }
   }
 }
 

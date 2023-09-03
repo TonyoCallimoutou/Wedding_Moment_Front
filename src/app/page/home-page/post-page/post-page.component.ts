@@ -2,7 +2,10 @@ import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@a
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
-import {OptionStringIcon} from 'src/app/model/option-string-icon.model';
+import {CookieHelper} from "../../../shared/service/cookie.helper";
+import {LocalModel} from "../../../model/local.model";
+import {SnackbarService} from "../../../shared/service/snackbar.service";
+import {TranslateService} from "@ngx-translate/core";
 
 
 @Component({
@@ -16,14 +19,16 @@ export class PostPageComponent {
   @Input() public isActivate: boolean = false;
   @Input() public currentUser!: User;
   @Input() public posts: Post[] = [];
+  @Input() public postsOffline: Post[] = [];
   @Input() public postsGridView: Post[] = [];
   @Input() public reactPostId: number[] = [];
   @Output() public switchTab: EventEmitter<number> = new EventEmitter<number>();
   @Input() public isEditMode: boolean = false;
   @Output() public takePicture: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  public tabSelector: number = 0;
+
   public listViewSelected: boolean = true;
-  public switchOptions: OptionStringIcon[];
   public postDetail: any = null;
 
   @ViewChild('dialogContent') dialogContent!: TemplateRef<any>;
@@ -33,18 +38,18 @@ export class PostPageComponent {
   constructor(
     private postModelService: PostModelService,
     private dialog: MatDialog,
+    private translate: TranslateService,
+    private snackbarService: SnackbarService,
   ) {
+  }
 
-    const optionOne : OptionStringIcon = {
-      optionText: "Posts.list",
-      icon: "list",
-    }
-    const optionTwo : OptionStringIcon = {
-      optionText: "Posts.grid",
-      icon: "grid_on",
-    }
-
-    this.switchOptions = [optionOne, optionTwo];
+  /**
+   * Function call when user change step
+   * @param tabulation
+   */
+  tab(tabulation: number) {
+    this.tabSelector = tabulation;
+    CookieHelper.set(LocalModel.TAB, String(this.tabSelector));
   }
 
   goToTakePicture() {
@@ -86,6 +91,23 @@ export class PostPageComponent {
         contentTemplate: this.dialogContent,
         isDisplayButton: false
       }
+    });
+  }
+
+  public updateOnline(post: Post) {
+    post.isDownloading = true;
+    this.postModelService.updatePostWithFirebase(post).then(() => {
+      post.isDownloading = false;
+      this.postsOffline = this.postsOffline.filter((postOffline) => postOffline.postId !== post.postId);
+      if (this.postsOffline.length === 0) {
+        this.tabSelector = 0;
+      }
+    }).catch((error) => {
+      post.isDownloading = false;
+      this.translate.get('Posts.Error.update-post').subscribe((res: string) => {
+        this.snackbarService.showSnackbar("error", res);
+      });
+      console.log(error);
     });
   }
 

@@ -7,6 +7,7 @@ import {DropdownMenuModule} from "../dropdown-menu/dropdown-menu.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lettre.module";
+import {MatIconModule} from "@angular/material/icon";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lett
     DropdownMenuModule,
     MatDialogModule,
     TranslateModule,
-    CapitalizeFirstLetterPipeModule
+    CapitalizeFirstLetterPipeModule,
+    MatIconModule,
   ],
   exports: [CardPostComponent]
 })

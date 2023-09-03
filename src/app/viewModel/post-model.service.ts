@@ -11,6 +11,8 @@ import {Post} from '../model/post.model';
 // @ts-ignore
 import {User} from '../model/user.model';
 import {LoaderService} from "../shared/service/loader.service";
+import {CookieHelper} from "../shared/service/cookie.helper";
+import {LocalModel} from "../model/local.model";
 
 
 @Injectable({
@@ -24,6 +26,7 @@ export class PostModelService {
 
   private listOfPost: Post[] = [];
   private listOfPostObs$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
+  private listOfPostOfflineObs$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
 
 
   constructor(
@@ -37,6 +40,7 @@ export class PostModelService {
 
     this.eventId = this.eventService.getEventId();
     this.userData = this.userModelService.getCurrentUser();
+    this.listOfPostOfflineObs$.next(CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : []);
 
     if (this.userData) {
 
@@ -59,8 +63,6 @@ export class PostModelService {
   // Create Post
   public createPost(picture: any, ratio: number) {
 
-    const pictureUrl = picture;
-
     const post : Post = {
       pictureUrl: "",
       eventId: this.eventId,
@@ -68,7 +70,7 @@ export class PostModelService {
       userId: this.userData.userId,
       userName: this.userData.userName,
       photoUrl: this.userData.photoUrl,
-      pictureRatio: ratio
+      pictureRatio: ratio,
     }
 
     this.loaderService.setLoader(true);
@@ -76,11 +78,11 @@ export class PostModelService {
     this.postService.createPost(post)
       .pipe(take(1))
       .subscribe(data => {
-        const postId = data.postId;
-        this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, postId, pictureUrl).then(url => {
+        post.postId = data.postId;
+        this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, post.postId, picture).then(url => {
           this.postService.setPictureOfPost({
             userId: data.userId,
-            postId: postId,
+            postId: post.postId,
             pictureUrl: url,
           })
             .pipe(take(1))
@@ -89,13 +91,24 @@ export class PostModelService {
               data.pictureUrl = url;
               this.socketService.addPost(data);
             })
-        })
+        }).catch((error) => {
+          this.loaderService.setLoader(false);
+          post.pictureUrl = picture;
+          let posts : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+          posts.push(post);
+          CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(posts));
+          this.listOfPostOfflineObs$.next(posts);
+        });
       })
   }
 
   // Get All Post
   public getAll(): BehaviorSubject<Post[]> {
     return this.listOfPostObs$;
+  }
+
+  public getAllOffline(): BehaviorSubject<Post[]> {
+    return this.listOfPostOfflineObs$;
   }
 
   // Remove Post
@@ -111,6 +124,50 @@ export class PostModelService {
         console.log(error);
       });
     }
+  }
+
+  /**
+   * Update post with firebase
+   * @param post
+   */
+  updatePostWithFirebase(post: Post = null): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      let posts : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+      let postsFilter = post ? posts.filter(item => item.postId === post.postId) : posts;
+      for (let post of postsFilter) {
+        if(navigator.onLine) {
+          this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, post.postId, post.pictureUrl).then(url => {
+            this.postService.setPictureOfPost({
+              userId: post.userId,
+              postId: post.postId,
+              pictureUrl: url,
+            })
+              .pipe(take(1))
+              .subscribe(() => {
+
+                let posts: Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+                posts = posts.filter(item => item.postId !== post.postId);
+                CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(posts));
+                this.listOfPostOfflineObs$.next(posts);
+
+                post.pictureUrl = url;
+                this.socketService.addPost(post);
+
+                resolve(true);
+              })
+          }).catch((error) => {
+            reject(error);
+          });
+        }
+        else {
+          reject(new Error("No internet connection"));
+        }
+      }
+      if (postsFilter.length === 0) {
+        reject(new Error("No post to update"));
+      }
+    });
+
   }
 
   /**

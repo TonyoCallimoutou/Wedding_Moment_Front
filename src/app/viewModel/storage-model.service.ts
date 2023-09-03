@@ -24,20 +24,23 @@ export class StorageModelService {
   public uploadPictureAndGetUrl(userId: string, postId: number, fileUpload: any): Promise<string> {
     let eventId = this.eventService.getEventId();
 
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
 
       try {
         fileUpload = base64ToFile(fileUpload);
       }
       catch (e) {
-        console.log(e);
+        reject(e);
       }
 
       let filePath = (`${this.basePathPost}/${eventId}/${userId}/${postId}`);
 
       this.storageService.uploadPictureAndGetUrl(fileUpload, filePath).then(url => {
         resolve(url)
-      })
+      }).catch(e => {
+        console.log(e);
+        reject(e);
+      });
     });
   }
 

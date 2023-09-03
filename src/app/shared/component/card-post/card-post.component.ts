@@ -15,8 +15,10 @@ export class CardPostComponent implements OnChanges{
   @Input() currentUser! : User;
   @Input() style : string = '';
   @Input() isActivate : boolean = false;
+  @Input() isOffline : boolean = false;
   @Output() reaction : EventEmitter<Post> = new EventEmitter<Post>();
   @Output() delete : EventEmitter<Post> = new EventEmitter<Post>();
+  @Output() onClick : EventEmitter<Post> = new EventEmitter<Post>();
 
   public dropdownOptions: OptionStringIcon[] = [];
 
@@ -24,7 +26,6 @@ export class CardPostComponent implements OnChanges{
     private translate: TranslateService,
     private snackbarService: SnackbarService,
   ) {
-    console.log(this.post);
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -81,6 +82,10 @@ export class CardPostComponent implements OnChanges{
 
   removePost(post: Post) {
     this.delete.emit(post);
+  }
+
+  updatePicture(post : Post) {
+    this.onClick.emit(post);
   }
 
   test() {

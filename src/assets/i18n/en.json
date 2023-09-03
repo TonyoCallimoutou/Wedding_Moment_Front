@@ -121,10 +121,14 @@
   "Posts": {
     "list" : "List",
     "grid" : "Grid",
+    "offline": "Offline",
     "create_post" : "Create a post",
     "Option": {
       "report" : "Report this post",
       "delete" : "Remove this post"
+    },
+    "Error": {
+      "update-post": "An error occurred while updating the post"
     }
   },
   "Plan_table" : {

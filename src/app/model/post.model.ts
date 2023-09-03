@@ -7,4 +7,5 @@ interface Post {
     userId: string,
     userName: string,
     photoUrl: string,
+    isDownloading: boolean,
 }

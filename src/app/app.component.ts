@@ -22,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
     isMainLoader: false,
   };
   private isLoadingFinish: boolean = false;
+  private isLoadingTimeout: boolean = false;
 
   constructor(
     private socketService: SocketIoService,
@@ -53,6 +54,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   listenLoader() {
     this.loaderService.getLoader().subscribe((value : LoaderModel) => {
+
+      //Start loader
       if (value.isStart && value.isStart !== this.loader.isStart) {
         this.showSnackBar(value);
         this.loader = value;
@@ -60,20 +63,26 @@ export class AppComponent implements OnInit, OnDestroy {
           if (this.isLoadingFinish) {
             this.loader.isStart = false;
             this.isLoadingFinish = false
+            this.isLoadingTimeout = false;
           }
           else {
+            this.isLoadingTimeout = true;
             console.log('Loading more than ', value.time/1000, 'sec for... ', value.text);
           }
         }, value.time);
       }
-      else if (this.loader.isStart) {
+      // Finish loader Before Timout
+      else if (!value.isStart && this.loader.isStart && !this.isLoadingTimeout) {
         this.isLoadingFinish = true;
       }
-      else if (!this.loader.isStart) {
-        this.isLoadingFinish = false;
+      // Finish loader After Timout
+      else if (!value.isStart && this.loader.isStart && this.isLoadingTimeout) {
         this.loader.isStart = false;
+        this.isLoadingFinish = false
+        this.isLoadingTimeout = false;
       }
-      else {
+      // Error loader
+      else if (value.isStart != this.loader.isStart) {
         console.log("error loading !! ")
       }
     });
