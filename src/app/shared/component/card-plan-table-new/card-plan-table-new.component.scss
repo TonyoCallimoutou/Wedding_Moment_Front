@@ -37,6 +37,10 @@
       input {
         text-align: center;
       }
+      
+      input[disabled] {
+        pointer-events: none;
+      }
     }
   }
 

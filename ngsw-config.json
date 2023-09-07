@@ -26,5 +26,19 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-freshness",
+      "urls": [
+        "https://firebasestorage.googleapis.com/v0/b/projet-secret-a86d6.appspot.com"
+      ],
+      "cacheConfig": {
+        "maxSize": 100,
+        "maxAge": "180d",
+        "timeout": "10s",
+        "strategy": "freshness"
+      }
+    }
   ]
 }

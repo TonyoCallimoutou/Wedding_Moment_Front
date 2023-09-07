@@ -113,7 +113,14 @@ export class PostModelService {
 
   // Remove Post
   public removePost(post: Post) {
-    if (post.userId == this.userData.userId) {
+    let postsOffline : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+    let postsFilter = postsOffline.filter(item => item.postId === post.postId);
+    if (postsFilter.length > 0) {
+      let postsFinal = postsOffline.filter(item => item.postId !== post.postId);
+      CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(postsFinal));
+      this.listOfPostOfflineObs$.next(postsFinal);
+    }
+    else if (post.userId == this.userData.userId) {
       this.storageModelService.deletePictureFromStorage(post.pictureUrl).then(() => {
         this.postService.deletePost(post)
           .pipe(take(1))

@@ -229,7 +229,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.postModelService.getAllOffline()
         .pipe(takeUntil(this.onDestroy$))
         .subscribe((data: Post[]) => {
-          this.postsOffline.push(...data);
+          this.postsOffline = data;
         });
 
       this.postModelService.getAll()

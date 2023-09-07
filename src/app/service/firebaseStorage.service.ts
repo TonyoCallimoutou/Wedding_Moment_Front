@@ -10,6 +10,8 @@ import * as JSZip from "jszip";
 export class FirebaseStorageService {
   private progressSubject: Subject<number> = new Subject<number>();
 
+  private timout = 10000;
+
 
   constructor(
     private afStorage: AngularFireStorage
@@ -25,6 +27,12 @@ export class FirebaseStorageService {
       const uploadTask = this.afStorage.upload(filePath, fileUpload);
       let resolved = false;
       let isTimeout = false;
+
+
+      if (!navigator.onLine) {
+        reject(new Error("Impossible de télécharger l'image. Vérifiez votre connexion Internet."));
+        isTimeout = true;
+      }
 
       uploadTask
         .snapshotChanges()
@@ -46,10 +54,9 @@ export class FirebaseStorageService {
           reject(new Error("Impossible de télécharger l'image. Vérifiez votre connexion Internet."));
           isTimeout = true;
         }
-      }, 10000);
+      }, this.timout);
 
     });
-
   }
 
   get progress$() {
