@@ -1,7 +1,8 @@
 mat-tab-group {
-  background-color: var(--primary);
-
   ::ng-deep {
+    mat-tab-header {
+      background-color: var(--primary);
+    }
     .mdc-tab {
       min-width: auto;
       height: 3.5rem;

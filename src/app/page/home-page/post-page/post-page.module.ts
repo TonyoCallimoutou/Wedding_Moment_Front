@@ -23,6 +23,8 @@ import {MatSliderModule} from "@angular/material/slider";
 import {FormsModule} from "@angular/forms";
 import {MatInputModule} from "@angular/material/input";
 import {MatSelectModule} from "@angular/material/select";
+import {InfiniteScrollModule} from "ngx-infinite-scroll";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import {MatSelectModule} from "@angular/material/select";
     MatSliderModule,
     FormsModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    InfiniteScrollModule,
+    MatProgressSpinnerModule
   ],
   exports: [PostPageComponent, GeneratePictureComponent],
   providers: [PostModelService, UserModelService]

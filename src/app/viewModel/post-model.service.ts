@@ -192,13 +192,31 @@ export class PostModelService {
 
   private initList() {
     if (!(this.userData.userId === '0' || !this.userData.emailVerified)) {
-      this.postService.getAllPost(this.eventId)
+      this.postService.getTenPost(this.eventId, {})
         .pipe(take(1))
         .subscribe((data: any) => {
           this.listOfPost = data;
           this.listOfPostObs$.next(data);
         });
     }
+  }
+
+  getMorePost(dateLastPost : Date): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      this.postService.getTenPost(this.eventId, {dateLastPost: dateLastPost})
+        .pipe(take(1))
+        .subscribe((data: any) => {
+          if (data.length !== 10) {
+            resolve(false);
+          }
+          else {
+            resolve(true);
+          }
+
+          this.listOfPost.push(...data);
+          this.listOfPostObs$.next(this.listOfPost);
+        });
+    });
   }
 
   private initListeningFromSocket() {

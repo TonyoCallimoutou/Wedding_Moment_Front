@@ -23,6 +23,8 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   public canvas!: fabric.Canvas;
   public image!: fabric.Image;
 
+  private isSelfie: boolean = true;
+
 
   private videoStream: MediaStream | null = null;
   public maxHeight: number = 500;
@@ -122,6 +124,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   switchCamera() {
     const video = document.getElementById('video') as HTMLVideoElement;
+    const image = document.getElementById('image') as HTMLImageElement;
     if (!!video.srcObject && "getTracks" in video.srcObject) {
       const videoTracks = video.srcObject.getTracks();
 
@@ -142,7 +145,9 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
             const activeCamera = videoTracks[0].getSettings().deviceId;
             facingMode = (activeCamera === frontCamera.deviceId) ? 'environment' : 'user';
 
-            (activeCamera === frontCamera.deviceId) ? video.classList.remove('mirror') : video.classList.add('mirror');
+            this.isSelfie = !(activeCamera === frontCamera.deviceId)
+
+            this.isSelfie ? video.classList.add('mirror') : video.classList.remove('mirror');
 
             // Bascule entre la caméra avant et arrière
             const constraints = {
@@ -189,6 +194,11 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     canvasElement.height = height;
 
     const ctx = canvasElement.getContext('2d');
+
+    if (this.isSelfie) {
+      ctx?.scale(-1, 1);
+      ctx?.translate(-width, 0);
+    }
     ctx?.drawImage(video, 0, 0, width, height);
 
     this.canvas.setWidth(canvasElement.width);
@@ -207,7 +217,6 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   }
 
   applyFilter(filter: string = '') {
-    console.log(this.filterType);
     if (this.image) {
 
       this.filterSelected = filter;

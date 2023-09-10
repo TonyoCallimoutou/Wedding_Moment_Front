@@ -7,6 +7,7 @@ export class PostUtils {
     refPost.userId = newData.userId
     refPost.userName = newData.userName
     refPost.photoUrl = newData.photoUrl
+    refPost.publicationDate = newData.publicationDate
   }
 
   static SetUser(post: Post, user: any) {

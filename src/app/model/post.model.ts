@@ -4,6 +4,7 @@ interface Post {
     pictureUrl: string,
     pictureRatio : number,
     countReact: number,
+    publicationDate: Date,
     userId: string,
     userName: string,
     photoUrl: string,

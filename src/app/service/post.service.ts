@@ -19,8 +19,8 @@ export class PostService {
     return this.http.post(baseUrl, data);
   }
 
-  getAllPost(id: number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${baseUrl}/event/${id}`);
+  getTenPost(id: number, filter: any): Observable<Post[]> {
+    return this.http.post<Post[]>(`${baseUrl}/event/${id}`, filter);
   }
 
   setPictureOfPost(data: any): Observable<any> {

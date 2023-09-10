@@ -14,6 +14,7 @@
     <div #canvasContainer class="canvas_container" >
       <button mat-mini-fab class="close_picture"  *ngIf="isPictureChoose" (click)="resetCamera()"><mat-icon>close</mat-icon></button>
       <app-generic-image-cropper
+        id="image"
         [maintainAspectRatio]="true"
         [imageBase64]="imageBase64"
         [ratio]="ratio"

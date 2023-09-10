@@ -7,6 +7,10 @@
   width: 100%;
   margin-bottom: -3.5rem;
 
+  .mirror {
+    transform: scaleX(-1);
+  }
+
   .page {
 
     .video_container {
@@ -14,10 +18,6 @@
 
       video {
         background: black;
-      }
-
-      video.mirror {
-        transform: scaleX(-1);
       }
 
       .ratio_1 {

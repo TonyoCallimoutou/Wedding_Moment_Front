@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
@@ -6,6 +6,7 @@ import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {LocalModel} from "../../../model/local.model";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {TranslateService} from "@ngx-translate/core";
+import {LoaderService} from "../../../shared/service/loader.service";
 
 
 @Component({
@@ -28,6 +29,8 @@ export class PostPageComponent {
 
   public tabSelector: number = 0;
 
+  isMorePost: boolean = true;
+
   public listViewSelected: boolean = true;
   public postDetail: any = null;
 
@@ -40,6 +43,7 @@ export class PostPageComponent {
     private dialog: MatDialog,
     private translate: TranslateService,
     private snackbarService: SnackbarService,
+    private loaderService: LoaderService
   ) {
   }
 
@@ -92,6 +96,16 @@ export class PostPageComponent {
         isDisplayButton: false
       }
     });
+  }
+
+  getMorePost() {
+    if(this.isMorePost) {
+      this.loaderService.setLoader(true);
+      this.postModelService.getMorePost(this.posts[this.posts.length - 1].publicationDate).then((isMorePost) => {
+        this.isMorePost = isMorePost;
+        this.loaderService.setLoader(false);
+      });
+    }
   }
 
   public updateOnline(post: Post) {
