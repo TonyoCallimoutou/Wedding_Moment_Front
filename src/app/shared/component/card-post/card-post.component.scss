@@ -2,6 +2,7 @@
   width: 100%;
   background: var(--primary-light);
   box-shadow: 0 0 1px 1px rgba(0,0,0,0.25);
+  position: relative;
 
   .content {
     display: flex;
@@ -13,6 +14,21 @@
       width: 100%;
       box-shadow: 0 0 1px 1px rgba(0,0,0,0.25);
       background: black;
+    }
+
+    .like {
+      height: 20%;
+      width: 20%;
+      color: red;
+      position: absolute;
+      fill: transparent;
+      transition: all 400ms ease-in;
+    }
+
+    .like.active {
+      fill: currentColor;
+      stroke: none;
+      transform: scale(3);
     }
 
     .offline {

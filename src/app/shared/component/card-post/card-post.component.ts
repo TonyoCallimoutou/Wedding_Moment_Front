@@ -77,6 +77,20 @@ export class CardPostComponent implements OnChanges{
   }
 
   reactPost(post : Post) {
+    const likeContainer = document.querySelector('#like-' + post.postId);
+
+
+    if (!this.reactPostId.includes(post.postId)) {
+      likeContainer?.classList.add('active');
+
+      setTimeout(() => {
+        likeContainer?.classList.remove('active');
+      }, 800);
+    }
+    else {
+      likeContainer?.classList.remove('active');
+    }
+
     this.reaction.emit(post);
   }
 
