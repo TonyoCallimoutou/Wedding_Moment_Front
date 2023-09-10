@@ -33,6 +33,7 @@
       }
     },
     "PWA": {
+      "install": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur ici pour télécharger notre application",
       "chrome": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Ajouter à l'écran d'accueil\"",
       "safari": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur \"Partager\" puis \"Ajouter a l'ecran d'acceuil\"",
       "firefox": "Améliorez votre expérience \uD83D\uDE80 \nCliquer sur les \"Paramètre\" puis sur \"Ajouter à l'écran d'accueil\"",

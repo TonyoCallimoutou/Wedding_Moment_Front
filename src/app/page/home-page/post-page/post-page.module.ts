@@ -21,6 +21,8 @@ import {ImageCropperModule} from "ngx-image-cropper";
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatSliderModule} from "@angular/material/slider";
 import {FormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
+import {MatSelectModule} from "@angular/material/select";
 
 
 @NgModule({
@@ -46,7 +48,9 @@ import {FormsModule} from "@angular/forms";
     ImageCropperModule,
     MatDialogModule,
     MatSliderModule,
-    FormsModule
+    FormsModule,
+    MatInputModule,
+    MatSelectModule
   ],
   exports: [PostPageComponent, GeneratePictureComponent],
   providers: [PostModelService, UserModelService]

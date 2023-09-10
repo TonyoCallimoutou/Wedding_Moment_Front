@@ -33,6 +33,7 @@
       }
     },
     "PWA": {
+      "install": "Improve your experience \uD83D\uDE80 \nClick to install the application",
       "chrome": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Add to Home Screen\"",
       "safari": "Improve your experience \uD83D\uDE80 \nClick on \"Share\" then on \"Add to Home Screen\"",
       "firefox": "Improve your experience \uD83D\uDE80 \nClick on \"Settings\" then on \"Add to Home Screen\"",

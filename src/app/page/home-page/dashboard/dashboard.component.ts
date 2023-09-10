@@ -1,8 +1,8 @@
-import {Component, HostListener, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {fromEvent, Subject, take, takeUntil} from "rxjs";
+import {Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {LocalModel} from "../../../model/local.model";
 // @ts-ignore
@@ -52,6 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   elem: any;
 
+  private installPrompt : any;
+  public needInstallPWA: boolean = false;
   public needInstallPWAChrome: boolean = false;
   public needInstallPWASafari: boolean = false;
   public needInstallPWAOpera: boolean = false;
@@ -135,22 +137,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
     // Récupérez les informations sur le navigateur
     const userAgent = navigator.userAgent;
 
+    const isAndroid = /Android/i.test(userAgent);
+    const isIOS = /iPhone|iPad|iPod/i.test(userAgent);
+    const isFirefox = /Firefox/i.test(userAgent);
+    const isOpera = /Opera|OPR/i.test(userAgent);
+    const isChrome = /Chrome/i.test(userAgent);
+    const isSafari = /Safari/i.test(userAgent);
+
+    let deviceName = isAndroid ? "Android" : isIOS ? "iOS" : "Autre";
+
     let browserName;
 
     switch (true) {
-      case /firefox|fxios/i.test(userAgent):
+      case isAndroid && isChrome:
+        browserName = 'Google Chrome';
+        this.beforeInstallPrompt();
+        break;
+      case isFirefox:
         browserName = 'Firefox';
         this.needInstallPWAFirefox = true;
         break;
-      case /opr\//i.test(userAgent):
+      case isOpera:
         browserName = 'Opera';
         this.needInstallPWAOpera = true;
         break;
-      case /chrome|crios/i.test(userAgent):
+      case isChrome:
         browserName = 'Google Chrome';
         this.needInstallPWAChrome = true;
         break;
-      case /safari/i.test(userAgent):
+      case isSafari:
         browserName = 'Safari';
         this.needInstallPWASafari = true;
         break;
@@ -161,7 +176,52 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     // Affichez le nom du navigateur dans la console
-    console.log(`Vous utilisez ${browserName}.`);
+    console.log(`Vous utilisez ${browserName}, sur ${deviceName}`);
+  }
+
+  beforeInstallPrompt() {
+
+    const newStartURL = window.location.href
+    const baseUrl = window.location.origin + '/'
+    const manifestLink = document.querySelector('link[rel="manifest"]');
+
+    if (manifestLink instanceof HTMLLinkElement) {
+      fetch(manifestLink.href)
+        .then(response => response.json())
+        .then(manifest => {
+          manifest.start_url = newStartURL;
+          manifest.scope = baseUrl;
+          for (let icons of manifest.icons) {
+            icons.src = baseUrl + icons.src;
+          }
+          const updatedManifest = JSON.stringify(manifest);
+          const blob = new Blob([updatedManifest], { type: 'application/json' });
+          manifestLink.href = URL.createObjectURL(blob);
+        })
+        .catch(error => {
+          console.error('Erreur lors de la mise à jour du manifeste :', error);
+        });
+    }
+
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+      this.installPrompt = event;
+      this.needInstallPWA = true;
+    });
+  }
+
+  async installPwa() {
+    this.installPrompt.prompt();
+    // Find out whether the user confirmed the installation or not
+    const { outcome } = await this.installPrompt.userChoice;
+    // The deferredPrompt can only be used once.
+    this.installPrompt = null;
+    // Act on the user's choice
+    if (outcome === 'accepted') {
+      console.log('User accepted the install prompt.');
+    } else if (outcome === 'dismissed') {
+      console.log('User dismissed the install prompt');
+    }
   }
 
   initData() {
