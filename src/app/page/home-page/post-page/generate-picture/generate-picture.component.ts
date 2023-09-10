@@ -16,8 +16,6 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   public isPictureChoose : boolean = false;
 
-  public tabSelector: number = 0;
-
   public filters: string[] = Data.getFilterList();
   public filterType: FilterType[] = Data.getFilterTypeList();
   public filterSelected: string = 'none';
@@ -59,7 +57,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       defaultCursor: 'default',
       hoverCursor: 'default',
       moveCursor: 'default',
-      height: this.maxHeight - this.navBarHeight *3,
+      height: this.maxHeight - this.navBarHeight *2,
       width: this.maxWidth,
       perPixelTargetFind: false,
       fireRightClick: false,
@@ -99,18 +97,10 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   reinit() {
     this.disableCamera();
     this.isPictureChoose = false;
-    this.tabSelector = 0;
     this.filterSelected = 'none';
     this.canvas.clear();
     this.canvas.renderAll();
     this.imageBase64 = null;
-  }
-
-  setTabSelector(index: number) {
-    this.tabSelector = index;
-    if (index === 1) {
-      this.snackBarService.showSnackbar();
-    }
   }
 
   initializeCamera() {
@@ -121,6 +111,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
       .then(stream => {
         this.videoStream = stream;
         video.srcObject = stream;
+        video.classList.add('mirror');
         video.play();
       })
       .catch(error => {
@@ -149,7 +140,9 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
           if (!!frontCamera && !!rearCamera) {
             // Détermine quelle caméra est actuellement active et bascule vers l'autre
             const activeCamera = videoTracks[0].getSettings().deviceId;
-            facingMode = (activeCamera === frontCamera.deviceId) ? 'environment' : 'user'
+            facingMode = (activeCamera === frontCamera.deviceId) ? 'environment' : 'user';
+
+            (activeCamera === frontCamera.deviceId) ? video.classList.remove('mirror') : video.classList.add('mirror');
 
             // Bascule entre la caméra avant et arrière
             const constraints = {

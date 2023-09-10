@@ -180,6 +180,7 @@ export class AuthService {
         }
       })
       .catch((error) => {
+        this.loaderService.setLoader(false);
         window.alert(error);
       });
   }

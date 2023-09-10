@@ -16,6 +16,10 @@
         background: black;
       }
 
+      video.mirror {
+        transform: scaleX(-1);
+      }
+
       .ratio_1 {
         width: 100%;
         height: 100%;

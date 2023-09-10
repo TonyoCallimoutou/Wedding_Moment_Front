@@ -28,7 +28,7 @@
         <button mat-fab color="{{ratio ==1/2 ? 'primary': 'accent'}}" (click)="ratio = 1/2"><mat-icon>crop_portrait</mat-icon></button>
         <button mat-fab color="{{ratio ==2 ? 'primary': 'accent'}}" (click)="ratio = 2"><mat-icon>crop_3_2</mat-icon></button>
       </div>
-      <div class="filter_list" *ngIf="tabSelector===0" [style.margin-bottom]="navBarHeight*2 + 'px' ">
+      <div class="filter_list" [style.margin-bottom]="navBarHeight + 'px' ">
         <div class="square"  [ngClass]="filterSelected === 'none' ? 'selected' : '' " >
           <div class="square-content" (click)="applyFilter('none')">{{'Utils.no_filter' | translate | capitalizeFirstLetter}}</div>
         </div>
@@ -36,15 +36,7 @@
           <div class="square-content" (click)="applyFilter(filter)">{{filter}}</div>
         </div>
       </div>
-      <div class="filter" *ngIf="tabSelector===1" [style.margin-bottom]="navBarHeight*2 + 'px' ">
-        <div class="slider" *ngFor="let prop of filterType">
-          <span>{{prop.name}}</span>
-          <mat-slider [min]="prop.minValue" [max]="prop.maxValue" [step]="prop.step" discrete>
-            <input matSliderThumb [(ngModel)]="prop.defautValue" (dragEnd)="applyFilter()">
-          </mat-slider>
-        </div>
-      </div>
-      <div class="save" [style.margin-bottom]="navBarHeight + 'px' ">
+      <div class="save">
         <button mat-raised-button (click)="saveImage()">{{'Utils.save' | translate | capitalizeFirstLetter}}</button>
       </div>
 
@@ -62,27 +54,6 @@
       <button mat-fab color="accent" class="switch_camera_button" (click)="switchCamera()"><mat-icon>flip_camera_ios</mat-icon></button>
     </div>
 
-  </div>
-
-
-  <div #tabs class="tabs" *ngIf="isPictureChoose">
-    <mat-tab-group
-      headerPosition="below"
-      disableRipple = true
-      [selectedIndex]="tabSelector"
-      (selectedIndexChange)="setTabSelector($event)">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <p>FILTRE</p>
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <p> MODIFIER </p>
-        </ng-template>
-      </mat-tab>
-
-    </mat-tab-group>
   </div>
 
 </div>

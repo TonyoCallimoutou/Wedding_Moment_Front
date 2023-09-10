@@ -1,13 +1,14 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
 import {OptionStringIcon} from "../../../model/option-string-icon.model";
+import {LoaderService} from "../../service/loader.service";
 
 @Component({
   selector: 'app-generic-image-cropper',
   templateUrl: './generic-image-cropper.component.html',
   styleUrls: ['./generic-image-cropper.component.scss']
 })
-export class GenericImageCropperComponent implements OnInit{
+export class GenericImageCropperComponent implements OnInit, OnChanges{
 
   @Input() maintainAspectRatio : boolean = false;
   @Input() imageChangedEvent : any;
@@ -18,7 +19,9 @@ export class GenericImageCropperComponent implements OnInit{
 
   public iconOptions : OptionStringIcon[];
 
-  constructor() {
+  constructor(
+    private loaderService: LoaderService,
+  ) {
     this.iconOptions = [{
       optionText : "carré",
       icon: "crop_square"
@@ -37,6 +40,12 @@ export class GenericImageCropperComponent implements OnInit{
   ngOnInit() {
     if (this.multiRatio) {
       this.ratio = 1;
+    }
+  }
+
+  ngOnChanges(changes:SimpleChanges) {
+    if (changes['imageBase64'] && changes['imageBase64'].currentValue) {
+      this.loaderService.setLoader(true, 500);
     }
   }
 
@@ -60,5 +69,9 @@ export class GenericImageCropperComponent implements OnInit{
       picture: event.base64,
       ratio : this.ratio
     });
+  }
+
+  cropperReady() {
+    this.loaderService.setLoader(false);
   }
 }

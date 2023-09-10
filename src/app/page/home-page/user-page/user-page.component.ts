@@ -109,6 +109,7 @@ export class UserPageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.currentUser.photoUrl = this.newUserPicture;
         this.userModelService.setPhotoUrl(this.newUserPicture);
       }
       this.newUserPicture = null;
