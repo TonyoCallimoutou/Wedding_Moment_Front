@@ -3,10 +3,12 @@ import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
-import {LocalModel} from "../../../model/local.model";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {TranslateService} from "@ngx-translate/core";
 import {LoaderService} from "../../../shared/service/loader.service";
+import {Post} from "../../../model/post.model";
+import {LocalModel} from "../../../model/local.model";
+import {User} from "../../../model/user.model";
 
 
 @Component({
@@ -26,6 +28,7 @@ export class PostPageComponent {
   @Output() public switchTab: EventEmitter<number> = new EventEmitter<number>();
   @Input() public isEditMode: boolean = false;
   @Output() public takePicture: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() public reportPost: EventEmitter<Post> = new EventEmitter<Post>();
 
   public tabSelector: number = 0;
 
@@ -78,10 +81,14 @@ export class PostPageComponent {
 
   /**
    * Like or dislike post
-   * @param postId
+   * @param post
    */
   public reactPost(post: Post) {
     this.postModelService.reactPost(post);
+  }
+
+  public reportedPost(post: Post) {
+    this.reportPost.emit(post);
   }
 
   /**

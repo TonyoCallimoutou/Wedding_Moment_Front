@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
+import {Menu} from "../../../model/menu.model";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-menu-page',

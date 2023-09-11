@@ -2,9 +2,9 @@
 
   <div
     *ngIf="needInstallPWA"
-    class="alertPWA"
-    (click)="installPwa()">
-    <span> {{ "Utils.PWA.install" | translate | capitalizeFirstLetter }}</span>
+    class="alertPWA">
+    <span (click)="installPwa()"> {{ "Utils.PWA.install" | translate | capitalizeFirstLetter }}</span>
+    <mat-icon (click)="needInstallPWA = false">close</mat-icon>
   </div>
 
   <div
@@ -52,7 +52,7 @@
   </mat-toolbar>
 
   <div
-    *ngIf="!isTakePicture"
+    *ngIf="!isTakePicture && !isReport"
     class="onglet"
     (touchstart)="onTouchStart($event)"
     (touchmove)="onTouchMove($event)"
@@ -86,6 +86,7 @@
       (switchTab)="tabSelector = $event"
       [isEditMode]="isEditMode"
       (takePicture)="isTakePicture = $event"
+      (reportPost)="reportPost($event)"
     >
     </app-post-page>
     <app-plan-table-page
@@ -115,8 +116,16 @@
   >
   </app-generate-picture>
 
+  <app-report-page
+    *ngIf="isReport"
+    [post]="postReport"
+    (report)="sendReport($event)"
+    (goBack)="isReport = false"
+  >
+  </app-report-page>
+
   <mat-tab-group
-    *ngIf="!isTakePicture"
+    *ngIf="!isTakePicture && !isReport"
     headerPosition="below"
     disablePagination
     disableRipple = true

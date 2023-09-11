@@ -1,4 +1,4 @@
-interface EventModel {
+export interface EventModel {
   eventId: number,
   userId: string,
   pictureUrl: string,
@@ -10,7 +10,7 @@ interface EventModel {
   isActivate: boolean,
 }
 
-interface EventModelPresentation {
+export interface EventModelPresentation {
   presentationText: string,
   presentationTextSize: number,
   presentationTextAlign: string,

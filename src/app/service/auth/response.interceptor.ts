@@ -1,9 +1,10 @@
 import {Injectable} from "@angular/core";
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable, take, tap} from "rxjs";
-import {LocalModel} from "../../model/local.model";
 import {CookieHelper} from "../../shared/service/cookie.helper";
 import {UserService} from "../user.service";
+import {User} from "../../model/user.model";
+import {LocalModel} from "../../model/local.model";
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {

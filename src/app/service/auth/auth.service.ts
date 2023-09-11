@@ -2,22 +2,21 @@ import {Injectable} from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/compat/auth';
 import {Router} from '@angular/router';
 import * as auth from 'firebase/auth';
-import {finalize, take} from 'rxjs';
+import {take} from 'rxjs';
 import {UserModelService} from '../../viewModel/user-model.service';
-import {LocalModel} from "../../model/local.model";
 import {EventModelService} from "../../viewModel/event-model.service";
-// @ts-ignore
-import {User} from '../../model/user.model';
 import {StorageModelService} from "../../viewModel/storage-model.service";
 import {CookieHelper} from "../../shared/service/cookie.helper";
 import {LoaderService} from "../../shared/service/loader.service";
+import {User} from "../../model/user.model";
+import {LocalModel} from "../../model/local.model";
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
 
-  userData: User;
+  userData!: User;
 
   constructor(
     public userModelService: UserModelService,
@@ -78,7 +77,7 @@ export class AuthService {
                     this.loaderService.setLoader(false);
                     resolve(true);
 
-                    user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified
+                    user.emailVerified = user.emailVerified ? user.emailVerified : result.user?.emailVerified ? result.user.emailVerified : false;
                     CookieHelper.set(LocalModel.USER, JSON.stringify(user));
                     this.userModelService.initUserData();
                     this.eventModelService.initUserData();

@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {AuthService} from "../../../../service/auth/auth.service";
 import {UserModelService} from "../../../../viewModel/user-model.service";
+import {User} from "../../../../model/user.model";
 
 @Component({
   selector: 'app-verify-email',

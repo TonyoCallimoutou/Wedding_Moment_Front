@@ -15,6 +15,8 @@ import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/di
 import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
 import {LoaderService} from "../../../shared/service/loader.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
+import {User} from "../../../model/user.model";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-home',

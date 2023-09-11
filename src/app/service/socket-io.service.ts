@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as socketIo from 'socket.io-client';
 import {environment} from 'src/environments/environment';
+import {Post} from "../model/post.model";
 
 @Injectable({
   providedIn: 'root'

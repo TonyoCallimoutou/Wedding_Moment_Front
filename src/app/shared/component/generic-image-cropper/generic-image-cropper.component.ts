@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {ImageCroppedEvent} from "ngx-image-cropper";
-import {OptionStringIcon} from "../../../model/option-string-icon.model";
 import {LoaderService} from "../../service/loader.service";
+import {OptionStringIcon} from "../../../model/option-string-icon.model";
 
 @Component({
   selector: 'app-generic-image-cropper',

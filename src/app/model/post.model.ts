@@ -1,4 +1,4 @@
-interface Post {
+export interface Post {
     postId: number,
     eventId: number,
     pictureUrl: string,

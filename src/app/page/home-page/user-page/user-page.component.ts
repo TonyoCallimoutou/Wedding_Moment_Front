@@ -7,7 +7,6 @@ import {User} from 'src/app/model/user.model';
 import {AuthService} from "../../../service/auth/auth.service";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {LocalModel} from "../../../model/local.model";
 import {TranslateService} from "@ngx-translate/core";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {CguDialogComponent} from "../../../shared/component/cgu-dialog/cgu-dialog.component";
@@ -16,6 +15,8 @@ import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/di
 import {take} from "rxjs";
 import {Share} from "../../../shared/component/share-button/share-button.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
+import {EventModel} from "../../../model/event.model";
+import {LocalModel} from "../../../model/local.model";
 
 interface Language {
   code: string;
@@ -30,7 +31,7 @@ interface Language {
 export class UserPageComponent {
 
   @Input() public canAccess!: boolean;
-  @Input() public currentUser: User;
+  @Input() public currentUser!: User;
   @Input() public event?: EventModel;
   @Input() public isMaster: boolean = false;
   @Input() public isEditMode: boolean = false;
@@ -128,7 +129,7 @@ export class UserPageComponent {
    * Open dialog to change User Name
    */
   changeUserName() {
-    this.userName = this.currentUser.userName.split();
+    this.userName = this.currentUser.userName;
     const dialogRef = this.dialog.open(GenericDialogComponent, {
       data: {contentTemplate: this.dialogChangeUserName },
     });

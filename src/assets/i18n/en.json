@@ -12,6 +12,7 @@
       "wrong-password": "incorrect password",
       "length-password": "must contain at least 6 characters"
     },
+    "send": "Send",
     "save": "Save",
     "no_filter": "No filter",
     "choose_galerie": "Choose an image from the gallery",
@@ -127,6 +128,17 @@
     "Option": {
       "report" : "Report this post",
       "delete" : "Remove this post"
+    },
+    "Report": {
+      "Report-type": {
+        "obscene": "Obscene",
+        "spam": "Spam",
+        "violence": "Violence",
+        "consent": "without consent",
+        "other": "Other"
+      },
+      "type": "Type of report",
+      "reason": "Reason for the report"
     },
     "Error": {
       "update-post": "An error occurred while updating the post"

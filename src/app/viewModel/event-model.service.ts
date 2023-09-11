@@ -4,19 +4,15 @@ import {EventService} from '../service/event.service';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserModelService} from './user-model.service';
 import {PostModelService} from "./post-model.service";
-import {LocalModel} from "../model/local.model";
-// @ts-ignore
-import {User} from '../model/user.model';
-// @ts-ignore
-import {EventModel} from "../model/event.model";
-// @ts-ignore
-import {Menu} from "../model/menu.model";
-// @ts-ignore
-import {TableInvite} from "../model/table-invite.model";
 import {StorageModelService} from "./storage-model.service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 import {Router} from "@angular/router";
 import {LoaderService} from "../shared/service/loader.service";
+import {User} from "../model/user.model";
+import {EventModel, EventModelPresentation} from "../model/event.model";
+import {Invite, PlanTable, TableInvite} from "../model/table-invite.model";
+import {LocalModel} from "../model/local.model";
+import {Menu} from "../model/menu.model";
 
 
 @Injectable({
@@ -24,8 +20,8 @@ import {LoaderService} from "../shared/service/loader.service";
 })
 export class EventModelService {
 
-  userData: User;
-  event: EventModel;
+  userData!: User;
+  event!: EventModel;
   private listOfMenu: Menu[] = [];
   private listOfTableInvite: TableInvite[] = [];
   private listOfMenuObs$: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
@@ -109,8 +105,8 @@ export class EventModelService {
     this.socketService.socket.on('listeningRemoveInvite', (invite: any) => {
       for (let i = 0; i < this.listOfTableInvite.length; i++) {
         if (this.listOfTableInvite[i].inviteId == invite.inviteId) {
-          this.listOfTableInvite[i].inviteId = null;
-          this.listOfTableInvite[i].inviteName = null;
+          this.listOfTableInvite[i].inviteId = undefined;
+          this.listOfTableInvite[i].inviteName = undefined;
         }
       }
       this.listOfTableInviteObs$.next(this.listOfTableInvite);
@@ -361,6 +357,6 @@ export class EventModelService {
   reinitAllObservable() {
   this.listOfMenuObs$ = new BehaviorSubject<Menu[]>([]);
   this.listOfTableInviteObs$ = new BehaviorSubject<TableInvite[]>([]);
-  this.event = null;
+  this.event = {} as EventModel;
   }
 }

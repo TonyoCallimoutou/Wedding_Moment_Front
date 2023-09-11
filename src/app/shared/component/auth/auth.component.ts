@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {UserModelService} from "../../../viewModel/user-model.service";
+import {User} from "../../../model/user.model";
 
 @Component({
   selector: 'app-auth',

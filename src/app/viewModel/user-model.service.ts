@@ -2,14 +2,12 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, take} from 'rxjs';
 import {SocketIoService} from '../service/socket-io.service';
 import {UserService} from '../service/user.service';
-import {LocalModel} from "../model/local.model";
-// @ts-ignore
-import {Post} from '../model/post.model';
-// @ts-ignore
-import {User} from '../model/user.model';
 import {StorageModelService} from "./storage-model.service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 import {LoaderService} from "../shared/service/loader.service";
+import {User} from "../model/user.model";
+import {LocalModel} from "../model/local.model";
+import {Post} from "../model/post.model";
 
 
 @Injectable({
@@ -88,7 +86,7 @@ export class UserModelService {
     if (!!user) {
       return JSON.parse(user);
     }
-    return null;
+    return {} as User;
   }
 
   // SET USER

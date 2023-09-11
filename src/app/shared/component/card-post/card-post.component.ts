@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild} from '@angular/core';
-import {OptionStringIcon} from "../../../model/option-string-icon.model";
 import {TranslateService} from "@ngx-translate/core";
 import {SnackbarService} from "../../service/snackbar.service";
+import {OptionStringIcon} from "../../../model/option-string-icon.model";
+import {Post} from "../../../model/post.model";
+import {User} from "../../../model/user.model";
 
 @Component({
   selector: 'app-card-post',
@@ -17,6 +19,7 @@ export class CardPostComponent implements OnChanges{
   @Input() isActivate : boolean = false;
   @Input() isOffline : boolean = false;
   @Output() reaction : EventEmitter<Post> = new EventEmitter<Post>();
+  @Output() reported : EventEmitter<Post> = new EventEmitter<Post>();
   @Output() delete : EventEmitter<Post> = new EventEmitter<Post>();
   @Output() onClick : EventEmitter<Post> = new EventEmitter<Post>();
 
@@ -69,7 +72,7 @@ export class CardPostComponent implements OnChanges{
    */
   onOptionSelected(option: OptionStringIcon) {
     if (option === this.dropdownOptions[0]) {
-      this.test();
+      this.reported.emit(this.post)
     }
     else if (option === this.dropdownOptions[1]) {
       this.removePost(this.post);

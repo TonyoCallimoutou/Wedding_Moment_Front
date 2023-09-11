@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DeepCopy} from "../../../../utils/deepCopy";
+import {Invite, TableInfos} from "../../../../model/table-invite.model";
 
 @Component({
   selector: 'app-card-detail-plan-table',

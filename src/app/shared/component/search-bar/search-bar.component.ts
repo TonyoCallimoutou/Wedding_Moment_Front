@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Invite} from "../../../model/table-invite.model";
 
 @Component({
   selector: 'app-search-bar',

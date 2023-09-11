@@ -6,7 +6,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
-import {OptionStringIcon} from "../../../model/option-string-icon.model";
+import {Invite, PlanTable, TableInfos, TableInvite} from "../../../model/table-invite.model";
+import {EventModel} from "../../../model/event.model";
 
 @Component({
   selector: 'app-plan-table-page',

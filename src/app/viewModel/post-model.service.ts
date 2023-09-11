@@ -6,13 +6,12 @@ import {SocketIoService} from '../service/socket-io.service';
 import {PostUtils} from '../utils/post.utils';
 import {StorageModelService} from './storage-model.service';
 import {UserModelService} from './user-model.service';
-// @ts-ignore
-import {Post} from '../model/post.model';
-// @ts-ignore
-import {User} from '../model/user.model';
 import {LoaderService} from "../shared/service/loader.service";
 import {CookieHelper} from "../shared/service/cookie.helper";
 import {LocalModel} from "../model/local.model";
+import {User} from "../model/user.model";
+import {Report} from "../model/report.model";
+import {Post} from "../model/post.model";
 
 
 @Injectable({
@@ -64,6 +63,7 @@ export class PostModelService {
   public createPost(picture: any, ratio: number) {
 
     const post : Post = {
+      postId: 0,
       pictureUrl: "",
       eventId: this.eventId,
       countReact: 0,
@@ -71,6 +71,8 @@ export class PostModelService {
       userName: this.userData.userName,
       photoUrl: this.userData.photoUrl,
       pictureRatio: ratio,
+      publicationDate: new Date(),
+      isDownloading: false
     }
 
     this.loaderService.setLoader(true);
@@ -137,7 +139,7 @@ export class PostModelService {
    * Update post with firebase
    * @param post
    */
-  updatePostWithFirebase(post: Post = null): Promise<boolean> {
+  updatePostWithFirebase(post: Post | null = null): Promise<boolean> {
     return new Promise<boolean>((resolve, reject) => {
       let posts : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
       let postsFilter = post ? posts.filter(item => item.postId === post.postId) : posts;
@@ -188,6 +190,18 @@ export class PostModelService {
 
   reactPost(post: Post) {
     this.userModelService.reactPost(post);
+  }
+
+  reportedPost(report: Report, post: Post): Promise<boolean> {
+    return new Promise<boolean>((resolve) => {
+      report.userId = this.userData.userId;
+      this.postService.reportedPost(report)
+        .pipe(take(1))
+        .subscribe(() => {
+          this.socketService.removePost(post);
+          resolve(true);
+        });
+    });
   }
 
   private initList() {

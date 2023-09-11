@@ -5,6 +5,7 @@ import {GenericDialogComponent} from "../../../shared/component/generic-dialog/g
 import {TranslateService} from "@ngx-translate/core";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {OptionStringIcon} from 'src/app/model/option-string-icon.model';
+import {EventModel, EventModelPresentation} from "../../../model/event.model";
 
 @Component({
   selector: 'app-presentation-page',

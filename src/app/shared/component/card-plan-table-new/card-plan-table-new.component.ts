@@ -3,6 +3,7 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 import {DeepCopy} from "../../../utils/deepCopy";
 import {SnackbarService} from "../../service/snackbar.service";
 import {TranslateService} from "@ngx-translate/core";
+import {Invite, PlanTable, TableInfos} from "../../../model/table-invite.model";
 
 @Component({
   selector: 'app-card-plan-table-new',

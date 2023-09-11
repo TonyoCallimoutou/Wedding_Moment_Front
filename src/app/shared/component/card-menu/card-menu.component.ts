@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DeepCopy} from "../../../utils/deepCopy";
+import {Menu} from "../../../model/menu.model";
 
 @Component({
   selector: 'app-card-menu',

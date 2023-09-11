@@ -4,17 +4,19 @@ import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
 import {Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
-import {LocalModel} from "../../../model/local.model";
-// @ts-ignore
-import {Post} from "../../../model/post.model";
-// @ts-ignore
-import {User} from "../../../model/user.model";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {MatDialog} from "@angular/material/dialog";
 import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {Utils} from "../../../utils/Utils";
 import {DOCUMENT} from "@angular/common";
+import {Menu} from "../../../model/menu.model";
+import {Post} from "../../../model/post.model";
+import {Invite, PlanTable, TableInvite} from "../../../model/table-invite.model";
+import {User} from "../../../model/user.model";
+import {EventModel} from "../../../model/event.model";
+import {LocalModel} from "../../../model/local.model";
+import {Report} from "../../../model/report.model";
 
 @Component({
   selector: 'app-dashboard',
@@ -32,7 +34,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public tableInviteList: TableInvite[] = [];
   public inviteList: Invite[] = [];
   public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
-  public currentUser: User;
+  public currentUser!: User;
   public canAccess: boolean = false;
   public isMaster: boolean = false;
   public isActivate: boolean = false;
@@ -42,6 +44,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public decompteDateString: string= "";
 
   public isTakePicture: boolean = false;
+  public isReport : boolean = false;
+  public postReport : Post = {} as Post;
 
   private touchStartXY: number[] = [0, 0];
   private touchEndXY: number[] = [0, 0];
@@ -483,6 +487,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
    */
   setFinallyBackground(image: any) {
     this.eventModelService.setEventPicture(image);
+  }
+
+  reportPost(post: Post) {
+    this.isReport = true;
+    this.postReport = post;
+  }
+
+  sendReport(report: Report) {
+    this.postModelService.reportedPost(report, this.postReport).then(() => {
+      this.snackbarService.showSnackbar("tips", "Le post a été signalé");
+    });
   }
 
   onTouchStart(event: TouchEvent): void {

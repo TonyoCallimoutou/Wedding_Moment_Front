@@ -28,6 +28,7 @@
             [isActivate]="isActivate"
             (reaction)="reactPost($event)"
             (delete)="removePost($event)"
+            (reported)="reportedPost($event)"
           >
           </app-card-post>
         </div>
@@ -64,6 +65,7 @@
               [style]="'border-radius: 1.5rem; border: 0.5rem solid var(--secondary-dark);'"
               (reaction)="reactPost($event)"
               (delete)="removePost($event)"
+              (reported)="reportedPost($event)"
             >
             </app-card-post>
           </ng-template>

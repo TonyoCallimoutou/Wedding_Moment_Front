@@ -12,6 +12,7 @@
       "wrong-password": "mot de passe incorrect",
       "length-password": "doit contenir au moins 6 caractères"
     },
+    "send": "Envoyer",
     "save": "Enregistrer",
     "no_filter": "Aucun filtre",
     "choose_galerie": "Choisir une image dans la galerie",
@@ -127,6 +128,17 @@
     "Option": {
       "report" : "Signaler ce post",
       "delete" : "Supprimer ce post"
+    },
+    "Report": {
+      "Report-type": {
+        "obscene": "Contenu obscène",
+        "spam": "Spam",
+        "violence": "Violence",
+        "consent": "Manque de consentement",
+        "other": "Autre"
+      },
+      "type": "Type de signalement",
+      "reason": "Raison du signalement"
     },
     "Error": {
       "update-post": "Une erreur est survenue lors de la mise à jour du post"

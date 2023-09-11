@@ -2,6 +2,8 @@ import {HttpClient} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {Observable} from "rxjs";
 import {environment} from "src/environments/environment";
+import {Post} from "../model/post.model";
+import {Report} from "../model/report.model";
 
 const baseUrl = environment.Back_Host + '/api/posts';
 
@@ -25,6 +27,10 @@ export class PostService {
 
   setPictureOfPost(data: any): Observable<any> {
     return this.http.post(`${baseUrl}/setter`, data);
+  }
+
+  reportedPost(report: Report): Observable<any> {
+    return this.http.post(`${baseUrl}/report`, report);
   }
 
   deletePost(post: Post): Observable<any> {

@@ -1,4 +1,4 @@
-interface Menu {
+export interface Menu {
   menuId?: number,
   eventId?: number,
   menuCategorie: string,

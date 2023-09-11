@@ -1,4 +1,4 @@
-interface TableInvite {
+export interface TableInvite {
   eventId: number,
   planTableId: number,
   inviteId?: number,
@@ -6,20 +6,20 @@ interface TableInvite {
   inviteName?: string
 }
 
-interface PlanTable {
+export interface PlanTable {
   eventId: number,
   planTableId?: number,
   tableName: string,
 }
 
-interface Invite {
+export interface Invite {
   inviteId?: number,
   eventId: number,
   planTableId: number,
   inviteName: string,
 }
 
-interface TableInfos {
+export interface TableInfos {
   key: PlanTable,
   value: Invite[],
 }

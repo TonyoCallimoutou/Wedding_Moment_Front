@@ -1,0 +1,56 @@
+<div class="home">
+  <div #toolbar>
+    <mat-toolbar  color="primary">
+      <button mat-icon-button (click)="returnPostPage()">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <span> {{'General.app_name' | translate | capitalizeFirstLetter }}</span>
+    </mat-toolbar>
+  </div>
+
+  <div class="page">
+    <div class="post-image">
+      <img alt="{{ post.userId}}" src="{{ post.pictureUrl }}">
+    </div>
+
+    <form [formGroup]="reportForm" class="formulaire">
+      <mat-form-field>
+        <mat-label>{{'Posts.Report.type' | translate | capitalizeFirstLetter}}</mat-label>
+        <mat-select
+          [formControlName]="'type'"
+          name="type">
+          <mat-option *ngFor="let type of typeReport" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="reportForm.get('type')?.hasError('required')">
+          {{'Utils.Errors.required' | translate | capitalizeFirstLetter}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        *ngIf="isOther"
+      >
+        <mat-label>{{'Posts.Report.reason' | translate | capitalizeFirstLetter}}</mat-label>
+        <textarea
+          autosize
+          matInput
+          [formControlName]="'reason'"
+        ></textarea>
+        <mat-error *ngIf="reportForm.get('reason')?.hasError('required')">
+          {{'Utils.Errors.required' | translate | capitalizeFirstLetter}}
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        [disabled]="reportForm.invalid"
+        mat-raised-button
+        color="primary"
+        (click)="sendReport()">{{'Utils.send' | translate | uppercase}}</button>
+    </form>
+
+
+  </div>
+
+</div>
+

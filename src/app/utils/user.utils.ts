@@ -1,6 +1,3 @@
-// @ts-ignore
-import {User} from "../model/user.model";
-
 // Creer User depuis FirebaseUser
 export class UserUtils {
   static createUserFromFirebase(data: any) {

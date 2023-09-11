@@ -1,5 +1,7 @@
 
 // Creer User depuis FirebaseUser
+import {Post} from "../model/post.model";
+
 export class PostUtils {
   static SetPost(refPost: Post, newData: any) {
     refPost.pictureUrl = newData.pictureUrl
