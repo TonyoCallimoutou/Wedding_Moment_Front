@@ -104,7 +104,11 @@ export class HomeComponent{
   }
 
   goToEvent() {
-    this.router.navigate(['dashboard', this.event?.eventCode]);
+    if (!!this.event?.eventCode) {
+      this.loaderService.setLoader(true, 5000, '', true);
+      this.router.navigate(['dashboard', this.event?.eventCode]);
+      this.loaderService.setLoader(false);
+    }
 
   }
 
@@ -146,11 +150,13 @@ export class HomeComponent{
   }
 
   goToEventWithCode() {
+    this.loaderService.setLoader(true);
     this.eventModelService.getEventByCode(this.formInvite.controls['code'].value)
       .pipe(take(1))
       .subscribe((data: EventModel) => {
+        this.loaderService.setLoader(false);
         if (!!data) {
-          this.loaderService.setLoader(true, 1000);
+          this.loaderService.setLoader(true, 5000, '', true);
           this.router.navigate(['dashboard', data.eventCode ]);
           this.loaderService.setLoader(false);
         }

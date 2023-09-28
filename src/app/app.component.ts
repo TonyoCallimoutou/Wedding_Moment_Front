@@ -38,18 +38,28 @@ export class AppComponent implements OnInit, OnDestroy {
     translate.use(language);
 
     CookieHelper.set(LocalModel.LANGUAGE, language);
-
-    this.listenLoader();
-
-    window.scrollTo(0,1); // hide address bar on mobile
   }
 
   ngOnInit() {
+    this.listenLoader();
+    this.listenRefreshPage();
   }
 
 
   ngOnDestroy() {
     this.socketService.disconnect();
+  }
+
+
+  listenRefreshPage() {
+    window.addEventListener('beforeunload', () => {
+      this.loaderService.setLoader(true);
+    });
+
+    // Attendez que la page soit complètement chargée
+    window.addEventListener('load', () => {
+      this.loaderService.setLoader(false);
+    });
   }
 
   listenLoader() {
