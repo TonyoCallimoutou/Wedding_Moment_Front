@@ -1,4 +1,4 @@
-import {Component, Inject, TemplateRef} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit, TemplateRef} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
@@ -6,7 +6,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
   templateUrl: './generic-dialog.component.html',
   styleUrls: ['./generic-dialog.component.scss']
 })
-export class GenericDialogComponent {
+export class GenericDialogComponent implements OnInit, OnDestroy{
   public contentTemplate: TemplateRef<any>;
   public isDisplayButton: boolean = true;
   public isDisplayCloseButton: boolean = true;
@@ -22,6 +22,19 @@ export class GenericDialogComponent {
       this.isDisplayCloseButton = data.isDisplayCloseButton;
     }
     this.contentTemplate = data.contentTemplate;
+  }
+
+  ngOnInit(): void {
+    history.pushState({ action: 'customAction' }, '', window.location.href);
+    window.addEventListener('popstate', this.handlePopState.bind(this));
+  }
+
+  handlePopState(event: PopStateEvent) {
+    this.dialogRef.close();
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('popstate', this.handlePopState);
   }
 
   onNoClick(): void {

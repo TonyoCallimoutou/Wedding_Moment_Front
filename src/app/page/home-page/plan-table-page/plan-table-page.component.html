@@ -25,13 +25,15 @@
     </form>
   </div>
 
-  <app-card-plan-table-new
+  <app-card-plan-table
     [tableInviteMap]="tableInviteMap"
     [isEditable]="isEditable"
     (getDetail)="getDetail($event)"
     (addPlanTable)="addPlanTable($event)"
     (removePlanTable)="removePlanTable($event)"
-  ></app-card-plan-table-new>
+    [inEdition]="inEdition"
+    (beInEdition)="beInEdition.emit($event)"
+  ></app-card-plan-table>
 
   <ng-template #dialogPlanTableDetail>
     <app-card-detail-plan-table
@@ -41,6 +43,8 @@
       [tableInfos]="tableInfos"
       (addInvite)="addInvite($event)"
       (removeInvite)="removeInvite($event)"
+      [inEdition]="inEdition"
+      (beInEdition)="beInEdition.emit($event)"
     ></app-card-detail-plan-table>
   </ng-template>
 </div>

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {Menu} from "../../../model/menu.model";
 import {EventModel} from "../../../model/event.model";
@@ -14,6 +14,8 @@ export class MenuPageComponent {
   @Input() public menuList: Menu[] = [];
   @Input() public isEditMode: boolean = false;
   @Input() public event?: EventModel;
+  @Input() public inEdition: boolean = false;
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor(
     private eventModelService: EventModelService

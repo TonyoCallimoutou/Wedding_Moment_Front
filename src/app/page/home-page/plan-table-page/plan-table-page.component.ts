@@ -1,9 +1,19 @@
-import {Component, Input, OnChanges, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {map, Observable, startWith} from "rxjs";
 import {FormControl} from "@angular/forms";
-import {MatDialog} from "@angular/material/dialog";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {MatDialog, MatDialogState} from "@angular/material/dialog";
+import {GenericDialogComponent} from "../../../shared/component/dialog/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {Invite, PlanTable, TableInfos, TableInvite} from "../../../model/table-invite.model";
@@ -14,7 +24,7 @@ import {EventModel} from "../../../model/event.model";
   templateUrl: './plan-table-page.component.html',
   styleUrls: ['./plan-table-page.component.scss']
 })
-export class PlanTablePageComponent implements OnChanges {
+export class PlanTablePageComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() public isEditable: boolean = false;
   @Input() public tableInviteList: TableInvite[] = [];
@@ -22,9 +32,11 @@ export class PlanTablePageComponent implements OnChanges {
   @Input() public tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
   @Input() public isEditMode: boolean = false;
   @Input() public event?: EventModel;
+  @Input() public inEdition: boolean = false;
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   myControl = new FormControl('');
-  inviteListFiltered: Observable<Invite[]>;
+  inviteListFiltered!: Observable<Invite[]>;
 
   tableInfos : TableInfos | null = null;
 
@@ -33,10 +45,13 @@ export class PlanTablePageComponent implements OnChanges {
   constructor(
     private eventModelService: EventModelService,
     private dialog: MatDialog,
-    private translate: TranslateService,
-    private snackbarService: SnackbarService,
-
   ) {
+  }
+
+  ngOnInit(): void {
+    history.pushState({ action: 'customAction' }, '', window.location.href);
+    window.addEventListener('popstate', this.handlePopState.bind(this));
+
     this.inviteListFiltered = this.myControl.valueChanges.pipe(
       startWith(''),
       map((value: any) => {
@@ -44,6 +59,19 @@ export class PlanTablePageComponent implements OnChanges {
         return name ? this.filter(name as string) : this.inviteList.slice();
       }),
     );
+  }
+
+  handlePopState(event: PopStateEvent) {
+    if (this.inEdition) {
+      this.beInEdition.emit(false);
+    }
+    else if (!this.tableInfos) {
+      history.back();
+    }
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('popstate', this.handlePopState);
   }
 
 
@@ -91,11 +119,17 @@ export class PlanTablePageComponent implements OnChanges {
     this.myControl.setValue('');
     this.tableInfos = invites;
 
-    this.dialog.open(GenericDialogComponent, {
+    let detailDialog = this.dialog.open(GenericDialogComponent, {
       data: {
         contentTemplate: this.dialogPlanTableDetail,
         isDisplayButton: false
       },
+    });
+
+    detailDialog.afterClosed().subscribe((result: any) => {
+      setTimeout(() => {
+        this.tableInfos = null;
+      }, 20);
     });
   }
 

@@ -6,23 +6,24 @@ import {TranslateService} from "@ngx-translate/core";
 import {Invite, PlanTable, TableInfos} from "../../../model/table-invite.model";
 
 @Component({
-  selector: 'app-card-plan-table-new',
-  templateUrl: './card-plan-table-new.component.html',
-  styleUrls: ['./card-plan-table-new.component.scss']
+  selector: 'app-card-plan-table',
+  templateUrl: './card-plan-table.component.html',
+  styleUrls: ['./card-plan-table.component.scss']
 })
-export class CardPlanTableNewComponent implements OnInit, OnChanges {
+export class CardPlanTableComponent implements OnInit, OnChanges {
 
   @Input() tableInviteMap: Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>()
   @Input() isEditable = false;
+  @Input() inEdition: boolean = false;
   @Output() getDetail: EventEmitter<TableInfos> = new EventEmitter<TableInfos>();
   @Output() addPlanTable: EventEmitter<PlanTable> = new EventEmitter<PlanTable>();
   @Output() removePlanTable: EventEmitter<PlanTable> = new EventEmitter<PlanTable>();
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   planTableIdChange : number[] = [];
   planTableRemove : any[] = [];
   editPlanTableMap :Map<PlanTable, Invite[]> = new Map<PlanTable, Invite[]>();
-  public isEdit : boolean = false;
   public style: object = {};
 
   constructor(
@@ -51,7 +52,7 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
       );
     });
 
-    this.isEdit = true;
+    this.beInEdition.emit(true);
   }
 
   addTable() {
@@ -71,7 +72,7 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
   }
 
   save() {
-    this.isEdit = ! this.isEdit;
+    this.beInEdition.emit(!this.inEdition);
 
     for (let planTable of this.planTableRemove) {
       this.removePlanTable.emit(planTable);
@@ -88,7 +89,7 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
   }
 
   delete(planTable: PlanTable) {
-    if (this.isEdit) {
+    if (this.inEdition) {
       if (!!planTable.planTableId) {
         this.planTableRemove.push(planTable);
       }
@@ -98,12 +99,12 @@ export class CardPlanTableNewComponent implements OnInit, OnChanges {
   }
 
   retour() {
-    this.isEdit = false;
+    this.beInEdition.emit(false);
     this.editPlanTableMap = DeepCopy.ofMap(this.tableInviteMap);
   }
 
   onClick(invites: TableInfos) {
-    if (!this.isEdit) {
+    if (!this.inEdition) {
       this.getDetail.emit(invites);
     }
   }

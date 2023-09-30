@@ -1,6 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {CardPlanTableNewComponent} from "./card-plan-table-new.component";
+import {CardPlanTableComponent} from "./card-plan-table.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {FormsModule} from "@angular/forms";
 import {CardDetailPlanTableComponent} from "./card-detail-plan-table/card-detail-plan-table.component";
@@ -11,7 +11,7 @@ import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lett
 
 @NgModule({
   declarations: [
-    CardPlanTableNewComponent,
+    CardPlanTableComponent,
     CardDetailPlanTableComponent
   ],
   imports: [
@@ -23,7 +23,7 @@ import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lett
     MatButtonModule,
     CapitalizeFirstLetterPipeModule,
   ],
-  exports: [CardPlanTableNewComponent, CardDetailPlanTableComponent]
+  exports: [CardPlanTableComponent, CardDetailPlanTableComponent]
 })
-export class CardPlanTableNewModule {
+export class CardPlanTableModule {
 }

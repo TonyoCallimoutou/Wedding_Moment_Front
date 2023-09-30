@@ -5,6 +5,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {MatSnackBar} from "@angular/material/snack-bar"
 import {NgxQrcodeElementTypes} from "@techiediaries/ngx-qrcode";
 import html2canvas from "html2canvas";
+import {GenericDialogComponent} from "../generic-dialog/generic-dialog.component";
 
 
 @Component({
@@ -12,7 +13,7 @@ import html2canvas from "html2canvas";
   templateUrl: './dialog-qr-code.component.html',
   styleUrls: ['./dialog-qr-code.component.scss']
 })
-export class DialogQrCodeComponent {
+export class DialogQrCodeComponent extends GenericDialogComponent {
 
   public elementType: NgxQrcodeElementTypes = "canvas" as NgxQrcodeElementTypes
   public qrCode: string = '';
@@ -23,9 +24,10 @@ export class DialogQrCodeComponent {
 
   constructor(
     private _snackBar: MatSnackBar,
-    public dialogRef: MatDialogRef<DialogQrCodeComponent>,
+    public override dialogRef: MatDialogRef<DialogQrCodeComponent>,
   @Inject(MAT_DIALOG_DATA) data: any
   ) {
+    super(dialogRef, data);
     const styles = getComputedStyle(document.documentElement);
     this.qrCodeColorDark = styles.getPropertyValue('--primary-dark').trim();
 
@@ -33,7 +35,7 @@ export class DialogQrCodeComponent {
     this.eventCode = data.eventCode;
   }
 
-  onNoClick(): void {
+  override onNoClick(): void {
     this.dialogRef.close();
   }
 

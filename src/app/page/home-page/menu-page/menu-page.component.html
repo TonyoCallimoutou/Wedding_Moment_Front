@@ -5,6 +5,8 @@
     [isEditable]="isEditable"
     (addMenu)="addMenu($event)"
     (removeMenu)="removeMenu($event)"
+    [inEdition]="inEdition"
+    (beInEdition)="beInEdition.emit($event)"
   ></app-card-menu>
 
 </div>

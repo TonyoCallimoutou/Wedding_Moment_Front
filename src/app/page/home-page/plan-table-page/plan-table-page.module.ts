@@ -8,7 +8,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {MatIconModule} from "@angular/material/icon";
-import {CardPlanTableNewModule} from "../../../shared/component/card-plan-table-new/card-plan-table-new.module";
+import {CardPlanTableModule} from "../../../shared/component/card-plan-table/card-plan-table.module";
 import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdown-menu.module";
 
 
@@ -26,7 +26,7 @@ import {DropdownMenuModule} from "../../../shared/component/dropdown-menu/dropdo
     TranslateModule,
     CapitalizeFirstLetterPipeModule,
     MatIconModule,
-    CardPlanTableNewModule,
+    CardPlanTableModule,
     DropdownMenuModule,
   ],
   exports: [PlanTablePageComponent],

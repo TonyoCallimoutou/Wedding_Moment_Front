@@ -10,15 +10,15 @@ import {Menu} from "../../../model/menu.model";
 export class CardMenuComponent implements OnInit, OnChanges {
   @Input() menuList : Menu[] = [];
   @Input() isEditable: boolean = false;
+  @Input() inEdition: boolean = false;
   @Output() addMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
   @Output() removeMenu: EventEmitter<Menu> = new EventEmitter<Menu>();
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   menuIdChange : number[] = [];
   menuRemove : Menu[] = [];
 
   editMenuList : Menu[] = [];
-
-  isEdit : boolean = false;
 
   constructor() { }
 
@@ -33,7 +33,7 @@ export class CardMenuComponent implements OnInit, OnChanges {
   }
 
   retour() {
-    this.isEdit = false;
+    this.beInEdition.emit(false);
     this.editMenuList = DeepCopy.ofList(this.menuList);
   }
 
@@ -52,7 +52,7 @@ export class CardMenuComponent implements OnInit, OnChanges {
   }
 
   save() {
-    this.isEdit = !this.isEdit;
+    this.beInEdition.emit(!this.inEdition);
 
     for (let menu of this.menuRemove) {
       this.removeMenu.emit(menu);

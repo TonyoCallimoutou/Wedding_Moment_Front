@@ -96,4 +96,10 @@
     color: var(--primary-light);
     z-index: 2;
   }
+
+  .button_google {
+    svg {
+      height: 2rem;
+    }
+  }
 }

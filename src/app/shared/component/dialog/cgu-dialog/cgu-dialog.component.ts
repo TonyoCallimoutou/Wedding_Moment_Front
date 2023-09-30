@@ -1,20 +1,22 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import {GenericDialogComponent} from "../generic-dialog/generic-dialog.component";
 
 @Component({
   selector: 'app-cgu-dialog',
   templateUrl: './cgu-dialog.component.html',
   styleUrls: ['./cgu-dialog.component.scss']
 })
-export class CguDialogComponent {
+export class CguDialogComponent extends GenericDialogComponent{
 
   public isConfidentiality: boolean = false;
   public switchAutorize: boolean = true;
 
   constructor(
-    public dialogRef: MatDialogRef<CguDialogComponent>,
+    public override dialogRef: MatDialogRef<CguDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data: any,
   ) {
+    super(dialogRef,data);
     if (data.isConfidentiality != undefined) {
       this.isConfidentiality = data.isConfidentiality;
     }
@@ -27,7 +29,7 @@ export class CguDialogComponent {
     this.isConfidentiality = !this.isConfidentiality;
   }
 
-  onNoClick(): void {
+  override onNoClick(): void {
     this.dialogRef.close();
   }
 }

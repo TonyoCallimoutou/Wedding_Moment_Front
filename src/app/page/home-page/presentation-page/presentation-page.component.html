@@ -2,16 +2,16 @@
 
 
   <app-dropdown-menu
-    *ngIf="isEditable && !isSetPresentationText"
+    *ngIf="isEditable && !inEdition"
     [matIcon]="'edit'"
     [options]="dropdownOptions"
     (optionSelected)="onOptionSelected($event)">
   </app-dropdown-menu>
 
   <div class="text-zone">
-    <button mat-raised-button class="save_button" *ngIf="isSetPresentationText" (click)="save()"> SAVE </button>
+    <button mat-raised-button class="save_button" *ngIf="inEdition" (click)="save()"> SAVE </button>
 
-    <div class="edit_buttons" *ngIf="isSetPresentationText">
+    <div class="edit_buttons" *ngIf="inEdition">
       <button mat-raised-button (click)="onFontSizeChange(true)"><mat-icon>text_increase</mat-icon></button>
       <button mat-raised-button (click)="onFontSizeChange(false)"><mat-icon>text_decrease</mat-icon></button>
       <button mat-raised-button  (click)="onAlignChange('left')"><mat-icon>format_align_left</mat-icon></button>
@@ -21,8 +21,8 @@
     <div class="text">
       <textarea
         autosize
-        [style]="isSetPresentationText ? 'outline: auto' : 'outline: none'"
-        [disabled]="!isSetPresentationText"
+        [style]="inEdition ? 'outline: auto' : 'outline: none'"
+        [disabled]="!inEdition"
         class="text-presentation"
         [ngStyle]="{'font-size': fontSizeString, 'text-align': textAlign }"
         [(ngModel)]="presentationText">

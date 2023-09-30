@@ -5,13 +5,13 @@ import {EventModelService} from "../../../viewModel/event-model.service";
 // @ts-ignore
 import {User} from 'src/app/model/user.model';
 import {AuthService} from "../../../service/auth/auth.service";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {GenericDialogComponent} from "../../../shared/component/dialog/generic-dialog/generic-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {TranslateService} from "@ngx-translate/core";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
-import {CguDialogComponent} from "../../../shared/component/cgu-dialog/cgu-dialog.component";
-import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
-import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
+import {CguDialogComponent} from "../../../shared/component/dialog/cgu-dialog/cgu-dialog.component";
+import {DialogLinkComponent} from "../../../shared/component/dialog/dialog-link/dialog-link.component";
+import {DialogQrCodeComponent} from "../../../shared/component/dialog/dialog-qr-code/dialog-qr-code.component";
 import {take} from "rxjs";
 import {Share} from "../../../shared/component/share-button/share-button.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";

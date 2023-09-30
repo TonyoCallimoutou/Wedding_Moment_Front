@@ -1,9 +1,9 @@
 <div #card class="card">
 
   <div class="buttons">
-    <mat-icon *ngIf="isEdit" class="button-modifier" (click)="retour()"> undo </mat-icon>
-    <mat-icon *ngIf="isEditable && !isEdit" class="button-modifier" (click)="edit()"> edit </mat-icon>
-    <mat-icon *ngIf="isEdit" class="button-save" (click)="save()"> save </mat-icon>
+    <mat-icon *ngIf="inEdition" class="button-modifier" (click)="retour()"> undo </mat-icon>
+    <mat-icon *ngIf="isEditable && !inEdition" class="button-modifier" (click)="edit()"> edit </mat-icon>
+    <mat-icon *ngIf="inEdition" class="button-save" (click)="save()"> save </mat-icon>
   </div>
 
   <div>
@@ -18,17 +18,17 @@
         class="input font-default-16"
         type="text"
         (ngModelChange)="onInputChange(item.key.planTableId)"
-        [disabled]="!isEdit"
+        [disabled]="!inEdition"
         [style.width.px]="(item.key.tableName.length + 1) * 8"
         oninput="this.style.width = ((this.value.length + 1) * 8) + 'px';"
         [(ngModel)]="item.key.tableName">
 
-        <mat-icon class="button-remove" *ngIf="isEdit" (click)="delete(item.key)"> delete </mat-icon>
+        <mat-icon class="button-remove" *ngIf="inEdition" (click)="delete(item.key)"> delete </mat-icon>
 
     </div>
   </div>
 
-  <div *ngIf="isEdit" class="button_add">
+  <div *ngIf="inEdition" class="button_add">
     <button mat-fab extended (click)="addTable()">
       <mat-icon>add</mat-icon>
       {{ 'Plan_table.add_plan_table' | translate | capitalizeFirstLetter }}

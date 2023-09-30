@@ -52,7 +52,7 @@
   </mat-toolbar>
 
   <div
-    *ngIf="!isTakePicture && !isReport"
+    *ngIf="!isTakePicture && !isReport && !!event?.eventId"
     class="onglet"
     (touchstart)="onTouchStart($event)"
     (touchmove)="onTouchMove($event)"
@@ -64,6 +64,8 @@
       [isEditable]="isEditable"
       [isEditMode]="isEditMode"
       [event]="event"
+      (beInEdition)="inEdition($event)"
+      [inEdition]="isTabDesactive"
     >
     </app-presentation-page>
     <app-menu-page
@@ -72,6 +74,8 @@
       [menuList]="menuList"
       [isEditMode]="isEditMode"
       [event]="event"
+      (beInEdition)="inEdition($event)"
+      [inEdition]="isTabDesactive"
     >
     </app-menu-page>
     <app-post-page
@@ -97,6 +101,8 @@
       [tableInviteMap]="tableInviteMap"
       [isEditMode]="isEditMode"
       [event]="event"
+      (beInEdition)="inEdition($event)"
+      [inEdition]="isTabDesactive"
     >
     </app-plan-table-page>
     <app-user-page
@@ -131,27 +137,27 @@
     disableRipple = true
     [selectedIndex]="tabSelector"
     (selectedIndexChange)="tab($event)">
-    <mat-tab>
+    <mat-tab [disabled]="isTabDesactive">
       <ng-template mat-tab-label>
         <mat-icon>home</mat-icon>
       </ng-template>
     </mat-tab>
-    <mat-tab>
+    <mat-tab [disabled]="isTabDesactive">
       <ng-template mat-tab-label>
         <mat-icon>restaurant_menu</mat-icon>
       </ng-template>
     </mat-tab>
-    <mat-tab>
+    <mat-tab [disabled]="isTabDesactive">
       <ng-template mat-tab-label>
         <mat-icon>photo_camera</mat-icon>
       </ng-template>
     </mat-tab>
-    <mat-tab>
+    <mat-tab [disabled]="isTabDesactive">
       <ng-template mat-tab-label>
         <mat-icon>person_search</mat-icon>
       </ng-template>
     </mat-tab>
-    <mat-tab>
+    <mat-tab [disabled]="isTabDesactive">
       <ng-template mat-tab-label>
         <mat-icon>account_circle</mat-icon>
       </ng-template>

@@ -15,7 +15,7 @@ import {PageNotFoundComponent} from './page/page-not-found/page-not-found.compon
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {MatIconModule} from "@angular/material/icon";
-import {GenericDialogComponent} from './shared/component/generic-dialog/generic-dialog.component';
+import {GenericDialogComponent} from './shared/component/dialog/generic-dialog/generic-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatButtonModule} from "@angular/material/button";
@@ -25,9 +25,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {HomeModule} from "./page/home-page/home/home.module";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {DatePipe} from "@angular/common";
-import {CguDialogComponent} from './shared/component/cgu-dialog/cgu-dialog.component';
-import {DialogQrCodeComponent} from "./shared/component/dialog-qr-code/dialog-qr-code.component";
-import {DialogLinkComponent} from "./shared/component/dialog-link/dialog-link.component";
+import {CguDialogComponent} from './shared/component/dialog/cgu-dialog/cgu-dialog.component';
+import {DialogQrCodeComponent} from "./shared/component/dialog/dialog-qr-code/dialog-qr-code.component";
+import {DialogLinkComponent} from "./shared/component/dialog/dialog-link/dialog-link.component";
 import {ShareButtonModule} from "./shared/component/share-button/share-button.module";
 import {ClipboardModule} from "@angular/cdk/clipboard";
 import {MatCardModule} from "@angular/material/card";
@@ -36,6 +36,7 @@ import {MatMenuModule} from "@angular/material/menu";
 import {LoaderModule} from "./shared/component/loader/loader.module";
 import {NgxQRCodeModule} from "@techiediaries/ngx-qrcode";
 import { ServiceWorkerModule } from '@angular/service-worker';
+import {LottieModule} from "ngx-lottie";
 
 @NgModule({
   declarations: [
@@ -75,6 +76,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
         CapitalizeFirstLetterPipeModule,
         MatMenuModule,
         LoaderModule,
+        LottieModule.forRoot({ player: playerFactory }),
         ServiceWorkerModule.register('ngsw-worker.js', {
           enabled: !isDevMode(),
           // Register the ServiceWorker as soon as the application is stable
@@ -106,4 +108,8 @@ export class AppModule {
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
+export function playerFactory(): any {
+  return import('lottie-web');
 }

@@ -8,6 +8,7 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../pipes/capitalize-first-lettre.module";
 import {MatIconModule} from "@angular/material/icon";
+import {LottieComponent} from "ngx-lottie";
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {MatIconModule} from "@angular/material/icon";
     TranslateModule,
     CapitalizeFirstLetterPipeModule,
     MatIconModule,
+    LottieComponent,
   ],
   exports: [CardPostComponent]
 })

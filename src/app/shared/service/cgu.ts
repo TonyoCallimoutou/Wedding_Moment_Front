@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {MatDialog} from "@angular/material/dialog";
-import {CguDialogComponent} from "../component/cgu-dialog/cgu-dialog.component";
+import {CguDialogComponent} from "../component/dialog/cgu-dialog/cgu-dialog.component";
 
 @Injectable({
   providedIn: 'root'

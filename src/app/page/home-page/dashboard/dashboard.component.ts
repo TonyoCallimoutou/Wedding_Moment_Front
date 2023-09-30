@@ -6,7 +6,7 @@ import {Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {MatDialog} from "@angular/material/dialog";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {GenericDialogComponent} from "../../../shared/component/dialog/generic-dialog/generic-dialog.component";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {Utils} from "../../../utils/Utils";
 import {DOCUMENT} from "@angular/common";
@@ -17,6 +17,7 @@ import {User} from "../../../model/user.model";
 import {EventModel} from "../../../model/event.model";
 import {LocalModel} from "../../../model/local.model";
 import {Report} from "../../../model/report.model";
+import {LoaderService} from "../../../shared/service/loader.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -54,7 +55,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   public background: any;
 
-  elem: any;
+  public isTabDesactive: boolean = false;
 
   private installPrompt : any;
   public needInstallPWA: boolean = false;
@@ -74,6 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
+    private loaderService: LoaderService,
 
     @Inject(DOCUMENT) private document: any,
 
@@ -82,8 +84,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.elem = document.documentElement;
-
     this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
     this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
@@ -120,6 +120,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   initAll() {
+
+    this.loaderService.setLoader(false);
 
     if (!window.matchMedia('(display-mode: fullscreen)').matches) {
       this.initPWA();
@@ -471,6 +473,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   tab(tabulation: number) {
     this.tabSelector = tabulation;
     CookieHelper.set(LocalModel.TAB, String(this.tabSelector));
+  }
+
+  inEdition(desactiveTab: boolean) {
+    this.isTabDesactive = desactiveTab;
   }
 
   /**

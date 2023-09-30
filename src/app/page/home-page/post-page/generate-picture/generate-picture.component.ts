@@ -124,7 +124,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   switchCamera() {
     const video = document.getElementById('video') as HTMLVideoElement;
-    const image = document.getElementById('image') as HTMLImageElement;
+
     if (!!video.srcObject && "getTracks" in video.srcObject) {
       const videoTracks = video.srcObject.getTracks();
 
@@ -182,7 +182,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     this.disableCamera();
   }
 
-  createPicture(video: any, width : number, height: number) {
+  createPicture(video: any, width : number, height: number, isFromFile : boolean = false) {
     const canvasElement = document.createElement('canvas');
     if (width > 2048 || height > 2048) {
       const ratio = Math.max(width / 2048, height / 2048);
@@ -195,7 +195,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
     const ctx = canvasElement.getContext('2d');
 
-    if (this.isSelfie) {
+    if (this.isSelfie && !isFromFile) {
       ctx?.scale(-1, 1);
       ctx?.translate(-width, 0);
     }
@@ -249,7 +249,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
         image.src = e.target.result;
 
         image.onload = () => {
-          this.createPicture(image, image.width, image.height);
+          this.createPicture(image, image.width, image.height, true);
         };
       }
 

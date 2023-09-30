@@ -1,27 +1,38 @@
-import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges, OnDestroy,
+  OnInit,
+  Output,
+  SimpleChanges,
+  TemplateRef,
+  ViewChild
+} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {MatDialog} from "@angular/material/dialog";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {GenericDialogComponent} from "../../../shared/component/dialog/generic-dialog/generic-dialog.component";
 import {TranslateService} from "@ngx-translate/core";
-import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {OptionStringIcon} from 'src/app/model/option-string-icon.model';
 import {EventModel, EventModelPresentation} from "../../../model/event.model";
+import {Utils} from "../../../utils/Utils";
 
 @Component({
   selector: 'app-presentation-page',
   templateUrl: './presentation-page.component.html',
   styleUrls: ['./presentation-page.component.scss']
 })
-export class PresentationPageComponent implements OnInit{
+export class PresentationPageComponent implements OnInit, OnDestroy {
 
   @Input() public event?: EventModel;
-  @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
-  @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
   @Input() public isEditable: boolean = false;
   @Input() public isEditMode: boolean = false;
+  @Input() public inEdition: boolean = false;
+  @Output() sendTemporaryBackground: EventEmitter<any> = new EventEmitter<any>();
+  @Output() sendFinallyBackground: EventEmitter<any> = new EventEmitter<any>();
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   public dropdownOptions: OptionStringIcon[] = [];
-  public isSetPresentationText : boolean = false;
   public presentationText : string = '';
   public fontSize : number = 96
   public fontSizeString : string = '96px'
@@ -37,19 +48,30 @@ export class PresentationPageComponent implements OnInit{
     private eventModelService: EventModelService,
     private dialog: MatDialog,
     private translate: TranslateService,
-
-    private snackbarService: SnackbarService,
   ) {
-
     this.initDropDownOption();
-
   }
 
   ngOnInit(): void {
+    history.pushState({ action: 'customAction' }, '', window.location.href);
+    window.addEventListener('popstate', this.handlePopState.bind(this));
     this.fontSize = this.event?.presentationTextSize ? this.event?.presentationTextSize : 96;
     this.fontSizeString = this.fontSize + 'px'
     this.textAlign = this.event?.presentationTextAlign ? this.event?.presentationTextAlign : 'center';
     this.presentationText = this.event?.presentationText ? this.event?.presentationText : '';
+  }
+
+  handlePopState(event: PopStateEvent) {
+    if (this.inEdition) {
+      this.beInEdition.emit(false);
+    }
+    else {
+      history.back();
+    }
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('popstate', this.handlePopState);
   }
 
   /**
@@ -90,7 +112,7 @@ export class PresentationPageComponent implements OnInit{
       fileInput.click();
     }
     else if (option === this.dropdownOptions[0]) {
-      this.isSetPresentationText = true;
+      this.beInEdition.emit(true);
     }
   }
 
@@ -145,7 +167,7 @@ export class PresentationPageComponent implements OnInit{
    * Save presentation texte
    */
   save() {
-    this.isSetPresentationText = false;
+    this.beInEdition.emit(false);
     let presentation : EventModelPresentation = {
       presentationText: this.presentationText,
       presentationTextSize: this.fontSize,

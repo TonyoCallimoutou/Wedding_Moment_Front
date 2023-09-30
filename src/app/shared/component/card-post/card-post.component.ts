@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
-import {SnackbarService} from "../../service/snackbar.service";
 import {OptionStringIcon} from "../../../model/option-string-icon.model";
 import {Post} from "../../../model/post.model";
 import {User} from "../../../model/user.model";
+import {AnimationOptions} from "ngx-lottie";
+import {AnimationItem} from "lottie-web";
 
 @Component({
   selector: 'app-card-post',
@@ -23,11 +24,16 @@ export class CardPostComponent implements OnChanges{
   @Output() delete : EventEmitter<Post> = new EventEmitter<Post>();
   @Output() onClick : EventEmitter<Post> = new EventEmitter<Post>();
 
+  animationItem!: AnimationItem;
+
+  options: AnimationOptions = {
+    path: '/assets/lottie/animation_1.json',
+  };
+
   public dropdownOptions: OptionStringIcon[] = [];
 
   constructor(
     private translate: TranslateService,
-    private snackbarService: SnackbarService,
   ) {
   }
 
@@ -80,21 +86,16 @@ export class CardPostComponent implements OnChanges{
   }
 
   reactPost(post : Post) {
-    const likeContainer = document.querySelector('#like-' + post.postId);
-
-
     if (!this.reactPostId.includes(post.postId)) {
-      likeContainer?.classList.add('active');
-
-      setTimeout(() => {
-        likeContainer?.classList.remove('active');
-      }, 800);
-    }
-    else {
-      likeContainer?.classList.remove('active');
+      this.animationItem.show();
+      this.animationItem.play();
     }
 
     this.reaction.emit(post);
+  }
+
+  loopComplete() {
+    this.animationItem.pause();
   }
 
   removePost(post: Post) {
@@ -105,8 +106,10 @@ export class CardPostComponent implements OnChanges{
     this.onClick.emit(post);
   }
 
-  test() {
-    this.snackbarService.showSnackbar();
+  animationCreated(animationItem: AnimationItem): void {
+    this.animationItem = animationItem;
+    this.animationItem.pause();
+    this.animationItem.hide();
   }
 
 }

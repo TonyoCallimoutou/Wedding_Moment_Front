@@ -18,15 +18,10 @@
       justify-content: space-around;
       align-items: center;
       padding: 1rem;
-      min-height: 90lvh;
 
       .invite_code {
         display: flex;
-        flex-direction: column;
-
-        mat-form-field {
-          margin-bottom: 2rem;
-        }
+        gap: 2rem;
       }
 
       .invite_qr_code{

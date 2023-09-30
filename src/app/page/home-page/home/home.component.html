@@ -1,12 +1,12 @@
 <div class="page">
   <mat-tab-group
     [selectedIndex]="selected"
-    (selectedIndexChange)="selected = $event">
+    (selectedIndexChange)="changeTab($event)">
     <mat-tab label="Invité">
       <div class="participate" *ngIf="selected === 0" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)" (touchend)="onTouchEnd()">
         <h1 class="font-title-48" style="text-align: center">{{ 'Home.Text.bienvenue' | translate | capitalizeFirstLetter }}</h1>
 
-        <div class="invite_code">
+        <div class="invite_code" [ngStyle]=" {'flex-direction': activeScanner ? 'row' : 'column'}">
           <form [formGroup]="formInvite">
             <mat-form-field>
               <mat-label>{{ 'Home.enter_code' | translate | capitalizeFirstLetter }}</mat-label>
@@ -14,7 +14,7 @@
                 matInput
                 type="number"
                 formControlName="code">
-              <mat-error *ngIf="formEvent.controls['date'].invalid">{{getErrorMessage('date') | translate | capitalizeFirstLetter }}</mat-error>
+              <mat-error *ngIf="formInvite.controls['code'].invalid">{{getErrorMessage('code') | translate | capitalizeFirstLetter }}</mat-error>
             </mat-form-field>
           </form>
           <button [disabled]="formInvite.invalid" mat-raised-button (click)="goToEventWithCode()">
@@ -22,13 +22,18 @@
           </button>
         </div>
 
-        <div class="invite_qr_code">
+        <div class="invite_qr_code" [ngStyle]=" {'margin-top': activeScanner ? '0' : '2rem'}">
           <p>{{ 'Home.scan_qr_code' | translate | capitalizeFirstLetter }}</p>
           <button mat-fab (click)="test()" *ngIf="!activeScanner">
             <mat-icon>qr_code_scanner</mat-icon>
           </button>
-          <div class="scanner" *ngIf="activeScanner">
-            <zxing-scanner></zxing-scanner>
+          <div class="scanner" *ngIf="activeScanner" >
+            <zxing-scanner
+              (scanSuccess)="scanSuccessHandler($event)"
+              (camerasNotFound)="camerasNotFound($event)"
+              (scanError)="scanErrorHandler($event)"
+              (scanFailure)="scanFailure($event)"
+            ></zxing-scanner>
           </div>
         </div>
 

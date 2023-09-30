@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {DeepCopy} from "../../../../utils/deepCopy";
 import {Invite, TableInfos} from "../../../../model/table-invite.model";
 
@@ -7,16 +7,16 @@ import {Invite, TableInfos} from "../../../../model/table-invite.model";
   templateUrl: './card-detail-plan-table.component.html',
   styleUrls: ['./card-detail-plan-table.component.scss']
 })
-export class CardDetailPlanTableComponent implements OnInit, OnChanges {
+export class CardDetailPlanTableComponent implements OnInit, OnChanges, OnDestroy {
   @Input() tableInfos!: TableInfos;
   @Input() isEditable = false;
+  @Input() inEdition: boolean = false;
   @Output() addInvite: EventEmitter<Invite> = new EventEmitter<Invite>();
   @Output() removeInvite: EventEmitter<Invite> = new EventEmitter<Invite>();
+  @Output() beInEdition: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 
   invite: string = "";
-
-  isEdit : boolean = false;
   inviteIdChange : number[] = [];
   inviteRemove : Invite[] = [];
   editInviteList: Invite[] = [];
@@ -29,6 +29,10 @@ export class CardDetailPlanTableComponent implements OnInit, OnChanges {
     if (changes['tableInfos']) {
       this.editInviteList = DeepCopy.ofList(this.tableInfos.value);
     }
+  }
+
+  ngOnDestroy() {
+    this.beInEdition.emit(false);
   }
 
   onInputChange(inviteId : number|undefined) {
@@ -47,7 +51,7 @@ export class CardDetailPlanTableComponent implements OnInit, OnChanges {
   }
 
   save() {
-    this.isEdit = !this.isEdit;
+    this.beInEdition.emit(!this.inEdition);
 
     for (let invite of this.inviteRemove) {
       this.removeInvite.emit(invite);
@@ -72,7 +76,7 @@ export class CardDetailPlanTableComponent implements OnInit, OnChanges {
   }
 
   retour() {
-    this.isEdit = false;
+    this.beInEdition.emit(false);
     this.editInviteList = DeepCopy.ofList(this.tableInfos.value);
   }
 

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {take} from "rxjs";
 import {AuthService} from "../../../service/auth/auth.service";
@@ -11,8 +11,8 @@ import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {MatDialog} from "@angular/material/dialog";
 import {Share} from "../../../shared/component/share-button/share-button.component";
 import {TranslateService} from "@ngx-translate/core";
-import {DialogQrCodeComponent} from "../../../shared/component/dialog-qr-code/dialog-qr-code.component";
-import {DialogLinkComponent} from "../../../shared/component/dialog-link/dialog-link.component";
+import {DialogQrCodeComponent} from "../../../shared/component/dialog/dialog-qr-code/dialog-qr-code.component";
+import {DialogLinkComponent} from "../../../shared/component/dialog/dialog-link/dialog-link.component";
 import {LoaderService} from "../../../shared/service/loader.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
 import {User} from "../../../model/user.model";
@@ -23,14 +23,14 @@ import {EventModel} from "../../../model/event.model";
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent{
+export class HomeComponent implements OnInit{
   public currentUser: User | null = null;
   public canAccess: boolean = false;
   public event: EventModel | null  = null ;
   public isEditable: boolean = false;
   public isCreateEvent: boolean = false;
-  public formInvite: FormGroup;
-  public formEvent: FormGroup;
+  public formInvite!: FormGroup;
+  public formEvent!: FormGroup;
   public selectedDate: Date = new Date();
   public eventLink: string = '';
   public shareLink: Share | undefined;
@@ -61,6 +61,9 @@ export class HomeComponent{
     private loaderService: LoaderService,
   ) {
 
+  }
+
+  ngOnInit() {
     this.formInvite = this.fb.group({
       code: ['', Validators.required],
     });
@@ -150,19 +153,22 @@ export class HomeComponent{
   }
 
   goToEventWithCode() {
-    this.loaderService.setLoader(true);
+    this.activeScanner = false;
+
+    this.loaderService.setLoader(true, 1);
     this.eventModelService.getEventByCode(this.formInvite.controls['code'].value)
       .pipe(take(1))
       .subscribe((data: EventModel) => {
         this.loaderService.setLoader(false);
-        if (!!data) {
-          this.loaderService.setLoader(true, 5000, '', true);
-          this.router.navigate(['dashboard', data.eventCode ]);
-          this.loaderService.setLoader(false);
-        }
-        else {
-          this.snackbarService.showSnackbar('error','Aucun événement trouvé');
-        }
+        setTimeout(() => {
+          if (!!data) {
+            this.loaderService.setLoader(true, 5000, '', true);
+            this.router.navigate(['dashboard', data.eventCode ]);
+          }
+          else {
+            this.snackbarService.showSnackbar('error','Aucun événement trouvé');
+          }
+        }, 1);
       });
   }
 
@@ -227,6 +233,37 @@ export class HomeComponent{
       } else if (swipeDistance < 0 && this.selected < 1) {
         this.selected++
       }
+    }
+  }
+
+  scanErrorHandler(error: any) {
+    console.log("scan error", error);
+  }
+
+  camerasNotFound(error: any) {
+    console.log("camera not found", error)
+  }
+
+  scanFailure(error: any) {
+    console.log("scan failure", error)
+  }
+
+  scanSuccessHandler(url: string) {
+    let code = url.split('/')[url.split('/').length - 1]
+    if (!!code) {
+      this.formInvite.controls['code'].markAsDirty();
+      this.formInvite.controls['code'].setValue(+code);
+      this.formInvite.controls['code'].updateValueAndValidity();
+      if (this.formInvite.valid) {
+        this.goToEventWithCode();
+      }
+    }
+  }
+
+  changeTab(tabSelected : number) {
+    this.selected = tabSelected
+    if (tabSelected === 1) {
+      this.activeScanner = false;
     }
   }
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, HostListener, Input, Output, TemplateRef, ViewChild} from '@angular/core';
 import {PostModelService} from 'src/app/viewModel/post-model.service';
 import {MatDialog} from "@angular/material/dialog";
-import {GenericDialogComponent} from "../../../shared/component/generic-dialog/generic-dialog.component";
+import {GenericDialogComponent} from "../../../shared/component/dialog/generic-dialog/generic-dialog.component";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {TranslateService} from "@ngx-translate/core";
