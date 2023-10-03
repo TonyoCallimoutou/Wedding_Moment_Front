@@ -13,6 +13,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {CapitalizeFirstLetterPipeModule} from "../../../shared/pipes/capitalize-first-lettre.module";
 import {MatDialogModule} from "@angular/material/dialog";
 import {ReportPageModule} from "../post-page/report-page/report-page.module";
+import {TabModule} from "../../../shared/component/tab/tab.module";
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import {ReportPageModule} from "../post-page/report-page/report-page.module";
         TranslateModule,
         CapitalizeFirstLetterPipeModule,
         MatDialogModule,
-        ReportPageModule
+        ReportPageModule,
+        TabModule
     ]
 })
 export class DashboardModule {

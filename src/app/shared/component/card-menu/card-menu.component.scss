@@ -21,8 +21,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 3.5rem;
-    margin-top: 3.5rem;
+    gap: 2rem;
+    margin-top: 2rem;
 
     .champ-input {
       display: flex;
@@ -49,7 +49,7 @@
       display: block;
       margin: auto;
       text-align: center;
-      width: 70%;
+      width: 100%;
     }
 
     input.categorie,

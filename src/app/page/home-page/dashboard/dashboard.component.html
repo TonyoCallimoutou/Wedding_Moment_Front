@@ -130,39 +130,12 @@
   >
   </app-report-page>
 
-  <mat-tab-group
-    *ngIf="!isTakePicture && !isReport"
-    headerPosition="below"
-    disablePagination
-    disableRipple = true
-    [selectedIndex]="tabSelector"
-    (selectedIndexChange)="tab($event)">
-    <mat-tab [disabled]="isTabDesactive">
-      <ng-template mat-tab-label>
-        <mat-icon>home</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab [disabled]="isTabDesactive">
-      <ng-template mat-tab-label>
-        <mat-icon>restaurant_menu</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab [disabled]="isTabDesactive">
-      <ng-template mat-tab-label>
-        <mat-icon>photo_camera</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab [disabled]="isTabDesactive">
-      <ng-template mat-tab-label>
-        <mat-icon>person_search</mat-icon>
-      </ng-template>
-    </mat-tab>
-    <mat-tab [disabled]="isTabDesactive">
-      <ng-template mat-tab-label>
-        <mat-icon>account_circle</mat-icon>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <app-tab
+    #tabBar
+    [isDisabled]="isTabDesactive"
+    [tabSelector]="tabSelector"
+    (changeTab)="tab($event)"
+  ></app-tab>
 
 </div>
 

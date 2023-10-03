@@ -100,6 +100,7 @@ $my-theme: mat.define-light-theme((
   --black: #{$black};
 
   --font-size-default: 0.75rem;
+  --font-size-default-14: 0.875rem;
   --font-size-default-16: 1rem;
   --font-size-default-20: 1.25rem;
   --font-size-default-24: 1.5rem;
@@ -120,6 +121,12 @@ body {
 .font-default {
   font-family: breeSerif, serif;
   font-size: var(--font-size-default);
+  margin: 0;
+  font-weight: normal;
+}
+.font-default-14 {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-default-14);
   margin: 0;
   font-weight: normal;
 }

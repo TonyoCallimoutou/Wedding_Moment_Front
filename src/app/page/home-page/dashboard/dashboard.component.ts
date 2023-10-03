@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
@@ -24,8 +24,9 @@ import {LoaderService} from "../../../shared/service/loader.service";
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
 
+  public previousTab: number = 0;
   public tabSelector: number = 0;
   public menuList: Menu[] = [];
   public posts: Post[] = [];
@@ -66,6 +67,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public needInstallPWADefault: boolean = false;
 
   @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
+  @ViewChild('tabBar') tabBar!: TemplateRef<any>;
 
   constructor(
     private userModelService: UserModelService,
@@ -84,8 +86,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
-    this.tabSelector = this.tabSelector ? this.tabSelector : 0;
 
     this.route.params
       .pipe(take(1))
@@ -109,6 +109,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
         }
 
     });
+  }
+
+  ngAfterViewInit() {
+    this.tabSelector = Number(CookieHelper.get(LocalModel.TAB));
+    this.tabSelector = this.tabSelector ? this.tabSelector : 0;
   }
 
   ngOnDestroy() {
@@ -470,7 +475,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
    * Function call when user change step
    * @param tabulation
    */
-  tab(tabulation: number) {
+  tab(tabulation: number): void {
+    this.previousTab = this.tabSelector;
     this.tabSelector = tabulation;
     CookieHelper.set(LocalModel.TAB, String(this.tabSelector));
   }
@@ -522,9 +528,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
       const swipeDistance = this.touchEndXY[0] - this.touchStartXY[0];
 
       if (swipeDistance > 0 && this.tabSelector > 0) {
-        this.tabSelector--;
+        this.tab(this.tabSelector - 1);
       } else if (swipeDistance < 0 && this.tabSelector < 4) {
-        this.tabSelector++
+        this.tab(this.tabSelector + 1);
       }
     }
   }

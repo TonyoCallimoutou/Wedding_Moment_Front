@@ -42,7 +42,7 @@
 .onglet {
   display: flex;
   flex: 1;
-  margin-bottom: 3.5rem;
+  margin-bottom: 3em;
   background-color: var(--secondary);
 
   * {
@@ -95,4 +95,14 @@ mat-tab-group {
     display: flex;
     gap: 0.5rem;
   }
+}
+
+
+app-tab {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
