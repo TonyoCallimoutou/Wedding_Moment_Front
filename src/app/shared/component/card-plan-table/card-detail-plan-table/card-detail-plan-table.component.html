@@ -7,17 +7,17 @@
   </div>
 
   <div>
-    <p class="font-default-24 table-name"> {{ tableInfos.key.tableName }}</p>
+    <p class="font-paris-28 table-name"> {{ tableInfos.key.tableName }}</p>
   </div>
 
 
   <div class="invites">
     <div *ngFor="let item of editInviteList; index as i" >
-      <p *ngIf="!inEdition" class="invite font-default-20">{{ item.inviteName }}</p>
+      <p *ngIf="!inEdition" class="invite font-paris-20">{{ item.inviteName }}</p>
       <div class="champ-input"
            *ngIf="inEdition">
         <input
-          class="invite font-default-20"
+          class="invite font-paris-20"
           [style]="inEdition ? 'outline: auto' : 'outline: none'"
           (ngModelChange)="onInputChange(item.inviteId)"
           type="text"

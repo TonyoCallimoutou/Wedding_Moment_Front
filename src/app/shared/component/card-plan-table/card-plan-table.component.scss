@@ -29,15 +29,16 @@
 
     .table {
       cursor: move;
-      background: #fff;
-      border-radius: 5px;
       display: flex;
       align-items: center;
 
       input {
         text-align: center;
+        background: transparent;
+        border: 0;
+        color: var(--primary);
       }
-      
+
       input[disabled] {
         pointer-events: none;
       }

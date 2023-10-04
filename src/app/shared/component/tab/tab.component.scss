@@ -99,3 +99,7 @@
     font-size: .8em;
   }
 }
+
+button {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+}
