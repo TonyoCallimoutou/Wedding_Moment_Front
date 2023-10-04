@@ -35,7 +35,7 @@ mat-expansion-panel {
   mat-expansion-panel-header {
     color: var(--primary-light);
     background:  var(--secondary-dark) !important;
-    font-size: var(--font-size-default-20);
+    font-size: var(--font-size-20);
     height: auto !important;
     padding: 1rem 1rem 1rem 2rem;
   }
@@ -44,7 +44,7 @@ mat-expansion-panel {
     margin: 0 -24px -16px;
 
     .param {
-      font-size: var(--font-size-default-16);
+      font-size: var(--font-size-16);
       color: var(--primary-dark);
       padding: 1rem;
       transition: max-height, 1s;

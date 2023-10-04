@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-import {LikeButtonModule} from 'src/app/shared/component/button-component/like-button/like-button.module';
-import {SettingButtonModule} from 'src/app/shared/component/button-component/setting-button/setting-button.module';
 import {UserModelService} from 'src/app/viewModel/user-model.service';
 import {UserPageComponent} from './user-page.component';
 import {NgClass, NgForOf, NgIf, TitleCasePipe} from "@angular/common";
@@ -25,8 +23,6 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     UserPageComponent
   ],
     imports: [
-        LikeButtonModule,
-        SettingButtonModule,
         NgIf,
         NgClass,
         TranslateModule,

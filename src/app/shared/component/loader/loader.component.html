@@ -8,4 +8,8 @@
       <tspan x="50%" dy="1.2em">Moment</tspan>
     </text>
   </svg>
+
+  <div class="starry-night" *ngIf="loader.isMainLoader">
+    <div [ngClass]="'star'" *ngFor="let star of stars" [style.top]="star.top" [style.left]="star.left"></div>
+  </div>
 </div>

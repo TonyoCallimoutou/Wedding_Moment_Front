@@ -9,6 +9,15 @@
   font-family: "BreeSerif";
   src: local("BreeSerif"), url(./assets/fonts/BreeSerif-Regular.ttf) format("truetype");
 }
+@font-face {
+  font-family: "Scriptina";
+  src: local("Scriptina"), url(./assets/fonts/Scriptina-Regular.otf) format("opentype");
+}
+@font-face {
+  font-family: "Parisienne";
+  src: local("Parisienne"), url(./assets/fonts/Parisienne-Regular.ttf) format("truetype");
+}
+
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 
@@ -99,18 +108,15 @@ $my-theme: mat.define-light-theme((
   --secondary-dark: #{$secondary-dark};
   --black: #{$black};
 
-  --font-size-default: 0.75rem;
-  --font-size-default-14: 0.875rem;
-  --font-size-default-16: 1rem;
-  --font-size-default-20: 1.25rem;
-  --font-size-default-24: 1.5rem;
-  --font-size-default-28: 1.75rem;
-
-  --font-size-title: 0.75rem;
-  --font-size-title-20: 1.25rem;
-  --font-size-title-24: 1.5rem;
-  --font-size-title-28: 1.75rem;
-  --font-size-title-48: 3rem;
+  --font-size: 0.75rem;
+  --font-size-14: 0.875rem;
+  --font-size-16: 1rem;
+  --font-size-20: 1.25rem;
+  --font-size-24: 1.5rem;
+  --font-size-28: 1.75rem;
+  --font-size-30: 1.875rem;
+  --font-size-38: 2.375rem;
+  --font-size-48: 3rem;
 
 }
 
@@ -120,50 +126,87 @@ body {
 
 .font-default {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default);
+  font-size: var(--font-size);
   margin: 0;
   font-weight: normal;
 }
 .font-default-14 {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-14);
+  font-size: var(--font-size);
   margin: 0;
   font-weight: normal;
 }
 .font-default-16 {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-16);
+  font-size: var(--font-size-16);
   margin: 0;
   font-weight: normal;
 }
 .font-default-20 {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-20);
+  font-size: var(--font-size-20);
   margin: 0;
   font-weight: normal;
 }
 .font-default-24 {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-24);
+  font-size: var(--font-size-24);
+  margin: 0;
+  font-weight: normal;
+}
+.font-default-28 {
+  font-family: breeSerif, serif;
+  font-size: var(--font-size-28);
+  margin: 0;
+  font-weight: normal;
+}
+.font-paris-16 {
+  font-family: Parisienne, serif;
+  font-size: var(--font-size-16);
+  margin: 0;
+  font-weight: normal;
+}
+.font-paris-20{
+  font-family: Parisienne, serif;
+  font-size: var(--font-size-20);
+  margin: 0;
+  font-weight: normal;
+}
+.font-paris-28 {
+  font-family: Parisienne, serif;
+  font-size: var(--font-size-28);
+  margin: 0;
+  font-weight: normal;
+}
+.font-paris-38 {
+  font-family: Parisienne, serif;
+  font-size: var(--font-size-38);
   margin: 0;
   font-weight: normal;
 }
 .font-title {
   font-family: GreatVibes, serif;
-  font-size: var(--font-size-title);
+  font-size: var(--font-size);
   margin: 0;
   font-weight: normal;
 }
 .font-title-20 {
   font-family: GreatVibes, serif;
-  font-size: var(--font-size-title-20);
+  font-size: var(--font-size-20);
   margin: 0;
   font-weight: normal;
 }
 
+.font-title-bold-30 {
+  font-family: GreatVibes, serif;
+  font-size: var(--font-size-30);
+  margin: 0;
+  font-weight: bold;
+}
+
 .font-title-48 {
   font-family: GreatVibes, serif;
-  font-size: var(--font-size-title-48);
+  font-size: var(--font-size-48);
 }
 
 .font-primary {
@@ -195,12 +238,12 @@ html, body { height: 100%; }
 body {
   margin: 0;
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-16);
+  font-size: var(--font-size-16);
 }
 
 mat-error {
   font-family: breeSerif, serif;
-  font-size: var(--font-size-default-16);
+  font-size: var(--font-size-16);
 }
 
 .mat-mdc-snack-bar-container {

@@ -113,9 +113,11 @@ export class EventModelService {
     });
 
     this.socketService.socket.on('listeningSetInvite', (invite: any) => {
-      this.listOfTableInvite = this.listOfTableInvite.filter(item => item.inviteId !== invite.inviteId);
-      this.listOfTableInvite.push(invite);
-      this.listOfTableInviteObs$.next(this.listOfTableInvite);
+      const index = this.listOfTableInvite.findIndex((obj) => obj.inviteId === invite.inviteId);
+      if (index !== -1) {
+        this.listOfTableInvite.splice(index, 1, invite);
+        this.listOfTableInviteObs$.next(this.listOfTableInvite);
+      }
     });
 
     this.socketService.socket.on('listeningAddPlanTable', (tableInvite: any) => {
@@ -129,9 +131,12 @@ export class EventModelService {
     });
 
     this.socketService.socket.on('listeningSetPlanTable', (tableInvite: any) => {
-      this.listOfTableInvite = this.listOfTableInvite.filter(item => item.planTableId !== tableInvite.planTableId);
-      this.listOfTableInvite.push(tableInvite);
-      this.listOfTableInviteObs$.next(this.listOfTableInvite);
+      const index = this.listOfTableInvite.findIndex((obj) => obj.planTableId === tableInvite.planTableId);
+      if (index !== -1) {
+        this.listOfTableInvite.splice(index, 1, tableInvite);
+        this.listOfTableInviteObs$.next(this.listOfTableInvite);
+      }
+
     });
   }
 

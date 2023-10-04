@@ -6,7 +6,7 @@
   </div>
 
   <div>
-    <h1 class="font-primary-light font-default-24"> {{ 'Menu.title' | translate | uppercase }}</h1>
+    <h1 class="font-primary-light font-paris-38"> {{ 'Menu.title' | translate | capitalizeFirstLetter }}</h1>
   </div>
 
 
@@ -18,11 +18,11 @@
       </div>
 
       <!-- Categorie -->
-      <p *ngIf="!inEdition" class="categorie font-primary-light font-default-20"> ~ {{ item.menuCategorie }} ~</p>
+      <p *ngIf="!inEdition" class="categorie font-primary-light font-paris-28"> ~ {{ item.menuCategorie }} ~</p>
       <div class="champ-input"
         *ngIf="inEdition">
         <input
-          class="categorie font-primary-light font-default-20"
+          class="categorie font-primary-light font-paris-28"
           (ngModelChange)="onInputChange(item.menuId)"
           type="text"
           placeholder="~ {{ 'Menu.placeholder_categorie' | translate | capitalizeFirstLetter }} ~"
@@ -34,7 +34,7 @@
         <textarea
           autosize
           [disabled]="!inEdition"
-          class="description font-primary-light font-default-16"
+          class="description font-primary-light font-paris-20"
           (ngModelChange)="onInputChange(item.menuId)"
           placeholder="{{ 'Menu.placeholder_description' | translate | capitalizeFirstLetter }}"
           [(ngModel)]="item.menuDescription">

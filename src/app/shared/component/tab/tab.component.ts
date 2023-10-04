@@ -35,7 +35,7 @@ export class TabComponent implements OnInit, AfterViewInit, OnChanges{
   ngOnChanges(changes: SimpleChanges) {
     if (changes['tabSelector']) {
       let index = changes['tabSelector'].currentValue;
-      this.switchTab(this.menuItems[index], index);
+      this.switchTab(this.menuItems[index]);
     }
   }
 
@@ -52,6 +52,9 @@ export class TabComponent implements OnInit, AfterViewInit, OnChanges{
     this.menuItems.forEach((item : any, index: number) => {
       item.addEventListener("click", () => this.clickItem(index));
     })
+
+
+    this.switchTab(this.menuItems[this.tabSelector]);
   }
 
 
@@ -59,7 +62,7 @@ export class TabComponent implements OnInit, AfterViewInit, OnChanges{
     this.changeTab.emit(index);
   }
 
-  switchTab(item : any, index: number) {
+  switchTab(item : any) {
     this.menu.nativeElement.style.removeProperty("--timeOut");
 
     if (this.activeItem == item) return;

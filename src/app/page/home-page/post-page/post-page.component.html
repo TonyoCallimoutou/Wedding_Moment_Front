@@ -1,101 +1,88 @@
 <div *ngIf="canAccess">
   <div class="page">
-    <mat-tab-group
-      [selectedIndex]="tabSelector"
-      (selectedIndexChange)="tab($event)">
-      <mat-tab >
-        <ng-template mat-tab-label >
+    <div class="toolbar">
+      <mat-toolbar color="primary">
+        <span class="font-title-bold-30"> {{'General.app_name' | translate}}</span>
+        <div class="icon">
+        </div>
+        <div class="icon" (click)="tabSelector = 2" [ngClass]="tabSelector === 2 ? 'active': ''">
+          <mat-icon  *ngIf="postsOffline.length > 0">warning</mat-icon>
+        </div>
+        <div class="icon">
+        </div>
+        <div class="icon" (click)="tabSelector = 0" *ngIf="tabSelector !== 0">
           <mat-icon>list</mat-icon>
-          {{ 'Posts.list' | translate | capitalizeFirstLetter }}
-        </ng-template>
-        <div class="top-button">
-          <div class="div_button" *ngIf="isActivate">
-            <div class="button" (click)="goToTakePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
-          </div>
         </div>
-        <!-- LIST -->
-        <div
-          infiniteScroll
-          [infiniteScrollDistance]="2"
-          [infiniteScrollThrottle]="1000"
-          (scrolled)="getMorePost()"
-          [scrollWindow]="true">
-          <app-card-post
-            *ngFor="let post of posts; let index = index"
-            [post]="post"
-            [reactPostId]="reactPostId"
-            [currentUser]="currentUser"
-            [isActivate]="isActivate"
-            (reaction)="reactPost($event)"
-            (delete)="removePost($event)"
-            (reported)="reportedPost($event)"
-          >
-          </app-card-post>
-        </div>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
+        <div class="icon" (click)="tabSelector = 1" *ngIf="tabSelector === 0">
           <mat-icon>grid_on</mat-icon>
-          {{ 'Posts.grid' | translate | capitalizeFirstLetter }}
-        </ng-template>
+        </div>
+        <div class="icon" (click)="goToTakePicture()">
+          <mat-icon>photo_camera</mat-icon>
+        </div>
+      </mat-toolbar>
+    </div>
 
-        <div class="top-button">
-          <div class="div_button" *ngIf="isActivate">
-            <div class="button" (click)="goToTakePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
-          </div>
-        </div>
-        <!-- GRID -->
-        <div class="view-grid">
+    <!-- LIST -->
+    <div
+      *ngIf="tabSelector === 0"
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="1000"
+      (scrolled)="getMorePost()"
+      [scrollWindow]="true">
+      <app-card-post
+        *ngFor="let post of posts; let index = index"
+        [post]="post"
+        [reactPostId]="reactPostId"
+        [currentUser]="currentUser"
+        [isActivate]="isActivate"
+        (reaction)="reactPost($event)"
+        (delete)="removePost($event)"
+        (reported)="reportedPost($event)"
+      >
+      </app-card-post>
+    </div>
 
-          <div class="image-grid">
-            <img
-              *ngFor="let post of postsGridView; let i = index"
-              [src]="post.pictureUrl"
-              [ngClass]="{'square': post.pictureRatio == 1, 'portrait': post.pictureRatio == 0.5, 'paysage': post.pictureRatio == 2} "
-              (click)="openDialog(postsGridView[i])">
-          </div>
+    <!-- GRID -->
+    <div class="view-grid" *ngIf="tabSelector === 1">
 
-          <ng-template #dialogContent>
-            <app-card-post
-              class="dialog"
-              [post]="postDetail"
-              [reactPostId]="reactPostId"
-              [currentUser]="currentUser"
-              [isActivate]="isActivate"
-              [style]="'border-radius: 1.5rem; border: 0.5rem solid var(--secondary-dark);'"
-              (reaction)="reactPost($event)"
-              (delete)="removePost($event)"
-              (reported)="reportedPost($event)"
-            >
-            </app-card-post>
-          </ng-template>
-        </div>
-      </mat-tab>
-      <mat-tab  *ngIf="postsOffline.length > 0">
-        <ng-template mat-tab-label>
-          <mat-icon>warning</mat-icon>
-          {{ 'Posts.offline' | translate | capitalizeFirstLetter }}
-        </ng-template>
-        <div class="top-button">
-          <div class="div_button" *ngIf="isActivate">
-            <div class="button" (click)="goToTakePicture()"> {{ 'Posts.create_post' | translate | capitalizeFirstLetter }} </div>
-          </div>
-        </div>
-        <!-- LIST -->
-        <div>
-          <app-card-post
-            *ngFor="let post of postsOffline; let index = index"
-            [post]="post"
-            [isOffline]="true"
-            [currentUser]="currentUser"
-            [isActivate]="isActivate"
-            (delete)="removePost($event)"
-            (onClick)="updateOnline($event)"
-          >
-          </app-card-post>
-        </div>
-      </mat-tab>
-    </mat-tab-group>
+      <div class="image-grid">
+        <img
+          *ngFor="let post of postsGridView; let i = index"
+          [src]="post.pictureUrl"
+          [ngClass]="{'square': post.pictureRatio == 1, 'portrait': post.pictureRatio == 0.5, 'paysage': post.pictureRatio == 2} "
+          (click)="openDialog(postsGridView[i])">
+      </div>
+
+      <ng-template #dialogContent>
+        <app-card-post
+          class="dialog"
+          [post]="postDetail"
+          [reactPostId]="reactPostId"
+          [currentUser]="currentUser"
+          [isActivate]="isActivate"
+          [style]="'border-radius: 1.5rem; border: 0.5rem solid var(--secondary-dark);'"
+          (reaction)="reactPost($event)"
+          (delete)="removePost($event)"
+          (reported)="reportedPost($event)"
+        >
+        </app-card-post>
+      </ng-template>
+    </div>
+
+    <!-- LIST OFFLINE-->
+    <div *ngIf="tabSelector === 2">
+      <app-card-post
+        *ngFor="let post of postsOffline; let index = index"
+        [post]="post"
+        [isOffline]="true"
+        [currentUser]="currentUser"
+        [isActivate]="isActivate"
+        (delete)="removePost($event)"
+        (onClick)="updateOnline($event)"
+      >
+      </app-card-post>
+    </div>
 
   </div>
 </div>

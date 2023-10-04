@@ -81,6 +81,13 @@ export class PostModelService {
       .pipe(take(1))
       .subscribe(data => {
         post.postId = data.postId;
+
+        post.pictureUrl = picture;
+        let posts : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+        posts.push(post);
+        CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(posts));
+        this.listOfPostOfflineObs$.next(posts);
+
         this.storageModelService.uploadPictureAndGetUrl(this.userData.userId, post.postId, picture).then(url => {
           this.postService.setPictureOfPost({
             userId: data.userId,
@@ -95,11 +102,6 @@ export class PostModelService {
             })
         }).catch((error) => {
           this.loaderService.setLoader(false);
-          post.pictureUrl = picture;
-          let posts : Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
-          posts.push(post);
-          CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(posts));
-          this.listOfPostOfflineObs$.next(posts);
         });
       })
   }

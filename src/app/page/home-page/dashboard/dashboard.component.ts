@@ -67,7 +67,6 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
   public needInstallPWADefault: boolean = false;
 
   @ViewChild('dialogEditMode') dialogEditMode!: TemplateRef<any>;
-  @ViewChild('tabBar') tabBar!: TemplateRef<any>;
 
   constructor(
     private userModelService: UserModelService,

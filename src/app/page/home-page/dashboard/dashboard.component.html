@@ -87,7 +87,7 @@
       [postsOffline]="postsOffline"
       [postsGridView]="postsGridView"
       [reactPostId]="reactPostId"
-      (switchTab)="tabSelector = $event"
+      (switchTab)="tab($event)"
       [isEditMode]="isEditMode"
       (takePicture)="isTakePicture = $event"
       (reportPost)="reportPost($event)"
@@ -131,7 +131,7 @@
   </app-report-page>
 
   <app-tab
-    #tabBar
+    *ngIf="!isTakePicture && !isReport"
     [isDisabled]="isTabDesactive"
     [tabSelector]="tabSelector"
     (changeTab)="tab($event)"
