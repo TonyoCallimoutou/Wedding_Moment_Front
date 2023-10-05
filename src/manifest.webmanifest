@@ -6,7 +6,7 @@
   "display": "fullscreen",
   "cache": false,
   "scope": "./",
-  "start_url": "/",
+  //"start_url": "/", // a dé-commenter si PWA Chrome
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",

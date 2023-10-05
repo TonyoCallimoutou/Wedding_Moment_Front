@@ -127,10 +127,6 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
 
     this.loaderService.setLoader(false);
 
-    if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-      this.initPWA();
-    }
-
     this.initData();
 
     this.initUser();
@@ -140,6 +136,10 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
     this.initPost();
 
     this.initPlanTable();
+
+    if (!window.matchMedia('(display-mode: fullscreen)').matches && !!this.currentUser && this.currentUser.userId !== "0") {
+      this.initPWA();
+    }
   }
 
 
@@ -158,10 +158,12 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
 
     let browserName;
 
+    //this.beforeInstallPrompt(); // a dé-commenter si PWA Chrome || ATTENTION MANIFEST
+
     switch (true) {
       case isAndroid && isChrome:
         browserName = 'Google Chrome';
-        this.beforeInstallPrompt();
+        this.needInstallPWAChrome = true; // a commenter si le PWA Chrome || ATTENTION MANIFEST
         break;
       case isFirefox:
         browserName = 'Firefox';
