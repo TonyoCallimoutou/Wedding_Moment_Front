@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Inject, OnDestroy, OnInit, TemplateRef, ViewCh
 import {EventModelService} from "../../../viewModel/event-model.service";
 import {PostModelService} from "../../../viewModel/post-model.service";
 import {UserModelService} from "../../../viewModel/user-model.service";
-import {distinctUntilChanged, Subject, take, takeUntil} from "rxjs";
+import {Subject, take, takeUntil} from "rxjs";
 import {ActivatedRoute, Router} from "@angular/router";
 import {CookieHelper} from "../../../shared/service/cookie.helper";
 import {MatDialog} from "@angular/material/dialog";
@@ -329,7 +329,7 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
   initPlanTable() {
     this.eventModelService
       .getPlanTable()
-      .pipe(takeUntil(this.onDestroy$), distinctUntilChanged())
+      .pipe(takeUntil(this.onDestroy$))
       .subscribe((data: any[]) => {
 
         this.tableInviteMap = new Map<PlanTable, Invite[]>();
