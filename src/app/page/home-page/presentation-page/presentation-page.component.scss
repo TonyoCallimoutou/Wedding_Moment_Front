@@ -12,7 +12,7 @@
     display: flex;
     justify-content: flex-end;
     margin: 2rem;
-
+    z-index: 2;
   }
 
   .text-zone {
@@ -23,6 +23,7 @@
     .save_button {
       position: fixed;
       margin: 2rem;
+      z-index: 2;
     }
 
     .edit_buttons {
@@ -32,6 +33,7 @@
       display: flex;
       justify-content: space-around;
       margin-bottom: 5rem;
+      z-index: 2;
     }
 
     .text {
