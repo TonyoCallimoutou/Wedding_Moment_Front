@@ -4,6 +4,7 @@ import {PostModelService} from "../../../../viewModel/post-model.service";
 import {Data, FilterType} from "../../../../utils/Data";
 import {SnackbarService} from "../../../../shared/service/snackbar.service";
 import {max} from "rxjs";
+import {LoaderService} from "../../../../shared/service/loader.service";
 
 @Component({
   selector: 'app-generate-picture',
@@ -43,6 +44,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
   constructor(
     private postModelService: PostModelService,
     private snackBarService: SnackbarService,
+    private loaderService: LoaderService,
   ) {
   }
 
@@ -174,6 +176,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
 
   capturePhoto() {
     this.isPictureChoose = true;
+    this.loaderService.setLoader(true, 500);
 
     const video = document.getElementById('video') as HTMLVideoElement;
 
@@ -214,6 +217,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     this.canvas.add(this.image);
 
     this.imageBase64 = this.canvas.toDataURL();
+    this.loaderService.setLoader(false);
   }
 
   applyFilter(filter: string = '') {
@@ -238,6 +242,7 @@ export class GeneratePictureComponent implements AfterViewInit, OnInit, OnDestro
     fileInput.accept = '.png,.jpg';
     fileInput.addEventListener('change', (event: any) => {
       this.isPictureChoose = true;
+      this.loaderService.setLoader(true, 500);
 
       const file = event.target.files[0];
       const reader = new FileReader();

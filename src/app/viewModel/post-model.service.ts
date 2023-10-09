@@ -98,6 +98,12 @@ export class PostModelService {
             .subscribe(() => {
               this.loaderService.setLoader(false);
               data.pictureUrl = url;
+
+              let posts: Post[] = CookieHelper.get(LocalModel.POST_OFFLINE) ? JSON.parse(<string>CookieHelper.get(LocalModel.POST_OFFLINE)) : [];
+              posts = posts.filter(item => item.postId !== post.postId);
+              CookieHelper.set(LocalModel.POST_OFFLINE, JSON.stringify(posts));
+              this.listOfPostOfflineObs$.next(posts);
+
               this.socketService.addPost(data);
             })
         }).catch((error) => {
