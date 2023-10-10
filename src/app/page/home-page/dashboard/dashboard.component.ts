@@ -368,10 +368,6 @@ export class DashboardComponent implements OnInit, OnDestroy,  AfterViewInit {
             this.tableInviteList.push(<TableInvite>planTable);
           }
         }
-
-        this.tableInviteMap.forEach((value, key) => {
-          value.reverse();
-        });
       })
   }
 
