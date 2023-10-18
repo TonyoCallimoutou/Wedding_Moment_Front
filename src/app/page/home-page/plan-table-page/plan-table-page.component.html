@@ -16,7 +16,7 @@
         <mat-autocomplete
           #auto="matAutocomplete"
           [displayWith]="displayFn"
-          (optionSelected)="getSearchResult($event.option.value)">
+          (optionSelected)="getSearchResult($event)">
           <mat-option *ngFor="let invite of inviteListFiltered | async" [value]="invite">
             {{invite.inviteName}}
           </mat-option>

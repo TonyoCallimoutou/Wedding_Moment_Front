@@ -18,6 +18,7 @@ import {TranslateService} from "@ngx-translate/core";
 import {SnackbarService} from "../../../shared/service/snackbar.service";
 import {Invite, PlanTable, TableInfos, TableInvite} from "../../../model/table-invite.model";
 import {EventModel} from "../../../model/event.model";
+import {MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 
 @Component({
   selector: 'app-plan-table-page',
@@ -117,6 +118,7 @@ export class PlanTablePageComponent implements OnInit, OnChanges, OnDestroy {
    */
   getDetail(invites: TableInfos) {
     this.myControl.setValue('');
+    this.myControl.updateValueAndValidity();
     this.tableInfos = invites;
 
     let detailDialog = this.dialog.open(GenericDialogComponent, {
@@ -137,7 +139,10 @@ export class PlanTablePageComponent implements OnInit, OnChanges, OnDestroy {
    * Function call on click on result of searchBar
    * @param invite
    */
-  getSearchResult(invite: Invite) {
+  getSearchResult(event: MatAutocompleteSelectedEvent) {
+    let invite = event.option.value;
+    event.option.deselect();
+
     this.tableInviteMap.forEach((value,key) => {
       if (key.planTableId === invite.planTableId) {
         this.tableInfos = {
