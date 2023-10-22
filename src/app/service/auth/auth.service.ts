@@ -193,39 +193,20 @@ export class AuthService {
         userName: result.user.displayName,
         email:  result.user.email,
         emailVerified: result.user.emailVerified,
-        photoUrl: "https://firebasestorage.googleapis.com/v0/b/projet-secret-a86d6.appspot.com/o/users%2F0?alt=media&token=da247115-af2f-466d-b4e7-526d1860bec6",
+        photoUrl: result.user.photoURL ? result.user.photoURL : "https://firebasestorage.googleapis.com/v0/b/projet-secret-a86d6.appspot.com/o/users%2F0?alt=media&token=da247115-af2f-466d-b4e7-526d1860bec6",
         nbrOfPost: 0
       }
-      // If user have picture
-      if (result.user.photoUrl) {
-        this.storageModelService.uploadUserPictureAndGetUrl(result.user.uid, result.user.photoUrl)
-          .then(url => {
-            this.userData.photoUrl = url;
-            this.userModelService.createUser(this.userData)
-              .pipe(take(1))
-              .subscribe((user: User) => {
-                CookieHelper.set(LocalModel.USER, JSON.stringify(user));
-                this.userModelService.initUserData();
-                this.eventModelService.initUserData();
-                this.loaderService.setLoader(false);
 
-                window.location.reload();
-              });
-          })
-      }
-      // If User do not have picture
-      else {
-        this.userModelService.createUser(this.userData)
-          .pipe(take(1))
-          .subscribe((user: User) => {
-            CookieHelper.set(LocalModel.USER, JSON.stringify(user));
-            this.userModelService.initUserData();
-            this.eventModelService.initUserData();
-            this.loaderService.setLoader(false);
+      this.userModelService.createUser(this.userData)
+        .pipe(take(1))
+        .subscribe((user: User) => {
+          CookieHelper.set(LocalModel.USER, JSON.stringify(user));
+          this.userModelService.initUserData();
+          this.eventModelService.initUserData();
+          this.loaderService.setLoader(false);
 
-            window.location.reload();
-          });
-      }
+          window.location.reload();
+        });
     }
   }
 
